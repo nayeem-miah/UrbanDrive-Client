@@ -68,13 +68,13 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <button
-            onClick= {() => setIsLoggedIn(true)}
+            
             className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500  
        to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400  
        dark:focus:ring-yellow-800"
 >
   <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">  
-    Sign Up
+  <Link to="/login">Login</Link>
   </span>
 
           </button> 
@@ -166,7 +166,7 @@ const Navbar: React.FC = () => {
                 }}
                 className="text-4xl font-bold text-green-500 hover:text-green-600 transition-colors duration-300"
               >
-                Sign Up
+                <Link to="/login">Login</Link>
               </button>
             </li>
           )}
