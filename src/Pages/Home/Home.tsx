@@ -1,5 +1,6 @@
 import BookAutoRental from "../../Components/BookAutoRental";
 import BrowseByCar from "../../Components/BrowseByCar";
+import BrowseByDestination from "../../Components/BrowseByDestination";
 
 import CarRental from "../../Components/CarRental";
 
@@ -8,6 +9,7 @@ const Home: React.FC = () => {
     <div>
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>
+      <BrowseByDestination/>
       <BrowseByCar></BrowseByCar>
     </div>
   );

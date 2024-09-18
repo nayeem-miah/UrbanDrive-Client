@@ -13,7 +13,7 @@ interface Destination {
   name: string;
   icon: string; // You can replace this with a React component if you're using SVG or images
 }
-// BrowseByDestination
+
 const destinations: Destination[] = [
   { name: "Los Angeles", icon: "🌴" }, // Replace this with actual icons or images
   { name: "Honolulu", icon: "🏝️" },
@@ -24,7 +24,7 @@ const destinations: Destination[] = [
 ];
 
 
-const BrowseByCar: React.FC = () => {
+const BrowseByDestination: React.FC = () => {
     
 return (
     <>
@@ -69,4 +69,4 @@ return (
 )    
 }
 
-export default BrowseByCar
+export default BrowseByDestination;
