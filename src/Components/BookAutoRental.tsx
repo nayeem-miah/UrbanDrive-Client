@@ -24,7 +24,7 @@ const BookAutoRental: React.FC = () => {
         </div>
 
         <div className='grid grid-cols-2 md:grid-cols-6 ml-2 mr-2 md:bg-gray-900 md:bg-opacity-75 md:p-4 lg:grid-cols-6 gap-3 lg:gap-6 mt-6 mb-6 lg:bg-gray-900 lg:bg-opacity-75 p-8 rounded-full'>
-          <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3">
+          <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3 h-12">
             <option disabled value="">Choose Car Types</option>
             <option value="economy">Economy Cars</option>
             <option value="luxury">Luxury Cars</option>
@@ -32,7 +32,7 @@ const BookAutoRental: React.FC = () => {
             <option value="sedan">Sedan</option>
           </select>
 
-          <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3">
+          <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3 box-border h-12">
             <option disabled value="">Pick Up Locations</option>
             <option value="uttora">Uttora</option>
             <option value="mirpur-1">Mirpur-1</option>
@@ -44,11 +44,11 @@ const BookAutoRental: React.FC = () => {
           <input
             id="pickup-date"
             type="date"
-            className="block w-full max-w-xs border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-4"
+            className="block w-full max-w-xs  box-border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-4 h-12"
             min={todayDate}
           />
 
-          <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3">
+          <select className="select w-full max-w-xs box-border bg-[#111010] text-white border rounded-full p-3 h-12">
             <option disabled value="">Drop Off Locations</option>
             <option value="uttora">Uttora</option>
             <option value="mirpur-1">Mirpur-1</option>
@@ -60,16 +60,16 @@ const BookAutoRental: React.FC = () => {
           <input
             id="return-date"
             type="date"
-            className="block w-full max-w-xs border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-3"
+            className=" w-full max-w-xs  box-border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-3 h-12"
             min={todayDate}
           />
           <input
             id="return-date"
             type="button"
-            className="block w-full max-w-xs border border-amber-600   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3"
+            className=" w-full max-w-xs border box-border border-amber-600   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3 h-12"
            value="Rent Now"
           />
-         
+        
         </div>
       </div>
     </div>
