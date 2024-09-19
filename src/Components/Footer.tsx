@@ -99,7 +99,6 @@ const Footer: React.FC = () => {
 
                     </div>
 
-
                     <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
 
                     <div className="flex flex-col items-center justify-between sm:flex-row text-white">

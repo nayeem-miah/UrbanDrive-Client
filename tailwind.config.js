@@ -11,6 +11,8 @@ export default {
         'Playfair': ['Playfair Display', 'sans-serif'],
         'Merri': ['Merriweather', 'serif'],
         'Open': ['Open Sans', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'], // Poppins font
+        lato: ['Lato', 'sans-serif'],   
       },
     },
   },

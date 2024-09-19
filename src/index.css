@@ -9,3 +9,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Style the color of the date input symbol for WebKit browsers */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      color: #ffffff; /* Replace with any color */
+      filter: invert(1); /* Makes the calendar icon white for dark backgrounds */
+      cursor: pointer;
+    }
+  }
+  
