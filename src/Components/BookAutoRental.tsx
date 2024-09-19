@@ -1,5 +1,5 @@
 import React from 'react';
-
+import car1 from '../assets/car1.jpg.jpg';
 const BookAutoRental: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-fixed bg-cover bg-center"  style={{ backgroundImage: `url(${car1})` }}> {/* Add your image URL */}
@@ -31,7 +31,7 @@ const BookAutoRental: React.FC = () => {
             id="pickup-date"
             type="date"
             className="block w-full max-w-xs border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-4"
-            min={todayDate}
+            // min={todayDate}
           />
 
           <select className="select w-full max-w-xs bg-[#111010] text-white border rounded-full p-3">
@@ -47,7 +47,7 @@ const BookAutoRental: React.FC = () => {
             id="return-date"
             type="date"
             className="block w-full max-w-xs border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-3"
-            min={todayDate}
+            // min={todayDate}
           />
           <input
             id="return-date"

@@ -78,7 +78,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
  import carRental from "../assets/carRental.jpg.jpg"
- import upperarrow from "../assets/upperarrow.svg.svg"
+//  import upperarrow from "../assets/upperarrow.svg.svg"
 
 const CarRental: React.FC = () => {
   return (
@@ -140,7 +140,7 @@ const CarRental: React.FC = () => {
             transition={{ delay: 0.7, duration: 0.8, ease: 'easeInOut' }}
           >
             Read More
-            <img className='h-[15px] w-[15px] ml-2' src={upperarrow} alt="" />
+            <img className='h-[15px] w-[15px] ml-2' src='' alt="" />
           </motion.button>
         </motion.div>
         <motion.div
