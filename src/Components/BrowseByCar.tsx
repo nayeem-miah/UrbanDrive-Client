@@ -16,20 +16,22 @@ import Toyota from '../assets/toyota.jpg';
 import Nissan from '../assets/nissan.jpg';
 import Jeep from '../assets/jeep.jpg';
 import Ford from '../assets/ford.jpg';
+import Lamborghini from '../assets/lamborghini.jpg';
 
 
 interface Destination {
   name: string;
-  // image : 
-  image: string; // You can replace this with a React component if you're using SVG or images
+  image: string; 
 }
-// BrowseByDestination
+
+
 const destinations: Destination[] = [
-  { name: "BMW", image: BMW }, // Replace this with actual icons or images
+  { name: "BMW", image: BMW }, 
   { name: "Mercedes", image: Mercedes },
   { name: "Porsche", image: Porsche },
   { name: "Toyota", image: Toyota },
   { name: "Nissan", image: Nissan },
+  { name: "Lamborghini", image: Lamborghini },
   { name: "Jeep", image: Jeep },
   { name: "Ford", image: Ford },
 ];

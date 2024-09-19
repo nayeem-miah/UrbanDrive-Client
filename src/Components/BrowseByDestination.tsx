@@ -20,12 +20,11 @@ import toronto from '../assets/toronto.jpg';
 
 interface Destination {
   name: string;
-  // image : 
-  image: string; // You can replace this with a React component if you're using SVG or images
+  image: string; 
 }
-// BrowseByDestination
+
 const destinations: Destination[] = [
-  { name: "Los Angeles", image: los }, // Replace this with actual icons or images
+  { name: "Los Angeles", image: los },
   { name: "Miami", image: miami },
   { name: "New Work", image: newWork },
   { name: "Paris", image: paris },
