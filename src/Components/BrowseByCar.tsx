@@ -57,10 +57,10 @@ return (
       >
         {destinations.map((destination, index) => (
           <SwiperSlide key={index}>
-            <div className="border rounded-lg p-6 flex flex-col items-center">
+            {/* <div className="border rounded-lg p-6 flex flex-col items-center">
               <div className="text-6xl mb-4">{destination.icon}</div>
               <h3 className="text-lg font-semibold">{destination.name}</h3>
-            </div>
+            </div> */}
           </SwiperSlide>
         ))}
         
