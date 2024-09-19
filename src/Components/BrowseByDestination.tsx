@@ -39,6 +39,9 @@ const BrowseByDestination: React.FC = () => {
     
 return (
     <>
+    <div>
+      <h2 className='font-bold text-3xl text-center mt-20 mb-14'>Browse by Destination</h2>
+    </div>
         <Swiper
         slidesPerView={1}
         spaceBetween={5}
