@@ -1,9 +1,13 @@
+import Banner from "../../components/Banner";
+import BookAutoRental from "../../components/BookAutoRental";
+import CarRental from "../../components/CarRental";
+
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>
-        Welcome to UrbanDrive!
-      </h1>
+      <Banner></Banner>
+      <CarRental></CarRental>
+      <BookAutoRental></BookAutoRental>
     </div>
   );
 }
