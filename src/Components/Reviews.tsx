@@ -28,7 +28,7 @@ const Reviews: React.FC = () => {
   }, []);
 
   return (
-    <div className='bg-[#111010]'>
+    <div className='bg-[#111010] mt-10'>
       <div className="container mx-auto pt-16">
         <div className='border-l-4 border-amber-600 pb-2'>
           <div className='ml-2 space-y-1'>

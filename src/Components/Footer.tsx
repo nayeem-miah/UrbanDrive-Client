@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
     )
     return (
         <div>
-            <div className="bg-white dark:bg-gray-900 mt-8">
+            <div className="bg-white dark:bg-gray-900">
                 <div className="container px-6 py-12 mx-auto">
                     <div className="md:flex md:-mx-3 md:items-center md:justify-between">
                         <h1 className="text-xl font-semibold tracking-tight text-gray-800 md:mx-3 xl:text-2xl dark:text-white">
@@ -84,8 +84,8 @@ const Footer: React.FC = () => {
        to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400
        dark:focus:ring-yellow-800 hover:bg-[#12625D]">
                                     <span >Sign in Now</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                     </svg>
                                 </p></Link>
                         </div>
