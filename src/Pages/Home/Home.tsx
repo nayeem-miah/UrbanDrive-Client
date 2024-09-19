@@ -1,3 +1,4 @@
+import Banner from "../../Components/Banner";
 import BookAutoRental from "../../Components/BookAutoRental";
 import CarRental from "../../Components/CarRental";
 import Reviews from "../../Components/Reviews";
@@ -5,6 +6,7 @@ import Reviews from "../../Components/Reviews";
 const Home: React.FC = () => {
   return (
     <div>
+      <Banner></Banner>
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>
       <Reviews></Reviews>
