@@ -9,18 +9,29 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
+import london from '../assets/lodon.jpg';
+import miami from '../assets/miami.jpg';
+import newWork from '../assets/newWork.jpg';
+import paris from '../assets/paris.jpg';
+import sydney from '../assets/sydney.jpg';
+import los from '../assets/losangeles.jpg';
+import toronto from '../assets/toronto.jpg';
+
+
 interface Destination {
   name: string;
-  icon: string; // You can replace this with a React component if you're using SVG or images
+  // image : 
+  image: string; // You can replace this with a React component if you're using SVG or images
 }
 // BrowseByDestination
 const destinations: Destination[] = [
-  { name: "Los Angeles", icon: "🌴" }, // Replace this with actual icons or images
-  { name: "Honolulu", icon: "🏝️" },
-  { name: "Paris", icon: "🗼" },
-  { name: "Sydney", icon: "🌉" },
-  { name: "London", icon: "🕰️" },
-  { name: "Toronto", icon: "🗼" },
+  { name: "Los Angeles", image: los }, // Replace this with actual icons or images
+  { name: "Miami", image: miami },
+  { name: "New Work", image: newWork },
+  { name: "Paris", image: paris },
+  { name: "Sydney", image: sydney },
+  { name: "London", image: london },
+  { name: "Toronto", image: toronto },
 ];
 
 
@@ -57,10 +68,15 @@ return (
       >
         {destinations.map((destination, index) => (
           <SwiperSlide key={index}>
-            {/* <div className="border rounded-lg p-6 flex flex-col items-center">
-              <div className="text-6xl mb-4">{destination.icon}</div>
-              <h3 className="text-lg font-semibold">{destination.name}</h3>
-            </div> */}
+             <div 
+              className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden"
+              style={{ backgroundImage: `url(${destination.image})` }}
+            >
+              {/* Overlay for text visibility */}
+              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h3 className="text-white text-lg font-semibold">{destination.name}</h3>
+              </div>
+            </div>
           </SwiperSlide>
         ))}
         
