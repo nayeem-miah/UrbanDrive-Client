@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 const CarRental: React.FC = () => {
   return (
     <div className='bg-[#111010]'>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-14 lg:ml-16 lg:mr-16 lg:p-12 md:ml-10 md:mr-10 md:p-6 md:gap-12'>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12'>
         <motion.div 
           className='mx-auto justify-center items-center'
           initial={{ y: -100, opacity: 0 }}
@@ -67,7 +67,7 @@ const CarRental: React.FC = () => {
           </motion.button>
         </motion.div>
         <motion.div 
-          className='relative group'
+          className=''
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8, ease: 'easeInOut' }}
