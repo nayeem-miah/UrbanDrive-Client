@@ -1,11 +1,9 @@
-import BookAutoRental from "../../Components/BookAutoRental";
-import CarRental from "../../Components/CarRental";
-
 const Home: React.FC = () => {
   return (
     <div>
-      <CarRental></CarRental>
-      <BookAutoRental></BookAutoRental>
+      <h1>
+        Welcome to UrbanDrive!
+      </h1>
     </div>
   );
 }
