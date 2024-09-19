@@ -66,7 +66,7 @@ const BookAutoRental: React.FC = () => {
           <input
             id="return-date"
             type="button"
-            className="block w-full max-w-xs   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3"
+            className="block w-full max-w-xs border border-amber-600   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3"
            value="Rent Now"
           />
          
