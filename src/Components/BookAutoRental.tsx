@@ -1,20 +1,6 @@
-// 
-import '../index.css'
-import React, { useEffect, useState } from 'react';
-import car1 from "../assets/car1.jpg.jpg"
+import React from 'react';
 
 const BookAutoRental: React.FC = () => {
-  const [todayDate, setTodayDate] = useState('');
-
-  // Function to format today's date as YYYY-MM-DD
-  useEffect(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Add leading zero
-    const day = String(today.getDate()).padStart(2, '0'); // Add leading zero
-    setTodayDate(`${year}-${month}-${day}`);
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-fixed bg-cover bg-center"  style={{ backgroundImage: `url(${car1})` }}> {/* Add your image URL */}
       <div className="bg-black bg-opacity-50 min-h-screen flex flex-col justify-center items-center">
@@ -41,7 +27,7 @@ const BookAutoRental: React.FC = () => {
             <option value="mirpur-2">Mirpur-2</option>
           </select>
 
-          <input
+                <input
             id="pickup-date"
             type="date"
             className="block w-full max-w-xs border border-gray-300 shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-4"
@@ -66,10 +52,10 @@ const BookAutoRental: React.FC = () => {
           <input
             id="return-date"
             type="button"
-            className="block w-full max-w-xs border border-amber-600   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3"
+            className="block w-full max-w-xs   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3"
            value="Rent Now"
           />
-         
+
         </div>
       </div>
     </div>

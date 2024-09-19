@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-base-100 shadow-lg' : 'bg-transparent'}`}>
+    <nav className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-base-100 opacity-80 shadow-lg' : 'bg-transparent'}`}>
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
           <img src='' alt="UrbanDrive" className="h-8" />
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link 
                 to={`/${link.id}`} 
-                className={`text-lg font-medium ${isScrolled ? 'text-gray-800' : 'text-white'} hover:text-gray-300`}
+                className={`text-lg font-medium ${isScrolled ? 'text-white' : 'text-white'} hover:text-gray-300`}
               >
                 {link.title}
               </Link>
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
        to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400  
        dark:focus:ring-yellow-800"
 >
-  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">  
+  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">  
   <Link to="/login">Login</Link>
   </span>
 
