@@ -9,13 +9,13 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
-import london from '../assets/lodon.jpg';
-import miami from '../assets/miami.jpg';
-import newWork from '../assets/newWork.jpg';
-import paris from '../assets/paris.jpg';
-import sydney from '../assets/sydney.jpg';
-import los from '../assets/losangeles.jpg';
-import toronto from '../assets/toronto.jpg';
+import BMW from '../assets/bmw.jpg';
+import Mercedes from '../assets/mercedes.jpg';
+import Porsche from '../assets/porche.jpg';
+import Toyota from '../assets/toyota.jpg';
+import Nissan from '../assets/nissan.jpg';
+import Jeep from '../assets/jeep.jpg';
+import Ford from '../assets/ford.jpg';
 
 
 interface Destination {
@@ -25,13 +25,13 @@ interface Destination {
 }
 // BrowseByDestination
 const destinations: Destination[] = [
-  { name: "Los Angeles", image: los }, // Replace this with actual icons or images
-  { name: "Miami", image: miami },
-  { name: "New Work", image: newWork },
-  { name: "Paris", image: paris },
-  { name: "Sydney", image: sydney },
-  { name: "London", image: london },
-  { name: "Toronto", image: toronto },
+  { name: "BMW", image: BMW }, // Replace this with actual icons or images
+  { name: "Mercedes", image: Mercedes },
+  { name: "Porsche", image: Porsche },
+  { name: "Toyota", image: Toyota },
+  { name: "Nissan", image: Nissan },
+  { name: "Jeep", image: Jeep },
+  { name: "Ford", image: Ford },
 ];
 
 
@@ -41,7 +41,7 @@ return (
     <>
         <Swiper
         slidesPerView={1}
-        spaceBetween={10}
+        spaceBetween={5}
         pagination={{
           clickable: true,
         }}
@@ -69,7 +69,7 @@ return (
         {destinations.map((destination, index) => (
           <SwiperSlide key={index}>
              <div 
-              className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden"
+              className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden mt-10"
               style={{ backgroundImage: `url(${destination.image})` }}
             >
               {/* Overlay for text visibility */}

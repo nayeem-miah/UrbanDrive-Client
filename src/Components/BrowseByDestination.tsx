@@ -42,7 +42,7 @@ return (
     <>
         <Swiper
         slidesPerView={1}
-        spaceBetween={7}
+        spaceBetween={5}
         pagination={{
           clickable: true,
         }}
