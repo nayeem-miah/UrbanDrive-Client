@@ -16,13 +16,14 @@ const CarRental: React.FC = () => {
           transition={{ delay: 0.5, duration: 0.8, ease: 'easeInOut' }}
         >
           <h3 className='text-amber-600 font-bold tracking-wider ml-2 font-lato'>RENTAX</h3>
-          <motion.h1 
-            className='font-bold text-2xl lg:text-4xl font-lato mt-6 text-white'
+          <motion.h1
+            className='font-bold text-4xl font-lato mt-6 text-white'
             initial={{ y: -100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: 'easeInOut' }}
           >
-            We Are More Than <br /><span className='text-amber-600'>A Car Rental Company</span>
+            We Are More Than <br />
+            <span className='text-amber-600'>A Car Rental Company</span>
           </motion.h1>
           <motion.p
             className='mt-4 font-lato text-[#88837a]'
@@ -32,8 +33,8 @@ const CarRental: React.FC = () => {
           >
             The UrbanDrive website showcases the core message of the company, highlighting that it offers more than just a standard car rental service. The header introduces UrbanDrive as a unique brand, focusing on the idea of providing a superior experience. 
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             className='flex flex-col gap-2 mt-4'
             initial={{ y: -100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -57,7 +58,7 @@ const CarRental: React.FC = () => {
             </div>
           </motion.div>
           <motion.button
-            className="flex font-lato mt-4 items-center p-4  text-black rounded-3xl  bg-amber-600 
+            className="flex font-lato mt-4 items-center p-4  text-black rounded-3xl  bg-amber-600
              hover:bg-gradient-to-r hover:from-[#bd7811] hover:to-[#bd4d11] hover:text-white transition-colors duration-300"
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -75,7 +76,7 @@ const CarRental: React.FC = () => {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8, ease: 'easeInOut' }}
         >
-          <img className='h-[400px] w-[380px] lg:h-[470px] lg:w-[420px] rounded-3xl transition-transform duration-300 group-hover:scale-105' src={carRental} alt="carRental" />
+          <img className='h-[470px] w-[420px] rounded-3xl transition-transform duration-300 group-hover:scale-105' src={carRental} alt="carRental" />
         </motion.div>
 
       </div>

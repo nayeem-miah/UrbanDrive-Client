@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   return (
@@ -6,7 +7,7 @@ const LoginPage: React.FC = () => {
       <div
         className="relative flex flex-col m-6 space-y-8 bg-gray-800 shadow-2xl rounded-2xl md:flex-row md:space-y-0"
       >
-        {/* left side */}
+        
         <div className="flex flex-col justify-center p-8 md:p-14">
           <span className="mb-3 text-4xl font-bold text-white font-Playfair">Welcome back</span>
           <span className="text-gray-400 mb-8 font-Open font-bold">
@@ -44,17 +45,17 @@ const LoginPage: React.FC = () => {
             Sign in with Google
           </button>
           <div className="text-center text-gray-400">
-            Don't have an account? <span className="font-bold text-teal-500 hover:text-teal-300 cursor-pointer">Sign up</span>
+            Don't have an account? <span className="font-bold text-teal-500 hover:text-teal-300 cursor-pointer"><Link to="/register">Sign up</Link></span>
           </div>
         </div>
-        {/* right side */}
+        
         <div className="relative">
           <img
             src="src/assets/pexels-hamann.jpg"
             alt="img"
             className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
           />
-          {/* text on image */}
+          
           <div
             className="absolute hidden bottom-10 right-6 p-6 bg-gray-800 bg-opacity-30 backdrop-blur-sm rounded drop-shadow-lg md:block"
           >
