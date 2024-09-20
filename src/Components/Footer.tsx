@@ -105,7 +105,6 @@ const Footer: React.FC = () => {
                         <p aria-label="UrbanDrive" className="flex">
                             <img className="w-auto h-14 rounded" loading="lazy" src={logo}
                                 alt="UrbanDrive" />
-
                         </p>
 
                         <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">
