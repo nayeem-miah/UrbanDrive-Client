@@ -3,8 +3,9 @@ import Main from "../Layouts/Main";
 import Home from "../Pages/Home/Home";
 import LoginPage from "../Pages/Login/Login";
 import AboutUs from "../Pages/About/About";
-import Registration from "../Pages/Registration/Registration";
+
 import ErrorPage from "../Pages/ErrorPage";
+import Registration from "../Pages/Login/Registration/Registration";
 
 const router = createBrowserRouter([
     {
