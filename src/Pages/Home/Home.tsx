@@ -1,6 +1,9 @@
-import Banner from "../../components/Banner";
-import BookAutoRental from "../../components/BookAutoRental";
-import CarRental from "../../components/CarRental";
+import Banner from "../../Components/Banner";
+import BookAutoRental from "../../Components/BookAutoRental";
+import BrowseByCar from "../../Components/BrowseByCar";
+import BrowseByDestination from "../../Components/BrowseByDestination";
+import CarRental from "../../Components/CarRental";
+import Reviews from "../../Components/Reviews";
 
 const Home: React.FC = () => {
   return (
@@ -8,7 +11,10 @@ const Home: React.FC = () => {
       <Banner></Banner>
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>
+      <BrowseByDestination/>
+      <BrowseByCar></BrowseByCar>
+      <Reviews></Reviews>
     </div>
   );
 }
-export default Home
+export default Home;
