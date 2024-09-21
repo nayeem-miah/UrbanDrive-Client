@@ -3,24 +3,31 @@ import Main from "../Layouts/Main";
 import Home from "../Pages/Home/Home";
 import LoginPage from "../Pages/Login/Login";
 import AboutUs from "../Pages/About/About";
-import Registration from "../Pages/Registration/Registration";
+
+import ErrorPage from "../Pages/ErrorPage";
+import Registration from "../Pages/Login/Registration/Registration";
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
     {
       path: "/",
       element:<Main/>,
-      errorElement:<></>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
-            path : '/home',
+            path : '/',
             element : <Home/>
         },
         {
             path : '/about',
             element : <AboutUs></AboutUs>
+        },
+        {
+          path : '/contact',
+          element: <Contact></Contact>
         }
       ]
-      
+
     },
     {
       path: "/login",
