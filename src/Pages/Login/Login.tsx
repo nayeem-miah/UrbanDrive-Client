@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import img1 from '../../assets/pexels-hamann.jpg'
 
 const LoginPage: React.FC = () => {
   return (
@@ -51,7 +52,7 @@ const LoginPage: React.FC = () => {
         
         <div className="relative">
           <img
-            src="src/assets/pexels-hamann.jpg"
+            src={img1}
             alt="img"
             className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
           />

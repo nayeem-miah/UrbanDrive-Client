@@ -1,6 +1,6 @@
-import Banner from "../../components/Banner";
-import BookAutoRental from "../../components/BookAutoRental";
-import CarRental from "../../components/CarRental";
+import Banner from "../../Components/Banner";
+import BookAutoRental from "../../Components/BookAutoRental";
+import CarRental from "../../Components/CarRental";
 
 const Home: React.FC = () => {
   return (
