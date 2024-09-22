@@ -45,7 +45,7 @@ const AboutUs: React.FC = () => {
           delivering exceptional service, prioritizing safety, and offering unparalleled convenience to our customers, making every journey a memorable one.</p>
           <p className="text-white mt-8 sm:mt-16 text-sm sm:text-lg font-Merri font-bold">Learn more about our journey and values.</p>
         </div>
-        <div className="field absolute bottom-10 transform -translate-x-1/2 left-1/2 h-5">
+        <div className=" absolute bottom-10 transform -translate-x-1/2 left-1/2 h-5">
           <div className="arrow"></div>
         </div>
       </section>

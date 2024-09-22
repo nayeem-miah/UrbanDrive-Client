@@ -6,6 +6,7 @@ import AboutUs from "../Pages/About/About";
 
 import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         {
             path : '/about',
             element : <AboutUs></AboutUs>
+        },
+        {
+          path : '/contact',
+          element: <Contact></Contact>
         }
       ]
 
