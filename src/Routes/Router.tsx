@@ -5,6 +5,7 @@ import LoginPage from "../Pages/Login/Login";
 import AboutUs from "../Pages/About/About";
 import Registration from "../Pages/Registration/Registration";
 import ErrorPage from "../Pages/ErrorPage";
+import Cars from "../Components/Cars";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
       element:<Main/>,
       errorElement:<ErrorPage></ErrorPage>,
       children:[
+        
         {
             path : '/',
             element : <Home/>
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
         {
             path : '/about',
             element : <AboutUs></AboutUs>
+        },
+        {
+          path: "/cars", // You missed adding this path
+          element: <Cars />
         }
       ]
 

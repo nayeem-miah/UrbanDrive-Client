@@ -1,5 +1,6 @@
 import React from 'react';
 import car1 from '../assets/car1.jpg.jpg';
+import { Link } from 'react-router-dom';
 const BookAutoRental: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-fixed bg-cover bg-center"  style={{ backgroundImage: `url(${car1})` }}> {/* Add your image URL */}
@@ -49,12 +50,15 @@ const BookAutoRental: React.FC = () => {
             className="block w-full max-w-xs  shadow-sm sm:text-sm bg-[#111010] text-white rounded-full p-3 h-12"
             // min={todayDate}
           />
-          <input
-            id="return-date"
-            type="button"
-            className="block w-full max-w-xs   shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3 h-12"
-           value="Rent Now"
-          />
+          <Link to="/cars">
+  <input
+    id="return-date"
+    type="button"
+    className="block w-full max-w-xs shadow-sm sm:text-sm bg-amber-600 text-white border-none rounded-full p-3 h-12"
+    value="Rent Now"
+  />
+</Link>
+          
 
         </div>
       </div>
