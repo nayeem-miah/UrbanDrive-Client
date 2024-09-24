@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import img1 from '../../assets/pexels-hamann.jpg'
+import img1 from '../../assets/pexels-hamann.jpg';
+
 
 const LoginPage: React.FC = () => {
+ 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div
