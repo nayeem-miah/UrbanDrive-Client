@@ -11,9 +11,10 @@ const Home: React.FC = () => {
       <Banner></Banner>
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>
-      <BrowseByDestination/>
+      <BrowseByDestination />
       <BrowseByCar></BrowseByCar>
       <Reviews></Reviews>
+
     </div>
   );
 }
