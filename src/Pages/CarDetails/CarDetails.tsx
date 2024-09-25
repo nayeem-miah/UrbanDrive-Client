@@ -10,6 +10,9 @@ import { DateRange } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 
+import { motion } from 'framer-motion';
+import { Rating } from '@smastrom/react-rating';
+
 
 interface ICar {
     id: number;
@@ -29,8 +32,23 @@ interface ICar {
     rating: number;
     review: string;
 }
+interface RatingData {
+  label: string;
+  value: number;
+}
+
 
 const CarDetails: React.FC = () => {
+  
+
+  const ratingsData: RatingData[] = [
+    { label: 'Cleanliness', value: 3.0 },
+    { label: 'Maintenance', value: 5.0 },
+    { label: 'Communication', value: 2.0 },
+    { label: 'Convenience', value: 5.0 },
+    { label: 'Accuracy', value: 4.0 },
+  ];
+
   const [scrollY, setScrollY] = useState(0);
   const [dateRange, setDateRange] = useState([
     {
@@ -56,7 +74,7 @@ const CarDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    // Calculate initial total cost
+    
     const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(initialTotalCost);
   }, []);
@@ -157,6 +175,46 @@ const CarDetails: React.FC = () => {
                 <p className="text-gray-300">
                   {car.description}
                 </p>
+              </div>
+              <div className="mt-6">
+                <h2 className="text-xl font-bold mb-2 text-white">Features</h2>
+                <p className="text-gray-300">
+                  {car.features.map((feature, index) => (
+                    <span key={index}>{feature}, </span>
+                  ))}
+                </p>
+              </div>
+
+              <div>
+              <div className="p-6 bg-[#18181B] rounded-lg shadow-md">
+      <div className="text-2xl font-bold mb-4">Ratings and Reviews</div>
+      <div className="text-5xl text-purple-600 font-bold">5.0</div>
+      <div className="text-gray-500 mb-6">(94 ratings)</div>
+
+      {ratingsData.map((rating, index) => (
+        <div key={index} className="mb-4">
+          <div className="flex justify-between mb-2">
+            <span>{rating.label}</span>
+            <span>{rating.value}</span>
+          </div>
+          <motion.div
+            className="h-2 bg-gray-200 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${(rating.value / 5) * 100}%` }}
+            transition={{ duration: 1.5 }}
+          >
+            <div className="h-full bg-purple-600 rounded-full"></div>
+          </motion.div>
+        </div>
+      ))}
+
+      <div className="mt-6">
+        <div className="font-semibold">Reviews</div>
+        <div className="mt-4 space-y-4">
+          
+        </div>
+      </div>
+    </div>
               </div>
             </div>
 
