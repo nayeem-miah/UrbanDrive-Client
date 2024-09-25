@@ -1,7 +1,10 @@
 import React from "react";
 import bgimg from "../../../assets/pexels-bertellifotografia-799443.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosPublic from "../../../Hooks/useAxoisPublic";
+import Swal from "sweetalert2";
 
 type Inputs = {
   name: string;
@@ -20,13 +23,37 @@ const Registration: React.FC = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
+  const { createUser } = useAuth();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const password = watch("password");
   // const agreeToTerms = watch("agreeToTerms");
 
   const onSubmit: SubmitHandler<Inputs> = (data) =>{
-   
-    console.log(data)
+    createUser(data.email, data.password)
+      .then(() => {
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          // console.log(res.data)
+          if (res.data.insertedId) {
+            reset();
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successfully Sign up",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+          }
+        });
+      })
+      .catch();
   };
 
   return (

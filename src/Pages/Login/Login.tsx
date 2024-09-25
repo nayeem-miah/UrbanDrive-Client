@@ -13,7 +13,7 @@ type Inputs = {
 }
 
 const LoginPage: React.FC = () => {
-  const { signIn, googleSignIn, loading } = useAuth();
+  const { signIn, googleSignIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<Inputs>()
-  
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     signIn(data.email, data.password)
       .then(() => {
