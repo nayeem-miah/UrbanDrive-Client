@@ -1,34 +1,33 @@
 import { useQuery } from '@tanstack/react-query'
 
-import axios from 'axios'
 
 import { FaCalendar } from 'react-icons/fa6';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { Link } from 'react-router-dom';
 
 interface Car {
 _id: string;
 make: string;
-modelName: string;
+model: string;
 year: number;
 price: number;
 image: string;
 
 }
 
-const fetchCars = async (): Promise<Car[]> => {
 
-const response = await axios.get<Car[]>('https://freetestapi.com/api/v1/cars')
 
-return response.data
-
-}
 
 const CarList: React.FC=() => {
 
+  const axiosPublic = useAxiosPublic();
+
 const { data: cars, isLoading, isError } = useQuery<Car[], Error>({
-
 queryKey: ['cars'],
-
-queryFn: fetchCars,
+queryFn: async () => {
+  const response = await axiosPublic.get('/cars')
+  return response.data
+}
 
 })
 
@@ -42,7 +41,7 @@ return (
 
   {cars?.map((car) => (
 
-    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-[#18181B] text-white transition-all duration-300 hover:shadow-xl">
+    <Link to={`/car/${car._id}`}> <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-[#18181B] text-white transition-all duration-300 hover:shadow-xl">
 
     <div className="overflow-hidden">
 
@@ -74,7 +73,7 @@ return (
 
           </div>
 
-          <span className="font-semibold">{car.modelName}</span>
+          <span className="font-semibold">{car.model}</span>
 
         </div>
 
@@ -146,7 +145,7 @@ return (
 
     </div>
 
-  </div>
+  </div></Link>
 
   ))}
 
