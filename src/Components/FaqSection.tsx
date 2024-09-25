@@ -2,7 +2,7 @@
 const FaqSection: React.FC = () => {
     return (
         <div className="bg-[#111010] py-5">
-            <h2 className="font-bold lg:text-3xl md:text-2xl text-xl text-center my-10">Frequently Asked Questions in <br /><span className="text-[#2DD4BF]">UrabanDrive</span></h2>
+            <h2 className="font-bold lg:text-3xl text-2xl  text-center my-10">Frequently Asked Questions in <br /><span className="text-[#2DD4BF]">UrabanDrive</span></h2>
             <div className="lg:flex w-full gap-4 mx-auto ">
                 <div className="w-full">
                     <div className="collapse collapse-arrow ">

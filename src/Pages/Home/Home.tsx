@@ -4,6 +4,7 @@ import CarRental from "../../Components/CarRental";
 import BrowseByCar from "../../Components/BrowseByCar";
 import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
+import FaqSection from "../../Components/FaqSection";
 
 const Home: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const Home: React.FC = () => {
       <BrowseByDestination />
       <BrowseByCar></BrowseByCar>
       <Reviews></Reviews>
-
+      <FaqSection />
     </div>
   );
 }
