@@ -1,5 +1,4 @@
 import {
-  GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -27,7 +26,6 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<any>;
   logOut: () => Promise<void>;
   googleSignIn: () => Promise<any>;
-  gitHubSignIn: () => Promise<any>;
   updateUserProfile: (name: string, photo: string) => Promise<void>;
 }
 
@@ -39,7 +37,6 @@ const defaultAuthContext: AuthContextType = {
   signIn: async () => { /* no-op */ },
   logOut: async () => { /* no-op */ },
   googleSignIn: async () => { /* no-op */ },
-  gitHubSignIn: async () => { /* no-op */ },
   updateUserProfile: async () => { /* no-op */ },
 };
 
@@ -55,7 +52,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  const gitHubProvider = new GithubAuthProvider();
   const axiosPublic = useAxiosPublic();
 
 
@@ -77,12 +73,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  // github login
-  const gitHubSignIn = () => {
-    setLoading(true);
-    return signInWithPopup(auth, gitHubProvider);
-  };
-
   // update user profile
   const updateUserProfile = (name: string, photo: string) => {
     if (auth.currentUser) {
@@ -97,19 +87,20 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        // get token from client site and store it
-        const userInfo = { email: currentUser.email };
-        axiosPublic.post("/jwt", userInfo).then((res) => {
-          if (res.data.token) {
-            localStorage.setItem("access-token", res.data.token);
-            setLoading(false);
-          }
-        });
-      } else {
-        localStorage.removeItem("access-token");
-        setLoading(false);
-      }
+      // if (currentUser) {
+      //   // get token from client site and store it
+      //   const userInfo = { email: currentUser.email };
+      //   axiosPublic.post("/jwt", userInfo).then((res) => {
+      //     if (res.data.token) {
+      //       localStorage.setItem("access-token", res.data.token);
+      //       setLoading(false);
+      //     }
+      //   });
+      // } else {
+      //   localStorage.removeItem("access-token");
+      //   setLoading(false);
+      // }
+      setLoading(false)
     });
     return () => {
       unSubscribe();
@@ -130,7 +121,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     signIn,
     logOut,
     googleSignIn,
-    gitHubSignIn,
     updateUserProfile,
   };
 
