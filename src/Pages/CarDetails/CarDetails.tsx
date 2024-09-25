@@ -5,7 +5,7 @@ import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
 import { FaGasPump, FaStar } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
-import { addDays, format } from 'date-fns';
+import { addDays, differenceInDays, format } from 'date-fns';
 import { DateRange } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
@@ -40,13 +40,26 @@ const CarDetails: React.FC = () => {
     }
   ]);
   const [location, setLocation] = useState('Current Location');
-  const [showCalendar, setShowCalendar] = useState(false); // State for calendar visibility
+  const [showCalendar, setShowCalendar] = useState(false); 
+  const [totalCost, setTotalCost] = useState(0);
+ 
 
-  const handleSelect = (ranges: any) => {
-    setDateRange([ranges.selection]);
-    // Remove this line to keep the calendar open after date selection
-    // setShowCalendar(false);
+  const calculateTotalCost = (start: Date, end: Date) => {
+    const days = differenceInDays(end, start) + 1; 
+    return days * car.rental_price_per_day;
   };
+
+  const handleSelect = (ranges) => {
+    setDateRange([ranges.selection]);
+    const newTotalCost = calculateTotalCost(ranges.selection.startDate, ranges.selection.endDate);
+    setTotalCost(newTotalCost);
+  };
+
+  useEffect(() => {
+    // Calculate initial total cost
+    const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
+    setTotalCost(initialTotalCost);
+  }, []);
 
 
   useEffect(() => {
@@ -112,7 +125,7 @@ const CarDetails: React.FC = () => {
                 <GiCarSeat className='w-5 h-5 mr-2' /><span>5 Seats</span>
                 </div>
               </div>
-
+              <h1 className="text-2xl font-bold mb-4 text-white text-center"> Hosted By</h1>
               <div className="mt-6 bg-gray-800 rounded-lg shadow p-4">
                 <div className="flex items-center mb-4">
                   <img
@@ -121,7 +134,7 @@ const CarDetails: React.FC = () => {
                     className="w-10 h-10 rounded-full mr-3"
                   />
                   <div>
-                    <h3 className="font-bold text-white">Tagor</h3>
+                    <h3 className="font-bold text-white">Name</h3>
                     <p className="text-sm text-gray-400">All-Star Host</p>
                   </div>
                 </div>
@@ -132,7 +145,7 @@ const CarDetails: React.FC = () => {
                 </div>
                 <p className="text-sm text-gray-400 mt-2">
                   <IoIosInformationCircleOutline className="w-4 h-4 inline mr-1" />
-                  All-Star Hosts like Tagor are the top-rated and most experienced hosts on Turo.
+                  All-Star Hosts like Name are the top-rated and most experienced hosts on UrbanDrive.
                 </p>
                 <a href="#" className="text-teal-500 text-sm">
                   Learn more
@@ -148,15 +161,14 @@ const CarDetails: React.FC = () => {
             </div>
 
             <div className="flex-1">
-              <span className="text-3xl font-bold text-white text-center">{car.rental_price_per_day}/day</span>
-              <p className="text-sm text-gray-400">Price before taxes</p>
+              <span className="text-3xl font-bold text-white text-center">${car.rental_price_per_day}/day</span>              <p className="text-sm text-gray-400">Price before taxes</p>
 
               {/* Reservation Section */}
               <div className=" mx-auto bg-gray-800 p-6 rounded-lg shadow-md text-white">
                 <div className="mb-4">
-                  <span className="text-2xl font-bold">$191 total</span>
-                  <p className="text-sm text-gray-400">Price before taxes</p>
-                </div>
+  <span className="text-2xl font-bold">${totalCost}</span>
+  <p className="text-sm text-gray-400">Total for {differenceInDays(dateRange[0].endDate, dateRange[0].startDate) + 1} days</p>
+</div>
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold mb-1">Trip dates</p>
@@ -207,7 +219,7 @@ const CarDetails: React.FC = () => {
                   >
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                   </svg>
-                  <span className="text-gray-400 text-sm">Free cancellation before </span>
+                  <span className="text-gray-400 text-sm">Free cancellation before {format(new Date(), 'MM/dd/yyyy')}</span>
                 </div>
 
                 {/* Support Section */}
