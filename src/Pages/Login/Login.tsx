@@ -21,9 +21,24 @@ const LoginPage: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>()
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    signIn(data.email, data.password)
+      .then(() => {
+        reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Successfully logged in",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+         navigate(location.state ? location.state : "/");
+      })
+      .catch();}
 
   const handleGoogleLogIn = () => {
     googleSignIn()
