@@ -3,7 +3,7 @@ import useAxiosPublic from '../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Cars: React.FC = () => {
     const axiosPublic = useAxiosPublic();
@@ -12,6 +12,7 @@ const Cars: React.FC = () => {
     const [category,setCategory] = useState ('');
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(0);
+    const [sortOption,setSortOption]=useState('');
     
     
     interface Car {
@@ -21,14 +22,16 @@ const Cars: React.FC = () => {
         review:string,
         availability:boolean,
         model:string,
-        category:string
+        category:string,
+        price:number,
+       date: number
     }
  
 
     const {data:cardata= [],refetch}=useQuery({
-        queryKey:['car',currentPage,category],
+        queryKey:['car',currentPage,category,maxPrice,minPrice,sortOption],
         queryFn: async (page) =>{
-            const response = await axiosPublic.get('/cars',{params:{page:currentPage,limit:6,category:category}});
+            const response = await axiosPublic.get('/cars',{params:{page:currentPage,limit:6,category:category,minPrice:minPrice,maxPrice:maxPrice,sort:sortOption}});
             setTotalPages(response.data.totalPages); // Set total pages for pagination
             return response.data.Cars;
 
@@ -49,7 +52,16 @@ const Cars: React.FC = () => {
             setMinPrice(min);
             setMaxPrice(max);
         }
+        console.log('Price Range:', minPrice, maxPrice);
     }
+    useEffect(() => {
+        refetch();
+    }, [minPrice, maxPrice, category, currentPage, sortOption]);
+
+      const formatDate = (dateString:number) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB'); // Format as DD/MM/YYYY
+    };
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -67,9 +79,9 @@ const Cars: React.FC = () => {
   return (
     <div className='bg-[#181818]  mt-16'>
     
-    <div >
+    <div>
     
-             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-12'>
+             <div className='grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-12'>
              <select className="select w-full bg-[#111010] text-white  border rounded-full p-3 h-12"
              value={category} // Set the current selected value
              onChange={handleCategoryChange} // Handle change
@@ -93,17 +105,10 @@ const Cars: React.FC = () => {
              <option value="7">7 or more</option>
              <option value="8">8 or more</option>
            </select>
-     <select className="select w-full  bg-[#111010] text-white border rounded-full p-3 h-12">
-             <option disabled value="">Drop Off Locations</option>
-             <option value="uttora">Uttora</option>
-             <option value="mirpur-1">Mirpur-1</option>
-             <option value="saver">Saver</option>
-             <option value="ajimpur">Ajimpur</option>
-             <option value="mirpur-2">Mirpur-2</option>
-           </select>
+    
 
            <select
-                    className="select select-bordered w-full max-w-xs"
+                    className="select w-full bg-[#111010] text-white  border rounded-full p-3 h-12"
                     value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` :""}
                     onChange={handlePriceRangeChange}
                 >
@@ -118,9 +123,9 @@ const Cars: React.FC = () => {
 
 
                 <select
-    className="select select-bordered w-full max-w-xs"
-    // value={sortOption}
-    // onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+    className="select w-full bg-[#111010] text-white  border rounded-full p-3 h-12"
+    value={sortOption}
+    onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
 >
     <option disabled value="">Sort by</option>
     <option value="price-asc">Price: Low to High</option>
@@ -158,6 +163,14 @@ const Cars: React.FC = () => {
                              <div>
                                  <p>Category</p>
                                  <p>{car.category}</p>
+                             </div>
+                             <div>
+                                 <p>Price</p>
+                                 <p>{car.price}</p>
+                             </div>
+                             <div>
+                                 <p>date</p>
+                                 <p>{formatDate(car.date)}</p> 
                              </div>
                              <div className="card-actions justify-end">
                                  <button className="btn btn-primary rounded-3xl">Buy Now</button>
