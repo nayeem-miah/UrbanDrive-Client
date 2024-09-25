@@ -115,6 +115,18 @@ const Cars: React.FC = () => {
                     <option value="501-1000">$501 - $1000</option>
                     <option value="1001-Infinity">Above $1000</option>
                 </select>
+
+
+                <select
+    className="select select-bordered w-full max-w-xs"
+    // value={sortOption}
+    // onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+>
+    <option disabled value="">Sort by</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="date-desc">Date Added: Newest First</option>
+</select>
  
              </div>
     
