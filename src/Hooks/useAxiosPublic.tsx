@@ -1,10 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
+// Create an axios instance
+const axiosPublic = axios.create({
+  baseURL: 'http://localhost:5000'
+});
+
+// Custom Hook to return the axios instance
 const useAxiosPublic = () => {
-    const axiosPublic = axios.create({
-      baseURL: "http://localhost:5000",
-    });
-    return axiosPublic;
+  return axiosPublic;
 };
 
 export default useAxiosPublic;

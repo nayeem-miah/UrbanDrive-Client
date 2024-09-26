@@ -9,6 +9,7 @@ import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
 import CarList from "../Pages/CarList/CarList";
 import CarDetails from "../Pages/CarDetails/CarDetails";
+import Cars from "../Components/Cars";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
           path: '/car/:id',
           element: <CarDetails></CarDetails>,
           loader : ({params}) => fetch(`http://localhost:8000/cars/${params.id}`)
+        },
+        {
+          path:'/cars',
+          element:<Cars></Cars>
+
         }
       ]
 
