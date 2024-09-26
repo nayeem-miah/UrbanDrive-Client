@@ -17,7 +17,7 @@ const Cars: React.FC = () => {
     const [sortOption,setSortOption]=useState('');
     const [totalCars,setTotalCars] = useState(0);
     const [seatCount, setSeatCount] = useState<number | null>(null);
-    const [loading,setLoading] =useState(false);
+   
     
     
     interface Car {
