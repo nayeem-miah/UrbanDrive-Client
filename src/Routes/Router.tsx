@@ -3,8 +3,10 @@ import Main from "../Layouts/Main";
 import Home from "../Pages/Home/Home";
 import LoginPage from "../Pages/Login/Login";
 import AboutUs from "../Pages/About/About";
-import Registration from "../Pages/Registration/Registration";
+
 import ErrorPage from "../Pages/ErrorPage";
+import Registration from "../Pages/Login/Registration/Registration";
+import Contact from "../Pages/Contact/Contact";
 import Cars from "../Components/Cars";
 
 const router = createBrowserRouter([
@@ -23,8 +25,12 @@ const router = createBrowserRouter([
             element : <AboutUs></AboutUs>
         },
         {
-          path: "/cars", // You missed adding this path
-          element: <Cars />
+          path : '/contact',
+          element: <Contact></Contact>
+        },
+        {
+          path : '/cars',
+          element: <Cars></Cars>
         }
       ]
 
