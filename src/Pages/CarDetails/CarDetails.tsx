@@ -110,7 +110,7 @@ const CarDetails: React.FC = () => {
       {/* Car Details */}
       <section className="bg-white text-gray-800">
   <div className="max-w-5xl mx-auto p-4">
-    <div className="flex justify-between items-start gap-20">
+    <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-20">
       <div className="flex-1">
         <h1 className="text-3xl font-bold mb-2 font-merri text-gray-800">
           {car.make} <span className="text-gray-600">{"(" + car.category + ")"}</span>
@@ -163,7 +163,7 @@ const CarDetails: React.FC = () => {
           <p className="text-gray-600">Family road trip or backcountry adventure? Experience it in a Subaru rental. Rev up your taste for adventure and make your mark regardless of the weather conditions. Flexible configurations, seamless connectivity, award-winning safety, and comfortable handling are just the beginning. Rent one for an extended test drive, and see why Turo guests can’t get enough of all that Subaru love.</p>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 mx-2">
           <h2 className="text-xl font-bold mb-2 text-gray-800">Features</h2>
           <p className="text-gray-600">
             {car.features.map((feature, index) => (
