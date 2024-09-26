@@ -113,7 +113,7 @@ const LoginPage: React.FC = () => {
                 Forgot password
               </span>
             </div>
-            <button className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium">
+            <button className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium ">
               Sign in
             </button>
           </form>

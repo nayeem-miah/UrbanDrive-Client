@@ -1,5 +1,5 @@
 import React from "react";
-import bgimg from "../../../assets/pexels-bertellifotografia-799443.jpg";
+import bgimg from "../../../assets/ladingpage.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
@@ -58,9 +58,9 @@ const Registration: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="relative flex flex-col m-6 space-y-8 shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+      <div className="relative flex gap-9 flex-col justify-center items-center m-6 space-y-8 bg-slate-50 shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
-          <span className="mb-3 text-4xl font-bold text-white font-Playfair">
+          <span className="mb-3 text-4xl font-bold text-black text-center font-poppins">
             Create Account
           </span>
           <span className="text-gray-400 mb-8 font-Open font-bold">
@@ -68,10 +68,12 @@ const Registration: React.FC = () => {
           </span>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="py-4">
-              <span className="mb-2 text-md text-gray-300">Full Name</span>
+              <span className="mb-2 text-[14px] text-md text-black font-medium ml-1">
+                Full Name
+              </span>
               <input
                 type="text"
-                className="w-full p-2 bg-gray-700 border border-teal-500 rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("name", { required: true })}
                 placeholder="Full Name"
               />
@@ -82,10 +84,12 @@ const Registration: React.FC = () => {
               )}
             </div>
             <div className="py-4">
-              <span className="mb-2 text-md text-gray-300">Email</span>
+              <span className="text-[14px] text-md text-black font-medium ml-1">
+                Email
+              </span>
               <input
                 type="email"
-                className="w-full p-2 bg-gray-700 border border-teal-500 rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Your email"
                 {...register("email", { required: true })}
               />
@@ -101,7 +105,7 @@ const Registration: React.FC = () => {
                 <select
                   defaultValue=""
                   {...register("role", { required: true })}
-                  className="select select-bordered w-full bg-gray-700 rounded-md border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option className="text-white" disabled value="">
                     Select a role
@@ -121,7 +125,7 @@ const Registration: React.FC = () => {
               <input
                 type="password"
                 placeholder="password"
-                className="w-full p-2 bg-gray-700 border border-teal-500 rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", {
                   required: true,
                   minLength: 6,
@@ -150,37 +154,14 @@ const Registration: React.FC = () => {
                     </p>
                   )} */}
             </div>
-            {/* <div className="py-4">
-              <span className="mb-2 text-md text-gray-300">Password</span>
-              <input
-                type="password"
-                id="password"
-                className="w-full p-2 bg-gray-700 border border-teal-500 rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Create a password"
-              />
-
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
-              {errors.password && (
-                <span className="text-red-500 mt-2">
-                  {errors.password.message}
-                </span>
-              )}
-            </div> */}
             <div className="py-4">
-              <span className="mb-2 text-md text-gray-300">
+              <span className=" text-[14px] text-md text-black font-medium ml-1">
                 Confirm Password
               </span>
               <input
                 type="password"
                 id="confirmPassword"
-                className="w-full p-2 bg-gray-700 border border-teal-500 rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Confirm password"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("confirmPassword", {
                   required: "Please confirm your password",
                   validate: (value) =>
@@ -193,24 +174,24 @@ const Registration: React.FC = () => {
                 </span>
               )}
             </div>
-            <div className="flex justify-start w-full py-4 text-gray-300">
+            <div className="flex justify-start w-full py-4 text-gray-500">
               <input type="checkbox" id="terms" className="mr-2" />
-              <span className="text-sm">
+              <span className="text-sm font-medium">
                 I agree to the Terms and Conditions
               </span>
             </div>
             <input
               type="submit"
               value="Sign Up"
-              className="w-full bg-gradient-to-r from-teal-500 to-teal-700 text-white p-2 rounded-lg mb-6 hover:bg-teal-500 hover:from-teal-500 hover:to-teal-500"
+              className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium cursor-pointer"
             />
           </form>
-          <button className="w-full border border-teal-500 text-teal-500 text-md p-2 rounded-lg mb-6 hover:bg-teal-500 hover:text-white">
+          <button className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white">
             Sign up with Google
           </button>
           <div className="text-center text-gray-400">
             Already have an account?{" "}
-            <span className="font-bold text-teal-500 hover:text-teal-300 cursor-pointer">
+            <span className="font-bold text-primary hover:text-second cursor-pointer">
               <Link to="/login">Login</Link>
             </span>
           </div>
@@ -220,14 +201,14 @@ const Registration: React.FC = () => {
           <img
             src={bgimg}
             alt="cool image"
-            className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
+            className="w-[600px] hidden rounded-r-2xl md:block"
           />
 
-          <div className="absolute hidden bottom-10 right-6 p-6 bg-gray-800 bg-opacity-30 backdrop-blur-sm rounded drop-shadow-lg md:block">
+          {/* <div className="absolute hidden bottom-10 right-6 p-6 bg-gray-800 bg-opacity-30 backdrop-blur-sm rounded drop-shadow-lg md:block">
             <span className="text-white text-xl">
               Join us for your next adventure
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
