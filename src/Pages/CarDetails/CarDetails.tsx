@@ -85,34 +85,37 @@ const CarDetails: React.FC = () => {
   return (
     <div>
       <section>
-        <div
-          className="bg-cover bg-center h-[60vh] flex items-center justify-center relative overflow-hidden"
-          style={{
-            backgroundImage: `url(${car.image ? car.image : slide1})`,
-            backgroundPositionY: `${scrollY * 0.5}px`
-          }}
-        >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="text-center z-10 flex flex-col px-4">
-            <p className="text-white text-sm sm:text-lg font-Merri font-bold">
-              Discover the perfect car for you
-            </p>
-            <h1 className="text-3xl mt-2 sm:mt-4 sm:text-4xl md:text-6xl font-bold text-white font-Playfair">
-              Rent a <span className="text-teal-400">{car.make}</span>
-            </h1>
-          </div>
-        </div>
-      </section>
+  <div
+    className="bg-cover bg-center h-[60vh] flex items-center justify-center relative overflow-hidden"
+    style={{
+      backgroundImage: `url(${slide1})`,
+      backgroundPositionY: `${scrollY * 0.5}px`,
+      willChange: "transform"
+    }}
+  >
+    <div className="absolute inset-0 bg-gradient-to-b from-gray-800 via-transparent to-gray-900 opacity-80"></div>
+    <div className="text-center z-10 flex flex-col px-4">
+      <p className="text-white text-sm sm:text-lg font-bold">
+        Discover the perfect car for you
+      </p>
+      <h1 className="text-3xl mt-2 sm:mt-4 sm:text-4xl md:text-6xl font-bold text-white">
+        Rent a <span className="text-teal-400">{car.make}</span>
+      </h1>
+      
+    </div>
+  </div>
+</section>
+
 
       {/* Car Details */}
       <section className="bg-white text-gray-800">
   <div className="max-w-5xl mx-auto p-4">
     <div className="flex justify-between items-start gap-20">
       <div className="flex-1">
-        <h1 className="text-3xl font-bold mb-2 text-gray-800">
+        <h1 className="text-3xl font-bold mb-2 font-merri text-gray-800">
           {car.make} <span className="text-gray-600">{"(" + car.category + ")"}</span>
         </h1>
-        <p className="text-gray-600 mb-4">{car.model}</p>
+        <p className="text-gray-600 mb-4 font-lato">{car.model}</p>
         <div className="flex items-center mb-4">
           <span className="text-xl font-bold text-indigo-600 mr-2">{car.rating}</span>
           <FaStar className="w-5 h-5 fill-indigo-600" />
@@ -173,7 +176,7 @@ const CarDetails: React.FC = () => {
       </div>
 
       <div className="flex-1">
-        <span className="text-3xl font-bold text-indigo-600 text-center">${car.rental_price_per_day}/day</span>
+        <span className="text-3xl font-bold  text-indigo-600 text-center">${car.rental_price_per_day}/day</span>
         <p className="text-sm text-gray-600">Price before taxes</p>
 
         <div className="mx-auto bg-gray-100 p-6 rounded-lg shadow-lg text-gray-800">
@@ -205,8 +208,12 @@ const CarDetails: React.FC = () => {
             <p className="text-sm font-semibold mb-1">Pickup & return location</p>
             <select value={location} onChange={(e) => setLocation(e.target.value)} className="w-full border border-gray-300 p-2 rounded bg-gray-200 text-gray-800">
               <option value="">Select location</option>
-              <option value="uttora">Uttora</option>
-              <option value="dhaka">Dhaka</option>
+              <option value="uttara">Uttara</option>
+              <option value="Gazipur">Dhaka</option>
+              <option value="Gulshan">Gulshan</option>
+              <option value="Badda">Badda</option>
+              <option value="Khilkhet">Khilkhet</option>
+              <option value="Airport">Airport</option>
             </select>
           </div>
 
