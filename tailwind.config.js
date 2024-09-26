@@ -10,11 +10,15 @@ export default {
         poppins: ["Poppins", "sans-serif"], // Poppins font
         lato: ["Lato", "sans-serif"],
       },
+      colors: {
+        primary: "#593cfb",
+        second: "#6463eb",
+      },
     },
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["black"],
+    themes: ["light"],
   },
 };
 
