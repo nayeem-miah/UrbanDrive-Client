@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
     )
     return (
         <div>
-            <div className=" bg-gray-900 mt-8">
+            <div className=" bg-second mt-8">
                 <div className="container px-6 py-12 mx-auto">
                     <div className="md:flex md:-mx-3 md:items-center md:justify-between">
                         <h1 className="text-xl font-semibold tracking-tight  md:mx-3 xl:text-2xl ">
