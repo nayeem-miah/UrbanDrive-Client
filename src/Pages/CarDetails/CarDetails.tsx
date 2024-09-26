@@ -6,36 +6,13 @@ import slide1 from '../../assets/slides/slide1.jpg';
 import { FaGasPump, FaStar } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { addDays, differenceInDays, format } from 'date-fns';
-import { DateRange } from 'react-date-range';
+import { DateRange, RangeKeyDict } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
-
 import { motion } from 'framer-motion';
-import { Rating } from '@smastrom/react-rating';
+import { ICar, RatingData } from '../../Types/car';
 
 
-interface ICar {
-    id: number;
-    make: string;
-    model: string;
-    year: number;
-    price: number;
-    image: string;
-    description: string;
-    features: string[];
-    category: string;
-    rental_price_per_day: number;
-    rental_duration: number;
-    availability: boolean;
-    total_price: number;
-    membership: string;
-    rating: number;
-    review: string;
-}
-interface RatingData {
-  label: string;
-  value: number;
-}
 
 
 const CarDetails: React.FC = () => {
@@ -57,6 +34,7 @@ const CarDetails: React.FC = () => {
       key: 'selection'
     }
   ]);
+  
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false); 
   const [totalCost, setTotalCost] = useState(0);
@@ -67,16 +45,24 @@ const CarDetails: React.FC = () => {
     return days * car.rental_price_per_day;
   };
 
-  const handleSelect = (ranges) => {
-    setDateRange([ranges.selection]);
-    const newTotalCost = calculateTotalCost(ranges.selection.startDate, ranges.selection.endDate);
-    setTotalCost(newTotalCost);
+  const handleSelect = (ranges: RangeKeyDict) => {
+    const selection = ranges.selection;
+    if (selection.startDate && selection.endDate) {
+      setDateRange([{
+        startDate: selection.startDate,
+        endDate: selection.endDate,
+        key: 'selection'
+      }]);
+      const newTotalCost = calculateTotalCost(selection.startDate, selection.endDate);
+      setTotalCost(newTotalCost);
+    }
   };
 
   useEffect(() => {
     
     const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(initialTotalCost);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
