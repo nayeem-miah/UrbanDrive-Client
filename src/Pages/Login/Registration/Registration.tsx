@@ -11,7 +11,6 @@ type Inputs = {
   password: string;
   confirmPassword: string;
   email: string;
-  // agreeToTerms: boolean;
   role: string;
 };
 
