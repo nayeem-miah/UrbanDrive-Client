@@ -7,7 +7,7 @@ const FaqSection: React.FC = () => {
           <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
         </h2>
       </div>
-      <div className="lg:flex w-full gap-4 mx-auto ">
+      <div className="lg:flex w-full gap-4 mx-auto font-poppins">
         <div className="w-full">
           <div className="collapse collapse-arrow ">
             <input type="radio" name="my-accordion-2" defaultChecked />
