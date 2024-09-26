@@ -101,10 +101,10 @@ const Cars: React.FC = () => {
       console.log(totalCars)
 
     return (
-        <div className='mt-10 pt-4 md:mt-24 md:p-5 lg:mt-28 lg:pt-8'>
+        <div className='mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8'>
             {/* Filters */}
-            <div className='grid grid-cols-2 md:grid-cols-6 lg:grid-cols-7 gap-4 lg:gap-6'>
-            <select className="select w-full  rounded-2xl p-3 h-12"
+            <div className='grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6'>
+            <select className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
              value={category} // Set the current selected value
              onChange={handleCategoryChange} // Handle change
              >
@@ -119,7 +119,7 @@ const Cars: React.FC = () => {
 
          
 
-     <select className="select w-full  rounded-2xl p-3 h-12"
+     <select className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
      value={seatCount ?? ""}
      onChange={handleSeatCountChange} 
      >
@@ -133,7 +133,7 @@ const Cars: React.FC = () => {
     
 
            <select
-                    className="select w-full  rounded-2xl p-3 h-12"
+                    className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
                     value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` :""}
                     onChange={handlePriceRangeChange}
                 >
@@ -148,7 +148,7 @@ const Cars: React.FC = () => {
 
 
                 <select
-    className="select w-full  rounded-2xl p-3 h-12"
+    className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
     value={sortOption}
     onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
 >
@@ -189,7 +189,7 @@ const Cars: React.FC = () => {
                                         )}
                                         <p className='flex gap-1'><FaMapLocationDot className='mt-1' />{car.make}</p>
                                         {car.discount > 0 ? (
-                                            <span className="flex gap-1 text-[#469761] ">
+                                            <span className="flex gap-1 text-[#0f923b] ">
                                                 <MdOutlineDiscount className='mt-1' /> Discount: {car.discount}%
                                             </span>
                                         ) : (
