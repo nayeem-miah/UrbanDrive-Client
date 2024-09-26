@@ -57,8 +57,8 @@ const Registration: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen max-w-6xl bg-gray-900">
-      <div className="relative flex flex-col m-6 space-y-8 bg-gray-800 shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="relative flex flex-col m-6 space-y-8 shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
           <span className="mb-3 text-4xl font-bold text-white font-Playfair">
             Create Account
@@ -194,11 +194,7 @@ const Registration: React.FC = () => {
               )}
             </div>
             <div className="flex justify-start w-full py-4 text-gray-300">
-              <input
-                type="checkbox"
-                id="terms"
-                className="mr-2"
-              />
+              <input type="checkbox" id="terms" className="mr-2" />
               <span className="text-sm">
                 I agree to the Terms and Conditions
               </span>
