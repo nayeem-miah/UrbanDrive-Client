@@ -8,9 +8,9 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 interface CheckoutFormProps {
-    price: number;
+    price: number
 }
-
+;
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
     const stripe = useStripe();
@@ -19,6 +19,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
     const { user } = useAuth();
     const [clientSecret, setClientSecret] = useState<string>("");
     const [cardError, setCardError] = useState<string>("");
+    const [cardSuccess, setCardSuccess] = useState<string>("");
     const [processing, setProcessing] = useState<boolean>(false);
 
     useEffect(() => {
@@ -90,7 +91,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
                 date: new Date(),
             };
-            console.log(paymentInfo.transactionId);
+            setCardSuccess(paymentInfo.transactionId)
+
             toast.success(`${user?.email} payment successful`);
 
             try {
@@ -121,7 +123,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
                 }}
             />
             <button
-                className="btn bg-blue-600 px-10 lg:w-[500px] md:w-[400px] w-[160px]"
+                className="btn bg-primary px-10 lg:w-[500px] md:w-[400px] w-[160px]"
                 type="submit"
                 disabled={!stripe || !clientSecret || processing}
             >
@@ -131,7 +133,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
                     `Pay $ (${price})`
                 )}
             </button>
-            {cardError && <p className="text-red-600 ml-10">{cardError}</p>}
+            {
+                cardSuccess && <p className="text-green-600  lg:text-xl text-xs">
+                    your transactionId is : <span className="text-green-700">{cardSuccess}</span></p>
+            }
+            {cardError && <p className="text-red-600 lg:text-xl text-xs">{cardError}</p>}
         </form>
     );
 };

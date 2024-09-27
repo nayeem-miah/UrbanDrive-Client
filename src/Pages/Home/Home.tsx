@@ -17,6 +17,7 @@ const Home: React.FC = () => {
       <Reviews></Reviews>
       <FaqSection />
 
+
     </div>
   );
 }

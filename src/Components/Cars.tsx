@@ -182,7 +182,9 @@ const Cars: React.FC = () => {
         </div>
       ) : (
         <div className="ml-1 lg:ml-2">
-          <p className="text-2xl  mt-4 lg:mt-8">{totalCars} + cars available</p>
+          <p className="text-2xl font-bold  mt-4 lg:mt-8">
+            {totalCars} + cars available
+          </p>
           {Array.isArray(cardata) && cardata.length > 0 ? (
             <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
               {cardata.map((car: Car) => (
@@ -193,7 +195,7 @@ const Cars: React.FC = () => {
                   >
                     <figure className="w-full lg:w-[50%]">
                       <img
-                        className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
                         src={car.image}
                         alt={car.name}
                       />
@@ -205,8 +207,9 @@ const Cars: React.FC = () => {
                         <p className="flex gap-1">
                           {car.rating}
                           <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
-                          {car.trip_count} trips) <FaAward className="mt-1" />{" "}
-                          All-Star-Host
+                          {car.trip_count} trips){" "}
+                          <FaAward className="mt-1 text-primary font-bold" />{" "}
+                          <span className="font-bold">All-Star-Host</span>
                         </p>
                       ) : (
                         <p>New listing</p>
@@ -225,7 +228,9 @@ const Cars: React.FC = () => {
                       )}
 
                       <div className="card-actions justify-end">
-                        <span>${car.price}/day</span>
+                        <span className="text-primary font-bold text-xl">
+                          ${car.price}/day
+                        </span>
                       </div>
                     </div>
                   </div>
