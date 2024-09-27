@@ -8,7 +8,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 interface CheckoutFormProps {
-    price: number
+    price: number,
 }
 ;
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
@@ -59,7 +59,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
         if (error) {
             console.error("[error]", error);
-            setCardError(error.message);
+            setCardError(error?.message);
             setProcessing(false);
             return;
         } else {
@@ -78,7 +78,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
         if (confirmError) {
             console.error(confirmError);
-            setCardError(confirmError.message);
+            setCardError(confirmError?.message);
             setProcessing(false);
             return;
         }
