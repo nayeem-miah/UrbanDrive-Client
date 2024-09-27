@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
@@ -17,8 +17,7 @@ import { ICar, RatingData } from '../../Types/car';
 
 
 const CarDetails: React.FC = () => {
-  
-
+  const navigate = useNavigate();
 
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
@@ -36,14 +35,14 @@ const CarDetails: React.FC = () => {
       key: 'selection'
     }
   ]);
-  
+
   const [location, setLocation] = useState('Current Location');
-  const [showCalendar, setShowCalendar] = useState(false); 
+  const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
- 
+
 
   const calculateTotalCost = (start: Date, end: Date) => {
-    const days = differenceInDays(end, start) + 1; 
+    const days = differenceInDays(end, start) + 1;
     return days * car.rental_price_per_day;
   };
 
@@ -61,10 +60,10 @@ const CarDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    
+
     const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(initialTotalCost);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -81,7 +80,11 @@ const CarDetails: React.FC = () => {
   const car = useLoaderData() as ICar;
 
   if (!car) return <div>Loading...</div>;
-
+  const handlePrice = () => {
+    const price = totalCost;
+   
+    navigate(`/payment/${price}`);
+  };
   return (
     <div>
       <section>
