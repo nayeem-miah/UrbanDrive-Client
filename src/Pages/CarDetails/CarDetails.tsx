@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
@@ -16,7 +16,7 @@ import { ICar, RatingData } from '../../Types/car';
 
 
 const CarDetails: React.FC = () => {
-  
+  const navigate = useNavigate();
 
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
@@ -34,14 +34,14 @@ const CarDetails: React.FC = () => {
       key: 'selection'
     }
   ]);
-  
+
   const [location, setLocation] = useState('Current Location');
-  const [showCalendar, setShowCalendar] = useState(false); 
+  const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
- 
+
 
   const calculateTotalCost = (start: Date, end: Date) => {
-    const days = differenceInDays(end, start) + 1; 
+    const days = differenceInDays(end, start) + 1;
     return days * car.rental_price_per_day;
   };
 
@@ -59,10 +59,10 @@ const CarDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    
+
     const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(initialTotalCost);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -79,7 +79,11 @@ const CarDetails: React.FC = () => {
   const car = useLoaderData() as ICar;
 
   if (!car) return <div>Loading...</div>;
-
+  const handlePrice = () => {
+    const price = totalCost;
+   
+    navigate(`/payment/${price}`);
+  };
   return (
     <div>
       <section>
@@ -108,7 +112,7 @@ const CarDetails: React.FC = () => {
         <div className="container mx-auto p-4">
           <div className="flex justify-between items-start gap-20">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-2 text-white">{car.make} <span className='text-gray-500'>{"(" + car.category + ")"}</span></h1> 
+              <h1 className="text-3xl font-bold mb-2 text-white">{car.make} <span className='text-gray-500'>{"(" + car.category + ")"}</span></h1>
               <p className="text-gray-400 mb-4">{car.model}</p>
               <div className="flex items-center mb-4">
                 <span className="text-xl font-bold text-teal-500 mr-2">{car.rating}</span>
@@ -117,16 +121,16 @@ const CarDetails: React.FC = () => {
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4 text-gray-300">
                 <div className="flex items-center">
-                <FaGasPump className='w-5 h-5 mr-2'  /> <span>22 MPG</span>
+                  <FaGasPump className='w-5 h-5 mr-2' /> <span>22 MPG</span>
                 </div>
                 <div className="flex items-center">
-                <MdElectricCar className='w-5 h-5 mr-2' /><span>Gas (Premium)</span>
+                  <MdElectricCar className='w-5 h-5 mr-2' /><span>Gas (Premium)</span>
                 </div>
                 <div className="flex items-center">
-                <GiCarDoor className='w-5 h-5 mr-2' /><span>4 Doors</span>
+                  <GiCarDoor className='w-5 h-5 mr-2' /><span>4 Doors</span>
                 </div>
                 <div className="flex items-center">
-                <GiCarSeat className='w-5 h-5 mr-2' /><span>5 Seats</span>
+                  <GiCarSeat className='w-5 h-5 mr-2' /><span>5 Seats</span>
                 </div>
               </div>
               <h1 className="text-2xl font-bold mb-4 text-white text-center"> Hosted By</h1>
@@ -172,35 +176,35 @@ const CarDetails: React.FC = () => {
               </div>
 
               <div>
-              <div className="p-6 bg-[#18181B] rounded-lg shadow-md">
-      <div className="text-2xl font-bold mb-4">Ratings and Reviews</div>
-      <div className="text-5xl text-purple-600 font-bold">5.0</div>
-      <div className="text-gray-500 mb-6">(94 ratings)</div>
+                <div className="p-6 bg-[#18181B] rounded-lg shadow-md">
+                  <div className="text-2xl font-bold mb-4">Ratings and Reviews</div>
+                  <div className="text-5xl text-purple-600 font-bold">5.0</div>
+                  <div className="text-gray-500 mb-6">(94 ratings)</div>
 
-      {ratingsData.map((rating, index) => (
-        <div key={index} className="mb-4">
-          <div className="flex justify-between mb-2">
-            <span>{rating.label}</span>
-            <span>{rating.value}</span>
-          </div>
-          <motion.div
-            className="h-2 bg-gray-200 rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${(rating.value / 5) * 100}%` }}
-            transition={{ duration: 1.5 }}
-          >
-            <div className="h-full bg-purple-600 rounded-full"></div>
-          </motion.div>
-        </div>
-      ))}
+                  {ratingsData.map((rating, index) => (
+                    <div key={index} className="mb-4">
+                      <div className="flex justify-between mb-2">
+                        <span>{rating.label}</span>
+                        <span>{rating.value}</span>
+                      </div>
+                      <motion.div
+                        className="h-2 bg-gray-200 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(rating.value / 5) * 100}%` }}
+                        transition={{ duration: 1.5 }}
+                      >
+                        <div className="h-full bg-purple-600 rounded-full"></div>
+                      </motion.div>
+                    </div>
+                  ))}
 
-      <div className="mt-6">
-        <div className="font-semibold">Reviews</div>
-        <div className="mt-4 space-y-4">
-          
-        </div>
-      </div>
-    </div>
+                  <div className="mt-6">
+                    <div className="font-semibold">Reviews</div>
+                    <div className="mt-4 space-y-4">
+
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -210,9 +214,9 @@ const CarDetails: React.FC = () => {
               {/* Reservation Section */}
               <div className=" mx-auto bg-gray-800 p-6 rounded-lg shadow-md text-white">
                 <div className="mb-4">
-  <span className="text-2xl font-bold">${totalCost}</span>
-  <p className="text-sm text-gray-400">Total for {differenceInDays(dateRange[0].endDate, dateRange[0].startDate) + 1} days</p>
-</div>
+                  <span className="text-2xl font-bold">${totalCost}</span>
+                  <p className="text-sm text-gray-400">Total for {differenceInDays(dateRange[0].endDate, dateRange[0].startDate) + 1} days</p>
+                </div>
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold mb-1">Trip dates</p>
@@ -223,21 +227,21 @@ const CarDetails: React.FC = () => {
                     <span>
                       {format(dateRange[0].startDate, 'MM/dd/yyyy')} - {format(dateRange[0].endDate, 'MM/dd/yyyy')}
                     </span>
-                    
+
                   </div>
                 </div>
 
                 {showCalendar && (
-          <DateRange
-            editableDateInputs={true}
-            onChange={handleSelect}
-            moveRangeOnFirstSelection={false}
-            ranges={dateRange}
-            className="mb-4"
-            rangeColors={['#4F46E5']}
-            color="#4F46E5"
-          />
-        )}
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={handleSelect}
+                    moveRangeOnFirstSelection={false}
+                    ranges={dateRange}
+                    className="mb-4"
+                    rangeColors={['#4F46E5']}
+                    color="#4F46E5"
+                  />
+                )}
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold mb-1">Pickup & return location</p>
@@ -250,7 +254,7 @@ const CarDetails: React.FC = () => {
                   </select>
                 </div>
 
-                <button className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">
+                <button onClick={handlePrice} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">
                   Continue
                 </button>
 
