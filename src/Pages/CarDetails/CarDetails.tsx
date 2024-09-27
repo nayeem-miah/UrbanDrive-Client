@@ -16,7 +16,7 @@ import { ICar, RatingData } from '../../Types/car';
 
 
 const CarDetails: React.FC = () => {
-  
+
 
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
@@ -34,14 +34,14 @@ const CarDetails: React.FC = () => {
       key: 'selection'
     }
   ]);
-  
+
   const [location, setLocation] = useState('Current Location');
-  const [showCalendar, setShowCalendar] = useState(false); 
+  const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
- 
+
 
   const calculateTotalCost = (start: Date, end: Date) => {
-    const days = differenceInDays(end, start) + 1; 
+    const days = differenceInDays(end, start) + 1;
     return days * car.rental_price_per_day;
   };
 
@@ -59,7 +59,7 @@ const CarDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    
+
     const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(initialTotalCost);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +108,7 @@ const CarDetails: React.FC = () => {
         <div className="container mx-auto p-4">
           <div className="flex justify-between items-start gap-20">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-2 text-white">{car.make} <span className='text-gray-500'>{"(" + car.category + ")"}</span></h1> 
+              <h1 className="text-3xl font-bold mb-2 text-white">{car.make} <span className='text-gray-500'>{"(" + car.category + ")"}</span></h1>
               <p className="text-gray-400 mb-4">{car.model}</p>
               <div className="flex items-center mb-4">
                 <span className="text-xl font-bold text-teal-500 mr-2">{car.rating}</span>
@@ -197,7 +197,7 @@ const CarDetails: React.FC = () => {
       <div className="mt-6">
         <div className="font-semibold">Reviews</div>
         <div className="mt-4 space-y-4">
-          
+
         </div>
       </div>
     </div>
@@ -223,7 +223,7 @@ const CarDetails: React.FC = () => {
                     <span>
                       {format(dateRange[0].startDate, 'MM/dd/yyyy')} - {format(dateRange[0].endDate, 'MM/dd/yyyy')}
                     </span>
-                    
+
                   </div>
                 </div>
 

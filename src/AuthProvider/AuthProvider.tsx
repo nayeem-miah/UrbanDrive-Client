@@ -15,7 +15,7 @@ import {
   useState,
   FC,
 } from "react";
-import useAxiosPublic from "../Hooks/useAxoisPublic";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 import {auth} from '../Firebase/FireBase.config'
 
 // Define the shape of the context
@@ -52,7 +52,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic()
 
 
   // sign up

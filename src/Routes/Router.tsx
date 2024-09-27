@@ -7,8 +7,9 @@ import AboutUs from "../Pages/About/About";
 import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
-import CarList from "../Pages/CarList/CarList";
+// import CarList from "../Pages/CarList/CarList";
 import CarDetails from "../Pages/CarDetails/CarDetails";
+import Cars from "../Components/Cars";
 
 const router = createBrowserRouter([
     {
@@ -28,15 +29,20 @@ const router = createBrowserRouter([
           path : '/contact',
           element: <Contact></Contact>
         },
+        // {
+        //   path : '/services',
+        //   element: <Cars></Cars>
+
+        // },
         {
-          path : '/services',
-          element: <CarList></CarList>
-          
+          path: '/cars/:id',
+          element: <CarDetails></CarDetails>,
+          loader : ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
         },
         {
-          path: '/car/:id',
-          element: <CarDetails></CarDetails>,
-          loader : ({params}) => fetch(`http://localhost:8000/cars/${params.id}`)
+          path:'/cars',
+          element:<Cars></Cars>
+
         }
       ]
 
