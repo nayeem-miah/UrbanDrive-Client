@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import useAuth from '../Hooks/useAuth';
 import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, logOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,11 +41,9 @@ const Navbar: React.FC = () => {
         <ul className="menu menu-horizontal px-1 font-Merri">
           {navLinks.map((link) => (
             <li key={link.id}>
-              <Link
-                to={`/${link.id}`}
-                className={`text-lg font-medium ${
-                  isScrolled ? "text-white" : "text-white"
-                } hover:text-gray-300`}
+              <Link 
+                to={`/${link.id}`} 
+                className={`text-lg font-medium ${isScrolled ? 'text-gray-600' : 'text-white'} hover:text-gray-300`}
               >
                 {link.title}
               </Link>
@@ -56,14 +55,12 @@ const Navbar: React.FC = () => {
       <div className="navbar-end">
         {/* Desktop  */}
         <div className="hidden lg:block">
-          {isLoggedIn ? (
+          {user ? (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <Link to='/'>
-                  <div className="w-10 rounded-full">
-                    <img src="/placeholder-avatar.jpg" alt="User Avatar" />
-                  </div>
-                </Link>
+                <div className="w-10 rounded-full border-2 border-white">
+                  <img src={user.photoURL || "/placeholder-avatar.jpg"} alt="User Avatar" />
+                </div>
               </label>
               <ul
                 tabIndex={0}
@@ -75,21 +72,15 @@ const Navbar: React.FC = () => {
                     <span className="badge">New</span>
                   </Link>
                 </li>
-                <li>
-                  <a onClick={() => setIsLoggedIn(false)}>Logout</a>
-                </li>
+                <li><a onClick={logOut}>Logout</a></li>
               </ul>
             </div>
           ) : (
-            <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500  
-       to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400  
-       dark:focus:ring-yellow-800"
-            >
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">
+            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500 to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white">
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">  
                 <Link to="/login">Login</Link>
               </span>
-            </button>
+            </button> 
           )}
         </div>
 
@@ -133,9 +124,9 @@ const Navbar: React.FC = () => {
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <Link
-                to={`/${link.id}`}
-                className="text-4xl font-bold text-white hover:text-gray-600 transition-colors duration-300"
+              <Link 
+                to={`/${link.id}`} 
+                className="text-4xl font-bold text-black hover:text-gray-600 transition-colors duration-300"
                 onClick={() => setToggle(false)}
               >
                 {link.title}
@@ -144,7 +135,7 @@ const Navbar: React.FC = () => {
           ))}
 
           {/* Mobile User Actions */}
-          {isLoggedIn && (
+          {user ? (
             <>
               <li
                 className={`transform transition-all duration-300 ${
@@ -172,7 +163,7 @@ const Navbar: React.FC = () => {
               >
                 <button
                   onClick={() => {
-                    setIsLoggedIn(false);
+                    logOut();
                     setToggle(false);
                   }}
                   className="text-4xl font-bold text-red-500 hover:text-red-600 transition-colors duration-300"
@@ -181,9 +172,8 @@ const Navbar: React.FC = () => {
                 </button>
               </li>
             </>
-          )}
-          {!isLoggedIn && (
-            <li
+          ) : (
+            <li 
               className={`transform transition-all duration-300 ${
                 toggle
                   ? "translate-y-0 opacity-100"
@@ -191,15 +181,13 @@ const Navbar: React.FC = () => {
               }`}
               style={{ transitionDelay: `${navLinks.length * 100}ms` }}
             >
-              <button
-                onClick={() => {
-                  setIsLoggedIn(true);
-                  setToggle(false);
-                }}
-                className="bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium "
+              <Link 
+                to="/login"
+                onClick={() => setToggle(false)}
+                className="text-4xl font-bold text-green-500 hover:text-green-600 transition-colors duration-300"
               >
-                <Link to="/login">Login</Link>
-              </button>
+                Login
+              </Link>
             </li>
           )}
         </ul>
