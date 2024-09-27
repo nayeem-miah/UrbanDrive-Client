@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img1 from '../../assets/ladingpage.png';
 import { useForm, SubmitHandler } from "react-hook-form"
 import useAuth from '../../Hooks/useAuth';
-import useAxiosPublic from '../../Hooks/useAxoisPublic';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 
 
