@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../Hooks/useAuth';
+import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,27 +12,31 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const navLinks = [
-    { id: '', title: 'Home' },
-    { id: 'services', title: 'Services' },
-    { id: 'about', title: 'About' },
-    { id: 'contact', title: 'Contact' },
+    { id: "", title: "Home" },
+    { id: "services", title: "Services" },
+    { id: "about", title: "About" },
+    { id: "contact", title: "Contact" },
   ];
 
   return (
-    <nav className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-base-100 opacity-80 shadow-lg' : 'bg-transparent'}`}>
+    <nav
+      className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-lg" : "bg-transparent"
+      }`}
+    >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <img src='' alt="UrbanDrive" className="h-8" />
+          <img src={logo} alt="UrbanDrive" className="w-[110px] h-14" />
         </Link>
       </div>
-      
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 font-Merri">
           {navLinks.map((link) => (
@@ -57,7 +62,10 @@ const Navbar: React.FC = () => {
                   <img src={user.photoURL || "/placeholder-avatar.jpg"} alt="User Avatar" />
                 </div>
               </label>
-              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
                 <li>
                   <Link to="/update-user" className="justify-between">
                     Update User
@@ -77,28 +85,42 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
           className="lg:hidden z-50 relative w-6 h-6"
           onClick={() => setToggle(!toggle)}
         >
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'rotate-45 top-3' : 'rotate-0 top-1'}`} />
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'opacity-0 translate-x-3' : 'opacity-100'} top-3`} />
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? '-rotate-45 top-3' : 'rotate-0 top-5'}`} />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "rotate-45 top-3" : "rotate-0 top-1"
+            }`}
+          />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "opacity-0 translate-x-3" : "opacity-100"
+            } top-3`}
+          />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "-rotate-45 top-3" : "rotate-0 top-5"
+            }`}
+          />
         </button>
       </div>
 
       {/* Mobile Menu */}
-      <div 
+      <div
         className={`fixed inset-0 bg-base-100 z-40 flex flex-col justify-center items-center transition-all duration-500 lg:hidden ${
-          toggle ? 'opacity-100 visible' : 'opacity-0 invisible'
+          toggle ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
         <ul className="space-y-8 font-Merri">
           {navLinks.map((link, index) => (
-            <li 
+            <li
               key={link.id}
               className={`transform transition-all duration-300 ${
-                toggle ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                toggle
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
@@ -115,27 +137,31 @@ const Navbar: React.FC = () => {
           {/* Mobile User Actions */}
           {user ? (
             <>
-              <li 
+              <li
                 className={`transform transition-all duration-300 ${
-                  toggle ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  toggle
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{ transitionDelay: `${navLinks.length * 100}ms` }}
               >
-                <Link 
-                  to="/update-user" 
+                <Link
+                  to="/update-user"
                   className="text-4xl font-bold text-blue-500 hover:text-blue-600 transition-colors duration-300"
                   onClick={() => setToggle(false)}
                 >
                   Update User
                 </Link>
               </li>
-              <li 
+              <li
                 className={`transform transition-all duration-300 ${
-                  toggle ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  toggle
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{ transitionDelay: `${(navLinks.length + 1) * 100}ms` }}
               >
-                <button 
+                <button
                   onClick={() => {
                     logOut();
                     setToggle(false);
@@ -149,7 +175,9 @@ const Navbar: React.FC = () => {
           ) : (
             <li 
               className={`transform transition-all duration-300 ${
-                toggle ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                toggle
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
               style={{ transitionDelay: `${navLinks.length * 100}ms` }}
             >

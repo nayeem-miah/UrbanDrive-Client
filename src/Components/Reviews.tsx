@@ -33,121 +33,155 @@ const Reviews: React.FC = () => {
   // }, []);
 
   return (
-    <div className='bg-[#111010] mt-10'>
-      <div className="container mx-auto pt-16">
-        <div className='border-l-4 border-amber-600 pb-2'>
-          <div className='ml-2 space-y-1'>
-            <p className='text-[#fff] font-semibold'>Testimonials</p>
-            <h1 className='text-4xl text-amber-600 font-bold'>What Clients Say</h1>
-            <p className='max-w-[600px] text-[#88837a]'>
-              Client reviews drive UrbanDrive to deliver better and more efficient service.
-            </p>
-          </div>
+    <div className="mt-10">
+      <div className="max-w-6xl mx-auto pt-16 px-4">
+        <div className="text-center">
+          <h2 className="text-4xl font-bold relative inline-block mt-20 font-Playfair">
+            What Clients Say
+            <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
+          </h2>
+          <p className="text-[#88837a] mt-1">
+            Client reviews drive UrbanDrive to deliver better and more efficient
+            service.
+          </p>
+          {/* <div className="ml-2 space-y-1">
+            <p className="text-[#fff] font-semibold">Testimonials</p>
+            <h1 className="text-4xl text-amber-600 font-bold"></h1>
+          </div> */}
         </div>
         <div className="pt-4 pb-4">
-          <div className='mt-5'>
-            <Swiper navigation={true} loop={true} modules={[Navigation]} className="mySwiper">
-
-
+          <div className="mt-5">
+            <Swiper
+              navigation={true}
+              loop={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
               <SwiperSlide>
-              <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
-                      <figure className='w-96 mx-auto'>
-                        <img src={Aayman} alt={'Aayman Alfee'} />
-                      </figure>
-                      <div className="card-body">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={5}
-                          readOnly
-                        />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {'Aayman Alfee'}</h2>
-                        <p>
-                          <span className='font-bold text-amber-600'>Clients Say: </span>
-                          <br />
-                          <span className='text-[#88837a]'>{"This is by far the best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"}</span>
-                        </p>
-                      </div>
-                    </div>
+                <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
+                  <figure className="w-96 mx-auto">
+                    <img src={Aayman} alt={"Aayman Alfee"} />
+                  </figure>
+                  <div className="card-body">
+                    <Rating
+                      style={{ maxWidth: 180 }}
+                      value={5}
+                      readOnly
+                    />
+                    <h2 className="card-title text-3xl">
+                      <span className="font-bold">Name:</span>{" "}
+                      {"Aayman Alfee Rahman"}
+                    </h2>
+                    <p>
+                      <span className="font-bold text-primary">
+                        Clients Say:{" "}
+                      </span>
+                      <br />
+                      <span className="text-[#88837a]">
+                        {
+                          "This is by far the best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-              <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
-                      <figure className='w-96 mx-auto'>
-                        <img src={Ruksana} alt={'Roksana Sikder'} />
-                      </figure>
-                      <div className="card-body">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={4}
-                          readOnly
-                        />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {'Roksana Sikder'}</h2>
-                        <p>
-                          <span className='font-bold text-amber-600'>Clients Say: </span>
-                          <br />
-                          <span className='text-[#88837a]'>{"UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"}</span>
-                        </p>
-                      </div>
-                    </div>
+                <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
+                  <figure className="w-96 mx-auto">
+                    <img src={Ruksana} alt={"Roksana Sikder"} />
+                  </figure>
+                  <div className="card-body">
+                    <Rating style={{ maxWidth: 180 }} value={4} readOnly />
+                    <h2 className="card-title text-3xl">
+                      <span className="font-bold">Name:</span>{" "}
+                      {"Roksana Sikder"}
+                    </h2>
+                    <p>
+                      <span className="font-bold text-amber-600">
+                        Clients Say:{" "}
+                      </span>
+                      <br />
+                      <span className="text-[#88837a]">
+                        {
+                          "UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-              <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
-                      <figure className='w-96 mx-auto'>
-                        <img src={Najmul} alt={'Nazmul Hossain'} />
-                      </figure>
-                      <div className="card-body">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={5}
-                          readOnly
-                        />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {'Nazmul Hosan'}</h2>
-                        <p>
-                          <span className='font-bold text-amber-600'>Clients Say: </span>
-                          <br />
-                          <span className='text-[#88837a]'>{"UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"}</span>
-                        </p>
-                      </div>
-                    </div>
+                <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
+                  <figure className="w-96 mx-auto">
+                    <img src={Najmul} alt={"Nazmul Hossain"} />
+                  </figure>
+                  <div className="card-body">
+                    <Rating style={{ maxWidth: 180 }} value={5} readOnly />
+                    <h2 className="card-title text-3xl">
+                      <span className="font-bold">Name:</span> {"Nazmul Hosan"}
+                    </h2>
+                    <p>
+                      <span className="font-bold text-amber-600">
+                        Clients Say:{" "}
+                      </span>
+                      <br />
+                      <span className="text-[#88837a]">
+                        {
+                          "UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-              <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
-                      <figure className='w-96 mx-auto'>
-                        <img src={Nayem} alt={'NA YE EM'} />
-                      </figure>
-                      <div className="card-body">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={5}
-                          readOnly
-                        />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {'NA YE EM'}</h2>
-                        <p>
-                          <span className='font-bold text-amber-600'>Clients Say: </span>
-                          <br />
-                          <span className='text-[#88837a]'>{"UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"}</span>
-                        </p>
-                      </div>
-                    </div>
+                <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
+                  <figure className="w-96 mx-auto">
+                    <img src={Nayem} alt={"NA YE EM"} />
+                  </figure>
+                  <div className="card-body">
+                    <Rating style={{ maxWidth: 180 }} value={5} readOnly />
+                    <h2 className="card-title text-3xl">
+                      <span className="font-bold">Name:</span> {"NA YE EM"}
+                    </h2>
+                    <p>
+                      <span className="font-bold text-amber-600">
+                        Clients Say:{" "}
+                      </span>
+                      <br />
+                      <span className="text-[#88837a]">
+                        {
+                          "UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-              <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
-                      <figure className='w-96 mx-auto'>
-                        <img src={Zihad} alt={'Md Zihad'} />
-                      </figure>
-                      <div className="card-body">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={4}
-                          readOnly
-                        />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {'Zihad Hasan'}</h2>
-                        <p>
-                          <span className='font-bold text-amber-600'>Clients Say: </span>
-                          <br />
-                          <span className='text-[#88837a]'>{"UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"}</span>
-                        </p>
-                      </div>
-                    </div>
+                <div className="card md:card-side bg-base-100 border max-w-[900px] mx-auto">
+                  <figure className="w-96 mx-auto">
+                    <img src={Zihad} alt={"Md Zihad"} />
+                  </figure>
+                  <div className="card-body">
+                    <Rating style={{ maxWidth: 180 }} value={4} readOnly />
+                    <h2 className="card-title text-3xl">
+                      <span className="font-bold">Name:</span> {"Zihad Hasan"}
+                    </h2>
+                    <p>
+                      <span className="font-bold text-amber-600">
+                        Clients Say:{" "}
+                      </span>
+                      <br />
+                      <span className="text-[#88837a]">
+                        {
+                          "UrbanDrive best service I have ever used. The customer support is outstanding, and the product itself is top-notch. I couldn't be happier!"
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
               {/* {
                 reviews.map(review => (
@@ -179,6 +213,6 @@ const Reviews: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Reviews;
