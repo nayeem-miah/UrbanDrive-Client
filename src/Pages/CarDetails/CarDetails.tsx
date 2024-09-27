@@ -11,14 +11,14 @@ import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 import { ICar, RatingData } from '../../Types/car';
-// import useAuth from '../../Hooks/useAuth';
+
 
 
 
 
 const CarDetails: React.FC = () => {
   
-  // const user = useAuth();
+
 
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
