@@ -8,7 +8,7 @@ const stripePromise: Promise<Stripe | null> = loadStripe(import.meta.env.VITE_ST
 
 const PaymentPage: React.FC = () => {
   const { totalPrice } = useParams<{ totalPrice: string  }>();
-  const price = parseFloat(totalPrice);
+  const price = parseFloat(totalPrice ?? "0");
 
   if (isNaN(price)) {
     return <div>Error: Invalid price</div>;

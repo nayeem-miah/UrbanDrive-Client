@@ -11,6 +11,7 @@ import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
+import HostCarListingForm from "../Pages/CarHost/CarHost";
 
 const router = createBrowserRouter([
     {
@@ -30,11 +31,11 @@ const router = createBrowserRouter([
           path : '/contact',
           element: <Contact></Contact>
         },
-        // {
-        //   path : '/services',
-        //   element: <Cars></Cars>
+        {
+          path : '/services',
+          element: <HostCarListingForm></HostCarListingForm>
           
-        // },
+        },
         {
           path: '/cars/:id',
           element: <CarDetails></CarDetails>,
