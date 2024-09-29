@@ -1,12 +1,12 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const steps = [
-  { title: 'Personal Info', description: 'Completed' },
-  { title: 'Education', description: 'Completed' },
-  { title: 'Company', description: 'Pending' },
-  { title: 'Testing', description: 'Pending' },
-  { title: 'Review', description: 'Pending' },
+  { title: 'Basic Car Information', description: 'Completed' },
+  { title: 'Rental Details', description: 'Completed' },
+  { title: 'Location and Pickup Information', description: 'Pending' },
+  { title: 'Host Information', description: 'Pending' },
+  { title: 'Membership and Plan', description: 'Pending' },
+  { title: 'Additional Information', description: 'Pending' },
 ];
 
 const StepIndicator = ({ currentStep }) => {
