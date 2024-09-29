@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BasicCarInfo from '../../Components/steps/BasicCarInfo';
 import StepIndicator from '../../Components/steps/stepIndicator';
+import RentalDetails from '../../Components/steps/RentalDetails';
 
 
 const HostCarListingForm = () => {
@@ -19,10 +20,10 @@ const HostCarListingForm = () => {
   };
 
   const renderStep = () => {
-    const props = { formData, handleInputChange, nextStep, prevStep };
+    const props = { formData, handleInputChange, nextStep, prevStep, onSubmit: () => {} };
     switch (step) {
       case 1: return <BasicCarInfo {...props} />;
-      case 2: return <div>Step 2</div>;
+      case 2: return <RentalDetails {...props}></RentalDetails>;
       case 3: return <div>Step 3</div>;
       default: return <div>Form completed</div>;
     }

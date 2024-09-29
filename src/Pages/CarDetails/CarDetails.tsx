@@ -19,7 +19,7 @@ import { ICar, RatingData } from '../../Types/car';
 
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
-
+  const car = useLoaderData() as ICar;
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
     
@@ -78,7 +78,7 @@ const CarDetails: React.FC = () => {
     };
   }, []);
 
-  const car = useLoaderData() as ICar;
+
 
   if (!car) return <div>Loading...</div>;
   const handlePrice = () => {

@@ -56,7 +56,6 @@ const Cars: React.FC = () => {
       setTotalCars(response.data.totalCars);
       return response.data.Cars;
     },
-    // keepPreviousData: true, // This prevents the query from refetching immediately when state changes
   });
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
