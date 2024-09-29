@@ -1,63 +1,50 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import BasicCarInfo from '../../Components/steps/BasicCarInfo';
+import StepIndicator from '../../Components/steps/stepIndicator';
 
 
-
-const HostCarListingForm: React.FC = () => {
+const HostCarListingForm = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Initialize with empty values for all fields
-    carCategory: '',
-    make: '',
-    model: '',
-    seatCount: 0,
-    features: [],
-    rentalPrice: 0,
-    rentalDuration: '',
-    discount: 0,
-    availability: true,
-    city: '',
-    pickupPoint: '',
-    openingHours: '',
-    hostName: '',
-    hostEmail: '',
-    carImages: [],
-    membershipType: '',
-    planType: '',
-    description: '',
-    carTripCount: 0,
+    // ... (initialize your form data here)
   });
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleArrayInputChange = (name: string, value: string[]) => {
-    setFormData({ ...formData, [name]: value });
-  };
-
   const renderStep = () => {
+    const props = { formData, handleInputChange, nextStep, prevStep };
     switch (step) {
-      case 1:
-        return <BasicCarInfo formData={formData} handleInputChange={handleInputChange} handleArrayInputChange={handleArrayInputChange} nextStep={nextStep} />;
-      
-        return <ReviewConfirmation formData={formData} prevStep={prevStep} />;
-      default:
-        return <div>Form completed</div>;
+      case 1: return <BasicCarInfo {...props} />;
+      case 2: return <div>Step 2</div>;
+      case 3: return <div>Step 3</div>;
+      default: return <div>Form completed</div>;
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-6">List your car</h1>
-      <div className="mb-4">
-        Step {step} of 8
+    <div className="max-w-screen-lg mx-auto mt-10 px-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">List your car</h1>
+      <StepIndicator currentStep={step} />
+      <div className="mt-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
       </div>
-      {renderStep()}
     </div>
   );
 };
