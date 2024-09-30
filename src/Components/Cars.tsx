@@ -6,6 +6,7 @@ import { FaAward } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Cars: React.FC = () => {
     const axiosPublic = useAxiosPublic();
@@ -169,9 +170,11 @@ const Cars: React.FC = () => {
                 <div className='ml-1 lg:ml-2'>
                     <p className='text-2xl  mt-4 lg:mt-8'>{totalCars} + cars available</p>
                     {Array.isArray(cardata) && cardata.length > 0 ? (
+                      
                         <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
                             {cardata.map((car: Car) => (
-                                <div key={car._id} className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group">
+                              <Link to ={`/car/${car._id}`}>
+                              <div key={car._id} className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group">
                                     <figure className="w-full lg:w-[50%]">
                                         <img
                                             className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
@@ -201,8 +204,11 @@ const Cars: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+                              </Link>
+                                
                             ))}
                         </div>
+                  
                     ) : (
                         <p>No cars available</p>
                     )}

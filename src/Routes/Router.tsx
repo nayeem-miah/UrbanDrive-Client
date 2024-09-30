@@ -29,15 +29,11 @@ const router = createBrowserRouter([
           path : '/contact',
           element: <Contact></Contact>
         },
-        {
-          path : '/services',
-          element: <CarList></CarList>
-          
-        },
+        
         {
           path: '/car/:id',
           element: <CarDetails></CarDetails>,
-          loader : ({params}) => fetch(`http://localhost:8000/cars/${params.id}`)
+          loader : ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
         },
         {
           path:'/cars',
