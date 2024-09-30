@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdOutlineDiscount } from "react-icons/md";
@@ -43,7 +44,7 @@ const Cars: React.FC = () => {
     isLoading,
   } = useQuery({
     queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption],
-    queryFn: async (page) => {
+    queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
           page: currentPage,
@@ -90,25 +91,28 @@ const Cars: React.FC = () => {
     refetch();
   }, [minPrice, maxPrice, category, currentPage, sortOption, seatCount]);
 
-  const formatDate = (dateString: number) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB"); // Format as DD/MM/YYYY
-  };
+  // const formatDate = (dateString: number) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("en-GB"); 
+  // };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      refetch(); // Refetch data after changing page
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     setCurrentPage(currentPage + 1);
+  //     refetch(); 
+  //   }
+  // };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      refetch(); // Refetch data after changing page
-    }
-  };
-  console.log(totalCars);
+  // const handlePreviousPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage(currentPage - 1);
+  //     refetch();
+  //   }
+  // };
+  // console.log(totalCars);
+  // console.log(formatDate(123));
+  // console.log(handleNextPage());
+  // console.log(handlePreviousPage());
 
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
