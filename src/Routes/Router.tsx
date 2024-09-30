@@ -7,9 +7,10 @@ import AboutUs from "../Pages/About/About";
 import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
-import CarList from "../Pages/CarList/CarList";
+// import CarList from "../Pages/CarList/CarList";
 import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
+import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 
 const router = createBrowserRouter([
     {
@@ -29,9 +30,13 @@ const router = createBrowserRouter([
           path : '/contact',
           element: <Contact></Contact>
         },
-        
+        // {
+        //   path : '/services',
+        //   element: <Cars></Cars>
+          
+        // },
         {
-          path: '/car/:id',
+          path: '/cars/:id',
           element: <CarDetails></CarDetails>,
           loader : ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
         },
@@ -39,18 +44,36 @@ const router = createBrowserRouter([
           path:'/cars',
           element:<Cars></Cars>
 
-        }
-      ]
+      },
+      {
+        path: '/cars/:id',
+        element: <CarDetails></CarDetails>,
+        loader: ({ params }) => fetch(`http://localhost:5000/cars/${params.id}`)
+      },
+      {
+        path: '/cars',
+        element: <Cars></Cars>
 
-    },
-    {
-      path: "/login",
-      element:<LoginPage></LoginPage>
-    },
-    {
-      path: "/register",
-      element:<Registration></Registration>
-    }
+      },
+      {
+        path: '/payment/:totalPrice',
+        element: (
+          // <PrivetRouts>
+            <PaymentPage></PaymentPage>
+          // </PrivetRouts>
+        ),
+      },
+    ]
 
-  ]);
-  export default router
+  },
+  {
+    path: "/login",
+    element: <LoginPage></LoginPage>
+  },
+  {
+    path: "/register",
+    element: <Registration></Registration>
+  }
+
+]);
+export default router

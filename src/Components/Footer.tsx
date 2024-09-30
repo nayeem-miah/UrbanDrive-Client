@@ -3,7 +3,7 @@ import { FaPhone } from "react-icons/fa6";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
-import logo from '../assets/logo.png'
+import logo from '../assets/logo/logo.png'
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
     const nabLinks = (
@@ -70,50 +70,68 @@ const Footer: React.FC = () => {
         </>
     )
     return (
-        <div>
-            <div className=" bg-gray-900 mt-8">
-                <div className="container px-6 py-12 mx-auto">
-                    <div className="md:flex md:-mx-3 md:items-center md:justify-between">
-                        <h1 className="text-xl font-semibold tracking-tight  md:mx-3 xl:text-2xl ">
-                            Subscribe to our newsletter to get updates.
-                        </h1>
+      <div>
+        <div className=" bg-second mt-8">
+          <div className="px-4 py-12 mx-auto">
+            <div className="md:flex md:-mx-3 md:items-center md:justify-between">
+              <h1 className="text-xl font-semibold tracking-tight  md:mx-3 xl:text-2xl ">
+                Subscribe to our newsletter to get updates.
+              </h1>
 
-                        <div className="mt-6 md:mx-3 shrink-0 md:mt-0 md:w-auto">
-                            <Link to={'/register'}>
-                                <p aria-label="Sign up for newsletter" className="inline-flex items-center justify-center w-full px-4 py-2 text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500
-       to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400
-       dark:focus:ring-yellow-800 hover:bg-[#12625D] font-bold">
-                                    <span >Sign in Now</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                        <path stroke-linecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                                    </svg>
-                                </p></Link>
-                        </div>
-                    </div>
-
-                    <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
-
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-                     text-white list-none">
-                        {nabLinks}
-
-                    </div>
-
-                    <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
-
-                    <div className="flex flex-col items-center justify-between sm:flex-row text-white">
-                        <p aria-label="UrbanDrive" className="flex">
-                            <img className="w-auto h-14 rounded" loading="lazy" src={logo}
-                                alt="UrbanDrive" />
-                        </p>
-
-                        <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">
-                            © UrbanDrive {currentYear}. All Rights Reserved.
-                        </p>
-                    </div>
-                </div>
+              <div className="mt-6 md:mx-3 shrink-0 md:mt-0 md:w-auto">
+                <Link to={"/register"}>
+                  <p
+                    aria-label="Sign up for newsletter"
+                    className="bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium flex justify-between items-center"
+                  >
+                    <span>Sign in Now</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        strokeLinejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                      />
+                    </svg>
+                  </p>
+                </Link>
+              </div>
             </div>
+
+            <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
+
+            <div
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+                     text-white list-none"
+            >
+              {nabLinks}
+            </div>
+
+            <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
+
+            <div className="flex flex-col items-center justify-between sm:flex-row text-white">
+              <p aria-label="UrbanDrive" className="flex">
+                <img
+                  className="w-28 h-20 rounded-md"
+                  loading="lazy"
+                  src={logo}
+                  alt="UrbanDrive"
+                />
+              </p>
+
+              <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">
+                © UrbanDrive {currentYear}. All Rights Reserved.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     );
 };
 
