@@ -7,6 +7,7 @@ import { FaMapLocationDot } from "react-icons/fa6";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MapComponent from "./MapComponent";
 
 const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
@@ -186,7 +187,7 @@ const Cars: React.FC = () => {
             {totalCars} + cars available
           </p>
           {Array.isArray(cardata) && cardata.length > 0 ? (
-            <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
+            <div  className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
               {cardata.map((car: Car) => (
                 <Link to={`/cars/${car._id}`}>
                   <div
@@ -236,6 +237,7 @@ const Cars: React.FC = () => {
                   </div>
                 </Link>
               ))}
+              <MapComponent></MapComponent>
             </div>
           ) : (
             <p>No cars available</p>
