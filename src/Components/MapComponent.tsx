@@ -6,20 +6,21 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
-
+const fixLeafletIcons = () => {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: markerIcon2x,
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow,
+    });
+  };
 const MapComponent: React.FC = () => {
 
     useEffect(() => {
-        // Configure marker icons
-        delete L.Icon.Default.prototype._getIconUrl;
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: markerIcon2x,
-            iconUrl: markerIcon,
-            shadowUrl: markerShadow,
-        });
-    }, []);
+        fixLeafletIcons(); // Fix icons on component mount
+      }, []);
   return (
-    <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false} style={{ height: "100vh", width: "100%" }}>
+    <MapContainer  center={[23.8103, 90.4125]} zoom={13} scrollWheelZoom={true} style={{ height: "90vh", width: "100%" }}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -186,8 +186,11 @@ const Cars: React.FC = () => {
           <p className="text-2xl font-bold  mt-4 lg:mt-8">
             {totalCars} + cars available
           </p>
+          <div className="grid mt-5 grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
+
+          <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
           {Array.isArray(cardata) && cardata.length > 0 ? (
-            <div  className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
+            <div  className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
               {cardata.map((car: Car) => (
                 <Link to={`/cars/${car._id}`}>
                   <div
@@ -237,11 +240,18 @@ const Cars: React.FC = () => {
                   </div>
                 </Link>
               ))}
-              <MapComponent></MapComponent>
+             
             </div>
           ) : (
             <p>No cars available</p>
           )}
+          </div>
+          
+          <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
+            <MapComponent></MapComponent>
+          </div>
+          </div>
+          
         </div>
       )}
 
