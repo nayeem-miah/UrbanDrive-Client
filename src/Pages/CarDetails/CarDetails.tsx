@@ -12,6 +12,7 @@ import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 import { ICar, RatingData } from '../../Types/car';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 
 
@@ -22,7 +23,6 @@ const CarDetails: React.FC = () => {
   const car = useLoaderData() as ICar;
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
-    
     { label: 'Communication', value: 2.0 },
     { label: 'Convenience', value: 5.0 },
     
@@ -37,6 +37,7 @@ const CarDetails: React.FC = () => {
     }
   ]);
 
+  const axiosPublic = useAxiosPublic();
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
@@ -67,6 +68,29 @@ const CarDetails: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleContinue = async () => {
+    try {
+      const bookingData = {
+        carId: car.id,
+        startDate: dateRange[0].startDate,
+        endDate: dateRange[0].endDate,
+        location: location,
+        totalCost: totalCost,
+        
+      };
+
+      const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
+      
+      if (response.data.success) {
+        alert('Booking created successfully');
+        navigate(`/user-info/${response.data.bookingId}`);
+      } else {
+        console.error('Failed to create booking');
+      }
+    } catch (error) {
+      console.error('Error creating booking:', error);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -222,7 +246,7 @@ const CarDetails: React.FC = () => {
             </select>
           </div>
 
-          <button className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
+          <button onClick={handleContinue} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
 
           <div className="flex items-center mb-4">
             <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">

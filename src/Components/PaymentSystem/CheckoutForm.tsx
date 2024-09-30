@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
@@ -59,9 +59,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
         });
         console.log("[paymentMethod]", paymentMethod);
 
+        console.log(paymentMethod);
         if (error) {
             console.error("[error]", error);
-            setCardError(error.message ?? "An error occurred");
+            setCardError(error?.message ?? "An error occurred");
             setProcessing(false);
             return;
         } else {
@@ -80,7 +81,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
         if (confirmError) {
             console.error(confirmError);
-            setCardError(confirmError?.message ?? 'An error occurred');
+            setCardError(confirmError?.message ?? "An error occurred");
             setProcessing(false);
             return;
         }

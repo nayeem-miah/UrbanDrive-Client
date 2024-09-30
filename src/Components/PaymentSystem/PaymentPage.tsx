@@ -14,7 +14,7 @@ const PaymentPage: React.FC = () => {
     return <div>Error: Invalid price</div>;
   }
   return (
-    <div className="pt-20 min-h-[calc(100vh-180px)] bg-[url('https://img.freepik.com/premium-photo/bank-card-payment-black-hand-holding-3d-render_1106493-106452.jpg?w=1060')] bg-cover bg-center  items-center justify-center">
+    <div className="pt-20 min-h-screen bg-[url('https://img.freepik.com/premium-photo/bank-card-payment-black-hand-holding-3d-render_1106493-106452.jpg?w=1060')] bg-cover bg-center  items-center justify-center">
             <h1 className="lg:text-4xl text-3xl font-bold text-white text-center py-4">Secure Payment</h1>
 
       <Elements stripe={stripePromise}>

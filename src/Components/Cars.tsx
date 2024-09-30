@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
@@ -39,7 +40,7 @@ const Cars: React.FC = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption, seatCount], // seatCount added
+    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption],
     queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
@@ -79,21 +80,28 @@ const Cars: React.FC = () => {
     setSeatCount(value ? Number(value) : null);
   };
 
-  useEffect(() => {
-    refetch(); // Only refetch when these dependencies change
-  }, [category, minPrice, maxPrice, currentPage, sortOption, seatCount]);
+  // const formatDate = (dateString: number) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("en-GB"); 
+  // };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      refetch(); 
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      refetch();
     }
   };
+  // console.log(totalCars);
+  // console.log(formatDate(123));
+  // console.log(handleNextPage());
+  // console.log(handlePreviousPage());
 
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
