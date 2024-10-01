@@ -3,13 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import StepIndicator from './steps';
 
-
 export const steps = [
-  { id: 'verify', title: 'Verify Email', description: 'We sent a verification link to your email. Click the link to continue.' },
+  { id: 'verify', title: 'Verify Email', description: 'We sent a verification link to your email.' },
   { id: 'mobile', title: 'Mobile Number', description: 'Enter your mobile number' },
   { id: 'license', title: 'Driver License', description: 'Upload your driver license' },
   { id: 'payment', title: 'Payment Method', description: 'Add your payment method' },
-  { id: 'confirmation', title: 'Confirmation', description: 'Finish It!' },
+  { id: 'confirmation', title: 'Confirmation', description: 'Review and confirm your information' },
 ];
 
 const OnboardCheckout: React.FC = () => {
@@ -24,7 +23,6 @@ const OnboardCheckout: React.FC = () => {
   });
 
   useEffect(() => {
-    // Simulating email verification
     const timer = setTimeout(() => {
       setCurrentStep(1);
     }, 3000);
@@ -32,8 +30,8 @@ const OnboardCheckout: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleChange = (name: string, value: string | File) => {
-    setUserInfo({ ...userInfo, [name]: value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
   const handleNextStep = () => {
@@ -61,7 +59,7 @@ const OnboardCheckout: React.FC = () => {
       if (response.data.success) {
         navigate('/booking-confirmation');
       } else {
-        console.error('Failed to update booking with user info');
+        console.error('Failed to update booking');
       }
     } catch (error) {
       console.error('Error updating booking:', error);
@@ -71,34 +69,64 @@ const OnboardCheckout: React.FC = () => {
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <EmailVerificationStep />;
+        return <p>Verifying your email...</p>;
       case 1:
-        return <MobileNumberStep value={userInfo.phoneNumber} onChange={(value) => handleChange('phoneNumber', value)} />;
+        return (
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={userInfo.phoneNumber}
+            onChange={handleChange}
+            placeholder="Enter your mobile number"
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        );
       case 2:
-        return <DriverLicenseStep onChange={(file) => handleChange('driversLicense', file)} />;
+        return (
+          <input
+            type="file"
+            name="driversLicense"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        );
       case 3:
-        return <PaymentMethodStep value={userInfo.paymentMethod} onChange={(value) => handleChange('paymentMethod', value)} />;
+        return (
+          <input
+            type="text"
+            name="paymentMethod"
+            value={userInfo.paymentMethod}
+            onChange={handleChange}
+            placeholder="Enter payment details"
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        );
       case 4:
-        return <ConfirmationStep userInfo={userInfo} />;
+        return <p>Please review your information and confirm.</p>;
       default:
         return null;
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-8 text-center">Complete Your Booking</h2>
-      <StepIndicator steps={steps} currentStep={currentStep} />
-      <div className="mt-8">
-        {renderStepContent(currentStep)}
+    <div className="max-w-6xl mx-auto mt-28 p-6 bg-white rounded-xl shadow-lg flex flex-col lg:flex-row">
+      {/* Left side - Step Indicator */}
+      <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
+        <StepIndicator steps={steps} currentStep={currentStep} />
       </div>
-      <div className="mt-8 flex justify-end">
-        <button
-          onClick={handleNextStep}
-          className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
-        >
-          {currentStep === steps.length - 1 ? 'Confirm' : 'Next'}
-        </button>
+
+      {/* Right side - Form */}
+      <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
+        <h2 className="text-2xl font-bold mb-6">Complete Your Booking</h2>
+        <div>{renderStepContent(currentStep)}</div>
+        <div className="mt-8 flex justify-end">
+          <button
+            onClick={handleNextStep}
+            className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+          >
+            {currentStep === steps.length - 1 ? 'Confirm' : 'Next'}
+          </button>
+        </div>
       </div>
     </div>
   );
