@@ -13,6 +13,7 @@ export const steps = [
 
 const OnboardCheckout: React.FC = () => {
   const { bookingId } = useParams<{ bookingId: string }>();
+  
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [userInfo, setUserInfo] = useState({
