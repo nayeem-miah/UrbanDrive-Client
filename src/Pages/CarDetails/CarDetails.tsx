@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
@@ -82,8 +82,8 @@ const CarDetails: React.FC = () => {
       const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
       
       if (response.data.success) {
-        alert('Booking created successfully');
-        navigate(`/user-info/${response.data.bookingId}`);
+        
+        // navigate(`/user-info/${response.data.bookingId}`);
       } else {
         console.error('Failed to create booking');
       }
@@ -246,7 +246,7 @@ const CarDetails: React.FC = () => {
             </select>
           </div>
 
-          <button onClick={handleContinue} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
+          <Link to ={`/checkout`}><button onClick={handleContinue} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button></Link>
 
           <div className="flex items-center mb-4">
             <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">

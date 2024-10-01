@@ -12,6 +12,7 @@ import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
+import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
           fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+      },
+      {
+        path: "/checkout",
+        element:<OnboardCheckout></OnboardCheckout>
       },
       {
         path: "/cars",
