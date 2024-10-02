@@ -13,67 +13,54 @@ import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element:<Main/>,
-      errorElement:<ErrorPage></ErrorPage>,
-      children:[
-        {
-            path : '/',
-            element : <Home/>
-        },
-        {
-            path : '/about',
-            element : <AboutUs></AboutUs>
-        },
-        {
-          path : '/contact',
-          element: <Contact></Contact>
-        },
-        // {
-        //   path : '/services',
-        //   element: <Cars></Cars>
-          
-        // },
-        {
-          path: '/cars/:id',
-          element: <CarDetails></CarDetails>,
-          loader : ({params}) => fetch(`http://localhost:8000/cars/${params.id}`)
-        },
-        {
-          path:'/cars',
-          element:<Cars></Cars>
-
+  {
+    path: "/",
+    element: <Main />,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
       },
       {
-        path: '/cars/:id',
-        element: <CarDetails></CarDetails>,
-        loader: ({ params }) => fetch(`http://localhost:8000/cars/${params.id}`)
+        path: "/about",
+        element: <AboutUs></AboutUs>,
       },
       {
-        path: '/cars',
+        path: "/contact",
+        element: <Contact></Contact>,
+      },
+      {
+        path : '/services',
         element: <Cars></Cars>
 
       },
       {
-        path: '/payment/:totalPrice',
+        path: "/cars/:id",
+        element: <CarDetails></CarDetails>,
+        loader: ({ params }) => fetch(`http://localhost:8000/cars/${params.id}`)
+      },
+      {
+        path: "/cars",
+        element: <Cars></Cars>,
+      },
+      {
+        path: "/payment/:totalPrice",
         element: (
           // <PrivetRouts>
-            <PaymentPage></PaymentPage>
+          <PaymentPage></PaymentPage>
           // </PrivetRouts>
         ),
       },
-    ]
-
+    ],
   },
   {
     path: "/login",
-    element: <LoginPage></LoginPage>
+    element: <LoginPage></LoginPage>,
   },
   {
     path: "/register",
-    element: <Registration></Registration>
-  }
-
+    element: <Registration></Registration>,
+  },
 ]);
 export default router

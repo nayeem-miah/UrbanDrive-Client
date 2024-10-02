@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white">
-                  <img src={user.photoURL || "/placeholder-avatar.jpg"} alt="User Avatar" />
+                  <img src={user?.photoURL || "/placeholder-avatar.jpg"} alt="User Avatar" />
                 </div>
               </label>
               <ul
