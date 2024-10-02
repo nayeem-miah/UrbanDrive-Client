@@ -21,10 +21,10 @@ const CarDetails: React.FC = () => {
 
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
-    
+
     { label: 'Communication', value: 2.0 },
     { label: 'Convenience', value: 5.0 },
-    
+
   ];
 
   const [scrollY, setScrollY] = useState(0);
@@ -82,7 +82,7 @@ const CarDetails: React.FC = () => {
   if (!car) return <div>Loading...</div>;
   const handlePrice = () => {
     const price = totalCost;
-   
+
     navigate(`/payment/${price}`);
   };
   return (
@@ -104,7 +104,7 @@ const CarDetails: React.FC = () => {
       <h1 className="text-3xl mt-2 sm:mt-4 sm:text-4xl md:text-6xl font-bold text-white">
         Rent a <span className="text-teal-400">{car.make}</span>
       </h1>
-      
+
     </div>
   </div>
 </section>
@@ -175,7 +175,7 @@ const CarDetails: React.FC = () => {
           </p>
         </div>
 
-        
+
       </div>
 
       <div className="flex-1">
@@ -230,13 +230,13 @@ const CarDetails: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
     </div>
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-6">
           <div className="text-2xl font-bold mb-4">Ratings </div>
           <div className="text-5xl text-indigo-600 font-bold">3.5</div>
           <div className="text-gray-500 mb-6">(94 ratings)</div>
-          
+
           {ratingsData.map((rating, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-2">
