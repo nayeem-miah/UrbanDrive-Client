@@ -26,6 +26,16 @@ const OnboardCheckout: React.FC = () => {
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
+  // Update the email once user is available
+  useEffect(() => {
+    if (user) {
+      setUserInfo((prevInfo) => ({
+        ...prevInfo,
+        email: user.email ?? '',
+      }));
+    }
+  }, [user]);
+
   useEffect(() => {
     if (isEmailVerified) {
       setCurrentStep(1);

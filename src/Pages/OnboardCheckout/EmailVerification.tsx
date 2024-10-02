@@ -43,7 +43,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({ email, onVerified
     <div className="space-y-4">
       {!isCodeSent ? (
         <div>
-          <p>We need to verify your email address: {email}</p>
+          <p>We need to verify your email address: {    }</p>
           <button
             onClick={sendVerificationCode}
             className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"

@@ -13,6 +13,7 @@ import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 import { ICar, RatingData } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAuth from '../../Hooks/useAuth';
 
 
 
@@ -21,6 +22,7 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
+  const {user} = useAuth();
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
     { label: 'Communication', value: 2.0 },
@@ -71,6 +73,7 @@ const CarDetails: React.FC = () => {
   const handleContinue = async () => {
     try {
       const bookingData = {
+        user: user?.email,
         carId: car.id,
         startDate: dateRange[0].startDate,
         endDate: dateRange[0].endDate,
