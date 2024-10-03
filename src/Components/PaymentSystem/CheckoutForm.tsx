@@ -94,12 +94,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
                 date: new Date(),
             };
+            // console.log(paymentInfo);
             setCardSuccess(paymentInfo.transactionId)
 
             toast.success(`${user?.email} payment successful`);
 
             try {
-                await axiosPublic.post("/payment", paymentInfo);
+              const {data}=  await axiosPublic.post("/payment", paymentInfo);
+              console.log(data);
             } catch (error) {
                 console.error("Error posting payment info:", error);
             }

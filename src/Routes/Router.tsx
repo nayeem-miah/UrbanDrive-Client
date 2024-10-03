@@ -79,8 +79,8 @@ const router = createBrowserRouter([
         path: "/payment/:totalPrice",
         element: (
           // <PrivetRouts>
-          <PaymentPage></PaymentPage>
-          // </PrivetRouts>
+            <PaymentPage></PaymentPage>
+      // </PrivetRouts>
         ),
       },
     ],
