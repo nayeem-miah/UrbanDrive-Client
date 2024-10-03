@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -5,6 +6,7 @@ import StepIndicator from './steps';
 import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/steps';
+import Swal from 'sweetalert2';
 
 type UserInfo = {
   email: string;
@@ -85,12 +87,21 @@ const OnboardCheckout: React.FC = () => {
     try {
       const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
         ...userInfo,
-        // Skip driversLicense if it's not provided
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
-
+  
       if (response.data.success) {
-        navigate('/');
+        Swal.fire({
+          title: 'Booking Confirmed!',
+          text: 'Your booking has been successfully confirmed.',
+          icon: 'success',
+          confirmButtonText: 'Go to Homepage',
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/');
+          }
+        });
       } else {
         console.error('Failed to update booking:', response.data.message);
       }
@@ -98,6 +109,7 @@ const OnboardCheckout: React.FC = () => {
       console.error('Error updating booking:', error);
     }
   };
+  
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -117,6 +129,7 @@ const OnboardCheckout: React.FC = () => {
             onChange={handleChange}
             placeholder="Enter your mobile number"
             className="w-full px-3 py-2 border rounded-md"
+            required
           />
         );
       case 2:
@@ -140,6 +153,7 @@ const OnboardCheckout: React.FC = () => {
             onChange={handleChange}
             placeholder="Enter payment details"
             className="w-full px-3 py-2 border rounded-md"
+            
           />
         );
       case 4:
