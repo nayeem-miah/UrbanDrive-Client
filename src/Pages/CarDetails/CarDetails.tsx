@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
@@ -11,6 +12,8 @@ import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 import { ICar, RatingData } from '../../Types/car';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAuth from '../../Hooks/useAuth';
 
 
 
@@ -18,10 +21,10 @@ import { ICar, RatingData } from '../../Types/car';
 
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
-
+  const car = useLoaderData() as ICar;
+  const {user} = useAuth();
   const ratingsData: RatingData[] = [
     { label: 'Cleanliness', value: 3.0 },
-
     { label: 'Communication', value: 2.0 },
     { label: 'Convenience', value: 5.0 },
 
@@ -36,6 +39,7 @@ const CarDetails: React.FC = () => {
     }
   ]);
 
+  const axiosPublic = useAxiosPublic();
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
@@ -66,6 +70,30 @@ const CarDetails: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleContinue = async () => {
+    try {
+      const bookingData = {
+        user: user?.email,
+        carId: car.id,
+        startDate: dateRange[0].startDate,
+        endDate: dateRange[0].endDate,
+        location: location,
+        totalCost: totalCost,
+      };
+
+      const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
+      
+      if (response.data.success && response.data.bookingId) {
+        navigate(`/checkout/${response.data.bookingId}`);
+      } else {
+        console.error('Failed to create booking:', response.data.message || 'Unknown error');
+       
+      }
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +105,7 @@ const CarDetails: React.FC = () => {
     };
   }, []);
 
-  const car = useLoaderData() as ICar;
+
 
   if (!car) return <div>Loading...</div>;
   const handlePrice = () => {
@@ -121,7 +149,7 @@ const CarDetails: React.FC = () => {
         <div className="flex items-center mb-4">
           <span className="text-xl font-bold text-indigo-600 mr-2">{car.rating}</span>
           <FaStar className="w-5 h-5 fill-indigo-600" />
-          <span className="text-gray-600 ml-1">(35 trips)</span>
+          <span className="text-gray-600 ml-1">({car.trip_count} trips)</span>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6 text-gray-800">
@@ -135,20 +163,35 @@ const CarDetails: React.FC = () => {
             <GiCarDoor className="w-5 h-5 mr-2" /><span>4 Doors</span>
           </div>
           <div className="flex items-center">
-            <GiCarSeat className="w-5 h-5 mr-2" /><span>5 Seats</span>
+            <GiCarSeat className="w-5 h-5 mr-2" /><span>{car.seatCount} Seats</span>
           </div>
         </div>
 
+        
+
+        <div className="mt-6">
+          <h2 className="text-xl font-bold mb-2 text-gray-800">Description</h2>
+          <p className="text-gray-600">{car.description}</p>
+        </div>
+
+        <div className="mt-6 ">
+          <h2 className="text-xl font-bold mb-2 text-gray-800">Features</h2>
+          <p className="text-gray-600">
+            {car.features.map((feature, index) => (
+              <li key={index}>{feature}</li>
+            ))}
+          </p>
+        </div>
         <h1 className="text-2xl font-bold mb-4 text-indigo-600 text-center">Hosted By</h1>
         <div className="mt-6 bg-gray-100 rounded-lg shadow-lg p-4">
           <div className="flex items-center mb-4">
             <img src="https://via.placeholder.com/40" alt="Host" className="w-10 h-10 rounded-full mr-3" />
             <div>
-              <h3 className="font-bold text-gray-800">Name</h3>
+              <h3 className="font-bold text-gray-800">{car.name}</h3>
               <p className="text-sm text-gray-600">All-Star Host</p>
             </div>
           </div>
-          <p className="text-sm mb-2 text-gray-600">131 trips • Joined Jun 2021</p>
+          <p className="text-sm mb-2 text-gray-600">131 trips • {car.date}</p>
           <div className="flex items-center text-indigo-600">
             <FaStar className="w-4 h-4 fill-indigo-600 mr-1" />
             <span className="font-bold mr-1">5.0</span>
@@ -160,21 +203,7 @@ const CarDetails: React.FC = () => {
           <a href="#" className="text-indigo-600 text-sm">Learn more</a>
         </div>
 
-        <div className="mt-6">
-          <h2 className="text-xl font-bold mb-2 text-gray-800">Description</h2>
-          <p className="text-gray-600">Family road trip or backcountry adventure? Experience it in a Subaru rental. Rev up your taste for adventure and make your mark regardless of the weather conditions. Flexible configurations, seamless connectivity, award-winning safety, and comfortable handling are just the beginning. Rent one for an extended test drive, and see why Turo guests can’t get enough of all that Subaru love.</p>
-        </div>
-
-        <div className="mt-6 mx-2">
-          <h2 className="text-xl font-bold mb-2 text-gray-800">Features</h2>
-          <p className="text-gray-600">
-            {car.features.map((feature, index) => (
-              <li key={index}>{feature}</li>
-            ))}
-          </p>
-        </div>
-
-
+        
       </div>
 
       <div className="flex-1">
@@ -219,7 +248,7 @@ const CarDetails: React.FC = () => {
             </select>
           </div>
 
-          <button onClick={handlePrice} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
+          <button onClick={handleContinue} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
 
           <div className="flex items-center mb-4">
             <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">

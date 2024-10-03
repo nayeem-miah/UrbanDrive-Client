@@ -1,10 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { MdOutlineDiscount } from "react-icons/md";
-import { MdOutlineStar } from "react-icons/md";
-import { FaAward } from "react-icons/fa";
-import { FaMapLocationDot } from "react-icons/fa6";
-
+import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
+import { FaAward, FaMapLocationDot } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -43,16 +41,16 @@ const Cars: React.FC = () => {
     isLoading,
   } = useQuery({
     queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption],
-    queryFn: async (page) => {
+    queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
           page: currentPage,
           limit: 6,
-          category: category,
-          minPrice: minPrice,
-          maxPrice: maxPrice,
+          category,
+          minPrice,
+          maxPrice,
           sort: sortOption,
-          seatCount: seatCount,
+          seatCount,
         },
       });
       setTotalPages(response.data.totalPages);
@@ -63,8 +61,8 @@ const Cars: React.FC = () => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-    refetch();
   };
+
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === "0-50") {
@@ -75,54 +73,49 @@ const Cars: React.FC = () => {
       setMinPrice(min);
       setMaxPrice(max);
     }
-    console.log("Price Range:", minPrice, maxPrice);
   };
+
   const handleSeatCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (value === "") {
-      setSeatCount(null);
-    } else {
-      setSeatCount(Number(value));
-    }
-    refetch(); // Refetch when seat count changes
+    setSeatCount(value ? Number(value) : null);
   };
-  useEffect(() => {
-    refetch();
-  }, [minPrice, maxPrice, category, currentPage, sortOption, seatCount]);
 
-  const formatDate = (dateString: number) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB"); // Format as DD/MM/YYYY
-  };
+  // const formatDate = (dateString: number) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("en-GB"); 
+  // };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      refetch(); // Refetch data after changing page
+      refetch(); 
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      refetch(); // Refetch data after changing page
+      refetch();
     }
   };
-  console.log(totalCars);
+  // console.log(totalCars);
+  // console.log(formatDate(123));
+  // console.log(handleNextPage());
+  // console.log(handlePreviousPage());
 
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
       {/* Filters */}
       <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
-          value={category} // Set the current selected value
-          onChange={handleCategoryChange} // Handle change
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
+          value={category}
+          onChange={handleCategoryChange}
         >
           <option disabled value="">
             Select by Category
           </option>
-          <option value="Electric">Electrice</option>
+          <option value="Electric">Electric</option>
           <option value="suv">SUV</option>
           <option value="Sedan">Sedan</option>
           <option value="Luxury">Luxury</option>
@@ -145,7 +138,7 @@ const Cars: React.FC = () => {
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
           value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
           onChange={handlePriceRangeChange}
         >
@@ -161,9 +154,9 @@ const Cars: React.FC = () => {
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+          onChange={(e) => setSortOption(e.target.value)}
         >
           <option disabled value="">
             Sort by
@@ -182,17 +175,14 @@ const Cars: React.FC = () => {
         </div>
       ) : (
         <div className="ml-1 lg:ml-2">
-          <p className="text-2xl font-bold  mt-4 lg:mt-8">
+          <p className="text-2xl font-bold mt-4 lg:mt-8">
             {totalCars} + cars available
           </p>
           {Array.isArray(cardata) && cardata.length > 0 ? (
-            <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-8 ">
+            <div className="grid mt-5 grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
               {cardata.map((car: Car) => (
-                <Link to={`/cars/${car._id}`}>
-                  <div
-                    key={car._id}
-                    className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
-                  >
+                <Link to={`/cars/${car._id}`} key={car._id}>
+                  <div className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group">
                     <figure className="w-full lg:w-[50%]">
                       <img
                         className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
@@ -207,9 +197,9 @@ const Cars: React.FC = () => {
                         <p className="flex gap-1">
                           {car.rating}
                           <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
-                          {car.trip_count} trips){" "}
+                          {car.trip_count} trips)
                           <FaAward className="mt-1 text-primary font-bold" />{" "}
-                          <span className="font-bold">All-Star-Host</span>
+                          <span className="font-bold">All-Star Host</span>
                         </p>
                       ) : (
                         <p>New listing</p>
@@ -219,48 +209,39 @@ const Cars: React.FC = () => {
                         {car.make}
                       </p>
                       {car.discount > 0 ? (
-                        <span className="flex gap-1 text-[#0f923b] ">
-                          <MdOutlineDiscount className="mt-1" /> Discount:{" "}
-                          {car.discount}%
+                        <span className="font-semibold">
+                          ${car.price}{" "}
+                          <span className="ml-3 text-primary font-bold">
+                            {car.discount}% Discount{" "}
+                            <MdOutlineDiscount className="inline" />
+                          </span>
                         </span>
                       ) : (
-                        <p></p>
+                        <span className="font-semibold">${car.price}</span>
                       )}
-
-                      <div className="card-actions justify-end">
-                        <span className="text-primary font-bold text-xl">
-                          ${car.price}/day
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            <p>No cars available</p>
+            <p>No cars found.</p>
           )}
         </div>
       )}
 
       {/* Pagination */}
-      <div className="mx-auto text-center m-16">
+      <div className="flex justify-center mt-10">
         <button
-          className="btn btn-active btn-primary mr-4 rounded-md"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="btn btn-primary"
+          onClick={handlePreviousPage}
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span>
-          {" "}
-          Page {currentPage} of {totalPages}{" "}
-        </span>
         <button
-          className="btn btn-active btn-primary ml-4 rounded-md"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          className="btn btn-primary ml-4"
+          onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
           Next
