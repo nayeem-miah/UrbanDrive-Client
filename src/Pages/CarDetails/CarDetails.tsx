@@ -82,7 +82,6 @@ const CarDetails: React.FC = () => {
   if (!car) return <div>Loading...</div>;
   const handlePrice = () => {
     const price = totalCost;
-
     navigate(`/payment/${price}`);
   };
   return (
@@ -220,7 +219,7 @@ const CarDetails: React.FC = () => {
             </select>
           </div>
 
-          <button className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
+          <button onClick={handlePrice} className="w-full bg-indigo-600 text-white py-2 rounded-md mb-4 hover:bg-indigo-700 transition-colors">Continue</button>
 
           <div className="flex items-center mb-4">
             <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">

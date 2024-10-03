@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         // {
         //   path : '/services',
         //   element: <Cars></Cars>
-          
+
         // },
         {
           path: '/cars/:id',
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         element: (
           // <PrivetRouts>
             <PaymentPage></PaymentPage>
-          // </PrivetRouts>
+      // </PrivetRouts>
         ),
       },
     ]
