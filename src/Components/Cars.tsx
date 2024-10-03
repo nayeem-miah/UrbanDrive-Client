@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MapComponent from "./MapComponent";
 
+
+
+
 const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const [totalPages, setTotalPages] = useState(0);
@@ -18,8 +21,11 @@ const Cars: React.FC = () => {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [sortOption, setSortOption] = useState("");
-  const [totalCars, setTotalCars] = useState(0);
+  const [totalCars, setTotalCars] = useState([]);
   const [seatCount, setSeatCount] = useState<number | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
+  const [searchItem,setSearchItem] = useState("");
+  const [searchLocation, setSearchLocation] = useState('');
 
   interface Car {
     _id: string;
@@ -44,7 +50,7 @@ const Cars: React.FC = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption],
+    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem],
     queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
@@ -55,6 +61,11 @@ const Cars: React.FC = () => {
           maxPrice: maxPrice,
           sort: sortOption,
           seatCount: seatCount,
+          search:searchItem,
+          lat: userLocation?.lat,
+          lng: userLocation?.lng,
+          location: searchLocation,
+          maxDistance: 50000,
         },
       });
       setTotalPages(response.data.totalPages);
@@ -62,6 +73,33 @@ const Cars: React.FC = () => {
       return response.data.Cars;
     },
   });
+
+  // useEffect(() => {
+  //   // Get user location
+  //   getCurrentLocation();
+  //   // Fetch car data
+  //   fetchCars();
+  // }, []);
+
+   // Fetch user's current location
+   useEffect(() => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setUserLocation({
+                lng: position.coords.longitude,
+                lat: position.coords.latitude,
+            });
+        });
+    }
+}, []);
+
+useEffect(() => {
+  if (userLocation || searchLocation) {
+    refetch()
+  }
+}, [userLocation, searchLocation,]);
+
+
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
@@ -92,6 +130,11 @@ const Cars: React.FC = () => {
     refetch();
   }, [minPrice, maxPrice, category, currentPage, sortOption, seatCount]);
 
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchItem(e.target.value);
+    refetch(); // Refetch when the search term changes
+  };
+
   // const formatDate = (dateString: number) => {
   //   const date = new Date(dateString);
   //   return date.toLocaleDateString("en-GB"); 
@@ -118,6 +161,17 @@ const Cars: React.FC = () => {
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
       {/* Filters */}
+        {/* Search Bar */}
+        <div className="mb-6">
+         {/* সার্চ বক্স */}
+      <input
+        type="text"
+        placeholder="লোকেশন দিয়ে সার্চ করুন"
+        value={searchLocation}
+        onChange={(e) => setSearchLocation(e.target.value)}
+      />
+        
+      </div>
       <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
         <select
           className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
@@ -210,7 +264,7 @@ const Cars: React.FC = () => {
                     </figure>
                     <div className="card-body w-full lg:w-2/3 flex-1">
                       <h2 className="card-title">{car.model}</h2>
-                      <p className="text-ellipsis">{car.description}</p>
+                      <p className="text-ellipsis">{car.description.slice(0,80)}....</p>
                       {car.rating > 0 ? (
                         <p className="flex gap-1">
                           {car.rating}
@@ -252,7 +306,9 @@ const Cars: React.FC = () => {
           </div>
           
           <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
-            <MapComponent></MapComponent>
+          {userLocation && (
+        <MapComponent cars={totalCars} userLocation={userLocation} />
+      )}
           </div>
           </div>
           
