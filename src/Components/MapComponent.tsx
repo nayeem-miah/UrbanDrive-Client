@@ -34,7 +34,7 @@ interface MapComponentProps {
 const MapComponent: React.FC<MapComponentProps> = ({ cars = [], userLocation }) => { // Default to empty array
     const [selectedCar, setSelectedCar] = useState<Car | null>(null);
     const [loading, setLoading] = useState(true);
-   console.log(cars)
+  //  console.log(cars)
 
 
    useEffect(() => {

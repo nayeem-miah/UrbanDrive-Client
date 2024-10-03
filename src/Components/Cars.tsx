@@ -197,7 +197,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       {/* Search Bar */}
       <div className="mb-6">
        
-       <select className="select w-1/3 border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
+       <select className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
         <option disabled value="">Where</option>
   <option value="current">Current Location</option>
   <option value="anywhere">Anywhere</option>
