@@ -78,36 +78,7 @@ const Cars: React.FC = () => {
     },
   });
 
-  // useEffect(() => {
-  //   // Get user location
-  //   getCurrentLocation();
-  //   // Fetch car data
-  //   fetchCars();
-  // }, []);
-  // useEffect(() => {
-  //   const fetchCarLocations = async () => {
-  //     try {
-  //       const response = await axiosPublic.get("/SearchCars", {
-  //         params: {
-  //           search: searchItem,
-  //           lat: searchLocation === "Anywhere" ? null : userLocation?.lat,
-  //           lng: searchLocation === "Anywhere" ? null : userLocation?.lng,
-  //           location: userLocation,
-  //           maxDistance: searchLocation === "Anywhere" ? null : 5000, // ৫ কিমি বা সমস্ত গাড়ি
-  //         },
-  //       });
-  //       console.log(response.data);
-  //       // setCarLocation(response.data.Cars);
-  //     } catch (error) {
-  //       console.error("Error fetching car locations:", error);
-  //     }
-  //   };
-  
-  //   // Call fetch function if searchItem is provided
-  //   if (searchItem || searchLocation === "Anywhere") {
-  //     fetchCarLocations();
-  //   }
-  // }, [searchItem, userLocation, searchLocation]);
+
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
       const response = await axiosPublic.get("/SearchCars", {
@@ -119,7 +90,7 @@ const Cars: React.FC = () => {
         },
       });
       setCars(response.data);
-      console.log('allcars:',response.data) // সার্ভার থেকে প্রাপ্ত গাড়ি ডেটা সেভ করা
+      // console.log('allcars:',response.data) 
     } catch (error) {
       console.error("Error fetching cars:", error);
     }
@@ -144,21 +115,14 @@ useEffect(() => {
   }
 }, [userLocation, searchLocation,]);
 
-// function fetchCars(lat, lng, maxDistance) {
-//   fetch(`/SearchCars?lat=${lat}&lng=${lng}&maxDistance=${maxDistance}&location=current`)
-//     .then(response => response.json())
-//     .then(data => {
-//       searchByCars(data); // Function to display cars in the UI
-//     })
-//     .catch(error => console.error("Error fetching cars:", error));
-// }
+
 
 const fetchAllCars = async () => {
   try {
     const response = await axiosPublic.get("/SearchCars", {
       params: { location: "anywhere" },
     });
-    setCars(response.data); // সমস্ত গাড়ি সেভ করা
+    setCars(response.data); 
   } catch (error) {
     console.error("Error fetching all cars:", error);
   }
@@ -232,8 +196,8 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     {/* Filters */}
       {/* Search Bar */}
       <div className="mb-6">
-       {/* সার্চ বক্স */}
-       <select className="select w-full border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
+       
+       <select className="select w-1/3 border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
         <option disabled value="">Where</option>
   <option value="current">Current Location</option>
   <option value="anywhere">Anywhere</option>
@@ -312,7 +276,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         <p className="text-2xl font-bold  mt-4 lg:mt-8">
           {totalCars} + cars available
         </p>
-        <div className="grid mt-5 grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
+        <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
 
         <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
         {Array.isArray(cardata) && cardata.length > 0 ? (
