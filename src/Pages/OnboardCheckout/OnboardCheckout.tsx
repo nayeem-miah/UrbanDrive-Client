@@ -4,46 +4,63 @@ import axios from 'axios';
 import StepIndicator from './steps';
 import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
+import { steps } from '../../Components/steps/steps';
 
-export const steps = [
-  { id: 'email', title: 'Email Verification', description: 'Verify your email address' },
-  { id: 'mobile', title: 'Mobile Number', description: 'Enter your mobile number' },
-  { id: 'license', title: 'Driver License', description: 'Upload your driver license' },
-  { id: 'payment', title: 'Payment Method', description: 'Add your payment method' },
-  { id: 'confirmation', title: 'Confirmation', description: 'Review and confirm your information' },
-];
+type UserInfo = {
+  email: string;
+  phoneNumber: string;
+  driversLicense: File | null;
+  paymentMethod: string;
+};
 
 const OnboardCheckout: React.FC = () => {
   const { bookingId } = useParams<{ bookingId: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState<UserInfo>({
     email: user?.email || '',
     phoneNumber: '',
-    driversLicense: null as File | null,
+    driversLicense: null,
     paymentMethod: '',
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState<any>(null);
+  const [skipEmailVerification, setSkipEmailVerification] = useState(false);
+  const [skipDriversLicense, setSkipDriversLicense] = useState(false);
 
-  // Update the email once user is available
   useEffect(() => {
-    if (user) {
+    if (user?.email) {
       setUserInfo((prevInfo) => ({
         ...prevInfo,
-        email: user.email ?? '',
+        email: user.email || '',
       }));
     }
-  }, [user]);
+
+    const fetchBookingDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
+        setBookingDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching booking details:', error);
+      }
+    };
+
+    fetchBookingDetails();
+  }, [user, bookingId]);
 
   useEffect(() => {
-    if (isEmailVerified) {
+    if (isEmailVerified || skipEmailVerification) {
       setCurrentStep(1);
     }
-  }, [isEmailVerified]);
+  }, [isEmailVerified, skipEmailVerification]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    setUserInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   const handleNextStep = () => {
@@ -54,24 +71,28 @@ const OnboardCheckout: React.FC = () => {
     }
   };
 
+  const handleSkipEmailVerification = () => {
+    setSkipEmailVerification(true);
+    handleNextStep();
+  };
+
+  const handleSkipDriversLicense = () => {
+    setSkipDriversLicense(true);
+    handleNextStep();
+  };
+
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      Object.entries(userInfo).forEach(([key, value]) => {
-        if (value instanceof File) {
-          formData.append(key, value);
-        } else {
-          formData.append(key, value as string);
-        }
+      const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
+        ...userInfo,
+        // Skip driversLicense if it's not provided
+        driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
 
-      const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
       if (response.data.success) {
-        navigate('/booking-confirmation');
+        navigate('/');
       } else {
-        console.error('Failed to update booking');
+        console.error('Failed to update booking:', response.data.message);
       }
     } catch (error) {
       console.error('Error updating booking:', error);
@@ -81,7 +102,12 @@ const OnboardCheckout: React.FC = () => {
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <EmailVerification email={userInfo.email} onVerified={() => setIsEmailVerified(true)} />;
+        return (
+          <div>
+            <EmailVerification email={userInfo.email} onVerified={() => setIsEmailVerified(true)} />
+            <button onClick={handleSkipEmailVerification} className="mt-4 text-blue-600">Skip Email Verification</button>
+          </div>
+        );
       case 1:
         return (
           <input
@@ -95,12 +121,15 @@ const OnboardCheckout: React.FC = () => {
         );
       case 2:
         return (
-          <input
-            type="file"
-            name="driversLicense"
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
-          />
+          <div>
+            <input
+              type="file"
+              name="driversLicense"
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License Upload</button>
+          </div>
         );
       case 3:
         return (
@@ -114,7 +143,20 @@ const OnboardCheckout: React.FC = () => {
           />
         );
       case 4:
-        return <p>Please review your information and confirm.</p>;
+        return bookingDetails ? (
+          <div>
+            <p>Please review your information and confirm.</p>
+            <p>Start Date: {new Date(bookingDetails.startDate).toLocaleDateString()}</p>
+            <p>End Date: {new Date(bookingDetails.endDate).toLocaleDateString()}</p>
+            <p>Location: {bookingDetails.location}</p>
+            <p>Total Cost: ${bookingDetails.totalCost}</p>
+            <p>Phone Number: {userInfo.phoneNumber}</p>
+            <p>Payment Method: {userInfo.paymentMethod}</p>
+            <p>Driver's License: {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
+          </div>
+        ) : (
+          <p>Loading booking details...</p>
+        );
       default:
         return null;
     }

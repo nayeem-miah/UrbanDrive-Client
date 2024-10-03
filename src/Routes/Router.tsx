@@ -68,7 +68,7 @@ const router = createBrowserRouter([
           fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
-        path: "/checkout",
+        path: "/checkout/:bookingId",
         element:<OnboardCheckout></OnboardCheckout>
       },
       {
