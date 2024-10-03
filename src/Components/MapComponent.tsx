@@ -33,27 +33,11 @@ interface MapComponentProps {
 
 const MapComponent: React.FC<MapComponentProps> = ({ cars = [], userLocation }) => { // Default to empty array
     const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-    const [loading, setLoading] = useState(true);
-  //  console.log(cars)
+    
 
 
    useEffect(() => {
     fixLeafletIcons(); // Fix Leaflet icons on component mount
-
-    // Simulating a delay for loading the cars data
-    const loadCarsData = async () => {
-        setLoading(true); // Start loading
-        try {
-            // Here you would normally wait for an API call
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
-            setLoading(false); // After data is loaded
-        } catch (error) {
-            console.error('Error loading cars:', error);
-            setLoading(false); // End loading even in case of error
-        }
-    };
-
-    loadCarsData(); // Call the async loading function
 
 }, [cars]);
 
