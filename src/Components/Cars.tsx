@@ -59,9 +59,9 @@ const Cars: React.FC = () => {
         params: {
           page: currentPage,
           limit: 6,
-          category: category,
-          minPrice: minPrice,
-          maxPrice: maxPrice,
+          category,
+          minPrice,
+          maxPrice,
           sort: sortOption,
           seatCount: seatCount,
           search:searchItem,
@@ -140,8 +140,8 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-    refetch();
   };
+
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === "0-50") {
@@ -152,20 +152,12 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setMinPrice(min);
       setMaxPrice(max);
     }
-    console.log("Price Range:", minPrice, maxPrice);
   };
+
   const handleSeatCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (value === "") {
-      setSeatCount(null);
-    } else {
-      setSeatCount(Number(value));
-    }
-    refetch(); // Refetch when seat count changes
+    setSeatCount(value ? Number(value) : null);
   };
-  useEffect(() => {
-    refetch();
-  }, [minPrice, maxPrice, category, currentPage, sortOption, seatCount]);
 
   
   // const formatDate = (dateString: number) => {
@@ -173,19 +165,19 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   return date.toLocaleDateString("en-GB"); 
   // };
 
-  // const handleNextPage = () => {
-  //   if (currentPage < totalPages) {
-  //     setCurrentPage(currentPage + 1);
-  //     refetch(); 
-  //   }
-  // };
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      refetch(); 
+    }
+  };
 
-  // const handlePreviousPage = () => {
-  //   if (currentPage > 1) {
-  //     setCurrentPage(currentPage - 1);
-  //     refetch();
-  //   }
-  // };
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
   // console.log(totalCars);
   // console.log(formatDate(123));
   // console.log(handleNextPage());
