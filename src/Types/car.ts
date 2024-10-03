@@ -16,11 +16,6 @@ export interface ICar {
     membership: string;
     rating: number;
     review: string;
-    name: string;
-    date: number;
-    seatCount: number;
-    trip_count: number;
-    plan_type: string;
 }
 
 export interface RatingData {
