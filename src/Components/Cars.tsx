@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
-import { FaAward, FaMapLocationDot } from "react-icons/fa6";
+import { MdOutlineDiscount } from "react-icons/md";
+import { MdOutlineStar } from "react-icons/md";
+import { FaAward } from "react-icons/fa";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { RxMagnifyingGlass } from "react-icons/rx";
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MapComponent from "./MapComponent";
+
+
+
 
 const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
@@ -14,8 +22,13 @@ const Cars: React.FC = () => {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [sortOption, setSortOption] = useState("");
-  const [totalCars, setTotalCars] = useState(0);
+  const [totalCars, setTotalCars] = useState([]);
   const [seatCount, setSeatCount] = useState<number | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
+  const [searchItem,setSearchItem] = useState("");
+  const [searchLocation, setSearchLocation] = useState('');
+  const [cars,setCars] = useState([]);
+ 
 
   interface Car {
     _id: string;
@@ -40,7 +53,7 @@ const Cars: React.FC = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption],
+    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem],
     queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
@@ -50,14 +63,80 @@ const Cars: React.FC = () => {
           minPrice,
           maxPrice,
           sort: sortOption,
-          seatCount,
+          seatCount: seatCount,
+          search:searchItem,
+          lat: userLocation?.lat,
+          lng: userLocation?.lng,
+          location: searchLocation,
+          maxDistance: 50000,
         },
       });
       setTotalPages(response.data.totalPages);
       setTotalCars(response.data.totalCars);
+      // console.log(response.data.Cars)
       return response.data.Cars;
     },
   });
+
+
+  const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
+    try {
+      const response = await axiosPublic.get("/SearchCars", {
+        params: {
+          lat,
+          lng,
+          maxDistance,
+          location: "current",
+        },
+      });
+      setCars(response.data);
+      // console.log('allcars:',response.data) 
+    } catch (error) {
+      console.error("Error fetching cars:", error);
+    }
+  };
+   // Fetch user's current location
+   const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        setUserLocation({ lat, lng });
+        fetchCars(lat, lng, 5000); // ৫ কিমি এর মধ্যে গাড়ি অনুসন্ধান করা
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+useEffect(() => {
+  if (userLocation || searchLocation) {
+    refetch()
+  }
+}, [userLocation, searchLocation,]);
+
+
+
+const fetchAllCars = async () => {
+  try {
+    const response = await axiosPublic.get("/SearchCars", {
+      params: { location: "anywhere" },
+    });
+    setCars(response.data); 
+  } catch (error) {
+    console.error("Error fetching all cars:", error);
+  }
+};
+const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedValue = e.target.value;
+  if (selectedValue === "current") {
+    getCurrentLocation(); // Get current location and fetch cars
+  } else if (selectedValue === "anywhere") {
+    fetchAllCars(); // Fetch all cars from the server
+  }
+};
+
+
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
@@ -80,6 +159,7 @@ const Cars: React.FC = () => {
     setSeatCount(value ? Number(value) : null);
   };
 
+  
   // const formatDate = (dateString: number) => {
   //   const date = new Date(dateString);
   //   return date.toLocaleDateString("en-GB"); 
@@ -105,150 +185,185 @@ const Cars: React.FC = () => {
 
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
-      {/* Filters */}
-      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
-          value={category}
-          onChange={handleCategoryChange}
-        >
-          <option disabled value="">
-            Select by Category
-          </option>
-          <option value="Electric">Electric</option>
-          <option value="suv">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Luxury">Luxury</option>
-          <option value="Truck">Truck</option>
-        </select>
+    {/* Filters */}
+      {/* Search Bar */}
+      <div className="mb-6">
+       
+       <select className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
+        <option disabled value="">Where</option>
+  <option value="current">Current Location</option>
+  <option value="anywhere">Anywhere</option>
+</select>
+      
+    </div>
+    <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
+      <select
+        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+        value={category} // Set the current selected value
+        onChange={handleCategoryChange} // Handle change
+      >
+        <option disabled value="">
+          Select by Category
+        </option>
+        <option value="Electric">Electrice</option>
+        <option value="suv">SUV</option>
+        <option value="Sedan">Sedan</option>
+        <option value="Luxury">Luxury</option>
+        <option value="Truck">Truck</option>
+      </select>
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
-          value={seatCount ?? ""}
-          onChange={handleSeatCountChange}
-        >
-          <option disabled value="">
-            Select by Seats
-          </option>
-          <option value="4">4 or more</option>
-          <option value="5">5 or more</option>
-          <option value="6">6 or more</option>
-          <option value="7">7 or more</option>
-          <option value="8">8 or more</option>
-        </select>
+      <select
+        className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
+        value={seatCount ?? ""}
+        onChange={handleSeatCountChange}
+      >
+        <option disabled value="">
+          Select by Seats
+        </option>
+        <option value="4">4 or more</option>
+        <option value="5">5 or more</option>
+        <option value="6">6 or more</option>
+        <option value="7">7 or more</option>
+        <option value="8">8 or more</option>
+      </select>
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
-          value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
-          onChange={handlePriceRangeChange}
-        >
-          <option disabled value="">
-            Select By Price Range
-          </option>
-          <option value="0-50">$0 - $50</option>
-          <option value="51-100">$51 - $100</option>
-          <option value="101-200">$101 - $200</option>
-          <option value="201-500">$201 - $500</option>
-          <option value="501-1000">$501 - $1000</option>
-          <option value="1001-Infinity">Above $1000</option>
-        </select>
+      <select
+        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+        value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
+        onChange={handlePriceRangeChange}
+      >
+        <option disabled value="">
+          Select By Price Range
+        </option>
+        <option value="0-50">$0 - $50</option>
+        <option value="51-100">$51 - $100</option>
+        <option value="101-200">$101 - $200</option>
+        <option value="201-500">$201 - $500</option>
+        <option value="501-1000">$501 - $1000</option>
+        <option value="1001-Infinity">Above $1000</option>
+      </select>
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option disabled value="">
-            Sort by
-          </option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="date-desc">Date Added: Newest First</option>
-          <option value="date-asc">Date Added: Oldest First</option>
-        </select>
+      <select
+        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+        value={sortOption}
+        onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+      >
+        <option disabled value="">
+          Sort by
+        </option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="date-desc">Date Added: Newest First</option>
+        <option value="date-asc">Date Added: Oldest First</option>
+      </select>
+    </div>
+
+    {/* Loading Spinner */}
+    {isLoading ? (
+      <div className="flex justify-center items-center mt-10">
+        <span className="loading loading-dots loading-lg"></span>
       </div>
+    ) : (
+      <div className="ml-1 lg:ml-2">
+        <p className="text-2xl font-bold  mt-4 lg:mt-8">
+          {totalCars} + cars available
+        </p>
+        <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
 
-      {/* Loading Spinner */}
-      {isLoading ? (
-        <div className="flex justify-center items-center mt-10">
-          <span className="loading loading-dots loading-lg"></span>
-        </div>
-      ) : (
-        <div className="ml-1 lg:ml-2">
-          <p className="text-2xl font-bold mt-4 lg:mt-8">
-            {totalCars} + cars available
-          </p>
-          {Array.isArray(cardata) && cardata.length > 0 ? (
-            <div className="grid mt-5 grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
-              {cardata.map((car: Car) => (
-                <Link to={`/cars/${car._id}`} key={car._id}>
-                  <div className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group">
-                    <figure className="w-full lg:w-[50%]">
-                      <img
-                        className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                        src={car.image}
-                        alt={car.name}
-                      />
-                    </figure>
-                    <div className="card-body w-full lg:w-2/3 flex-1">
-                      <h2 className="card-title">{car.model}</h2>
-                      <p className="text-ellipsis">{car.description}</p>
-                      {car.rating > 0 ? (
-                        <p className="flex gap-1">
-                          {car.rating}
-                          <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
-                          {car.trip_count} trips)
-                          <FaAward className="mt-1 text-primary font-bold" />{" "}
-                          <span className="font-bold">All-Star Host</span>
-                        </p>
-                      ) : (
-                        <p>New listing</p>
-                      )}
+        <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
+        {Array.isArray(cardata) && cardata.length > 0 ? (
+          <div  className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
+            {cardata.map((car: Car) => (
+              <Link to={`/cars/${car._id}`}>
+                <div
+                  key={car._id}
+                  className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
+                >
+                  <figure className="w-full lg:w-[50%]">
+                    <img
+                      className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+                      src={car.image}
+                      alt={car.name}
+                    />
+                  </figure>
+                  <div className="card-body w-full lg:w-2/3 flex-1">
+                    <h2 className="card-title">{car.model}</h2>
+                    <p className="text-ellipsis">{car.description.slice(0,80)}....</p>
+                    {car.rating > 0 ? (
                       <p className="flex gap-1">
-                        <FaMapLocationDot className="mt-1" />
-                        {car.make}
+                        {car.rating}
+                        <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
+                        {car.trip_count} trips){" "}
+                        <FaAward className="mt-1 text-primary font-bold" />{" "}
+                        <span className="font-bold">All-Star-Host</span>
                       </p>
-                      {car.discount > 0 ? (
-                        <span className="font-semibold">
-                          ${car.price}{" "}
-                          <span className="ml-3 text-primary font-bold">
-                            {car.discount}% Discount{" "}
-                            <MdOutlineDiscount className="inline" />
-                          </span>
-                        </span>
-                      ) : (
-                        <span className="font-semibold">${car.price}</span>
-                      )}
+                    ) : (
+                      <p>New listing</p>
+                    )}
+                    <p className="flex gap-1">
+                      <FaMapLocationDot className="mt-1" />
+                      {car.make}
+                    </p>
+                    {car.discount > 0 ? (
+                      <span className="flex gap-1 text-[#0f923b] ">
+                        <MdOutlineDiscount className="mt-1" /> Discount:{" "}
+                        {car.discount}%
+                      </span>
+                    ) : (
+                      <p></p>
+                    )}
+
+                    <div className="card-actions justify-end">
+                      <span className="text-primary font-bold text-xl">
+                        ${car.price}/day
+                      </span>
                     </div>
                   </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <p>No cars found.</p>
-          )}
+                </div>
+              </Link>
+            ))}
+           
+          </div>
+        ) : (
+          <p>No cars available</p>
+        )}
         </div>
-      )}
-
-      {/* Pagination */}
-      <div className="flex justify-center mt-10">
-        <button
-          className="btn btn-primary"
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          className="btn btn-primary ml-4"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+        
+        <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
+        
+      <MapComponent cars={cars} userLocation={userLocation}/>
+    
+        </div>
+        </div>
+        
       </div>
+    )}
+
+    {/* Pagination */}
+    <div className="mx-auto text-center m-16">
+      <button
+        className="btn btn-active btn-primary mr-4 rounded-md"
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+      <span>
+        {" "}
+        Page {currentPage} of {totalPages}{" "}
+      </span>
+      <button
+        className="btn btn-active btn-primary ml-4 rounded-md"
+        onClick={() =>
+          setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+        }
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </button>
     </div>
-  );
+  </div>
+);
 };
 
 export default Cars;
