@@ -11,6 +11,7 @@ import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
+import Dashboard from "../Layouts/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -62,5 +63,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Registration></Registration>,
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard/>,
+    children: [
+      {
+
+      }
+    ]
+  }
 ]);
 export default router

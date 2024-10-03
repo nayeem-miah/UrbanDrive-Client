@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
 import { ImSpinner9 } from "react-icons/im";
