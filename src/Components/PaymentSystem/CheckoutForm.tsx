@@ -108,7 +108,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="items-center justify-center w-1/2 h-full mx-auto ">
+        <form onSubmit={handleSubmit} className="items-center justify-center w-1/2 min-h-screen mx-auto ">
             <CardElement
                 options={{
                     style: {
@@ -133,7 +133,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
                 {processing ? (
                     <ImSpinner9 size={24} className="animate-spin m-auto text-green-400" />
                 ) : (
-                    `Pay $ (${price})`
+                    `Pay`
                 )}
             </button>
             {

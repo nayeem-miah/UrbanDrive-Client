@@ -26,12 +26,6 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
           : ''
       }`}
     >
-            
-
-            
-
-
-
           <div className="flex items-center font-medium w-full">
             <span className={`w-8 h-8 ${index <= currentStep ? 'bg-indigo-600 text-white' : 'bg-gray-50 text-indigo-600'} border-2 border-${index <= currentStep ? 'transparent' : 'gray-200'} rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}>
               {index < currentStep ? (

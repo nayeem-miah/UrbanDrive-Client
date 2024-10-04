@@ -5,7 +5,7 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { MdOutlineStar } from "react-icons/md";
 import { FaAward } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { RxMagnifyingGlass } from "react-icons/rx";
+// import { RxMagnifyingGlass } from "react-icons/rx";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -26,8 +26,8 @@ const Cars: React.FC = () => {
   const [totalCars, setTotalCars] = useState([]);
   const [seatCount, setSeatCount] = useState<number | null>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
-  const [searchItem,setSearchItem] = useState("");
-  const [searchLocation, setSearchLocation] = useState('');
+  const [searchItem] = useState("");
+  const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
  
 
@@ -166,19 +166,19 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   return date.toLocaleDateString("en-GB"); 
   // };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      refetch(); 
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     setCurrentPage(currentPage + 1);
+  //     refetch(); 
+  //   }
+  // };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      refetch();
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage(currentPage - 1);
+  //     refetch();
+  //   }
+  // };
   // console.log(totalCars);
   // console.log(formatDate(123));
   // console.log(handleNextPage());

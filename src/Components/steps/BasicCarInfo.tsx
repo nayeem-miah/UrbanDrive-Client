@@ -19,8 +19,6 @@ const BasicCarInfo: React.FC<BasicCarInfoProps> = ({ formData, onSubmit, nextSte
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     formState: { errors },
   } = useForm<BasicCarInfoFormValues>({
     defaultValues: formData,
