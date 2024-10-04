@@ -72,7 +72,7 @@ const Registration: React.FC = () => {
               </span>
               <input
                 type="text"
-                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("name", { required: true })}
                 placeholder="Full Name"
               />
@@ -88,7 +88,7 @@ const Registration: React.FC = () => {
               </span>
               <input
                 type="email"
-                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Your email"
                 {...register("email", { required: true })}
               />
@@ -124,7 +124,7 @@ const Registration: React.FC = () => {
               <input
                 type="password"
                 placeholder="password"
-                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", {
                   required: true,
                   minLength: 6,
@@ -160,7 +160,7 @@ const Registration: React.FC = () => {
               <input
                 type="password"
                 id="confirmPassword"
-                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("confirmPassword", {
                   required: "Please confirm your password",
                   validate: (value) =>

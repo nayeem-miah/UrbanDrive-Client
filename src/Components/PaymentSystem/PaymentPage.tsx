@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 // Initialize Stripe with the publishable key
 const stripePromise: Promise<Stripe | null> = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
 
+
 const PaymentPage: React.FC = () => {
   const { totalPrice } = useParams<{ totalPrice: string }>();
   const price = totalPrice ? parseFloat(totalPrice) : NaN;
