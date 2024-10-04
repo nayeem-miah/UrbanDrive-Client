@@ -10,10 +10,11 @@ import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
-import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
+// import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 
 
 const router = createBrowserRouter([
@@ -34,15 +35,15 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      {
-        path: "/services",
-        element: <HostCarListingForm></HostCarListingForm>,
-      },
+      // {
+      //   path: "/services",
+      //   element: <HostCarListingForm></HostCarListingForm>,
+      // },
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
@@ -98,14 +99,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: "adminhome",
-        element: (
-            <AdminHome />
-        ),
+        element: <AdminHome />,
       },
       {
         path: "manageUser",
-        element: <ManageUsers/>
-      }
+        element: <ManageUsers />,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymetHistory/>
+      },
     ],
   },
 ]);

@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
-import img from "../assets/urbandrive-high-resolution-logo.png";
+// import img from "../assets/urbandrive-high-resolution-logo.png";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
-import { BiCategory } from "react-icons/bi";
+// import { BiCategory } from "react-icons/bi";
 // import { HiOutlineDocumentReport } from "react-icons/hi";
 import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
     <div className="flex">
       <div className="w-64 min-h-screen bg-[#076cec] pt-8">
         <div>
-          <img className="ml-2 w-[70px] lg:w-[80px]" src={img} alt="logo" />
+          {/* <img className="ml-2 w-[70px] lg:w-[80px]" src={img} alt="logo" /> */}
           <ul className="menu space-y-1 mt-3 text-base font-medium">
             {/* Admin Section */}
             {role === "Admin" && (
@@ -44,15 +44,15 @@ const Dashboard: React.FC = () => {
                     Manage users
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/dashboard/manageCategory">
                     <BiCategory />
                     Manage Category
                   </NavLink>
-                </li>
+                </li> */}
                 <li>
-                  <NavLink to="/dashboard/managePayment">
-                    <FaCoins /> Payment Management
+                  <NavLink to="/dashboard/paymentHistory">
+                    <FaCoins /> Payment History
                   </NavLink>
                 </li>
                 {/* <li>
@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
             {role === "User" && (
               <>
                 <li className="mb-2">
-                  <NavLink to="/dashboard/payment">
+                  <NavLink to="/dashboard/paymentHistory">
                     <MdPayment />
                     Payment history
                   </NavLink>

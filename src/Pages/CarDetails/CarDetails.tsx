@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import {  useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import slide1 from '../../assets/slides/slide1.jpg';
@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { ICar, RatingData } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
+import { SyncLoader } from 'react-spinners';
 
 
 
@@ -81,7 +82,7 @@ const CarDetails: React.FC = () => {
         totalCost: totalCost,
       };
 
-      const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
+      const response = await axiosPublic.post('https://urban-driveserver.vercel.app/bookings', bookingData);
       
       if (response.data.success && response.data.bookingId) {
         navigate(`/checkout/${response.data.bookingId}`);
@@ -107,11 +108,15 @@ const CarDetails: React.FC = () => {
 
 
 
-  if (!car) return <div>Loading...</div>;
-  const handlePrice = () => {
-    const price = totalCost;
-    navigate(`/payment/${price}`);
-  };
+  if (!car) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <SyncLoader color="#593cfb" size={18} />
+    </div>
+  );
+  // const handlePrice = () => {
+  //   const price = totalCost;
+  //   navigate(`/payment/${price}`);
+  // };
   return (
     <div>
       <section>
