@@ -98,6 +98,7 @@ const OnboardCheckout: React.FC = () => {
           confirmButtonText: 'Go to Homepage',
           allowOutsideClick: false,
         }).then((result) => {
+          console.log(result)
           if (result.isConfirmed) {
             navigate('/');
           }

@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import img from "../assets/urbandrive-high-resolution-logo.png";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
-import { HiOutlineDocumentReport } from "react-icons/hi";
+// import { HiOutlineDocumentReport } from "react-icons/hi";
 import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { MdPayment } from "react-icons/md";
@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
                     <FaCoins /> Payment Management
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/dashboard/sellsReport">
                     <HiOutlineDocumentReport />
                     Sales Report
@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
                   <NavLink to="/dashboard/manageAdvertise">
                     <RiAdvertisementLine /> Manage banner advertise
                   </NavLink>
-                </li>
+                </li> */}
               </>
             )}
 
