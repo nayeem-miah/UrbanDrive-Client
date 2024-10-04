@@ -142,7 +142,7 @@ const OnboardCheckout: React.FC = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded-md"
             />
-            <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License Upload</button>
+            <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License</button>
           </div>
         );
       case 3:
