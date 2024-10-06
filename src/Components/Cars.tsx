@@ -102,7 +102,7 @@ const Cars: React.FC = () => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         setUserLocation({ lat, lng });
-        fetchCars(lat, lng, 5000); // ৫ কিমি এর মধ্যে গাড়ি অনুসন্ধান করা
+        fetchCars(lat, lng, 5000); 
       });
     } else {
       alert("Geolocation is not supported by this browser.");
