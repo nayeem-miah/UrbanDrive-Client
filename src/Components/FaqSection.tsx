@@ -3,7 +3,7 @@ const FaqSection: React.FC = () => {
     <div className="max-w-6xl mx-auto py-5 px-4">
       <div className="text-center">
         <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Playfair">
-          Browse By Cars
+          Frequently Asked Question
           <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
         </h2>
       </div>

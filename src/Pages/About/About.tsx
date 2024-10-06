@@ -38,9 +38,8 @@ const AboutUs: React.FC = () => {
           backgroundPositionY: `${scrollY * 0.5}px`
         }}
       >
-        <div className="absolute inset-0 bg-black opacity-25"></div>
         <div className="text-center z-10 flex flex-col px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white font-Playfair">About <span className='text-teal-400'>Us</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white font-Playfair">About <span className='text-primary'>Us</span></h1>
           <p className='text-white mt-4 sm:mt-8 text-sm sm:text-lg font-Merri font-bold w-full sm:w-3/4 mx-auto'>Our mission is to be the leading car rental provider,
           delivering exceptional service, prioritizing safety, and offering unparalleled convenience to our customers, making every journey a memorable one.</p>
           <p className="text-white mt-8 sm:mt-16 text-sm sm:text-lg font-Merri font-bold">Learn more about our journey and values.</p>
@@ -50,10 +49,10 @@ const AboutUs: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 px-4 md:px-16 bg-[#111010]">
+      <section className="py-12 sm:py-16 px-4 md:px-16">
         <div className="container mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-white font-Playfair">Our <span className='text-teal-400'>Vision</span></h2>
-          <p className="mt-4 sm:mt-6 text-center max-w-3xl mx-auto text-base sm:text-lg text-gray-300 font-Merri">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-white font-Playfair">Our <span className='text-primary'>Vision</span></h2>
+          <p className="mt-4 sm:mt-6 text-center max-w-3xl mx-auto text-base sm:text-lg text-gray-500 font-Merri">
           To become the leading car rental company known for quality, innovation, and commitment to our customers and community.
           </p>
         </div>
@@ -66,23 +65,22 @@ const AboutUs: React.FC = () => {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-white font-Playfair">Our <span className='text-teal-400'>Values</span></h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-white font-Playfair">Our <span className='text-primary'>Values</span></h2>
           <p className="mt-4 sm:mt-6 text-center max-w-3xl mx-auto text-base sm:text-lg text-white font-Merri">
             To provide exceptional car rental services that exceed customer expectations, ensuring convenience, reliability, and satisfaction in every journey.
           </p>
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 px-4 md:px-16 bg-[#111010]">
+      <section className="py-12 sm:py-16 px-4 md:px-16">
         <div className="container mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-white font-Playfair">Meet Our <span className='text-teal-400'>Team</span></h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-black font-Playfair">Meet Our <span className='text-primary'>Team</span></h2>
           <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member text-center">
                 <img src={member.image} alt={`${member.name}`} className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full object-cover" />
-                <h3 className="text-lg sm:text-xl font-bold mt-4 text-white">{member.name}</h3>
+                <h3 className="text-lg sm:text-xl font-bold mt-4 text-black">{member.name}</h3>
                 <p className="text-gray-400">{member.role}</p>
               </div>
             ))}

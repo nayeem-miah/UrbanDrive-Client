@@ -5,11 +5,12 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { MdOutlineStar } from "react-icons/md";
 import { FaAward } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { RxMagnifyingGlass } from "react-icons/rx";
+// import { RxMagnifyingGlass } from "react-icons/rx";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MapComponent from "./MapComponent";
+// import { SyncLoader } from "react-spinners";
 
 
 
@@ -25,8 +26,8 @@ const Cars: React.FC = () => {
   const [totalCars, setTotalCars] = useState([]);
   const [seatCount, setSeatCount] = useState<number | null>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
-  const [searchItem,setSearchItem] = useState("");
-  const [searchLocation, setSearchLocation] = useState('');
+  const [searchItem] = useState("");
+  const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
  
 
@@ -102,7 +103,7 @@ const Cars: React.FC = () => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         setUserLocation({ lat, lng });
-        fetchCars(lat, lng, 5000); 
+        fetchCars(lat, lng, 5000);
       });
     } else {
       alert("Geolocation is not supported by this browser.");
@@ -165,19 +166,19 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   return date.toLocaleDateString("en-GB"); 
   // };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      refetch(); 
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     setCurrentPage(currentPage + 1);
+  //     refetch(); 
+  //   }
+  // };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      refetch();
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage(currentPage - 1);
+  //     refetch();
+  //   }
+  // };
   // console.log(totalCars);
   // console.log(formatDate(123));
   // console.log(handleNextPage());
@@ -185,185 +186,186 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
   return (
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
-    {/* Filters */}
+      {/* Filters */}
       {/* Search Bar */}
       <div className="mb-6">
-       
-       <select className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12" id="locationSelect" onChange={handleLocationChange}>
-        <option disabled value="">Where</option>
-  <option value="current">Current Location</option>
-  <option value="anywhere">Anywhere</option>
-</select>
-      
-    </div>
-    <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
-      <select
-        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
-        value={category} // Set the current selected value
-        onChange={handleCategoryChange} // Handle change
-      >
-        <option disabled value="">
-          Select by Category
-        </option>
-        <option value="Electric">Electrice</option>
-        <option value="suv">SUV</option>
-        <option value="Sedan">Sedan</option>
-        <option value="Luxury">Luxury</option>
-        <option value="Truck">Truck</option>
-      </select>
-
-      <select
-        className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
-        value={seatCount ?? ""}
-        onChange={handleSeatCountChange}
-      >
-        <option disabled value="">
-          Select by Seats
-        </option>
-        <option value="4">4 or more</option>
-        <option value="5">5 or more</option>
-        <option value="6">6 or more</option>
-        <option value="7">7 or more</option>
-        <option value="8">8 or more</option>
-      </select>
-
-      <select
-        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
-        value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
-        onChange={handlePriceRangeChange}
-      >
-        <option disabled value="">
-          Select By Price Range
-        </option>
-        <option value="0-50">$0 - $50</option>
-        <option value="51-100">$51 - $100</option>
-        <option value="101-200">$101 - $200</option>
-        <option value="201-500">$201 - $500</option>
-        <option value="501-1000">$501 - $1000</option>
-        <option value="1001-Infinity">Above $1000</option>
-      </select>
-
-      <select
-        className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
-        value={sortOption}
-        onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
-      >
-        <option disabled value="">
-          Sort by
-        </option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-        <option value="date-desc">Date Added: Newest First</option>
-        <option value="date-asc">Date Added: Oldest First</option>
-      </select>
-    </div>
-
-    {/* Loading Spinner */}
-    {isLoading ? (
-      <div className="flex justify-center items-center mt-10">
-        <span className="loading loading-dots loading-lg"></span>
+        <select
+          className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12"
+          id="locationSelect"
+          onChange={handleLocationChange}
+        >
+          <option disabled value="">
+            Where
+          </option>
+          <option value="current">Current Location</option>
+          <option value="anywhere">Anywhere</option>
+        </select>
       </div>
-    ) : (
-      <div className="ml-1 lg:ml-2">
-        <p className="text-2xl font-bold  mt-4 lg:mt-8">
-          {totalCars} + cars available
-        </p>
-        <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
+      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
+        <select
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          value={category} // Set the current selected value
+          onChange={handleCategoryChange} // Handle change
+        >
+          <option disabled value="">
+            Select by Category
+          </option>
+          <option value="Electric">Electrice</option>
+          <option value="suv">SUV</option>
+          <option value="Sedan">Sedan</option>
+          <option value="Luxury">Luxury</option>
+          <option value="Truck">Truck</option>
+        </select>
 
-        <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
-        {Array.isArray(cardata) && cardata.length > 0 ? (
-          <div  className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
-            {cardata.map((car: Car) => (
-              <Link to={`/cars/${car._id}`}>
-                <div
-                  key={car._id}
-                  className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
-                >
-                  <figure className="w-full lg:w-[50%]">
-                    <img
-                      className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                      src={car.image}
-                      alt={car.name}
-                    />
-                  </figure>
-                  <div className="card-body w-full lg:w-2/3 flex-1">
-                    <h2 className="card-title">{car.model}</h2>
-                    <p className="text-ellipsis">{car.description.slice(0,80)}....</p>
-                    {car.rating > 0 ? (
-                      <p className="flex gap-1">
-                        {car.rating}
-                        <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
-                        {car.trip_count} trips){" "}
-                        <FaAward className="mt-1 text-primary font-bold" />{" "}
-                        <span className="font-bold">All-Star-Host</span>
-                      </p>
-                    ) : (
-                      <p>New listing</p>
-                    )}
-                    <p className="flex gap-1">
-                      <FaMapLocationDot className="mt-1" />
-                      {car.make}
-                    </p>
-                    {car.discount > 0 ? (
-                      <span className="flex gap-1 text-[#0f923b] ">
-                        <MdOutlineDiscount className="mt-1" /> Discount:{" "}
-                        {car.discount}%
-                      </span>
-                    ) : (
-                      <p></p>
-                    )}
+        <select
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
+          value={seatCount ?? ""}
+          onChange={handleSeatCountChange}
+        >
+          <option disabled value="">
+            Select by Seats
+          </option>
+          <option value="4">4 or more</option>
+          <option value="5">5 or more</option>
+          <option value="6">6 or more</option>
+          <option value="7">7 or more</option>
+          <option value="8">8 or more</option>
+        </select>
 
-                    <div className="card-actions justify-end">
-                      <span className="text-primary font-bold text-xl">
-                        ${car.price}/day
-                      </span>
-                    </div>
-                  </div>
+        <select
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
+          onChange={handlePriceRangeChange}
+        >
+          <option disabled value="">
+            Select By Price Range
+          </option>
+          <option value="0-50">$0 - $50</option>
+          <option value="51-100">$51 - $100</option>
+          <option value="101-200">$101 - $200</option>
+          <option value="201-500">$201 - $500</option>
+          <option value="501-1000">$501 - $1000</option>
+          <option value="1001-Infinity">Above $1000</option>
+        </select>
+
+        <select
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+        >
+          <option disabled value="">
+            Sort by
+          </option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="date-desc">Date Added: Newest First</option>
+          <option value="date-asc">Date Added: Oldest First</option>
+        </select>
+      </div>
+
+      {/* Loading Spinner */}
+      {isLoading ? (
+        <div className="min-h-screen flex items-center justify-center">
+          <SyncLoader color="#593cfb" size={18} />
+        </div>
+      ) : (
+        <div className="ml-1 lg:ml-2">
+          <p className="text-2xl font-bold  mt-4 lg:mt-8">
+            {totalCars} + cars available
+          </p>
+          <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
+            <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
+              {Array.isArray(cardata) && cardata.length > 0 ? (
+                <div className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
+                  {cardata.map((car: Car) => (
+                    <Link to={`/cars/${car._id}`}>
+                      <div
+                        key={car._id}
+                        className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
+                      >
+                        <figure className="w-full lg:w-[50%]">
+                          <img
+                            className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+                            src={car.image}
+                            alt={car.name}
+                          />
+                        </figure>
+                        <div className="card-body w-full lg:w-2/3 flex-1">
+                          <h2 className="card-title">{car.model}</h2>
+                          <p className="text-ellipsis">
+                            {car.description.slice(0, 80)}....
+                          </p>
+                          {car.rating > 0 ? (
+                            <p className="flex gap-1">
+                              {car.rating}
+                              <MdOutlineStar className="text-[#f0bb0c] mt-1" />{" "}
+                              ({car.trip_count} trips){" "}
+                              <FaAward className="mt-1 text-primary font-bold" />{" "}
+                              <span className="font-bold">All-Star-Host</span>
+                            </p>
+                          ) : (
+                            <p>New listing</p>
+                          )}
+                          <p className="flex gap-1">
+                            <FaMapLocationDot className="mt-1" />
+                            {car.make}
+                          </p>
+                          {car.discount > 0 ? (
+                            <span className="flex gap-1 text-[#0f923b] ">
+                              <MdOutlineDiscount className="mt-1" /> Discount:{" "}
+                              {car.discount}%
+                            </span>
+                          ) : (
+                            <p></p>
+                          )}
+
+                          <div className="card-actions justify-end">
+                            <span className="text-primary font-bold text-xl">
+                              ${car.price}/day
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              </Link>
-            ))}
-           
-          </div>
-        ) : (
-          <p>No cars available</p>
-        )}
-        </div>
-        
-        <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
-        
-      <MapComponent cars={cars} userLocation={userLocation}/>
-    
-        </div>
-        </div>
-        
-      </div>
-    )}
+              ) : (
+                <p>No cars available</p>
+              )}
+            </div>
 
-    {/* Pagination */}
-    <div className="mx-auto text-center m-16">
-      <button
-        className="btn btn-active btn-primary mr-4 rounded-md"
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </button>
-      <span>
-        {" "}
-        Page {currentPage} of {totalPages}{" "}
-      </span>
-      <button
-        className="btn btn-active btn-primary ml-4 rounded-md"
-        onClick={() =>
-          setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-        }
-        disabled={currentPage === totalPages}
-      >
-        Next
-      </button>
+            <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
+              <MapComponent cars={cars} userLocation={userLocation} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pagination */}
+      <div className="mx-auto text-center m-16">
+        <button
+          className="btn btn-active btn-primary mr-4 rounded-md"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>
+          {" "}
+          Page {currentPage} of {totalPages}{" "}
+        </span>
+        <button
+          className="btn btn-active btn-primary ml-4 rounded-md"
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default Cars;
