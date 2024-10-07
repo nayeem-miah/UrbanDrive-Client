@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -31,9 +31,39 @@ interface MapComponentProps {
     cars?: Car[]; // Optional to avoid undefined errors
     userLocation?: { lat: number; lng: number } | null; 
 }
+const RecentMapLocation = ({ userLocation }: { userLocation?: { lat: number; lng: number } | null }) => {
+    const map = useMap();
+
+    useEffect(() => {
+        if (userLocation) {
+            // Set view to user's location with a zoom level of 13
+            map.setView([userLocation.lat, userLocation.lng], 13, { animate: true });
+        }
+    }, [userLocation, map]);
+
+    return null;
+};
+const MapEventHandler = ({ cars }: { cars: Car[] }) => {
+    const map = useMap();
+
+    useMapEvents({
+        click: () => {
+            // If there are cars, fit the map bounds to include all car markers
+            if (cars.length > 0) {
+                const bounds = L.latLngBounds(
+                    cars.map(car => L.latLng(car.location.coordinates[1], car.location.coordinates[0]))
+                );
+                map.fitBounds(bounds);
+            }
+        }
+    });
+
+    return null;
+}
 
 const MapComponent: React.FC<MapComponentProps> = ({ cars = [], userLocation }) => { // Default to empty array
     // const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+    
     
 
 
@@ -55,6 +85,8 @@ const MapComponent: React.FC<MapComponentProps> = ({ cars = [], userLocation }) 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
+             <RecentMapLocation userLocation={userLocation} />
+             <MapEventHandler cars={cars} />
              {userLocation && (
         <Marker position={[userLocation.lat, userLocation.lng]}>
           <Popup>You are here!</Popup>

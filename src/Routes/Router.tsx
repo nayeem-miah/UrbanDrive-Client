@@ -17,6 +17,7 @@ import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,15 +36,12 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      // {
-      //   path: "/services",
-      //   element: <HostCarListingForm></HostCarListingForm>,
-      // },
+      
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:5000/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -74,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars></Cars>,
+      },
+      {
+        path: "/payment",
+        element: <PaymentPage></PaymentPage>,
       },
       {
         path: "/payment/:totalPrice",

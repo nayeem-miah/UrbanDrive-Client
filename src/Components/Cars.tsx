@@ -10,7 +10,7 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MapComponent from "./MapComponent";
-// import { SyncLoader } from "react-spinners";
+import { SyncLoader } from "react-spinners";
 
 
 
@@ -29,6 +29,7 @@ const Cars: React.FC = () => {
   const [searchItem] = useState("");
   const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
  
 
   interface Car {
@@ -192,6 +193,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         <select
           className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12"
           id="locationSelect"
+          value={userLocation ? JSON.stringify(userLocation) : ""}
           onChange={handleLocationChange}
         >
           <option disabled value="">
@@ -266,7 +268,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       {/* Loading Spinner */}
       {isLoading ? (
         <div className="min-h-screen flex items-center justify-center">
-          <SyncLoader color="#593cfb" size={18} />
+          <SyncLoader color="#593cfb" size={10} />
         </div>
       ) : (
         <div className="ml-1 lg:ml-2">

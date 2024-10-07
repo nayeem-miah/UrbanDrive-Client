@@ -42,7 +42,7 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
-        const response = await axios.get(`https://urban-driveserver.vercel.app/bookings/${bookingId}`);
+        const response = await axios.get(`http://localhost:5000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
@@ -86,7 +86,7 @@ const OnboardCheckout: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.put(`https://urban-driveserver.vercel.app/bookings/${bookingId}`, {
+      const response = await axios.put(`http://localhost:5000/bookings/${bookingId}`, {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
