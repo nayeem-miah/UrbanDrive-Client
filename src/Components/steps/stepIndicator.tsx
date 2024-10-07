@@ -1,70 +1,57 @@
-import { motion } from 'framer-motion';
 
 const steps = [
-  { title: 'Basic Car Information', description: 'Completed' },
-  { title: 'Rental Details', description: 'Completed' },
-  { title: 'Location and Pickup Information', description: 'Pending' },
-  { title: 'Host Information', description: 'Pending' },
-  { title: 'Membership and Plan', description: 'Pending' },
-  { title: 'Additional Information', description: 'Pending' },
+  {id: 'basicCarInfo', title: 'Basic Car Information', description: 'Completed' },
+  {id: 'rentalDetails', title: 'Rental Details', description: 'Completed' },
+  {id: 'locationAndPickupInfo', title: 'Location and Pickup Information', description: 'Pending' },
+  {id: 'hostInfo', title: 'Host Information', description: 'Pending' },
+  {id: 'membershipAndPlan', title: 'Membership and Plan', description: 'Pending' },
+  {id: 'additionalInfo', title: 'Additional Information', description: 'Pending' },
 ];
+interface Step {
+  id: string;
+  title: string;
+  description: string;
+}
 
-const StepIndicator = ({ currentStep }: { currentStep: number }) => {
-  return (
-    <div className="flex items-start max-md:flex-col gap-y-6 gap-x-3 max-w-screen-lg mx-auto px-4 font-sans">
-      {steps.map((step, index) => (
-        <div key={index} className="w-full">
-          <motion.div
-            className="w-full h-1 rounded-xl"
-            initial={{ backgroundColor: '#D1D5DB' }}
-            animate={{
-              backgroundColor: index < currentStep ? '#10B981' : '#D1D5DB'
-            }}
-            transition={{ duration: 0.5 }}
-          />
-          <div className="mt-2 mr-4 flex">
-            {index+1 < currentStep ? (
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                className="shrink-0 fill-green-500"
-                viewBox="0 0 24 24"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <path d="M9.7 11.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l3 3c.2.2.4.3.7.3s.5-.1.7-.3l7-8c.3-.5.3-1.1-.2-1.4-.4-.3-1-.3-1.3.1L12 13.5z" />
-                <path d="M21 11c-.6 0-1 .4-1 1 0 4.4-3.6 8-8 8s-8-3.6-8-8c0-2.1.8-4.1 2.3-5.6C7.8 4.8 9.8 4 12 4c.6 0 1.3.1 1.9.2.5.2 1.1-.1 1.3-.7s-.2-1-.7-1.2h-.1c-.8-.2-1.6-.3-2.4-.3C6.5 2 2 6.5 2 12.1c0 2.6 1.1 5.2 2.9 7 1.9 1.9 4.4 2.9 7 2.9 5.5 0 10-4.5 10-10 .1-.6-.4-1-.9-1z" />
-              </motion.svg>
-            ) : null}
-            <div className={index +1 < currentStep ? "ml-2" : ""}>
-              <motion.h6
-                className={`text-base font-bold ${
-                  index+1 < currentStep ? 'text-green-500' : 'text-gray-400'
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {step.title}
-              </motion.h6>
-              <motion.p
-                className={`text-xs ${
-                  index+1 < currentStep ? 'text-green-500' : 'text-gray-400'
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.1 }}
-              >
-                {index+1 < currentStep ? 'Completed' : 'Pending'}
-              </motion.p>
+interface StepIndicatorProps {
+  steps: Step[];
+  currentStep: number;
+}
+
+  const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => {
+    return (
+      <ol className="space-y-8">
+        {steps.map((step, index) => (
+          // <li key={step.id} className={`relative flex-1 after:content-[''] after:w-0.5 after:h-full after:bg-${index <= currentStep ? 'indigo-600' : 'gray-200'} after:inline-block after:absolute after:-bottom-12 after:left-4 lg:after:left-5`}>
+              <li
+        key={step.id}
+        className={`relative flex-1 ${
+          index < steps.length - 1
+            ? `after:content-[''] after:w-0.5 after:h-full after:bg-${
+                index <= currentStep ? 'indigo-600' : 'gray-200'
+              } after:inline-block after:absolute after:-bottom-12 after:left-4 lg:after:left-5`
+            : ''
+        }`}
+      >
+            <div className="flex items-center font-medium w-full">
+              <span className={`w-8 h-8 ${index <= currentStep ? 'bg-indigo-600 text-white' : 'bg-gray-50 text-indigo-600'} border-2 border-${index <= currentStep ? 'transparent' : 'gray-200'} rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}>
+                {index < currentStep ? (
+                  <svg className="w-5 h-5 stroke-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12L9.28722 16.2923C9.62045 16.6259 9.78706 16.7927 9.99421 16.7928C10.2014 16.7929 10.3681 16.6262 10.7016 16.2929L20 7" stroke="stroke-current" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                ) : (
+                  index + 1
+                )}
+              </span>
+              <div className="block">
+                <h4 className={`text-lg ${index <= currentStep ? 'text-indigo-600' : 'text-gray-900'}`}>{step.title}</h4>
+                <span className="text-sm">{step.description}</span>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+          </li>
+        ))}
+      </ol>
+    );
+  };
 
 export default StepIndicator;
