@@ -44,6 +44,7 @@ const CarDetails: React.FC = () => {
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+  const [includedDriver, setIncludedDriver] = useState(false);
 
 
   const calculateTotalCost = (start: Date, end: Date) => {
@@ -226,6 +227,16 @@ const CarDetails: React.FC = () => {
             <div className="flex justify-between items-center border border-gray-300 p-2 rounded cursor-pointer bg-gray-200" onClick={() => setShowCalendar(!showCalendar)}>
               <span>{format(dateRange[0].startDate, 'MM/dd/yyyy')} - {format(dateRange[0].endDate, 'MM/dd/yyyy')}</span>
             </div>
+          </div>
+
+          <div className='mb-4 flex items-center'>
+            <input type="checkbox"
+                    checked={includedDriver}
+                    onChange={(e) => setIncludedDriver(e.target.checked)}
+                    className='w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500'
+            />
+            <span className='text-gray-800 text-sm ml-2'>Include driver(+20% total cost)</span>
+
           </div>
 
           {showCalendar && (
