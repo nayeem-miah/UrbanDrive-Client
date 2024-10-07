@@ -1,53 +1,128 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import BasicCarInfo from '../../Components/steps/BasicCarInfo';
 import StepIndicator from '../../Components/steps/stepIndicator';
-import RentalDetails from '../../Components/steps/RentalDetails';
+import { steps } from '../../Components/steps/HostSteps';
 
 
-const HostCarListingForm = () => {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    ... (initialize your form data here)
-  });
 
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const renderStep = () => {
-    const props = { formData, handleInputChange, nextStep, prevStep, onSubmit: () => {} };
-    switch (step) {
-      case 1: return <BasicCarInfo {...props} />;
-      case 2: return <RentalDetails {...props}></RentalDetails>;
-      case 3: return <div>Step 3</div>;
-      default: return <div>Form completed</div>;
-    }
-  };
-
-  return (
-    <div className="max-w-screen-lg mx-auto mt-10 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">List your car</h1>
-      <StepIndicator currentStep={step} />
-      <div className="mt-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderStep()}
-          </motion.div>
-        </AnimatePresence>
+const HostingCarForm = () => {
+    const [currentStep, setCurrentStep] = useState(0);
+    const [formData, setFormData] = useState({
+      basicCarInfo: { make: '', model: '', year: '' },
+      rentalDetails: { price: '', availability: '' },
+      locationAndPickupInfo: { address: '', instructions: '' },
+      hostInfo: { name: '', phone: '' },
+      membershipAndPlan: { plan: '' },
+      additionalInfo: { description: '' }
+    });
+  
+    const handleInputChange = (step: string, field: string, value: string) => {
+      setFormData(prevData => ({
+        ...prevData,
+        [step]: {
+          ...prevData[step as keyof typeof prevData],
+          [field]: value
+        }
+      }));
+    };
+  
+    const handleNext = () => {
+      if (currentStep < steps.length - 1) {
+        setCurrentStep(currentStep + 1);
+      }
+    };
+  
+    const handlePrevious = () => {
+      if (currentStep > 0) {
+        setCurrentStep(currentStep - 1);
+      }
+    };
+  
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      console.log('Form submitted:', formData);
+      // Here you would typically send the data to your backend
+    };
+  
+    const renderStepContent = () => {
+      switch (currentStep) {
+        case 0:
+          return (
+            <>
+              <label htmlFor="make">Make</label>
+              <input
+                id="make"
+                value={formData.basicCarInfo.make}
+                onChange={(e) => handleInputChange('basicCarInfo', 'make', e.target.value)}
+              />
+              <label htmlFor="model">Model</label>
+              <input
+                id="model"
+                value={formData.basicCarInfo.model}
+                onChange={(e) => handleInputChange('basicCarInfo', 'model', e.target.value)}
+              />
+              <label htmlFor="year">Year</label>
+              <input
+                id="year"
+                value={formData.basicCarInfo.year}
+                onChange={(e) => handleInputChange('basicCarInfo', 'year', e.target.value)}
+              />
+            </>
+          );
+        case 1:
+          return (
+            <>
+              <label htmlFor="price">Price per day</label>
+              <input
+                id="price"
+                value={formData.rentalDetails.price}
+                onChange={(e) => handleInputChange('rentalDetails', 'price', e.target.value)}
+              />
+              <label htmlFor="availability">Availability</label>
+              <input
+                id="availability"
+                value={formData.rentalDetails.availability}
+                onChange={(e) => handleInputChange('rentalDetails', 'availability', e.target.value)}
+              />
+            </>
+          );
+        // Add cases for the remaining steps...
+        case 5:
+          return (
+            <>
+              <label htmlFor="description">Additional Information</label>
+              <textarea
+                id="description"
+                value={formData.additionalInfo.description}
+                onChange={(e) => handleInputChange('additionalInfo', 'description', e.target.value)}
+              />
+            </>
+          );
+        default:
+          return <p>Step not implemented yet</p>;
+      }
+    };
+  
+    return (
+      <div className="max-w-4xl mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Host Your Car</h1>
+        <StepIndicator steps={steps} currentStep={currentStep} />
+        <form onSubmit={handleSubmit} className="mt-8">
+          <div className="mb-4">{renderStepContent()}</div>
+          <div className="flex justify-between mt-4">
+            <button type="button" onClick={handlePrevious} disabled={currentStep === 0}>
+              Previous
+            </button>
+            {currentStep < steps.length - 1 ? (
+              <button type="button" onClick={handleNext}>
+                Next
+              </button>
+            ) : (
+              <button type="submit">Submit</button>
+            )}
+          </div>
+        </form>
       </div>
-    </div>
-  );
-};
-
-export default HostCarListingForm;
+    );
+  };
+  
+  export default HostingCarForm;

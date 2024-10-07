@@ -15,6 +15,7 @@ import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
 
 
 const router = createBrowserRouter([
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
-        element: <Cars></Cars>,
+        element: <HostingCarForm></HostingCarForm>,
       },
       {
         path: "/cars/:id",

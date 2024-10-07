@@ -1,12 +1,5 @@
 
-const steps = [
-  {id: 'basicCarInfo', title: 'Basic Car Information', description: 'Completed' },
-  {id: 'rentalDetails', title: 'Rental Details', description: 'Completed' },
-  {id: 'locationAndPickupInfo', title: 'Location and Pickup Information', description: 'Pending' },
-  {id: 'hostInfo', title: 'Host Information', description: 'Pending' },
-  {id: 'membershipAndPlan', title: 'Membership and Plan', description: 'Pending' },
-  {id: 'additionalInfo', title: 'Additional Information', description: 'Pending' },
-];
+
 interface Step {
   id: string;
   title: string;
@@ -18,7 +11,7 @@ interface StepIndicatorProps {
   currentStep: number;
 }
 
-  const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => {
+  const StepIndicator: React.FC<StepIndicatorProps> = ({steps, currentStep }) => {
     return (
       <ol className="space-y-8">
         {steps.map((step, index) => (
