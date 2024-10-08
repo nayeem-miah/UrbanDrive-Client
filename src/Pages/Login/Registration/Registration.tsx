@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import bgimg from "../../../assets/ladingpage.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
@@ -15,6 +15,7 @@ type Inputs = {
   role: string;
 };
 
+
 const Registration: React.FC = () => {
   const {
     register,
@@ -23,8 +24,9 @@ const Registration: React.FC = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const { createUser } = useAuth();
+  const { createUser , googleSignIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const axiosPublic = useAxiosPublic();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
@@ -52,7 +54,33 @@ const Registration: React.FC = () => {
               showConfirmButton: false,
               timer: 1500,
             });
-            navigate("/");
+            navigate(location.state ? location.state : "/");
+          }
+        });
+      })
+      .catch();
+  };
+
+  const handleGoogleLogIn = () => {
+    googleSignIn()
+      .then(async (result) => {
+        const userInfo = {
+          email: result.user?.email,
+          name: result.user?.displayName,
+          role: "User",
+        };
+        // console.log(userInfo)
+        await axiosPublic.post("/users", userInfo).then((res) => {
+          // console.log(res.data)
+          if (res.data) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successfully logged in",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate(location.state ? location.state : "/");
           }
         });
       })
@@ -209,7 +237,10 @@ const Registration: React.FC = () => {
               className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium cursor-pointer"
             />
           </form>
-          <button className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white">
+          <button
+            onClick={handleGoogleLogIn}
+            className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white"
+          >
             Sign up with Google
           </button>
           <div className="text-center text-gray-400">
