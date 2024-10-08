@@ -29,7 +29,8 @@ const Cars: React.FC = () => {
   const [searchItem] = useState("");
   const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
+ const [driver,setDriver]=useState('');
+ const [homePickup,setHomePickup]=useState("");
  
 
   interface Car {
@@ -55,7 +56,7 @@ const Cars: React.FC = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem],
+    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem,driver,homePickup],
     queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
@@ -71,6 +72,8 @@ const Cars: React.FC = () => {
           lng: userLocation?.lng,
           location: searchLocation,
           maxDistance: 50000,
+          driver:driver,
+          homePickup:homePickup
         },
       });
       setTotalPages(response.data.totalPages);
@@ -143,6 +146,12 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
+  const handleDriverSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDriver(e.target.value);
+  };
+  const handleHomePickup = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setHomePickup(e.target.value);
+  };
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -189,23 +198,23 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
       {/* Filters */}
       {/* Search Bar */}
-      <div className="mb-6">
-        <select
-          className="select w-2/3 md:w-1/3 lg:w-1/3 border border-gray-300  rounded-2xl p-3 h-12"
+      <div className=" mb-6">
+      <select
+          className=" w-2/3 md:w-1/3 lg:w-1/3 border-b border-gray-300 focus:outline-none  p-3 h-12"
           id="locationSelect"
           value={userLocation ? JSON.stringify(userLocation) : ""}
           onChange={handleLocationChange}
-        >
+        >where
           <option disabled value="">
-            Where
+            Select By Location
           </option>
           <option value="current">Current Location</option>
           <option value="anywhere">Anywhere</option>
         </select>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-6">
+    </div>
+      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6">
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
           value={category} // Set the current selected value
           onChange={handleCategoryChange} // Handle change
         >
@@ -220,7 +229,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
           value={seatCount ?? ""}
           onChange={handleSeatCountChange}
         >
@@ -235,7 +244,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
           value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
           onChange={handlePriceRangeChange}
         >
@@ -251,7 +260,32 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12"
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
+          value={driver} // Set the current selected value
+          onChange={handleDriverSelect} // Handle change
+        >
+          <option disabled value="">
+            Select by Driver
+          </option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          
+        </select>
+        <select
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
+          value={homePickup} // Set the current selected value
+          onChange={handleHomePickup} // Handle change
+        >
+          <option disabled value="">
+            Home-PickUp
+          </option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          
+        </select>
+
+        <select
+          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
         >
