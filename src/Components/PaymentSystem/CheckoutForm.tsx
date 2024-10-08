@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
     price: number,
@@ -20,7 +21,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
     const [cardError, setCardError] = useState<string>("");
     const [cardSuccess, setCardSuccess] = useState<string>("");
     const [processing, setProcessing] = useState<boolean>(false);
-
+    const navigate = useNavigate()
     useEffect(() => {
         // Fetch client secret
         if (price && price > 0) {
@@ -94,14 +95,16 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
             };
             // console.log(paymentInfo);
             setCardSuccess(paymentInfo.transactionId)
-
             toast.success(`${user?.email} payment successful`);
 
+
             try {
-              const {data}=  await axiosPublic.post("/payment", paymentInfo);
-              console.log(data);
-            } catch (error) {
+                const { data } = await axiosPublic.post("/payment", paymentInfo);
+                console.log(data);
+                navigate('/dashboard/paymentHistory')
+            } catch (error: any) {
                 console.error("Error posting payment info:", error);
+                toast.error(error.message);
             }
             setProcessing(false);
         }
