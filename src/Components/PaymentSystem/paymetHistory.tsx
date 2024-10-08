@@ -20,8 +20,7 @@ const PaymetHistory = () => {
             return res.data;
         },
     });
-    // console.log(myHistory);
-
+    
     return (
       <div>
         <div>
