@@ -5,6 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import BasicCarInfo from './steps/BasicCarInfo';
 import RentalDetails from './steps/RentalDetails';
 import AdditionalInfo from './steps/AdditionalInfo';
+import LocationAndPickupInfo from './steps/LocationAndPickupInfo';
 
 
 interface FormData {
@@ -60,6 +61,8 @@ const HostingCarForm: React.FC = () => {
         return <BasicCarInfo />;
       case 1:
         return <RentalDetails />;
+      case 2:
+        return <LocationAndPickupInfo />;
       case 5:
         return <AdditionalInfo />;
       default:
