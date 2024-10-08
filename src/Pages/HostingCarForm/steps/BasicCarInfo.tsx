@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import Select from 'react-select';
+import Select, {  } from 'react-select';
 import { useFormContext } from 'react-hook-form';
+import makeAnimated from 'react-select/animated'; 
 
 const BasicCarInfo: React.FC = () => {
   const { register, setValue, formState: { errors } } = useFormContext();
@@ -31,6 +33,8 @@ const BasicCarInfo: React.FC = () => {
     setValue('basicCarInfo.category', selectedOption ? selectedOption.value : '');
   };
 
+  const animatedComponents = makeAnimated(); 
+
   return (
     <>
     {/* Car Category */}
@@ -41,12 +45,13 @@ const BasicCarInfo: React.FC = () => {
           onChange={handleCategoryChange}
           classNamePrefix="select"
           isClearable
+          required
         />
         {errors.basicCarInfo && 'category' in errors.basicCarInfo && typeof errors.basicCarInfo.category?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.category.message}</p>
         )}
       </div>
-      
+
       <div className="mb-4">
         <label htmlFor="make" className="block font-semibold mb-2">Make</label>
         <input
@@ -59,7 +64,8 @@ const BasicCarInfo: React.FC = () => {
         )}
       </div>
       
-      <div className="mb-4">
+      <div className="flex flex-col lg:flex-row lg:justify-between gap-4">
+      <div className="mb-4 w-full">
         <label htmlFor="model" className="block font-semibold mb-2">Model</label>
         <input
           id="model"
@@ -87,17 +93,24 @@ const BasicCarInfo: React.FC = () => {
           <p className="text-red-500">{errors.basicCarInfo.year.message}</p>
         )}
       </div>
+      </div>
 
       
 
-      {/* Seat Count */}
-      <div className="mb-4">
+    
+       {/* Seat Count */}
+       <div className="mb-4">
         <label htmlFor="seatCount" className="block font-semibold mb-2">Seat Count</label>
-        <input
-          id="seatCount"
-          type="number"
-          className="w-full border border-gray-300 rounded p-2"
-          {...register('basicCarInfo.seatCount', { required: 'Seat Count is required', min: { value: 1, message: 'At least 1 seat is required' } })}
+        <Select
+          options={Array.from({ length: 8 }, (_, index) => ({
+            value: index + 1,
+            label: `${index + 1} seat${index === 0 ? '' : 's'}`,
+          }))}
+          onChange={(selectedOption) => {
+            setValue('basicCarInfo.seatCount', selectedOption ? selectedOption.value : '');
+          }}
+          classNamePrefix="select"
+          isClearable
         />
         {errors.basicCarInfo && 'seatCount' in errors.basicCarInfo && typeof errors.basicCarInfo.seatCount?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.seatCount.message}</p>
@@ -111,6 +124,7 @@ const BasicCarInfo: React.FC = () => {
           options={featuresOptions}
           isMulti
           onChange={handleFeatureChange}
+          components={animatedComponents} 
           classNamePrefix="select"
         />
         {errors.basicCarInfo && 'features' in errors.basicCarInfo && typeof errors.basicCarInfo.features?.message === 'string' && (
