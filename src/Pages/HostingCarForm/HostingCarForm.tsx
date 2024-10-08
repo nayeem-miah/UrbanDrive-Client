@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import StepIndicator from '../../Components/steps/stepIndicator';
 import { steps } from '../../Components/steps/HostSteps';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
+import BasicCarInfo from './steps/BasicCarInfo';
+import RentalDetails from './steps/RentalDetails';
+import AdditionalInfo from './steps/AdditionalInfo';
+
 
 interface FormData {
   basicCarInfo: { make: string; model: string; year: string };
@@ -14,16 +18,32 @@ interface FormData {
 
 const HostingCarForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const methods = useForm<FormData>();
+  const { trigger, handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit = (data: FormData) => {
     console.log('Form submitted:', data);
     // Call the backend API here
-    // TODO: Implement API call to submit form data
   };
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
+  const handleNext = async () => {
+    let isValid = true;
+
+    switch (currentStep) {
+      case 0:
+        isValid = await trigger(['basicCarInfo.make', 'basicCarInfo.model', 'basicCarInfo.year']);
+        break;
+      case 1:
+        isValid = await trigger(['rentalDetails.price', 'rentalDetails.availability']);
+        break;
+      case 5:
+        isValid = await trigger(['additionalInfo.description']);
+        break;
+      default:
+        break;
+    }
+
+    if (isValid && currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -37,76 +57,11 @@ const HostingCarForm: React.FC = () => {
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
-        return (
-          <>
-            <div className="mb-4">
-              <label htmlFor="make" className="block font-semibold mb-2">Make</label>
-              <input
-                id="make"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('basicCarInfo.make', { required: 'Make is required' })}
-              />
-              {errors.basicCarInfo?.make && <p className="text-red-500">{errors.basicCarInfo.make.message}</p>}
-            </div>
-            <div className="mb-4">
-              <label htmlFor="model" className="block font-semibold mb-2">Model</label>
-              <input
-                id="model"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('basicCarInfo.model', { required: 'Model is required' })}
-              />
-              {errors.basicCarInfo?.model && <p className="text-red-500">{errors.basicCarInfo.model.message}</p>}
-            </div>
-            <div className="mb-4">
-              <label htmlFor="year" className="block font-semibold mb-2">Year</label>
-              <input
-                id="year"
-                type="number"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('basicCarInfo.year', { required: 'Year is required' })}
-              />
-              {errors.basicCarInfo?.year && <p className="text-red-500">{errors.basicCarInfo.year.message}</p>}
-            </div>
-          </>
-        );
+        return <BasicCarInfo />;
       case 1:
-        return (
-          <>
-            <div className="mb-4">
-              <label htmlFor="price" className="block font-semibold mb-2">Price per day</label>
-              <input
-                id="price"
-                type="number"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('rentalDetails.price', { required: 'Price is required' })}
-              />
-              {errors.rentalDetails?.price && <p className="text-red-500">{errors.rentalDetails.price.message}</p>}
-            </div>
-            <div className="mb-4">
-              <label htmlFor="availability" className="block font-semibold mb-2">Availability</label>
-              <input
-                id="availability"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('rentalDetails.availability', { required: 'Availability is required' })}
-              />
-              {errors.rentalDetails?.availability && <p className="text-red-500">{errors.rentalDetails.availability.message}</p>}
-            </div>
-          </>
-        );
+        return <RentalDetails />;
       case 5:
-        return (
-          <>
-            <div className="mb-4">
-              <label htmlFor="description" className="block font-semibold mb-2">Additional Information</label>
-              <textarea
-                id="description"
-                className="w-full border border-gray-300 rounded p-2"
-                {...register('additionalInfo.description', { required: 'Description is required' })}
-              />
-              {errors.additionalInfo?.description && <p className="text-red-500">{errors.additionalInfo.description.message}</p>}
-            </div>
-          </>
-        );
+        return <AdditionalInfo />;
       default:
         return <p className="text-gray-500">Step not implemented yet</p>;
     }
@@ -120,35 +75,37 @@ const HostingCarForm: React.FC = () => {
           <StepIndicator steps={steps} currentStep={currentStep} />
         </div>
         <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-            {renderStepContent()}
-            <div className="flex justify-between mt-6">
-              <button
-                type="button"
-                onClick={handlePrevious}
-                disabled={currentStep === 0}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
-              >
-                Previous
-              </button>
-              {currentStep < steps.length - 1 ? (
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+              {renderStepContent()}
+              <div className="flex justify-between mt-6">
                 <button
                   type="button"
-                  onClick={handleNext}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  onClick={handlePrevious}
+                  disabled={currentStep === 0}
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
                 >
-                  Next
+                  Previous
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                >
-                  Submit
-                </button>
-              )}
-            </div>
-          </form>
+                {currentStep < steps.length - 1 ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Next
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                  >
+                    Submit
+                  </button>
+                )}
+              </div>
+            </form>
+          </FormProvider>
         </div>
       </div>
     </div>
