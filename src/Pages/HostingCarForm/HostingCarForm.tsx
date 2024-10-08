@@ -11,7 +11,7 @@ import LocationAndPickupInfo from './steps/LocationAndPickupInfo';
 interface FormData {
   basicCarInfo: { make: string; model: string; year: string };
   rentalDetails: { price: string; availability: string };
-  locationAndPickupInfo: { address: string; instructions: string };
+  locationAndPickupInfo: { city: string; pickupPoint: string; openingHours: { start: string; end: string } };
   hostInfo: { name: string; phone: string };
   membershipAndPlan: { plan: string };
   additionalInfo: { description: string };
@@ -36,6 +36,9 @@ const HostingCarForm: React.FC = () => {
         break;
       case 1:
         isValid = await trigger(['rentalDetails.price', 'rentalDetails.availability']);
+        break;
+      case 2:
+        isValid = await trigger(['locationAndPickupInfo.city', 'locationAndPickupInfo.pickupPoint', 'locationAndPickupInfo.openingHours.start', 'locationAndPickupInfo.openingHours.end']);
         break;
       case 5:
         isValid = await trigger(['additionalInfo.description']);
