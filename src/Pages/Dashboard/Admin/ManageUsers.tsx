@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
 import { ClipLoader, SyncLoader } from "react-spinners";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 interface User {
   _id: string;

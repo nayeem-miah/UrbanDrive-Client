@@ -16,7 +16,7 @@ const AdminHome: React.FC =() => {
                 <FaSackDollar className="w-11 h-11" />
               </div>
               <div className="stat-title font-bold text-white">
-                Total Revenue
+                Total Car Owner
               </div>
               <div className="stat-value">$500</div>
               {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
