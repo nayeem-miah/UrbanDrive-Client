@@ -41,9 +41,11 @@ const Navbar: React.FC = () => {
         <ul className="menu menu-horizontal px-1 font-Merri">
           {navLinks.map((link) => (
             <li key={link.id}>
-              <Link 
-                to={`/${link.id}`} 
-                className={`text-lg font-medium ${isScrolled ? 'text-gray-600' : 'text-white'} hover:text-gray-300`}
+              <Link
+                to={`/${link.id}`}
+                className={`text-lg font-medium ${
+                  isScrolled ? "text-gray-600" : "text-white"
+                } hover:text-gray-300`}
               >
                 {link.title}
               </Link>
@@ -59,7 +61,10 @@ const Navbar: React.FC = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white">
-                  <img src={user?.photoURL || "/placeholder-avatar.jpg"} alt="User Avatar" />
+                  <img
+                    src={user?.photoURL || "/placeholder-avatar.jpg"}
+                    alt="User Avatar"
+                  />
                 </div>
               </label>
               <ul
@@ -72,15 +77,20 @@ const Navbar: React.FC = () => {
                     <span className="badge">New</span>
                   </Link>
                 </li>
-                <li><a onClick={logOut}>Logout</a></li>
+                <li>
+                  <Link to="/dashboard/paymentHistory">Dashboard</Link>
+                </li>
+                <li>
+                  <a onClick={logOut}>Logout</a>
+                </li>
               </ul>
             </div>
           ) : (
             <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500 to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white">
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">  
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">
                 <Link to="/login">Login</Link>
               </span>
-            </button> 
+            </button>
           )}
         </div>
 
@@ -124,8 +134,8 @@ const Navbar: React.FC = () => {
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <Link 
-                to={`/${link.id}`} 
+              <Link
+                to={`/${link.id}`}
                 className="text-4xl font-bold text-black hover:text-gray-600 transition-colors duration-300"
                 onClick={() => setToggle(false)}
               >
@@ -173,7 +183,7 @@ const Navbar: React.FC = () => {
               </li>
             </>
           ) : (
-            <li 
+            <li
               className={`transform transition-all duration-300 ${
                 toggle
                   ? "translate-y-0 opacity-100"
@@ -181,7 +191,7 @@ const Navbar: React.FC = () => {
               }`}
               style={{ transitionDelay: `${navLinks.length * 100}ms` }}
             >
-              <Link 
+              <Link
                 to="/login"
                 onClick={() => setToggle(false)}
                 className="text-4xl font-bold text-green-500 hover:text-green-600 transition-colors duration-300"

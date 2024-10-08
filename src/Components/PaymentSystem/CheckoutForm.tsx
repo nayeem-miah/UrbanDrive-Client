@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
 import { ImSpinner9 } from "react-icons/im";
@@ -9,7 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 interface CheckoutFormProps {
-    price: number
+    price: number,
 }
 ;
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
@@ -57,6 +55,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
             type: "card",
             card,
         });
+        console.log("[paymentMethod]", paymentMethod);
 
         console.log(paymentMethod);
         if (error) {
@@ -93,12 +92,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
 
                 date: new Date(),
             };
+            // console.log(paymentInfo);
             setCardSuccess(paymentInfo.transactionId)
 
             toast.success(`${user?.email} payment successful`);
 
             try {
-                await axiosPublic.post("/payment", paymentInfo);
+              const {data}=  await axiosPublic.post("/payment", paymentInfo);
+              console.log(data);
             } catch (error) {
                 console.error("Error posting payment info:", error);
             }
@@ -107,7 +108,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="items-center justify-center w-1/2 h-full mx-auto ">
+        <form onSubmit={handleSubmit} className="items-center justify-center w-1/2 min-h-screen mx-auto ">
             <CardElement
                 options={{
                     style: {
@@ -132,7 +133,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price: price }) => {
                 {processing ? (
                     <ImSpinner9 size={24} className="animate-spin m-auto text-green-400" />
                 ) : (
-                    `Pay $ (${price})`
+                    `Pay`
                 )}
             </button>
             {

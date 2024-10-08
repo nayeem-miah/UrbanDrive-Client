@@ -84,7 +84,7 @@ const LoginPage: React.FC = () => {
               <input
                 type="text"
                 placeholder="Type your name"
-                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("email", { required: true })}
               />
             </div>
@@ -95,7 +95,7 @@ const LoginPage: React.FC = () => {
               <input
                 type="password"
                 placeholder="Type your password"
-                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", { required: true })}
               />
               {errors.password && (
