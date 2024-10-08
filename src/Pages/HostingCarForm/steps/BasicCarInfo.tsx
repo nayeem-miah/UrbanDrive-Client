@@ -13,32 +13,30 @@ const BasicCarInfo: React.FC = () => {
           className="w-full border border-gray-300 rounded p-2"
           {...register('basicCarInfo.make', { required: 'Make is required' })}
         />
-        {typeof errors.basicCarInfo_make?.message === 'string' && (
-          <p className="text-red-500">{errors.basicCarInfo_make.message}</p>
+        {errors.basicCarInfo && 'make' in errors.basicCarInfo && typeof errors.basicCarInfo.make?.message === 'string' && (
+          <p className="text-red-500">{errors.basicCarInfo.make.message}</p>
         )}
       </div>
       <div className="mb-4">
         <label htmlFor="model" className="block font-semibold mb-2">Model</label>
         <input
           id="model"
-          
           className="w-full border border-gray-300 rounded p-2"
-          {...register('basicCarInfo_model', { required: 'Model is required' })}
+          {...register('basicCarInfo.model', { required: 'Model is required' })}
         />
-        {typeof errors.basicCarInfo_model?.message === 'string' && (
-          <p className="text-red-500">{errors.basicCarInfo_model.message}</p>
+        {errors.basicCarInfo && 'model' in errors.basicCarInfo && typeof errors.basicCarInfo.model?.message === 'string' && (
+          <p className="text-red-500">{errors.basicCarInfo.model.message}</p>
         )}
       </div>
       <div className="mb-4">
         <label htmlFor="year" className="block font-semibold mb-2">Year</label>
         <input
           id="year"
-          type="number"
           className="w-full border border-gray-300 rounded p-2"
-          {...register('basicCarInfo_year', { required: 'Year is required' })}
+          {...register('basicCarInfo.year', { required: 'Year is required' })}
         />
-        {typeof errors.basicCarInfo_year?.message === 'number' && (
-          <p className="text-red-500">{errors.basicCarInfo_year.message}</p>
+        {errors.basicCarInfo && 'year' in errors.basicCarInfo && typeof errors.basicCarInfo.year?.message === 'string' && (
+          <p className="text-red-500">{errors.basicCarInfo.year.message}</p>
         )}
       </div>
     </>

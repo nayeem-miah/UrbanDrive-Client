@@ -10,13 +10,12 @@ const RentalDetails: React.FC = () => {
         <label htmlFor="price" className="block font-semibold mb-2">Price per day</label>
         <input
           id="price"
-          type="number"
           className="w-full border border-gray-300 rounded p-2"
           {...register('rentalDetails_price', { required: 'Price is required' })}
         />
-        {/* Only render if message exists and is a string */}
-        {typeof errors.rentalDetails_price?.message === 'number' && (
-          <p className="text-red-500">{errors.rentalDetails_price.message}</p>
+       
+        {errors.rentalDetails && 'price' in errors.rentalDetails && typeof errors.rentalDetails.price?.message === 'string' && (
+          <p className="text-red-500">{errors.rentalDetails.price.message}</p>
         )}
       </div>
       <div className="mb-4">
@@ -26,9 +25,9 @@ const RentalDetails: React.FC = () => {
           className="w-full border border-gray-300 rounded p-2"
           {...register('rentalDetails_availability', { required: 'Availability is required' })}
         />
-        {/* Only render if message exists and is a string */}
-        {typeof errors.rentalDetails_availability?.message === 'string' && (
-          <p className="text-red-500">{errors.rentalDetails_availability.message}</p>
+      
+        {errors.rentalDetails && 'availability' in errors.rentalDetails && typeof errors.rentalDetails.availability?.message === 'string' && (
+          <p className="text-red-500">{errors.rentalDetails.availability.message}</p>
         )}
       </div>
     </>

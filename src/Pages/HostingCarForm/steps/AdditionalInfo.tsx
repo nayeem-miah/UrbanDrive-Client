@@ -13,9 +13,9 @@ const AdditionalInfo: React.FC = () => {
           className="w-full border border-gray-300 rounded p-2"
           {...register('additionalInfo_description', { required: 'Description is required' })}
         />
-        {/* Only render if message exists and is a string */}
-        {typeof errors.additionalInfo_description?.message === 'string' && (
-          <p className="text-red-500">{errors.additionalInfo_description.message}</p>
+       
+        {errors.additionalInfo && 'description' in errors.additionalInfo && typeof errors.additionalInfo.description?.message === 'string' && (
+          <p className="text-red-500">{errors.additionalInfo.description.message}</p>
         )}
       </div>
     </>
