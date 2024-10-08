@@ -6,6 +6,8 @@ import BasicCarInfo from './steps/BasicCarInfo';
 import RentalDetails from './steps/RentalDetails';
 import AdditionalInfo from './steps/AdditionalInfo';
 import LocationAndPickupInfo from './steps/LocationAndPickupInfo';
+import HostInformation from './steps/HostInformation';
+import Membership from './steps/Membership';
 
 
 interface FormData {
@@ -66,6 +68,10 @@ const HostingCarForm: React.FC = () => {
         return <RentalDetails />;
       case 2:
         return <LocationAndPickupInfo />;
+      case 3:
+        return <HostInformation />;
+      case 4:
+        return <Membership/>;
       case 5:
         return <AdditionalInfo />;
       default:
