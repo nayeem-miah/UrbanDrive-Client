@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import bgimg from "../../../assets/ladingpage.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 type Inputs = {
   name: string;
@@ -25,6 +26,9 @@ const Registration: React.FC = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+
 
   const password = watch("password");
   // const agreeToTerms = watch("agreeToTerms");
@@ -96,7 +100,7 @@ const Registration: React.FC = () => {
                 <span className="text-red-500 mt-2">Email is required*</span>
               )}
             </div>
-            <div>
+            {/* <div>
               <label className="form-control w-full mb-4">
                 <div className="label">
                   <span className="label-text font-medium">Role</span>
@@ -116,13 +120,13 @@ const Registration: React.FC = () => {
                   <span className="text-red-500 mt-2">Role is required</span>
                 )}
               </label>
-            </div>
-            <div className="form-control">
+            </div> */}
+            <div className="form-control relative">
               <label className="label">
                 <span className="label-text font-medium">Password</span>
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="password"
                 className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", {
@@ -152,13 +156,23 @@ const Registration: React.FC = () => {
                       number and a special character
                     </p>
                   )} */}
+              <span
+                className="absolute bottom-3 right-3"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEyeSlash className=""></FaEyeSlash>
+                ) : (
+                  <FaEye className="" />
+                )}
+              </span>
             </div>
-            <div className="py-4">
+            <div className="py-4 relative">
               <span className=" text-[14px] text-md text-black font-medium ml-1">
                 Confirm Password
               </span>
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 className="w-full mt-2 p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("confirmPassword", {
@@ -167,6 +181,16 @@ const Registration: React.FC = () => {
                     value === password || "Password do not match",
                 })}
               />
+              <span
+                className="absolute bottom-7 right-3"
+                onClick={() => setConfirmShowPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <FaEyeSlash></FaEyeSlash>
+                ) : (
+                  <FaEye className="" />
+                )}
+              </span>
               {errors.confirmPassword && (
                 <span className="text-red-500 mt-3">
                   {errors.confirmPassword.message}
