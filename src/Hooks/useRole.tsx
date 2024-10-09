@@ -14,7 +14,7 @@ const useRole = (): [Role, boolean, boolean] => {
     isLoading,
   } = useQuery({
     queryKey: ["role", user?.email],
-    enabled: !!user?.email && !loading, 
+    enabled: !loading, 
     queryFn: async (): Promise<Role> => {
       const { data } = await axiosPublic(`/user/${user?.email}`);
       return data.role as Role;
