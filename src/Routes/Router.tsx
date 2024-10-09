@@ -12,11 +12,11 @@ import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 // import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
-import AdminHome from "../Pages/Dashboard/AdminHome";
-import ManageUsers from "../Pages/Dashboard/ManageUsers";
-import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+// import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import PaymentHistory from "../Pages/Dashboard/Admin/PaymentHistory";
 import MembershipDuration from "../Components/Membership/MembershipDuration";
-
 
 
 const router = createBrowserRouter([
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
@@ -114,7 +114,7 @@ const router = createBrowserRouter([
       },
       {
         path: "paymentHistory",
-        element: <PaymetHistory/>
+        element: <PaymentHistory/>
       },
     ],
   },
