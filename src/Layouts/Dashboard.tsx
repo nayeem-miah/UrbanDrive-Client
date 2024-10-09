@@ -10,6 +10,7 @@ import { MdPayment } from "react-icons/md";
 import { AiFillMedicineBox } from "react-icons/ai";
 import React from "react";
 import { FaCarRear } from "react-icons/fa6";
+import { TbBrandBooking } from "react-icons/tb";
 
 type Role = "Admin" | "Host" | "User" | "";
 
@@ -60,17 +61,17 @@ const Dashboard: React.FC = () => {
                     <FaCoins /> Payment History
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink to="/dashboard/sellsReport">
-                    <HiOutlineDocumentReport />
-                    Sales Report
+                <li>
+                  <NavLink to="/dashboard/bookings">
+                    <TbBrandBooking />
+                    Bookings
                   </NavLink>
                 </li>
                 <li className="mb-2">
                   <NavLink to="/dashboard/manageAdvertise">
-                    <RiAdvertisementLine /> Manage banner advertise
+                    <RiAdvertisementLine /> Manage advertise
                   </NavLink>
-                </li> */}
+                </li>
               </>
             )}
 

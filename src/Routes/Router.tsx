@@ -17,6 +17,8 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 // import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 import PaymentHistory from "../Pages/Dashboard/Admin/PaymentHistory";
 import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
+import MembershipDuration from "../Components/Membership/MembershipDuration";
+import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
 
 
 const router = createBrowserRouter([
@@ -37,10 +39,7 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      // {
-      //   path: "/services",
-      //   element: <HostCarListingForm></HostCarListingForm>,
-      // },
+      
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
@@ -76,6 +75,14 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars></Cars>,
+      },
+      {
+        path: "/membership-duration/:planName/:price",
+        element:<MembershipDuration></MembershipDuration>,
+      },
+      {
+        path: "/payment/:planName/:totalPrice",
+        element: <PaymentPage></PaymentPage>,
       },
       {
         path: "/payment/:totalPrice",
@@ -114,7 +121,11 @@ const router = createBrowserRouter([
       {
         path: 'cars',
         element: <TotalCarList/>
-      }
+      },
+      {
+        path: 'bookings',
+        element: <AllBookings/>
+      },
     ],
   },
 ]);
