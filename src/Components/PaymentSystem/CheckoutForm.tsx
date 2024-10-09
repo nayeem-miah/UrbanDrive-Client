@@ -5,7 +5,7 @@ import "./CheckoutForm.css";
 import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
-import Swal from "sweetalert2";
+
 
 import { useNavigate } from "react-router-dom";
 
@@ -110,7 +110,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
         };
 
         try {
-          const response = await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
+           await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for membership`);
           setTimeout(() => {
@@ -136,7 +136,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
       } else {
         // Handle Booking payment
         try {
-          const response = await axiosPublic.post("/payment", paymentInfo);
+           await axiosPublic.post("/payment", paymentInfo);
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for booking`);
           setTimeout(() => {
