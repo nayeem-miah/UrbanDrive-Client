@@ -8,6 +8,7 @@ import AdditionalInfo from './steps/AdditionalInfo';
 import LocationAndPickupInfo from './steps/LocationAndPickupInfo';
 import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 
 interface FormData {
@@ -20,13 +21,19 @@ interface FormData {
 }
 
 const HostingCarForm: React.FC = () => {
+  const axiosPublic = useAxiosPublic();
   const [currentStep, setCurrentStep] = useState(0);
   const methods = useForm<FormData>();
   const { trigger, handleSubmit } = methods;
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log('Form submitted:', data);
-    // Call the backend API here
+   try {
+    const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+    console.log('Car hosted successfully:', response.data);
+  } catch (error) {
+    console.error('Error hosting car:', error);
+  }
   };
 
   const handleNext = async () => {

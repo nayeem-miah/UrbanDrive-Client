@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Select from 'react-select';
 import { useFormContext } from 'react-hook-form';
@@ -16,6 +17,7 @@ const planOptions = [
 ];
 
 const Membership: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { register, setValue, formState: { errors } } = useFormContext();
 
   const handleMembershipChange = (selectedOption: any) => {
@@ -39,7 +41,7 @@ const Membership: React.FC = () => {
           isClearable
         />
         {errors.membership && (
-          <p className="text-red-500">{errors.membership.message}</p>
+          <p className="text-red-500">{typeof errors.membership.message === 'string' ? errors.membership.message : ''}</p>
         )}
       </div>
 
@@ -54,7 +56,7 @@ const Membership: React.FC = () => {
           isClearable
         />
         {errors.plan && (
-          <p className="text-red-500">{errors.plan.message}</p>
+          <p className="text-red-500">{typeof errors.plan.message === 'string' ? errors.plan.message : ''}</p>
         )}
       </div>
     </div>
