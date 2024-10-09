@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img1 from '../../assets/ladingpage.png';
 import { useForm, SubmitHandler } from "react-hook-form"
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 
 type Inputs = {
@@ -17,6 +18,8 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const {
     register,
@@ -88,16 +91,26 @@ const LoginPage: React.FC = () => {
                 {...register("email", { required: true })}
               />
             </div>
-            <div className="py-4">
+            <div className="py-4 relative">
               <span className="mb-2 text-md text-black font-medium ml-1">
                 Password
               </span>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Type your password"
                 className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", { required: true })}
               />
+              <span
+                className="absolute bottom-7 right-3"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEyeSlash className=""></FaEyeSlash>
+                ) : (
+                  <FaEye/>
+                )}
+              </span>
               {errors.password && (
                 <span className="text-red-500 mt-2">Password is required*</span>
               )}

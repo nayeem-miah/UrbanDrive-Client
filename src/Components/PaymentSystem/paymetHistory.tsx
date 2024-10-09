@@ -44,7 +44,7 @@ const PaymetHistory = () => {
                     <th>Name</th>
                     <th>Transaction Id</th>
                     <th>Date</th>
-                    <th>Status</th>
+                    {/* <th>Status</th> */}
                   </tr>
                 </thead>
                 <tbody>
