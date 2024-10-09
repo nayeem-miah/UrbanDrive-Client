@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useAxiosPublic from '../Hooks/useAxiosPublic';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { SyncLoader } from 'react-spinners';
 
 const Membership: React.FC = () => {
@@ -48,7 +48,7 @@ const Membership: React.FC = () => {
                     <li key={index}>{feature}</li> // Render each feature
                   ))}
                 </ul>
-                <Link to={`/payment/${membership.price}`}>
+                <Link to={`/membership-duration/${membership.planName}/${membership.price}`}>
                 <button className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
                   Buy Now
                 </button></Link>

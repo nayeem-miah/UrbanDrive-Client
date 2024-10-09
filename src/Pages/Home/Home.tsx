@@ -5,7 +5,8 @@ import BrowseByCar from "../../Components/BrowseByCar";
 import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
-import Membership from "../../Components/Membership";
+import Membership from "../../Components/Membership/Membership";
+
 
 const Home: React.FC = () => {
   return (

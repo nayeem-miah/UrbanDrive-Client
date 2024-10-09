@@ -15,6 +15,7 @@ import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import MembershipDuration from "../Components/Membership/MembershipDuration";
 
 
 
@@ -74,7 +75,11 @@ const router = createBrowserRouter([
         element: <Cars></Cars>,
       },
       {
-        path: "/payment",
+        path: "/membership-duration/:planName/:price",
+        element:<MembershipDuration></MembershipDuration>,
+      },
+      {
+        path: "/payment/:planName/:totalPrice",
         element: <PaymentPage></PaymentPage>,
       },
       {
