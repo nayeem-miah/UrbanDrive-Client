@@ -8,6 +8,7 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/steps';
 import Swal from 'sweetalert2';
 
+
 type UserInfo = {
   email: string;
   phoneNumber: string;

@@ -2,9 +2,12 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { ImSpinner9 } from "react-icons/im";
 import { useEffect, useState } from "react";
 import "./CheckoutForm.css";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+
+import { useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
   price: number;
@@ -17,12 +20,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState<string>("");
   const [cardError, setCardError] = useState<string>("");
   const [cardSuccess, setCardSuccess] = useState<string>("");
   const [processing, setProcessing] = useState<boolean>(false);
-  console.log('planName:',planName)
-  console.log('price:',price)
+//   console.log('planName:',planName)
+//   console.log('price:',price)
 
   useEffect(() => {
     // Fetch client secret when price is valid
@@ -106,18 +110,53 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
         };
 
         try {
-          await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
+          const response = await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for membership`);
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+        //   if (response.data.success) {
+        //     const result = await Swal.fire({
+        //       title: 'Payment Confirmed!',
+        //       text: 'Your Payment has been successfully confirmed.',
+        //       icon: 'success',
+        //       confirmButtonText: 'Go to Home',
+        //       allowOutsideClick: false,
+        //     })
+        //       if (result.isConfirmed) {
+        //         navigate("/"); // Navigate to home page
+        //       }
+        //     ;
+        //   }
         } catch (error) {
           console.error("Error posting membership payment info:", error);
         }
+        
       } else {
         // Handle Booking payment
         try {
-          await axiosPublic.post("/payment", paymentInfo);
+          const response = await axiosPublic.post("/payment", paymentInfo);
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for booking`);
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+        //  if (response.data.success) {
+        //     const result = await Swal.fire({
+        //       title: 'Payment Confirmed!',
+        //       text: 'Your Payment has been successfully confirmed.',
+        //       icon: 'success',
+        //       confirmButtonText: 'Go to Home',
+        //       allowOutsideClick: false,
+        //     })
+        //       if (result.isConfirmed) {
+        //         navigate("/"); // Navigate to home page
+        //       }
+        //    ;
+        //   } else {
+        //     console.error('Failed to update booking:', response.data.message);
+        //   }
         } catch (error) {
           console.error("Error posting payment info:", error);
         }
@@ -161,6 +200,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
                     your transactionId is : <span className="text-green-700">{cardSuccess}</span></p>
             }
             {cardError && <p className="text-red-600 lg:text-xl text-xs">{cardError}</p>}
+            <Toaster></Toaster>
         </form>
   );
 };
