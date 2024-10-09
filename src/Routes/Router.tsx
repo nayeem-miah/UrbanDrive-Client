@@ -60,6 +60,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
+        element: <Cars></Cars>,
+      },
+      {
+        path: "/hostingForm",
         element: <HostingCarForm></HostingCarForm>,
       },
       {
