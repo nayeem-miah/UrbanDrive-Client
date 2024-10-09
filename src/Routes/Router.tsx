@@ -10,8 +10,14 @@ import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
-// import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
+import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
+
+import AdminHome from "../Pages/Dashboard/AdminHome";
+import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
+
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 // import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
@@ -61,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <Cars></Cars>,
+      },
+      {
+        path: "/hostingForm",
+        element: <HostingCarForm></HostingCarForm>,
       },
       {
         path: "/cars/:id",

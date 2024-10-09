@@ -5,7 +5,7 @@ import axios from 'axios';
 import StepIndicator from './steps';
 import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
-import { steps } from '../../Components/steps/steps';
+import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 
 
