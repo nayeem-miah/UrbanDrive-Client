@@ -253,10 +253,13 @@ const CarDetails: React.FC = () => {
           </div>
           {includedDriver && (
   <div className="mb-4">
-    <p className="text-sm text-gray-600">Driver fee (20% of total)</p>
-    <span className="font-bold">${(totalCost * 0.2).toFixed(2)}</span>
+    <p className="text-sm text-gray-600">Driver fee (20% of base cost)</p>
+    <span className="font-bold">
+      ${(totalCost - totalCost / 1.2).toFixed(2)}
+    </span>
   </div>
 )}
+
 
           {showCalendar && (
             <DateRange
