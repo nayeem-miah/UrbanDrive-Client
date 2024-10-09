@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
 import { ClipLoader, SyncLoader } from "react-spinners";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 interface User {
   _id: string;
@@ -56,7 +56,7 @@ const ManageUsers = () => {
 
   return (
     <div>
-      <div className="mt-8">
+      <div className="mt-4">
         <h2 className="text-3xl font-bold mb-6 text-center underline">
           Manage Users
         </h2>
