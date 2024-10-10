@@ -12,9 +12,13 @@ import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 // import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
-import AdminHome from "../Pages/Dashboard/AdminHome";
-import ManageUsers from "../Pages/Dashboard/ManageUsers";
-import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+// import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
+import PaymentHistory from "../Pages/Dashboard/Admin/PaymentHistory";
+import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
+import MembershipDuration from "../Components/Membership/MembershipDuration";
+import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
 
 
 const router = createBrowserRouter([
@@ -35,15 +39,12 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      // {
-      //   path: "/services",
-      //   element: <HostCarListingForm></HostCarListingForm>,
-      // },
+      
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
@@ -74,6 +75,14 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars></Cars>,
+      },
+      {
+        path: "/membership-duration/:planName/:price",
+        element:<MembershipDuration></MembershipDuration>,
+      },
+      {
+        path: "/payment/:planName/:totalPrice",
+        element: <PaymentPage></PaymentPage>,
       },
       {
         path: "/payment/:totalPrice",
@@ -107,7 +116,15 @@ const router = createBrowserRouter([
       },
       {
         path: "paymentHistory",
-        element: <PaymetHistory/>
+        element: <PaymentHistory/>
+      },
+      {
+        path: 'cars',
+        element: <TotalCarList/>
+      },
+      {
+        path: 'bookings',
+        element: <AllBookings/>
       },
     ],
   },

@@ -5,6 +5,8 @@ import BrowseByCar from "../../Components/BrowseByCar";
 import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
+import Membership from "../../Components/Membership/Membership";
+
 
 const Home: React.FC = () => {
   return (
@@ -14,6 +16,7 @@ const Home: React.FC = () => {
       <BookAutoRental></BookAutoRental>
       <BrowseByDestination />
       <BrowseByCar></BrowseByCar>
+      <Membership></Membership>
       <Reviews></Reviews>
       <FaqSection />
 
