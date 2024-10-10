@@ -5,7 +5,7 @@ import { TfiLayoutGrid2 } from "react-icons/tfi";
 // import { HiOutlineDocumentReport } from "react-icons/hi";
 import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
-import { MdPayment } from "react-icons/md";
+import { MdCardMembership, MdPayment } from "react-icons/md";
 // import { ClipLoader } from "react-spinners";
 import { AiFillMedicineBox } from "react-icons/ai";
 import React from "react";
@@ -68,8 +68,8 @@ const Dashboard: React.FC = () => {
                   </NavLink>
                 </li>
                 <li className="mb-2">
-                  <NavLink to="/dashboard/manageAdvertise">
-                    <RiAdvertisementLine /> Manage advertise
+                  <NavLink to="/dashboard/manageMemberShip">
+                    <MdCardMembership /> Manage Membership
                   </NavLink>
                 </li>
               </>

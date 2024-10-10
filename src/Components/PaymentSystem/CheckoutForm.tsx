@@ -15,7 +15,7 @@ interface CheckoutFormProps {
   isMembershipPayment: boolean; // To differentiate between membership and booking payments
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembershipPayment }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
@@ -58,7 +58,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });

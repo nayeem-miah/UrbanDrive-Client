@@ -10,21 +10,15 @@ import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
-import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
-
-import AdminHome from "../Pages/Dashboard/AdminHome";
-import ManageUsers from "../Pages/Dashboard/ManageUsers";
-import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
-
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
-// import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
-import PaymentHistory from "../Pages/Dashboard/Admin/PaymentHistory";
+import ManagePaymentHistory from "../Pages/Dashboard/Admin/ManagePaymentHistory";
 import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
 import MembershipDuration from "../Components/Membership/MembershipDuration";
 import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
+import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 
 
 const router = createBrowserRouter([
@@ -126,7 +120,7 @@ const router = createBrowserRouter([
       },
       {
         path: "paymentHistory",
-        element: <PaymentHistory/>
+        element: <ManagePaymentHistory/>
       },
       {
         path: 'cars',
@@ -136,6 +130,10 @@ const router = createBrowserRouter([
         path: 'bookings',
         element: <AllBookings/>
       },
+      {
+        path: 'manageMemberShip',
+        element: <ManageMemberShip/>
+      }
     ],
   },
 ]);

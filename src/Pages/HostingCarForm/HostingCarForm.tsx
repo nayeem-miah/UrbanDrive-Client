@@ -87,7 +87,7 @@ const HostingCarForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mt-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl mt-28 mx-auto p-4 bg-white shadow-lg rounded-lg mb-16">
       <h1 className="text-3xl font-bold mb-6">Host Your Car</h1>
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
