@@ -10,7 +10,7 @@ import Membership from "../../Components/Membership/Membership";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="">
       <Banner></Banner>
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>

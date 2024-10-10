@@ -39,7 +39,7 @@ const MembershipDuration: React.FC = () => {
 
       
      <Link to={`/payment/${planName}/${calculatedPrice}`}>
-     <button className="w-2/3 bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4">
+     <button className="w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4">
         Payment
       </button>
      </Link>

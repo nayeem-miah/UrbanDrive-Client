@@ -33,12 +33,11 @@ const Reviews: React.FC = () => {
   // }, []);
 
   return (
-    <div className="mt-10">
-      <div className="max-w-6xl mx-auto pt-16 px-4">
+    <div className="mt-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="text-center">
-          <h2 className="text-4xl font-bold relative inline-block mt-20 font-Playfair">
+          <h2 className="text-4xl font-bold relative inline-block mt-20 font-Merri">
             What Clients Say
-            <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
           </h2>
           <p className="text-[#88837a] mt-1">
             Client reviews drive UrbanDrive to deliver better and more efficient

@@ -20,9 +20,9 @@ const Membership: React.FC = () => {
   });
 
   return (
-    <div className="bg-white m-6 p-5">
+    <div className="mt-24 p-5">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+        <h1 className="text-4xl font-bold text-center mb-10 text-gray-800 font-Merri">
           Choose Your Membership Plan
         </h1>
 
@@ -35,7 +35,7 @@ const Membership: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Map over the membership data and dynamically render plans */}
             {membershipdata.map((membership: any) => (
-              <div key={membership._id} className="bg-base-100 rounded-lg shadow-lg p-6">
+              <div key={membership._id} className="bg-[#fdfcfb] rounded-lg shadow-lg p-6">
                 <h2 className="text-2xl font-bold mb-4 text-gray-700">
                   {membership.planName} {/* Render the plan name */}
                 </h2>
@@ -49,7 +49,7 @@ const Membership: React.FC = () => {
                   ))}
                 </ul>
                 <Link to={`/membership-duration/${membership.planName}/${membership.price}`}>
-                <button className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+                <button className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
                   Buy Now
                 </button></Link>
               </div>
