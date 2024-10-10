@@ -9,6 +9,7 @@ import LocationAndPickupInfo from './steps/LocationAndPickupInfo';
 import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 
 interface FormData {
@@ -31,6 +32,16 @@ const HostingCarForm: React.FC = () => {
    try {
     const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
     console.log('Car hosted successfully:', response.data);
+    Swal.fire({
+      title: 'Car Hosted Successfully',
+      text: 'Your car has been successfully hosted.',
+      icon: 'success',
+      confirmButtonText: 'Home'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '/';
+      }
+    });
   } catch (error) {
     console.error('Error hosting car:', error);
   }
@@ -88,9 +99,10 @@ const HostingCarForm: React.FC = () => {
 
   return (
     <div className="max-w-4xl mt-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-6">Host Your Car</h1>
+      <h1 className="text-3xl font-bold mb-6 font-Playfair text-center">Host Your Car</h1>
+      <hr className="border-2 border-gray-300 mb-6" />
       <div className="flex flex-col lg:flex-row justify-between">
-        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
+        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r ">
           <StepIndicator steps={steps} currentStep={currentStep} />
         </div>
         <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
@@ -102,22 +114,22 @@ const HostingCarForm: React.FC = () => {
                   type="button"
                   onClick={handlePrevious}
                   disabled={currentStep === 0}
-                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
+                  className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 disabled:bg-gray-300 transition-all duration-300 ease-in-out"
                 >
-                  Previous
+                  <span className="mr-2">←</span> Previous
                 </button>
                 {currentStep < steps.length - 1 ? (
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all duration-300 ease-in-out"
                   >
-                    Next
+                    Next <span className="ml-2">→</span>
                   </button>
                 ) : (
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
                   >
                     Submit
                   </button>
@@ -128,7 +140,11 @@ const HostingCarForm: React.FC = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
 export default HostingCarForm;
+
+
+
