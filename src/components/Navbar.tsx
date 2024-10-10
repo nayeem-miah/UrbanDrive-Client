@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../Hooks/useAuth';
-import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
+// import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,12 +28,14 @@ const Navbar: React.FC = () => {
   return (
     <nav
       className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-lg" : "bg-transparent"
+        isScrolled ? "bg-primary shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <img src={logo} alt="UrbanDrive" className="w-[110px] h-14" />
+          <h2 className="text-2xl font-bold text-center">
+            UrbanDrive
+          </h2>
         </Link>
       </div>
 
@@ -43,9 +45,9 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link
                 to={`/${link.id}`}
-                className={`text-lg font-medium ${
-                  isScrolled ? "text-gray-600" : "text-white"
-                } hover:text-gray-300`}
+                className={`text-lg font-bold ${
+                  isScrolled ? "text-white" : "text-primary"
+                } hover:text-black`}
               >
                 {link.title}
               </Link>
@@ -56,9 +58,7 @@ const Navbar: React.FC = () => {
 
       <div className="navbar-end">
         {/* Desktop  */}
-        <Link to="/hostingForm">
-                <button className="btn ml-2 border-[#593cfb] bg-transparent  hover:text-[#593cfb] outline-none text-lg font-Merri font-bold  mx-4">Become A Host</button>
-              </Link>
+
         <div className="hidden lg:block">
           {user ? (
             <div className="dropdown dropdown-end">
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
                   />
                 </div>
               </label>
-              
+
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
@@ -80,6 +80,9 @@ const Navbar: React.FC = () => {
                     Update User
                     <span className="badge">New</span>
                   </Link>
+                </li>
+                <li>
+                  <Link to="/hostingForm">Become A Host</Link>
                 </li>
                 <li>
                   <Link to="/dashboard/paymentHistory">Dashboard</Link>
