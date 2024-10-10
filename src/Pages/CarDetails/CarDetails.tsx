@@ -44,12 +44,32 @@ const CarDetails: React.FC = () => {
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+  const [perDayCost, setPerDayCost] = useState(0);
+  const [includedDriver, setIncludedDriver] = useState(false);
 
+  
 
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
-    return days * car.rental_price_per_day;
+    let cost = days * car.rental_price_per_day;
+  
+    if (includedDriver) {
+      cost += cost * 0.2; 
+    }
+  
+    return cost;
   };
+
+  useEffect(() => {
+    
+    const newTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
+    setTotalCost(newTotalCost);
+    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day); 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateRange, includedDriver]);
+
+
+
 
   const handleSelect = (ranges: RangeKeyDict) => {
     const selection = ranges.selection;
@@ -64,12 +84,6 @@ const CarDetails: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-
-    const initialTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
-    setTotalCost(initialTotalCost);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleContinue = async () => {
     try {
@@ -80,6 +94,7 @@ const CarDetails: React.FC = () => {
         endDate: dateRange[0].endDate,
         location: location,
         totalCost: totalCost,
+        includedDriver: includedDriver
       };
 
       const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
@@ -212,7 +227,7 @@ const CarDetails: React.FC = () => {
       </div>
 
       <div className="flex-1">
-        <span className="text-3xl font-bold  text-indigo-600 text-center">${car.rental_price_per_day}/day</span>
+        <span className="text-3xl font-bold  text-indigo-600 text-center"> {perDayCost.toFixed(2)}/day</span>
         <p className="text-sm text-gray-600">Price before taxes</p>
 
         <div className="mx-auto bg-gray-100 p-6 rounded-lg shadow-lg text-gray-800">
@@ -227,6 +242,24 @@ const CarDetails: React.FC = () => {
               <span>{format(dateRange[0].startDate, 'MM/dd/yyyy')} - {format(dateRange[0].endDate, 'MM/dd/yyyy')}</span>
             </div>
           </div>
+{/* include driver */}
+          <div className='mb-4 flex items-center'>
+            <input type="checkbox"
+                    checked={includedDriver}
+                    onChange={(e) => setIncludedDriver(e.target.checked)}
+                    className='w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500'
+            />
+            <span className='text-gray-800 text-sm ml-2'>Include driver(+20% total cost)</span>
+          </div>
+          {includedDriver && (
+  <div className="mb-4">
+    <p className="text-sm text-gray-600">Driver fee (20% of base cost)</p>
+    <span className="font-bold">
+      ${(totalCost - totalCost / 1.2).toFixed(2)}
+    </span>
+  </div>
+)}
+
 
           {showCalendar && (
             <DateRange

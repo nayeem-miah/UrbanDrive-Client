@@ -56,6 +56,9 @@ const Navbar: React.FC = () => {
 
       <div className="navbar-end">
         {/* Desktop  */}
+        <Link to="/hostingForm">
+                <button className="btn ml-2 border-[#593cfb] bg-transparent  hover:text-[#593cfb] outline-none text-lg font-Merri font-bold  mx-4">Become A Host</button>
+              </Link>
         <div className="hidden lg:block">
           {user ? (
             <div className="dropdown dropdown-end">
@@ -67,6 +70,7 @@ const Navbar: React.FC = () => {
                   />
                 </div>
               </label>
+              
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"

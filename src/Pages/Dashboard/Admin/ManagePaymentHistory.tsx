@@ -10,7 +10,7 @@ interface PaymentData {
   status: "Paid" | "pending";
 }
 
-const PaymentHistory = () => {
+const ManagePaymentHistory = () => {
   const axiosPublic = useAxiosPublic();
   const { data: paymentHistory = [] } = useQuery({
     queryKey: ["paymentHistory"],
@@ -87,4 +87,4 @@ const formatDate = (dateString: string) => {
   );
 };
 
-export default PaymentHistory;
+export default ManagePaymentHistory;
