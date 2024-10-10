@@ -67,11 +67,11 @@ const Dashboard: React.FC = () => {
                     Bookings
                   </NavLink>
                 </li>
-                <li className="mb-2">
+                {/* <li className="mb-2">
                   <NavLink to="/dashboard/manageAdvertise">
                     <RiAdvertisementLine /> Manage advertise
                   </NavLink>
-                </li>
+                </li> */}
               </>
             )}
 

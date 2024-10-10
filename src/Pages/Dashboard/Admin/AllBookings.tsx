@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
-interface PaymentData {
+interface bookings {
   _id: string;
   user: string;
   phoneNumber: string;
@@ -58,7 +58,7 @@ const AllBookings = () => {
                 </tr>
               </thead>
               <tbody>
-                {allBookings.map((item: PaymentData, idx: number) => (
+                {allBookings.map((item: bookings, idx: number) => (
                   <tr key={item._id}>
                     <th>{idx + 1}</th>
                     <td>{item?.user}</td>
