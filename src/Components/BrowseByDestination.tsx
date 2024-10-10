@@ -9,13 +9,13 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
-import london from '../assets/lodon.jpg';
-import miami from '../assets/miami.jpg';
-import newWork from '../assets/newWork.jpg';
-import paris from '../assets/paris.jpg';
-import sydney from '../assets/sydney.jpg';
-import los from '../assets/losangeles.jpg';
-import toronto from '../assets/toronto.jpg';
+import dhaka from '../assets/dhaka.jpg';
+import chittagong from '../assets/chittagong.png';
+import sylhet from '../assets/sylet.jpg';
+import mymenshing from '../assets/mymensingh.png';
+import rongpur from '../assets/rongpur.png';
+import rajshahi from '../assets/rajshahi.jpg';
+
 
 
 interface Destination {
@@ -24,13 +24,13 @@ interface Destination {
 }
 
 const destinations: Destination[] = [
-  { name: "Los Angeles", image: los },
-  { name: "Miami", image: miami },
-  { name: "New Work", image: newWork },
-  { name: "Paris", image: paris },
-  { name: "Sydney", image: sydney },
-  { name: "London", image: london },
-  { name: "Toronto", image: toronto },
+  { name: "Dhaka", image:dhaka  },
+  { name: "Chittagong", image: chittagong },
+  { name: "Rajshahi", image: rajshahi },
+  { name: "Rongpur", image: rongpur},
+  { name: "Sylhet", image: sylhet },
+  { name: "Mymensingh", image: mymenshing },
+  
 ];
 
 
@@ -41,7 +41,7 @@ return (
   <>
     <div className="text-center">
       <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Playfair">
-        Browse By Cars
+        Browse By Destination
         <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
       </h2>
     </div>

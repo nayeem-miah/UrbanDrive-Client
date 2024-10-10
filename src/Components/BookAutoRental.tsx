@@ -1,5 +1,5 @@
 import React from 'react';
-import car1 from '../assets/car1.jpg.jpg';
+import car1 from '../assets/nissan.jpg';
 const BookAutoRental: React.FC = () => {
   return (
     <div
@@ -95,7 +95,7 @@ const BookAutoRental: React.FC = () => {
           <input
             id="return-date"
             type="button"
-            className="block w-full max-w-xs shadow-sm sm:text-sm bg-primary font-bold hover:bg-white hover:text-primary text-white border-none rounded-full p-3 h-12 cursor-pointer"
+            className="block w-full max-w-xs shadow-sm sm:text-sm bg-gradient-to-r from-[#694ce9] to-[#9d10d4] font-bold  text-white border-none rounded-full p-3 h-12 cursor-pointer"
             value="Rent Now"
           />
         </div>

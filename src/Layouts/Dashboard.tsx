@@ -1,14 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
 // import img from "../assets/urbandrive-high-resolution-logo.png";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
-// import { BiCategory } from "react-icons/bi";
+import { TfiLayoutGrid2 } from "react-icons/tfi";
 // import { HiOutlineDocumentReport } from "react-icons/hi";
 import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
-import { MdPayment } from "react-icons/md";
+import { MdCardMembership, MdPayment } from "react-icons/md";
 // import { ClipLoader } from "react-spinners";
 import { AiFillMedicineBox } from "react-icons/ai";
 import React from "react";
+import { FaCarRear } from "react-icons/fa6";
+import { TbBrandBooking } from "react-icons/tb";
 
 type Role = "Admin" | "Host" | "User" | "";
 
@@ -25,17 +27,21 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex">
-      <div className="w-64 min-h-screen bg-[#076cec] pt-8">
+      <div className="w-64 min-h-screen bg-primary pt-8">
         <div>
           {/* <img className="ml-2 w-[70px] lg:w-[80px]" src={img} alt="logo" /> */}
+          <h2 className="text-2xl font-bold text-center">
+            <span className="text-white">U</span>rban
+            <span className="text-white">Drive</span>
+          </h2>
           <ul className="menu space-y-1 mt-3 text-base font-medium">
             {/* Admin Section */}
             {role === "Admin" && (
               <>
                 <li>
                   <NavLink to="/dashboard/adminHome">
-                    <FaUserAlt />
-                    Admin Home
+                    <TfiLayoutGrid2 />
+                    Overview
                   </NavLink>
                 </li>
                 <li>
@@ -44,28 +50,28 @@ const Dashboard: React.FC = () => {
                     Manage users
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink to="/dashboard/manageCategory">
-                    <BiCategory />
-                    Manage Category
+                <li>
+                  <NavLink to="/dashboard/cars">
+                    <FaCarRear />
+                    Manage Cars
                   </NavLink>
-                </li> */}
+                </li>
                 <li>
                   <NavLink to="/dashboard/paymentHistory">
                     <FaCoins /> Payment History
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink to="/dashboard/sellsReport">
-                    <HiOutlineDocumentReport />
-                    Sales Report
+                <li>
+                  <NavLink to="/dashboard/bookings">
+                    <TbBrandBooking />
+                    Bookings
                   </NavLink>
                 </li>
                 <li className="mb-2">
-                  <NavLink to="/dashboard/manageAdvertise">
-                    <RiAdvertisementLine /> Manage banner advertise
+                  <NavLink to="/dashboard/manageMemberShip">
+                    <MdCardMembership /> Manage Membership
                   </NavLink>
-                </li> */}
+                </li>
               </>
             )}
 

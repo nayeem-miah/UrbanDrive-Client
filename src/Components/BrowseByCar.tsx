@@ -9,14 +9,13 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
-import BMW from '../assets/bmw.jpg';
-import Mercedes from '../assets/mercedes.jpg';
-import Porsche from '../assets/porche.jpg';
+import Hyundai from '../assets/Hyundai.png';
+import Nissan from '../assets/nissan.png';
+import Nissan2 from '../assets/nissan2.png';
+import Tata from '../assets/tata.png';
+import Suzuki from '../assets/suzuki.jpg';
 import Toyota from '../assets/toyota.jpg';
-import Nissan from '../assets/nissan.jpg';
-import Jeep from '../assets/jeep.jpg';
-import Ford from '../assets/ford.jpg';
-import Lamborghini from '../assets/lamborghini.jpg';
+
 
 
 interface Destination {
@@ -26,14 +25,15 @@ interface Destination {
 
 
 const destinations: Destination[] = [
-  { name: "BMW", image: BMW }, 
-  { name: "Mercedes", image: Mercedes },
-  { name: "Porsche", image: Porsche },
-  { name: "Toyota", image: Toyota },
+  { name: "Hyundai", image:Hyundai }, 
   { name: "Nissan", image: Nissan },
-  { name: "Lamborghini", image: Lamborghini },
-  { name: "Jeep", image: Jeep },
-  { name: "Ford", image: Ford },
+  { name: "Tata", image: Tata},
+  { name: "Suzuki", image: Suzuki},
+  { name: "Toyota", image: Toyota },
+
+  { name: "Nissan", image: Nissan2 },
+  
+
 ];
 
 

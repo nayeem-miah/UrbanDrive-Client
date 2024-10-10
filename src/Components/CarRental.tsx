@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import carRental from "../assets/carRental.jpg.jpg";
+import carRental from "../assets/bannercar.jpg";
 import { TbArrowUpRight } from "react-icons/tb";
 
 const CarRental: React.FC = () => {
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">
+      <div className="grid grid-cols-1  gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">
         {/* First div: Content animates from top */}
         <motion.div
           className="mx-auto justify-center items-center"
@@ -16,16 +16,16 @@ const CarRental: React.FC = () => {
         >
           <h3 className="text-amber-600 font-bold tracking-wider ml-2 font-lato"></h3>
           <motion.h1
-            className="font-bold text-4xl font-lato mt-6 text-primary"
+            className="font-bold text-4xl font-lato mt-6 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-transparent bg-clip-text"
             initial={{ y: -100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
           >
             We Are More Than <br />
-            <span className="text-primary">A Car Rental Company</span>
+            <span className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-transparent bg-clip-text">A Car Rental Company</span>
           </motion.h1>
           <motion.p
-            className="mt-4 font-lato text-[#88837a]"
+            className="mt-4 font-lato text-[#504e4b]"
             initial={{ y: -100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
@@ -43,7 +43,7 @@ const CarRental: React.FC = () => {
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
           >
             <div className="flex items-center">
-              <div className="h-10 w-10 flex items-center justify-center bg-primary rounded-full">
+              <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -58,14 +58,14 @@ const CarRental: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="ml-3 text-[#88837a] font-lato">
+              <span className="ml-3 text-[#42413e] font-lato">
                 Sports and Luxury Cars
               </span>
             </div>
             <div className="flex items-center">
-              <div className="h-10 w-10 flex items-center justify-center bg-primary rounded-full">
+              <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-6 h-6 text-white "
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -78,13 +78,13 @@ const CarRental: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="ml-3 text-[#88837a] font-lato">
+              <span className="ml-3 text-[#3d3c39] font-lato">
                 Economy Cars
               </span>
             </div>
           </motion.div>
           <motion.button
-            className="flex bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium mt-4"
+            className="flex   outline-none  bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white p-2 rounded-lg mb-6  font-medium mt-4"
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
