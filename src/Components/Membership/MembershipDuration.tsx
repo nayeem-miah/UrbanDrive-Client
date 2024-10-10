@@ -4,13 +4,19 @@ import { Link, useParams } from 'react-router-dom';
 
 
 const MembershipDuration: React.FC = () => {
-  const { planName, price } = useParams(); 
-  const [duration, setDuration] = useState<number>(1); 
+  const { planName, price } = useParams<{ planName: string; price: string }>();
+  const [duration, setDuration] = useState<number>(1);
 
- 
-  const calculatedPrice = price * duration;
+  
+  const parsedPrice = price ? parseFloat(price) : NaN;
 
-  const handleDurationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  // const calculatedPrice = price * duration;
+
+  const calculatedPrice = parsedPrice * duration;
+
+  const handleDurationChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setDuration(Number(event.target.value));
   };
 
@@ -20,7 +26,7 @@ const MembershipDuration: React.FC = () => {
         {planName} Select the duration for the membership
       </h1>
       <label className="block mb-4 text-lg font-bold text-gray-700">
-      How many months do you want to buy?
+        How many months do you want to buy?
       </label>
       <select
         value={duration}
@@ -34,15 +40,14 @@ const MembershipDuration: React.FC = () => {
       </select>
 
       <p className="text-xl font-bold text-gray-700">
-        TotalPrice: ${calculatedPrice} 
+        TotalPrice: ${calculatedPrice}
       </p>
 
-      
-     <Link to={`/payment/${planName}/${calculatedPrice}`}>
-     <button className="w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4">
-        Payment
-      </button>
-     </Link>
+      <Link to={`/payment/${planName}/${calculatedPrice}`}>
+        <button className="w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4">
+          Payment
+        </button>
+      </Link>
     </div>
   );
 };

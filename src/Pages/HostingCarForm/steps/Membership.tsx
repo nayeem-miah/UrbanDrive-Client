@@ -18,7 +18,7 @@ const planOptions = [
 
 const Membership: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { setValue, formState: { errors } } = useFormContext();
 
   const handleMembershipChange = (selectedOption: any) => {
     setValue('membership', selectedOption ? selectedOption.value : '');
