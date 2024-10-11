@@ -10,7 +10,7 @@ interface PaymentData {
   status: "Paid" | "pending";
 }
 
-const PaymentHistory = () => {
+const ManagePaymentHistory = () => {
   const axiosPublic = useAxiosPublic();
   const { data: paymentHistory = [] } = useQuery({
     queryKey: ["paymentHistory"],
@@ -20,11 +20,18 @@ const PaymentHistory = () => {
     },
   });
   // console.log(myHistory);
-
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
   return (
     <div>
       <div>
-        <div className="mt-8">
+        <div className="mt-4">
           <h2 className="text-3xl font-bold mb-6 text-center underline">
             Payment History
           </h2>
@@ -38,7 +45,7 @@ const PaymentHistory = () => {
         ) : (
           <div className="overflow-x-auto border rounded mt-16">
             <table className="table font-medium">
-              <thead className="bg-[#076cec] text-white">
+              <thead className="bg-primary text-white">
                 <tr className="text-base">
                   <th>#</th>
                   <th>Name</th>
@@ -53,7 +60,7 @@ const PaymentHistory = () => {
                     <th>{idx + 1}</th>
                     <td>{item?.name}</td>
                     <td>{item?.transactionId}</td>
-                    <td>{item?.date}</td>
+                    <td>{formatDate(item?.date)}</td>
                     {/* <td
                         className={`inline-flex items-center justify-center font-bold`}
                       >
@@ -80,4 +87,4 @@ const PaymentHistory = () => {
   );
 };
 
-export default PaymentHistory;
+export default ManagePaymentHistory;
