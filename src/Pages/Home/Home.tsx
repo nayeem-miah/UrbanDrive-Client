@@ -5,6 +5,7 @@ import BrowseByCar from "../../Components/BrowseByCar";
 import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
+// import SslPayment from "../../Components/PaymentSystem/SSLCommarze/sslPayment";
 
 const Home: React.FC = () => {
   return (
@@ -16,8 +17,7 @@ const Home: React.FC = () => {
       <BrowseByCar></BrowseByCar>
       <Reviews></Reviews>
       <FaqSection />
-
-
+    	{/* <SslPayment/> */}
     </div>
   );
 }
