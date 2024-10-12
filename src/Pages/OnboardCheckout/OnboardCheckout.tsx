@@ -32,6 +32,7 @@ const OnboardCheckout: React.FC = () => {
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
   const price = 560;
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     if (user?.email) {
@@ -43,10 +44,13 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
+        setLoading(true); // Set loading to true before fetching
         const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
 
@@ -125,77 +129,109 @@ const OnboardCheckout: React.FC = () => {
         );
       case 1:
         return (
-          <input
-            type="tel"
-            name="phoneNumber"
-            value={userInfo.phoneNumber}
-            onChange={handleChange}
-            placeholder="Enter your mobile number"
-            className="w-full px-3 py-2 border rounded-md"
-            required
-          />
+          <div>
+            <label htmlFor="phoneNumber" className="block font-semibold mb-2">Phone Number</label>
+            <input
+          
+          type="tel"
+          name="phoneNumber"
+          value={userInfo.phoneNumber}
+          onChange={handleChange}
+          placeholder="Enter your mobile number"
+         className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
+          required
+        />
+          </div>
         );
       case 2:
         return (
           <div>
+            <label htmlFor="driversLicense" className="block font-semibold mb-2">Driver's License</label>
             <input
               type="file"
               name="driversLicense"
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md"
+              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
             />
             <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License</button>
           </div>
         );
       case 3:
         return (
-          <input
+          <div>
+            <label htmlFor="paymentMethod" className="block font-semibold mb-2">Payment Method</label>
+            <input
             type="text"
             name="paymentMethod"
             value={userInfo.paymentMethod}
             onChange={handleChange}
             placeholder="Enter payment details"
-            className="w-full px-3 py-2 border rounded-md"
+            className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
             
           />
+          </div>
         );
       case 4:
         return bookingDetails ? (
-          <div>
-            <p>Please review your information and confirm.</p>
-            <p>Start Date: {new Date(bookingDetails.startDate).toLocaleDateString()}</p>
-            <p>End Date: {new Date(bookingDetails.endDate).toLocaleDateString()}</p>
-            <p>Location: {bookingDetails.location}</p>
-            <p>Total Cost: ${bookingDetails.totalCost}</p>
-            <p>Phone Number: {userInfo.phoneNumber}</p>
-            <p>Payment Method: {userInfo.paymentMethod}</p>
-            <p>Driver's License: {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
+          <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4 text-indigo-600">Review Your Information</h2>
+            <div className="space-y-2">
+              <p className="text-lg"><span className="font-bold">Start Date:</span> {new Date(bookingDetails.startDate).toLocaleDateString()}</p>
+              <p className="text-lg"><span className="font-bold">End Date:</span> {new Date(bookingDetails.endDate).toLocaleDateString()}</p>
+              <p className="text-lg"><span className="font-bold">Location:</span> {bookingDetails.location}</p>
+              <p className="text-lg"><span className="font-bold">Total Cost:</span> ${bookingDetails.totalCost}</p>
+              <p className="text-lg"><span className="font-bold">Phone Number:</span> {userInfo.phoneNumber}</p>
+              <p className="text-lg"><span className="font-bold">Payment Method:</span> {userInfo.paymentMethod}</p>
+              <p className="text-lg"><span className="font-bold">Driver's License:</span> {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
+            </div>
           </div>
         ) : (
-          <p>Loading booking details...</p>
+          <p className="text-center text-gray-500">Loading booking details...</p>
         );
       default:
         return null;
     }
   };
 
+  const handlePreviousStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto mt-28 p-6 bg-white rounded-xl shadow-lg flex flex-col lg:flex-row">
-      <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
-        <StepIndicator steps={steps} currentStep={currentStep} />
-      </div>
-      <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
-        <h2 className="text-2xl font-bold mb-6">Complete Your Booking</h2>
-        <div>{renderStepContent(currentStep)}</div>
-        <div className="mt-8 flex justify-end">
-          {currentStep > 0 && (
-            <button
-              onClick={handleNextStep}
-              className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
-            >
-              {currentStep === steps.length - 1 ? 'Confirm' : 'Next'}
-            </button>
-          )}
+    <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Complete Your Booking</h1>
+      
+      <div className="flex flex-col lg:flex-row justify-between">
+        <div className="flex flex-col lg:flex-row w-full">
+          <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
+            <StepIndicator steps={steps} currentStep={currentStep} />
+          </div>
+          <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
+            {loading ? ( // Show loading indicator
+              <p>Loading booking details...</p>
+            ) : (
+              <div>{renderStepContent(currentStep)}</div>
+            )}
+            <div className="mt-8 flex justify-between">
+              {currentStep > 0 && (
+                <button
+                  onClick={handlePreviousStep}
+                  className="bg-gray-600 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors"
+                >
+                  <span className="mr-2">←</span> Previous
+                </button>
+              )}
+                      <button
+                onClick={currentStep === steps.length - 1 ? handleSubmit : handleNextStep}
+                className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+              >
+                {currentStep === steps.length - 1 ? 'Submit' : 'Next'} 
+                <span className="ml-2">{currentStep === steps.length - 1 ? '' : '→'}</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

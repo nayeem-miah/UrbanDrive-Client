@@ -98,16 +98,16 @@ const HostingCarForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mt-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-6 font-Playfair text-center">Host Your Car</h1>
-      <hr className="border-2 border-gray-300 mb-6" />
-      <div className="flex flex-col lg:flex-row justify-between">
-        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r ">
+    <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Host Your Car</h1>
+      
+      <div className="flex flex-col lg:flex-row justify-between ">
+        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
           <StepIndicator steps={steps} currentStep={currentStep} />
         </div>
-        <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
+        <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0 ">
           <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="">
               {renderStepContent()}
               <div className="flex justify-between mt-6">
                 <button

@@ -20,7 +20,6 @@ import MembershipDuration from "../Components/Membership/MembershipDuration";
 import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
 import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,7 +38,6 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
@@ -49,14 +47,6 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars></Cars>,
-      },
-      {
-        path: "/about",
-        element: <AboutUs></AboutUs>,
-      },
-      {
-        path: "/contact",
-        element: <Contact></Contact>,
       },
       {
         path: "/services",
@@ -67,18 +57,8 @@ const router = createBrowserRouter([
         element: <HostingCarForm></HostingCarForm>,
       },
       {
-        path: "/cars/:id",
-        element: <CarDetails></CarDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
-      },
-      {
         path: "/checkout/:bookingId",
         element: <OnboardCheckout></OnboardCheckout>,
-      },
-      {
-        path: "/cars",
-        element: <Cars></Cars>,
       },
       {
         path: "/membership-duration/:planName/:price",
