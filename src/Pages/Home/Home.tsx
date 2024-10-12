@@ -7,7 +7,6 @@ import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
 import Membership from "../../Components/Membership/Membership";
 
-
 const Home: React.FC = () => {
   return (
     <div className="">
@@ -19,8 +18,6 @@ const Home: React.FC = () => {
       <Membership></Membership>
       <Reviews></Reviews>
       <FaqSection />
-
-
     </div>
   );
 }

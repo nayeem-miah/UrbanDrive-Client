@@ -104,7 +104,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
           email: user?.email,
           transactionId: paymentIntent.id,
           amount: price,
-          purchaseDate: new Date(), 
+          purchaseDate: new Date(),
           expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // এক বছরের মেয়াদ
           membershipPlan:planName,
         };
@@ -132,7 +132,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
         } catch (error) {
           console.error("Error posting membership payment info:", error);
         }
-        
+
       } else {
         // Handle Booking payment
         try {
