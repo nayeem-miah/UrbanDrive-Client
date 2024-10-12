@@ -10,7 +10,7 @@ const AdditionalInfo: React.FC = () => {
         <label htmlFor="description" className="block font-semibold mb-2">Additional Information</label>
         <textarea
           id="description"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('additionalInfo_description', { required: 'Description is required' })}
         />
        
