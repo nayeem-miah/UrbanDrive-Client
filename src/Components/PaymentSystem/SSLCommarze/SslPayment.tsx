@@ -25,13 +25,6 @@ const SslPayment: React.FC = () => {
             console.error("Error posting payment info:", error);
             toast.error(error.message);
         }
-        // axios.post("http://localhost:8000/create-payment", {
-        //     paymentInfo
-        // })
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-
     }
     return (
         <div className="my-12">
