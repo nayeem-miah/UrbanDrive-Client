@@ -30,7 +30,7 @@ const HostingCarForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     console.log('Form submitted:', data);
    try {
-    const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+    const response = await axiosPublic.post('https://urban-driveserver.vercel.app/hostCar', data);
     console.log('Car hosted successfully:', response.data);
     Swal.fire({
       title: 'Car Hosted Successfully',
@@ -98,7 +98,7 @@ const HostingCarForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mt-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl mt-28 mb-24 mx-auto p-4 bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold mb-6 font-Playfair text-center">Host Your Car</h1>
       <hr className="border-2 border-gray-300 mb-6" />
       <div className="flex flex-col lg:flex-row justify-between">
