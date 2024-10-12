@@ -25,6 +25,7 @@ const Dashboard: React.FC = () => {
     );
   }
 
+  console.log(role)
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-primary pt-8">
