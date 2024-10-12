@@ -6,8 +6,6 @@ import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
 import Membership from "../../Components/Membership/Membership";
-import SslPayment from "../../Components/PaymentSystem/SSLCommarze/SslPayment";
-
 
 const Home: React.FC = () => {
   return (
@@ -20,7 +18,6 @@ const Home: React.FC = () => {
       <Membership></Membership>
       <Reviews></Reviews>
       <FaqSection />
-    	<SslPayment/>
     </div>
   );
 }
