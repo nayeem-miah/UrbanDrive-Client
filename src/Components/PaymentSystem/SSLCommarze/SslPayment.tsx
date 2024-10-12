@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
-// import axios from "axios";
+
 const SslPayment: React.FC = () => {
     const axiosPublic = useAxiosPublic()
     const { user } = useAuth()
@@ -14,13 +14,13 @@ const SslPayment: React.FC = () => {
 
     const handleSubmit = async () => {
         try {
+            // post request
             const { data } = await axiosPublic.post("/create-payment", paymentInfo);
             const redirectUrl = data.paymentUrl;
             console.log(redirectUrl);
             if (redirectUrl) {
                 window.location.replace(redirectUrl)
             }
-            // navigate('/dashboard/paymentHistory')
         } catch (error: any) {
             console.error("Error posting payment info:", error);
             toast.error(error.message);
