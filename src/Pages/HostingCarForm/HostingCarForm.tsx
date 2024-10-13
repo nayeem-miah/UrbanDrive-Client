@@ -10,6 +10,7 @@ import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { imageUpload } from '../../utils/ImageUpload';
 
 
 interface FormData {
@@ -19,6 +20,8 @@ interface FormData {
   hostInfo: { name: string; phone: string };
   membershipAndPlan: { plan: string };
   additionalInfo: { description: string };
+  carImage: File[];
+  carImages: File[];
 }
 
 const HostingCarForm: React.FC = () => {
@@ -28,23 +31,41 @@ const HostingCarForm: React.FC = () => {
   const { trigger, handleSubmit } = methods;
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
-   try {
-    const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
-    console.log('Car hosted successfully:', response.data);
-    Swal.fire({
-      title: 'Car Hosted Successfully',
-      text: 'Your car has been successfully hosted.',
-      icon: 'success',
-      confirmButtonText: 'Home'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = '/';
+    try {
+      // Upload single car image
+      if (data.carImage && data.carImage[0]) {
+        const carImageUrl = await imageUpload(data.carImage[0]);
+        data.carImageUrl = carImageUrl;
       }
-    });
-  } catch (error) {
-    console.error('Error hosting car:', error);
-  }
+
+      // Upload multiple car images
+      if (data.carImages && data.carImages.length > 0) {
+        const carImageUrls = await Promise.all(Array.from(data.carImages).map(imageUpload));
+        data.carImageUrls = carImageUrls;
+      }
+
+      // Now send the data to your backend
+      const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+      console.log('Car hosted successfully:', response.data);
+      Swal.fire({
+        title: 'Car Hosted Successfully',
+        text: 'Your car has been successfully hosted.',
+        icon: 'success',
+        confirmButtonText: 'Home'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/';
+        }
+      });
+    } catch (error) {
+      console.error('Error hosting car:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'There was an error hosting your car. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   const handleNext = async () => {
@@ -129,7 +150,7 @@ const HostingCarForm: React.FC = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
+                    className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all duration-300 ease-in-out"
                   >
                     Submit
                   </button>
