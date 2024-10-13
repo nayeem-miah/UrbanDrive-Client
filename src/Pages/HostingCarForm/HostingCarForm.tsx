@@ -22,6 +22,8 @@ interface FormData {
   additionalInfo: { description: string };
   carImage: File[];
   carImages: File[];
+  carImageUrl: string;
+  carImageUrls: string[];
 }
 
 const HostingCarForm: React.FC = () => {
@@ -44,7 +46,7 @@ const HostingCarForm: React.FC = () => {
         data.carImageUrls = carImageUrls;
       }
 
-      // Now send the data to your backend
+      // backend
       const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
       console.log('Car hosted successfully:', response.data);
       Swal.fire({

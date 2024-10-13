@@ -88,7 +88,8 @@ const CarDetails: React.FC = () => {
   const handleContinue = async () => {
     try {
       const bookingData = {
-        user: user?.email,
+        user_email: user?.email,
+        userName: user?.displayName, 
         carId: car.id,
         startDate: dateRange[0].startDate,
         endDate: dateRange[0].endDate,

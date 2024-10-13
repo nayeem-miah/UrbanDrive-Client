@@ -7,6 +7,7 @@ import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
+import { imageUpload } from '../../utils/ImageUpload'; 
 
 
 type UserInfo = {
@@ -32,7 +33,7 @@ const OnboardCheckout: React.FC = () => {
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
   const price = 560;
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     if (user?.email) {
@@ -44,13 +45,13 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
-        setLoading(true); // Set loading to true before fetching
+        setLoading(true); 
         const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false); 
       }
     };
 
@@ -91,11 +92,21 @@ const OnboardCheckout: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
+      
+      if (!skipDriversLicense && userInfo.driversLicense) {
+        
+        const driversLicenseUrl = await imageUpload(userInfo.driversLicense);
+        
+        userInfo.driversLicense = driversLicenseUrl; 
+      }
+
+     
+
       const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
-  
+
       if (response.data.success) {
         Swal.fire({
           title: 'Booking Confirmed!',
@@ -104,7 +115,6 @@ const OnboardCheckout: React.FC = () => {
           confirmButtonText: 'Go to Payment',
           allowOutsideClick: false,
         }).then((result) => {
-          console.log(result)
           if (result.isConfirmed) {
             navigate(`/payment/${price}`);
           }
