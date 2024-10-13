@@ -8,6 +8,9 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { imageUpload } from '../../utils/ImageUpload'; 
+import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+
 
 
 type UserInfo = {
@@ -73,6 +76,35 @@ const OnboardCheckout: React.FC = () => {
   };
 
   const handleNextStep = () => {
+    switch (currentStep) {
+      case 0:
+        if (!isEmailVerified && !skipEmailVerification) {
+          toast.error('Please verify your email before proceeding.');
+          return;
+        }
+        break;
+      case 1:
+        if (!userInfo.phoneNumber) {
+          toast.error('Please enter your phone number.');
+          return;
+        }
+        break;
+      case 2:
+        if (!skipDriversLicense && !userInfo.driversLicense) {
+          toast.error('Please upload your driver\'s license or choose to skip.');
+          return;
+        }
+        break;
+      case 3:
+        if (!userInfo.paymentMethod) {
+          toast.error('Please enter your payment method.');
+          return;
+        }
+        break;
+      default:
+        break;
+    }
+
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -219,7 +251,7 @@ const OnboardCheckout: React.FC = () => {
             <StepIndicator steps={steps} currentStep={currentStep} />
           </div>
           <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
-            {loading ? ( // Show loading indicator
+            {loading ? (
               <p>Loading booking details...</p>
             ) : (
               <div>{renderStepContent(currentStep)}</div>
@@ -233,7 +265,7 @@ const OnboardCheckout: React.FC = () => {
                   <span className="mr-2">←</span> Previous
                 </button>
               )}
-                      <button
+              <button
                 onClick={currentStep === steps.length - 1 ? handleSubmit : handleNextStep}
                 className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
               >
@@ -244,6 +276,7 @@ const OnboardCheckout: React.FC = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
