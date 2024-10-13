@@ -8,8 +8,7 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { imageUpload } from '../../utils/ImageUpload'; 
-import toast from 'react-hot-toast';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 
 
