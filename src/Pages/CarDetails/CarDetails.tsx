@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {  useLoaderData, useNavigate } from 'react-router-dom';
@@ -102,7 +103,7 @@ const CarDetails: React.FC = () => {
       const bookingData = {
         user_email: user?.email,
         userName: user?.displayName, 
-        carId: car.id,
+        carId: car._id.toString(),
         startDate: dateRange[0].startDate,
         endDate: dateRange[0].endDate,
         location: location,
