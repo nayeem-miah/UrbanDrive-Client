@@ -15,6 +15,9 @@ import { ICar, RatingData } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import { SyncLoader } from 'react-spinners';
+import { useQuery } from '@tanstack/react-query';
+import { Rating } from '@smastrom/react-rating';
+import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 
 
 
@@ -30,6 +33,14 @@ const CarDetails: React.FC = () => {
     { label: 'Convenience', value: 5.0 },
 
   ];
+
+  const { data: reviews = [], refetch: refetchReviews } = useQuery({
+    queryKey: ['reviews', car._id],
+    queryFn: async () => {
+      const response = await axiosPublic.get(`/reviews/${car._id}`);
+      return response.data;
+    }
+  });
 
   const [scrollY, setScrollY] = useState(0);
   const [dateRange, setDateRange] = useState([
@@ -48,6 +59,7 @@ const CarDetails: React.FC = () => {
   const [includedDriver, setIncludedDriver] = useState(false);
 
   
+
 
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
@@ -133,6 +145,11 @@ const CarDetails: React.FC = () => {
   //   const price = totalCost;
   //   navigate(`/payment/${price}`);
   // };
+
+  const handleReviewSubmitted = () => {
+    refetchReviews();
+  };
+
   return (
     <div>
       <section>
@@ -339,6 +356,32 @@ const CarDetails: React.FC = () => {
             <div className="mt-4 space-y-4"></div>
           </div> */}
         </div>
+        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
+  <h2 className="text-3xl font-bold mb-6">Reviews</h2>
+  {reviews.length > 0 ? (
+    <div className="space-y-6">
+      {reviews.map((review: any) => (
+        <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
+          <div className="flex items-center mb-2">
+            <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
+            <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
+          </div>
+          <p className="text-gray-600">{review.comment}</p>
+          <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
+  )}
+  
+  {user ? (
+    <ReviewForm carId={car._id} onReviewSubmitted={handleReviewSubmitted} />
+  ) : (
+    <p className="mt-6 text-gray-600">Please log in to leave a review.</p>
+  )}
+</div>
+
   </div>
 </section>
 
