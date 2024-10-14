@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './Routes/Router.tsx'
-
+import './Utils/i18n.ts';
 import {
   QueryClient,
   QueryClientProvider,

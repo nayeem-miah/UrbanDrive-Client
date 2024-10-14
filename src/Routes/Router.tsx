@@ -19,6 +19,7 @@ import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
 import MembershipDuration from "../Components/Membership/MembershipDuration";
 import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
 import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
+import TestTranslate from "../Components/TestTranslate";
 
 
 const router = createBrowserRouter([
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: '/test',
+    element: <TestTranslate/>
   },
   {
     path: "/login",
