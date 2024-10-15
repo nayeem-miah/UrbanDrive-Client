@@ -17,7 +17,7 @@ const SslPayment: React.FC = () => {
             // post request
             const { data } = await axiosPublic.post("/create-payment", paymentInfo);
             const redirectUrl = data.paymentUrl;
-            console.log(redirectUrl);
+            // console.log(redirectUrl);
             if (redirectUrl) {
                 window.location.replace(redirectUrl)
             }

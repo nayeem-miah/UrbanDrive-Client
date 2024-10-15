@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAuth from '../../Hooks/useAuth';
+import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 
 const MembershipDuration: React.FC = () => {
+  const axiosPublic = useAxiosPublic()
+  const { user } = useAuth()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { planName, price } = useParams<{ planName: string; price: string }>();
   const [duration, setDuration] = useState<number>(1);
-
-  
   const parsedPrice = price ? parseFloat(price) : NaN;
-
   // const calculatedPrice = price * duration;
 
   const calculatedPrice = parsedPrice * duration;
@@ -19,6 +23,36 @@ const MembershipDuration: React.FC = () => {
   ) => {
     setDuration(Number(event.target.value));
   };
+
+  // payment function
+
+  const paymentInfo = {
+    price: calculatedPrice,
+    currency: 'BDT',
+    email: user?.email,
+    name: user?.displayName,
+    planName: planName,
+    purchaseDate: new Date(),
+    expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+  }
+
+  const handleSubmitPayment = async () => {
+    setIsLoading(true)
+    try {
+      // post request
+      const { data } = await axiosPublic.post("/create-payment", paymentInfo);
+      const redirectUrl = data.paymentUrl;
+      // console.log(redirectUrl);
+      if (redirectUrl) {
+        window.location.replace(redirectUrl)
+      }
+    } catch (error: any) {
+      console.error("Error posting payment info:", error);
+      toast.error(error.message);
+    }finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="container lg:mt-16 mx-auto p-6">
@@ -43,11 +77,13 @@ const MembershipDuration: React.FC = () => {
         TotalPrice: ${calculatedPrice}
       </p>
 
-      <Link to={`/payment/${planName}/${calculatedPrice}`}>
-        <button className="w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4">
-          Payment
+      {/* <Link to={`/payment/${planName}/${calculatedPrice}`}> */}
+        <button onClick={handleSubmitPayment}  className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}` } disabled={isLoading} >
+         {
+          isLoading? <ImSpinner9 size={24} className="animate-spin m-auto text-[#3d83d3]" />:  "Payment"
+         }
         </button>
-      </Link>
+      {/* </Link> */}
     </div>
   );
 };
