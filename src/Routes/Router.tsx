@@ -19,6 +19,9 @@ import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
 import MembershipDuration from "../Components/Membership/MembershipDuration";
 import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
 import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
+import Success from "../Components/PaymentSystem/SSLCommarze/Success";
+import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
+import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
 import TestTranslate from "../Components/TestTranslate";
 
 
@@ -40,12 +43,12 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      
+
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -71,7 +74,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
@@ -83,7 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/membership-duration/:planName/:price",
-        element:<MembershipDuration></MembershipDuration>,
+        element: <MembershipDuration></MembershipDuration>,
       },
       {
         path: "/payment/:planName/:totalPrice",
@@ -111,6 +114,21 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Registration></Registration>,
   },
+  // payment success
+  {
+    path: "/success",
+    element: <Success />
+  },
+  // payment fail
+  {
+    path: "/fail",
+    element: <Fail />
+  },
+  // payment cancel
+  {
+    path: "/cancel",
+    element: <Cancel />
+  },
   {
     path: "/dashboard",
     element: <Dashboard />,
@@ -125,19 +143,19 @@ const router = createBrowserRouter([
       },
       {
         path: "paymentHistory",
-        element: <ManagePaymentHistory/>
+        element: <ManagePaymentHistory />
       },
       {
         path: 'cars',
-        element: <TotalCarList/>
+        element: <TotalCarList />
       },
       {
         path: 'bookings',
-        element: <AllBookings/>
+        element: <AllBookings />
       },
       {
         path: 'manageMemberShip',
-        element: <ManageMemberShip/>
+        element: <ManageMemberShip />
       }
     ],
   },

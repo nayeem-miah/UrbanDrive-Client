@@ -40,9 +40,8 @@ const BrowseByDestination: React.FC = () => {
 return (
   <>
     <div className="text-center">
-      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Playfair">
+      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Merri">
         Browse By Destination
-        <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
       </h2>
     </div>
     <Swiper
@@ -75,7 +74,7 @@ return (
       {destinations.map((destination, index) => (
         <SwiperSlide key={index}>
           <div
-            className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden"
+            className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden mt-10"
             style={{ backgroundImage: `url(${destination.image})` }}
           >
             {/* Overlay for text visibility */}

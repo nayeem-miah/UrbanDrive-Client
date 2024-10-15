@@ -9,10 +9,9 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
-import Hyundai from '../assets/Hyundai.png';
+// import Hyundai from '../assets/Hyundai.png';
 import Nissan from '../assets/nissan.png';
-import Nissan2 from '../assets/nissan2.png';
-import Tata from '../assets/tata.png';
+// import Nissan2 from '../assets/nissan2.png';
 import Suzuki from '../assets/suzuki.jpg';
 import Toyota from '../assets/toyota.jpg';
 
@@ -25,15 +24,9 @@ interface Destination {
 
 
 const destinations: Destination[] = [
-  { name: "Hyundai", image:Hyundai }, 
-  { name: "Nissan", image: Nissan },
-  { name: "Tata", image: Tata},
-  { name: "Suzuki", image: Suzuki},
   { name: "Toyota", image: Toyota },
-
-  { name: "Nissan", image: Nissan2 },
-  
-
+  { name: "Nissan", image: Nissan },
+  { name: "Suzuki", image: Suzuki},
 ];
 
 
@@ -41,10 +34,9 @@ const BrowseByCar: React.FC = () => {
     
 return (
   <>
-    <div className='text-center'>
-      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Playfair">
+    <div className="text-center">
+      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Merri">
         Browse By Cars
-        <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
       </h2>
     </div>
     <Swiper

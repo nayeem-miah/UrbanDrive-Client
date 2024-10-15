@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
     { id: "contact", title: "Contact" },
   ];
 
+
   return (
     <nav
       className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 ${
@@ -33,9 +34,7 @@ const Navbar: React.FC = () => {
     >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <h2 className="text-2xl font-bold text-center">
-            UrbanDrive
-          </h2>
+          <h2 className="text-2xl font-bold text-center">UrbanDrive</h2>
         </Link>
       </div>
 
@@ -55,6 +54,7 @@ const Navbar: React.FC = () => {
           ))}
         </ul>
       </div>
+      <input type="checkbox" className="toggle" defaultChecked />
 
       <div className="navbar-end">
         {/* Desktop  */}

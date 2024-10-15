@@ -1,34 +1,28 @@
+// i18n.js
 import i18n from "i18next";
+import Backend from "i18next-http-backend"; // For loading translations via HTTP
 import { initReactI18next } from "react-i18next";
 
-// the translations
-// (tip move them in a JSON file and import them,
-// or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
-const resources = {
-  en: {
-    translation: {
-      welcomeMessage: "Welcome to React and react-i18next"
-    }
-  },
-  fr: {
-    translation: {
-      welcomeMessage: "Bienvenue à React et react-i18next"
-    }
-  }
-};
-
+// Initialize i18next
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(Backend) // Load translations via HTTP
+  .use(initReactI18next) // Bind react-i18next to the i18next instance
   .init({
-    resources,
-    fallbackLng : 'en',
-    lng: "fr", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
-    // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage
-    // if you're using a language detector, do not define the lng option
-
+    fallbackLng: "en", // Fallback language
+    lng: "en", // Default language
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // React already escapes values, so we don't need this
+    },
+    backend: {
+      // Define the path to your translation files dynamically
+      loadPath: (lngs : any) => {
+        // Use environment variables or default to a path
+        return `locals/${lngs[0]}/translation.json`;
+      },
+    },
   });
 
-  export default i18n;
+// Access the current language
+// const currentLanguage = i18n.language;
+
+export default i18n;
