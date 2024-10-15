@@ -5,7 +5,7 @@ import { FaCarRear } from "react-icons/fa6";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
-
+import { Chart } from "react-google-charts";
 const AdminHome: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { data = [], isLoading } = useQuery({
@@ -50,8 +50,47 @@ const AdminHome: React.FC = () => {
       </div>
     );
   }
+  // pi chart
+  const piChartData = [
+    ["Task", "Hours per Day"],
+    ["accepted", 7],
+    ["pending", 5],
+    ["cancel", 3],
+  ];
 
-  
+  const piOptions = {
+    title: "My Daily Activities",
+  };
+  // line hcart
+  const lineChartData = [
+    [
+      { type: "number", label: "x" },
+      { type: "number", label: "values" },
+      { id: "i0", type: "number", role: "interval" },
+      { id: "i1", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+    ],
+    [1, 100, 90, 110, 85, 96, 104, 120],
+    [2, 120, 95, 130, 90, 113, 124, 140],
+    [3, 130, 105, 140, 100, 117, 133, 139],
+    [4, 90, 85, 95, 85, 88, 92, 95],
+    [5, 70, 74, 63, 67, 69, 70, 72],
+    [6, 30, 39, 22, 21, 28, 34, 40],
+    [7, 80, 77, 83, 70, 77, 85, 90],
+    [8, 100, 90, 110, 85, 95, 102, 110],
+  ];
+
+  const lineOptions = {
+    title: "Price, per days",
+    curveType: "function",
+    series: [{ color: "#D9544C" }],
+    intervals: { style: "bars" },
+    legend: "none",
+  };
+
   return (
     <div className="text-2xl">
       <div className="mt-3">
@@ -89,34 +128,56 @@ const AdminHome: React.FC = () => {
           </div>
         </div>
       </>
+
+      {/* chart */}
+      <div className="py-9 lg:py-11">
+        <h3>{piOptions.title} </h3>
+        {/* pi charts */}
+        <Chart
+          chartType="PieChart"
+          data={piChartData}
+          // options={options}
+          width={"100%"}
+          height={"400px"}
+        />
+        {/* line chart */}
+        <h3>{lineOptions.title} </h3>
+        <Chart
+          chartType="LineChart"
+          width="100%"
+          height="400px"
+          data={lineChartData}
+          // options={lineOptions}
+        />
+      </div>
       <div className="mt-6">
-          <h2 className="text-xl font-bold mb-4 text-left">
-            Recent car bookings
-          </h2>
-          <div className="overflow-x-auto border rounded mt-5">
-            <table className="table font-medium">
-              <thead className="bg-primary text-white">
-                <tr className="text-base">
-                  <th>#</th>
-                  <th>User</th>
-                  <th>Location</th>
-                  <th>Start Date</th>
-                  <th>Cost</th>
+        <h2 className="text-xl font-bold mb-4 text-left">
+          Recent car bookings
+        </h2>
+        <div className="overflow-x-auto border rounded mt-5">
+          <table className="table font-medium">
+            <thead className="bg-primary text-white">
+              <tr className="text-base">
+                <th>#</th>
+                <th>User</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((item: bookings, idx: number) => (
+                <tr key={item._id}>
+                  <th>{idx + 1}</th>
+                  <td>{item?.user}</td>
+                  <td>{item?.location}</td>
+                  <td>{formatDate(item?.startDate)}</td>
+                  <td className="font-bold">{item?.totalCost}$</td>
                 </tr>
-              </thead>
-              <tbody>
-                {bookings.map((item: bookings, idx: number) => (
-                  <tr key={item._id}>
-                    <th>{idx + 1}</th>
-                    <td>{item?.user}</td>
-                    <td>{item?.location}</td>
-                    <td>{formatDate(item?.startDate)}</td>
-                    <td className="font-bold">{item?.totalCost}$</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
