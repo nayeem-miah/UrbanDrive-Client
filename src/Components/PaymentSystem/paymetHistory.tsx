@@ -39,7 +39,7 @@ const PaymetHistory = () => {
           ) : (
             <div className="overflow-x-auto border rounded mt-16">
               <table className="table font-medium">
-                <thead className="bg-[#076cec] text-white">
+                <thead className="bg-primary text-white">
                   <tr className="text-base">
                     <th>#</th>
                     <th>Name</th>

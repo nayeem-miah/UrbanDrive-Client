@@ -5,7 +5,7 @@ import axios from 'axios';
 import StepIndicator from './steps';
 import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
-import { steps } from '../../Components/steps/steps';
+import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 
 
@@ -43,7 +43,7 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/bookings/${bookingId}`);
+        const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
@@ -87,7 +87,7 @@ const OnboardCheckout: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.put(`http://localhost:5000/bookings/${bookingId}`, {
+      const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
