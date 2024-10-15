@@ -1,6 +1,4 @@
 {
-  "title": "Multi-language app",
-  "label": "Select another language!",
-  "about": "About",
-  "home": "Home"
+  "welcome": "Welcome to the site",
+  "toggleLanguage": "Switch to Bangla"
 }

@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import carRental from "../assets/bannercar.jpg";
 import { TbArrowUpRight } from "react-icons/tb";
+// import { useTranslation } from 'react-i18next';
 
 const CarRental: React.FC = () => {
+  // const { t } = useTranslation();
   return (
     <>
       <div className="grid grid-cols-1  gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">

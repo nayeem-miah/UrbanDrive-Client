@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // i18n.js
 import i18n from "i18next";
 import Backend from "i18next-http-backend"; // For loading translations via HTTP
