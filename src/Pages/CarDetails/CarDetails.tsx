@@ -35,13 +35,7 @@ const CarDetails: React.FC = () => {
 
   ];
 
-  const { data: reviews = [], refetch: refetchReviews } = useQuery({
-    queryKey: ['reviews', car._id],
-    queryFn: async () => {
-      const response = await axiosPublic.get(`/reviews/${car._id}`);
-      return response.data;
-    }
-  });
+
 
   const [scrollY, setScrollY] = useState(0);
   const [dateRange, setDateRange] = useState([
@@ -58,8 +52,17 @@ const CarDetails: React.FC = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [perDayCost, setPerDayCost] = useState(0);
   const [includedDriver, setIncludedDriver] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  
+
+  const { data: reviews = [], currentPage: 1, totalPages: 1, totalReviews: 1, refetch: refetchReviews } = useQuery({
+    queryKey: ['reviews', car._id],
+    queryFn: async () => {
+      const response = await axiosPublic.get(`/reviews/${car._id}`);
+      return response.data;
+    }
+  });
 
 
   const calculateTotalCost = (start: Date, end: Date) => {
@@ -188,9 +191,9 @@ const CarDetails: React.FC = () => {
         <p className="text-lg text-gray-600 mb-4 font-lato">{car.model}</p>
 
         <div className="flex items-center mb-6">
-          <span className="text-2xl font-bold text-indigo-600 mr-2">{car.rating}</span>
+          <span className="text-2xl font-bold text-indigo-600 mr-2">{car.averageRating}</span>
           <FaStar className="w-6 h-6 fill-indigo-600" />
-          <span className="text-gray-600 ml-1">({car.trip_count} trips)</span>
+          <span className="text-gray-600 ml-1">({car.reviewCount} reviews)</span>
         </div>
 
         {/* Features Grid */}
@@ -332,8 +335,8 @@ const CarDetails: React.FC = () => {
     </div>
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-6">
           <div className="text-2xl font-bold mb-4">Ratings </div>
-          <div className="text-5xl text-indigo-600 font-bold">3.5</div>
-          <div className="text-gray-500 mb-6">(94 ratings)</div>
+          <div className="text-5xl text-indigo-600 font-bold">{car.averageRating}</div>
+          <div className="text-gray-500 mb-6">({car.reviewCount} reviews)</div>
 
           {ratingsData.map((rating, index) => (
             <div key={index} className="mb-4">

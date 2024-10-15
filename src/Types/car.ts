@@ -21,6 +21,8 @@ export interface ICar {
     seatCount: number;
     trip_count: number;
     plan_type: string;
+    averageRating: number;
+    reviewCount: number;
 }
 
 export interface RatingData {
