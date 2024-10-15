@@ -10,20 +10,22 @@ import CarDetails from "../Pages/CarDetails/CarDetails";
 import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
-import HostCarListingForm from "../Pages/HostingCarForm/HostingCarForm";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 
 
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
-
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
-// import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
-import PaymentHistory from "../Pages/Dashboard/Admin/PaymentHistory";
+import ManagePaymentHistory from "../Pages/Dashboard/Admin/ManagePaymentHistory";
 import TotalCarList from "../Pages/Dashboard/Admin/TotalCarList";
 import MembershipDuration from "../Components/Membership/MembershipDuration";
 import AllBookings from "../Pages/Dashboard/Admin/AllBookings";
+import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
+import Success from "../Components/PaymentSystem/SSLCommarze/Success";
+import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
+import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
+import Profile from "../Components/UserDashboard/Profile";
 
 
 const router = createBrowserRouter([
@@ -44,12 +46,12 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-      
+
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -75,7 +77,7 @@ const router = createBrowserRouter([
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
@@ -87,7 +89,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/membership-duration/:planName/:price",
-        element:<MembershipDuration></MembershipDuration>,
+        element: <MembershipDuration></MembershipDuration>,
       },
       {
         path: "/payment/:planName/:totalPrice",
@@ -111,6 +113,25 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Registration></Registration>,
   },
+  // payment success
+  {
+    path: "/success",
+    element: <Success />
+  },
+  // payment fail
+  {
+    path: "/fail",
+    element: <Fail />
+  },
+  // payment cancel
+  {
+    path: "/cancel",
+    element: <Cancel />
+  },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
   {
     path: "/dashboard",
     element: <Dashboard />,
@@ -125,16 +146,20 @@ const router = createBrowserRouter([
       },
       {
         path: "paymentHistory",
-        element: <PaymentHistory/>
+        element: <ManagePaymentHistory />
       },
       {
         path: 'cars',
-        element: <TotalCarList/>
+        element: <TotalCarList />
       },
       {
         path: 'bookings',
-        element: <AllBookings/>
+        element: <AllBookings />
       },
+      {
+        path: 'manageMemberShip',
+        element: <ManageMemberShip />
+      }
     ],
   },
 ]);

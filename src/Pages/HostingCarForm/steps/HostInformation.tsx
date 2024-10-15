@@ -10,7 +10,7 @@ const HostInformation: React.FC = () => {
         <label htmlFor="hostName" className="block font-semibold mb-2">Host Name</label>
         <input
           id="hostName"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('host.name', { required: 'Host name is required' })}
         />
         {errors.host && 'name' in errors.host && typeof errors.host.name?.message === 'string' && (
@@ -23,7 +23,7 @@ const HostInformation: React.FC = () => {
         <input
           id="hostEmail"
           type="email"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('host.email', { required: 'Host email is required' })}
         />
         {errors.host && 'email' in errors.host && typeof errors.host.email?.message === 'string' && (
@@ -37,7 +37,7 @@ const HostInformation: React.FC = () => {
           id="carImage"
           type="file"
           accept="image/*"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('carImage', { required: 'Car image is required' })}
         />
         {errors.carImage && typeof errors.carImage.message === 'string' && (
@@ -52,7 +52,7 @@ const HostInformation: React.FC = () => {
           type="file"
           accept="image/*"
           multiple
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('carImages', { required: 'At least one car image is required' })}
         />
         {errors.carImages && typeof errors.carImages.message === 'string' && (

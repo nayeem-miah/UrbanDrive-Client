@@ -15,7 +15,7 @@ interface CheckoutFormProps {
   isMembershipPayment: boolean; // To differentiate between membership and booking payments
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembershipPayment }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
@@ -58,7 +58,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -104,7 +104,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
           email: user?.email,
           transactionId: paymentIntent.id,
           amount: price,
-          purchaseDate: new Date(), 
+          purchaseDate: new Date(),
           expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // এক বছরের মেয়াদ
           membershipPlan:planName,
         };
@@ -132,7 +132,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName, isMembersh
         } catch (error) {
           console.error("Error posting membership payment info:", error);
         }
-        
+
       } else {
         // Handle Booking payment
         try {

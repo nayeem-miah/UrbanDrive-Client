@@ -46,6 +46,21 @@ const BasicCarInfo: React.FC = () => {
           classNamePrefix="select"
           isClearable
           required
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,  
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
         />
         {errors.basicCarInfo && 'category' in errors.basicCarInfo && typeof errors.basicCarInfo.category?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.category.message}</p>
@@ -55,21 +70,19 @@ const BasicCarInfo: React.FC = () => {
       <div className="mb-4">
         <label htmlFor="make" className="block font-semibold mb-2">Make</label>
         <input
-          id="make"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('basicCarInfo.make', { required: 'Make is required' })}
         />
         {errors.basicCarInfo && 'make' in errors.basicCarInfo && typeof errors.basicCarInfo.make?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.make.message}</p>
         )}
-      </div>
+      </div>  
       
       <div className="flex flex-col lg:flex-row lg:justify-between gap-4">
       <div className="mb-4 w-full">
         <label htmlFor="model" className="block font-semibold mb-2">Model</label>
         <input
-          id="model"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('basicCarInfo.model', { required: 'Model is required' })}
         />
         {errors.basicCarInfo && 'model' in errors.basicCarInfo && typeof errors.basicCarInfo.model?.message === 'string' && (
@@ -79,9 +92,9 @@ const BasicCarInfo: React.FC = () => {
 
       <div className="mb-4">
         <label htmlFor="year" className="block font-semibold mb-2">Year</label>
-        <select {...register('basicCarInfo.year', { required: true })} className="border rounded p-2 text-gray-700" required>
+        <select {...register('basicCarInfo.year', { required: true })} className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100" required>
           {Array.from({ length: 30 }, (_, index) => {
-            const year = new Date().getFullYear() - index; // Current year minus index
+            const year = new Date().getFullYear() - index; 
             return (
               <option key={year} value={year}>
                 {year}
@@ -111,6 +124,21 @@ const BasicCarInfo: React.FC = () => {
           }}
           classNamePrefix="select"
           isClearable
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,    
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, // Ensure the menu appears above other elements
+            }),
+          }}
         />
         {errors.basicCarInfo && 'seatCount' in errors.basicCarInfo && typeof errors.basicCarInfo.seatCount?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.seatCount.message}</p>
@@ -126,6 +154,21 @@ const BasicCarInfo: React.FC = () => {
           onChange={handleFeatureChange}
           components={animatedComponents} 
           classNamePrefix="select"
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
         />
         {errors.basicCarInfo && 'features' in errors.basicCarInfo && typeof errors.basicCarInfo.features?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.features.message}</p>
@@ -136,3 +179,6 @@ const BasicCarInfo: React.FC = () => {
 };
 
 export default BasicCarInfo;
+
+
+

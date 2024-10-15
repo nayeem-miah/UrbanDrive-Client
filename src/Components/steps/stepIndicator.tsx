@@ -26,8 +26,8 @@ interface StepIndicatorProps {
             : ''
         }`}
       >
-            <div className="flex items-center font-medium w-full">
-              <span className={`w-8 h-8 ${index <= currentStep ? 'bg-indigo-600 text-white' : 'bg-gray-50 text-indigo-600'} border-2 border-${index <= currentStep ? 'transparent' : 'gray-200'} rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}>
+            <div className="flex items-center font-medium w-full font-Merri ">
+              <span className={`w-8 h-8 ${index <= currentStep ? 'bg-indigo-600 text-white' : 'bg-gray-50 text-indigo-600'} border-1 border-${index <= currentStep ? 'transparent' : 'gray-200'} rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}>
                 {index < currentStep ? (
                   <svg className="w-5 h-5 stroke-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 12L9.28722 16.2923C9.62045 16.6259 9.78706 16.7927 9.99421 16.7928C10.2014 16.7929 10.3681 16.6262 10.7016 16.2929L20 7" stroke="stroke-current" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>

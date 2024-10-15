@@ -29,7 +29,7 @@ const LocationAndPickupInfo: React.FC = () => {
         <label htmlFor="city" className="block font-semibold mb-2">City</label>
         <input
           id="city"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('locationAndPickupInfo.city', { required: 'City is required' })}
         />
         {errors.locationAndPickupInfo && 'city' in errors.locationAndPickupInfo && typeof errors.locationAndPickupInfo.city?.message === 'string' && (
@@ -41,7 +41,7 @@ const LocationAndPickupInfo: React.FC = () => {
         <label htmlFor="pickupPoint" className="block font-semibold mb-2">Pickup Point</label>
         <input
           id="pickupPoint"
-          className="w-full border border-gray-300 rounded p-2"
+          className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-300 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
           {...register('locationAndPickupInfo.pickupPoint', { required: 'Pickup point is required' })}
         />
         {errors.locationAndPickupInfo && 'pickupPoint' in errors.locationAndPickupInfo && typeof errors.locationAndPickupInfo.pickupPoint?.message === 'string' && (
@@ -59,12 +59,23 @@ const LocationAndPickupInfo: React.FC = () => {
             placeholder="Start Time"
             isClearable
             styles={{
-              control: (provided) => ({
+              control: (provided, { isFocused }) => ({
+                ...provided,  
+                border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+                borderRadius: '0.5rem', 
+                backgroundColor: '#f9fafb',
+                boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+                transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+                transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+              }),
+              menu: (provided) => ({
                 ...provided,
-                borderColor: errors.locationAndPickupInfo && 'openingHours' in errors.locationAndPickupInfo && (errors.locationAndPickupInfo.openingHours as { start?: any }).start ? 'red' : provided.borderColor,
+                zIndex: 9999, 
               }),
             }}
+            
           />
+          
           <span className="self-center">-</span>
           <Select
             options={timeOptions}
@@ -73,9 +84,18 @@ const LocationAndPickupInfo: React.FC = () => {
             placeholder="End Time"
             isClearable
             styles={{
-              control: (provided) => ({
+              control: (provided, { isFocused }) => ({
+                ...provided,  
+                border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+                borderRadius: '0.5rem', 
+                backgroundColor: '#f9fafb',
+                boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+                transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+                transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+              }),
+              menu: (provided) => ({
                 ...provided,
-                borderColor: errors.locationAndPickupInfo && 'openingHours' in errors.locationAndPickupInfo && (errors.locationAndPickupInfo.openingHours as { end?: any }).end ? 'red' : provided.borderColor,
+                zIndex: 9999, 
               }),
             }}
           />

@@ -18,7 +18,7 @@ const planOptions = [
 
 const Membership: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { setValue, formState: { errors } } = useFormContext();
 
   const handleMembershipChange = (selectedOption: any) => {
     setValue('membership', selectedOption ? selectedOption.value : '');
@@ -39,6 +39,21 @@ const Membership: React.FC = () => {
           classNamePrefix="select"
           placeholder="Select Membership"
           isClearable
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,  
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
         />
         {errors.membership && (
           <p className="text-red-500">{typeof errors.membership.message === 'string' ? errors.membership.message : ''}</p>
@@ -54,6 +69,21 @@ const Membership: React.FC = () => {
           classNamePrefix="select"
           placeholder="Select Plan"
           isClearable
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,  
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
         />
         {errors.plan && (
           <p className="text-red-500">{typeof errors.plan.message === 'string' ? errors.plan.message : ''}</p>
