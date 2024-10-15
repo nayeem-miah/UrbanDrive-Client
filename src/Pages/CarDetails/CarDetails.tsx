@@ -377,7 +377,7 @@ const CarDetails: React.FC = () => {
   )}
   
   {user ? (
-    <ReviewForm carId={car._id} onReviewSubmitted={handleReviewSubmitted} />
+    <ReviewForm carId={car._id.toString()} onReviewSubmitted={handleReviewSubmitted} />
   ) : (
     <p className="mt-6 text-gray-600">Please log in to leave a review.</p>
   )}

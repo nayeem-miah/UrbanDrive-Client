@@ -1,7 +1,6 @@
 
 export interface ICar {
     _id: number;
-    carId: string;
     make: string;
     model: string;
     year: number;
