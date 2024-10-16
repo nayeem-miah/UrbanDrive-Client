@@ -12,5 +12,20 @@
   "renatalsubheading": "The UrbanDrive website showcases the core message of the company, highlighting that it offers more than just a standard car rental service. The header introduces UrbanDrive as a unique brand, focusing on the idea of providing a superior experience.",
   "feature1": "Sports and Luxury Cars",
   "feature2": "Economy Cars",
-  "readMore": "Read More"
+  "readMore": "Read More",
+  "rentNow": "RENT NOW",
+  "bookAutoRental": "Book Auto Rental",
+  "chooseCarType": "Choose Car Types",
+  "economyCars": "Economy Cars",
+  "luxuryCars": "Luxury Cars",
+  "sedan": "Sedan",
+  "pickupLocation": "Pick Up Locations",
+  "uttora": "Uttora",
+  "mirpur1": "Mirpur-1",
+  "saver": "Saver",
+  "ajimpur": "Ajimpur",
+  "mirpur2": "Mirpur-2",
+  "pickupDate": "Pick-Up Date",
+  "dropOffLocation": "Drop Off Locations",
+  "rentNowButton": "Rent Now"
 }
