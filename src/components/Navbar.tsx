@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center">
           <button
             className={`font-bold  ${
-              currentLanguage === "en" ? " text-primary" : "text-white"
+              currentLanguage === "en" ? " text-secondary" : "text-white"
             }`}
             onClick={() => changeLanguage("en")}
           >
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
           <span className="ml-2 mr-2">|</span>
           <button
             className={`font-bold mr-3  ${
-              currentLanguage === "bn" ? " text-primary" : "text-white"
+              currentLanguage === "bn" ? " text-secondary" : "text-white"
             }`}
             onClick={() => changeLanguage("bn")}
           >
