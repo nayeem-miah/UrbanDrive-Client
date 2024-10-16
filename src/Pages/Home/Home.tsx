@@ -6,11 +6,13 @@ import BrowseByDestination from "../../Components/BrowseByDestination";
 import Reviews from "../../Components/Reviews";
 import FaqSection from "../../Components/FaqSection";
 import Membership from "../../Components/Membership/Membership";
+// import TestTranslate from "../../Components/TestTranslate";
 
 const Home: React.FC = () => {
   return (
     <div className="">
       <Banner></Banner>
+      {/* <TestTranslate/> */}
       <CarRental></CarRental>
       <BookAutoRental></BookAutoRental>
       <BrowseByDestination />
