@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
@@ -15,8 +15,28 @@ interface ReviewFormProps {
 const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [rating, setRating] = useState(0);
+  const [hasReviewed, setHasReviewed] = useState(false); 
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+
+  
+  // useEffect(() => {
+  //   const checkUserReview = async () => {
+  //     try {
+  //       const response = await axiosPublic.get(`/reviews/${carId}`);
+  //       const userReview = response.data.reviews.find((review: any) => review.userId === user?.uid);
+  //       if (userReview) {
+  //         setHasReviewed(true); 
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking user review:', error);
+  //     }
+  //   };
+
+  //   if (user) {
+  //     checkUserReview();
+  //   }
+  // }, [carId, user, axiosPublic]);
 
   const onSubmit = async (data: any) => {
     if (rating === 0) {
@@ -30,7 +50,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
       userName: user?.displayName,
       rating,
       comment: data.comment,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     try {
@@ -39,11 +59,21 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
       setRating(0);
       onReviewSubmitted();
       toast.success('Review submitted successfully!');
+      setHasReviewed(true); 
     } catch (error) {
       console.error('Error submitting review:', error);
       toast.error('Failed to submit review. Please try again.');
     }
   };
+
+  if (hasReviewed) {
+    return (
+      <div className="mt-8 bg-gray-100 p-6 rounded-lg shadow-md">
+        <h3 className="text-2xl font-bold mb-4">Thank you for your review!</h3>
+        <p className="text-gray-700">You have already reviewed this car.</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 bg-gray-100 p-6 rounded-lg shadow-md">
