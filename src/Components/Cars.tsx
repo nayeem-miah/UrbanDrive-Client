@@ -5,18 +5,23 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { MdOutlineStar } from "react-icons/md";
 import { FaAward } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 // import { RxMagnifyingGlass } from "react-icons/rx";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
 
 
 
 
 const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
+  const {user} =useAuth();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("");
@@ -31,6 +36,7 @@ const Cars: React.FC = () => {
   const [cars,setCars] = useState([]);
  const [driver,setDriver]=useState('');
  const [homePickup,setHomePickup]=useState("");
+ const [favoriteCars, setFavoriteCars] = useState<string[]>([]);
  
 
   interface Car {
@@ -168,6 +174,32 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   const handleSeatCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSeatCount(value ? Number(value) : null);
+  };
+
+  const removeFromFavoriteCars = async (carId: string) => {
+    try {
+      // console.log('গাড়ির ID মুছতে:', carId);
+      await axiosPublic.delete(`/favoritesCars/${carId}`);
+      setFavoriteCars(favoriteCars.filter(id => id !== carId)); 
+      toast.success('Removed from favorites!');
+      // console.log('Removed from favorites:', carId);
+    } catch (error) {
+      // console.error('Error removing from favorites:', error);
+      toast.error('Failed to remove from favorites.');
+    }
+  };
+  const addToFavoriteCars = async (car: Car) => {
+    try {
+      const response = await axiosPublic.post('/favoritesCars', {
+        ...car,
+        email: user?.email
+      });
+      setFavoriteCars([...favoriteCars, car._id]); 
+      toast.success('Added to favorites!');
+      console.log('Added to favorites:', response.data);
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
   };
 
   
@@ -314,7 +346,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
               {Array.isArray(cardata) && cardata.length > 0 ? (
                 <div className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
                   {cardata.map((car: Car) => (
-                    <Link to={`/cars/${car._id}`}>
+                   
                       <div
                         key={car._id}
                         className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
@@ -327,7 +359,24 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
                           />
                         </figure>
                         <div className="card-body w-full lg:w-2/3 flex-1">
-                          <h2 className="card-title">{car.model}</h2>
+                        <div className="flex justify-between">
+                        <h2 className="card-title">{car.model}</h2>
+                        {favoriteCars.includes(car._id) ? (
+  <IoMdHeart 
+    onClick={() => removeFromFavoriteCars(car._id)} 
+    className="text-xl" 
+    style={{ cursor: 'pointer', color: 'black' }} 
+  />
+) : (
+  <IoMdHeartEmpty 
+    onClick={() => addToFavoriteCars(car)} 
+    className="text-xl" 
+    style={{ cursor: 'pointer' }} 
+  />
+)}
+
+                        </div>
+                          
                           <p className="text-ellipsis">
                             {car.description.slice(0, 80)}....
                           </p>
@@ -355,14 +404,17 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
                             <p></p>
                           )}
 
-                          <div className="card-actions justify-end">
+                          <div className="card-actions gap-2 items-center justify-end mt-2">
                             <span className="text-primary font-bold text-xl">
                               ${car.price}/day
                             </span>
+                            <Link to={`/cars/${car._id}`}>
+              <button className="bg-blue-700 p-2 rounded-lg text-white ">Details</button>
+            </Link>
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    
                   ))}
                 </div>
               ) : (

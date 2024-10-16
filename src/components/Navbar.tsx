@@ -82,6 +82,9 @@ const Navbar: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/favorite">Favorite</Link>
+                </li>
+                <li>
                   <Link to="/hostingForm">Become A Host</Link>
                 </li>
                 <li>

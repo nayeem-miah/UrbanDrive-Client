@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../../Hooks/useAuth';
 import EditProfile from './EditeProfile';
 import { LuCheckCircle } from "react-icons/lu";
-import { divIcon } from 'leaflet';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const Profile: React.FC = () => {
     const { user,setUser } = useAuth();
@@ -17,10 +17,12 @@ const Profile: React.FC = () => {
     const [work, setWork] = useState(user?.work || ''); 
     const [link, setLink] = useState(user?.link || ''); 
     const [photoURL, setPhotoURL] = useState('');
+    const [phone, setPhone] = useState(user?.phone || '');
 
     const {
         data: userdata,  // Corrected line with comma
         isLoading,
+        isFetching,
     } = useQuery({
         queryKey: ["userdata"],
         queryFn: async () => {
@@ -29,7 +31,7 @@ const Profile: React.FC = () => {
             return response.data;
         },
     });
-    console.log(userdata)
+    // console.log(userdata)
    
 
     const formatJoinDate = (dateString: string) => {
@@ -55,18 +57,24 @@ const Profile: React.FC = () => {
     };
     const handleSave = async() => {
         const updatedUser = {
-        Name: displayName || user?.displayName,
         photoURL: photoURL || user?.photoURL, 
         language,
         work,
-        link, // Ensure facebook is included
+        email:user?.email,
+        link,
+        phone // Ensure facebook is included
        
             
         };
         // console.log('Updated User:', updatedUser);
         try {
-            const response = await axiosPublic.post('/user/profile', { updateData: updatedUser });
-            setUser(response.data); // Update the local state with the newly created user
+            const response = await axiosPublic.put('/user/profile', { updateData: updatedUser });
+            setUser(response.data);
+            toast.success('update userata successfully')
+            setTimeout(() => {
+                toast.success('update userata successfully')
+              }, 3000);
+             // Update the local state with the newly created user
             setIsEditing(false); 
         } catch (error) {
             console.error('Error saving user data:', error);
@@ -121,15 +129,34 @@ const Profile: React.FC = () => {
   <h2>Email address</h2>
   <span className="text-green-600 text-2xl"><LuCheckCircle /></span>
   </div>
-  <div className="flex justify-between items-center text-lg">
-  <h2>Phone number</h2>
-  <span className="text-blue-600">Verify phone number</span> {/* Change color for visibility */}
-  </div>
-  <div className="flex justify-between items-center text-lg">
-  <h2>Facebook</h2>
-  <span className="text-blue-600">Connect Account</span> {/* Change color for visibility */}
-  </div>
+  {isEditing && (
+                        <div>
+                            {/* ফোন নম্বর ফিল্ড */}
+                            <div className='flex flex-col mt-3'>
+                                <label htmlFor="phone" className='ml-1 mb-2'>Phone Number</label>
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    placeholder="Enter your phone number"
+                                    className="input input-bordered w-full max-w-xs border-gray-600 text-gray-800 rounded-lg p-3 h-12 focus:outline-none"
+                                />
+                            </div>
+                        </div>
+                    )}
+                   
+  
+ 
   <h3 className='text-slate-500 font-lato text-xs'>Build trust with other users on UrbanDrive by verifying your contact information.</h3>
+  {userdata?.phone && (
+  <p>
+    Phone: 
+    <a href={`tel:${userdata.phone}`} className="text-blue-600 underline ml-2">
+      {userdata.phone}
+    </a>
+  </p>
+)}
   {userdata?.language &&  <p>Language: {userdata?.language}</p>}
   {userdata?.work &&   <p>Work: {userdata?.work}</p>}
  
@@ -186,11 +213,22 @@ const Profile: React.FC = () => {
         </div>):(<div></div>)}
         <h1 className='uppercase text-slate-500 text-sm font-lato font-semibold tracking-wider'>About    {user?.displayName},</h1>
             
-        {userdata?.link &&  <h3>
-    <a href={userdata.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-      {userdata.link}
-    </a>
-  </h3> }
+        {userdata?.link && userdata.link.length > 0 && (
+  <h3>
+    {userdata.link.map((link, index) => (
+      <div key={index}> {/* Wrap each link in a div */}
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline"
+        >
+          {link}
+        </a>
+      </div>
+    ))}
+  </h3>
+)}
     
       
        <h2 className='uppercase text-slate-500 text-sm font-lato font-semibold lg:mt-4'>Reviews from hosts</h2>
