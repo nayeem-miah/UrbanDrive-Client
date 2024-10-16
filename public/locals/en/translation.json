@@ -83,6 +83,26 @@
       "Personalized rental options": "Personalized rental options",
       "24/7 dedicated support": "24/7 dedicated support"
     }
-  }
-
+  },
+  "faqTitle": "Frequently Asked Question",
+  "q1": "What documents do I need to rent a car?",
+  "q2": "What is the minimum age requirement to rent a car?",
+  "q3": "Can I rent a car with a debit card?",
+  "q4": "Can I return the car to a different location?",
+  "q5": "Is there a mileage limit?",
+  "q6": "Do I need insurance to rent a car?",
+  "q7": "Can I add an additional driver?",
+  "q8": "What happens if I return the car late?",
+  "q9": "What should I do if I have an accident or breakdown?",
+  "q10": "What fuel policy do you offer?",
+  "a1": "You will need a valid driver's license, a credit card in your name, and a form of identification (e.g., passport or ID card). Some locations may require additional documents, so it's best to confirm with your rental location.",
+  "a2": "The minimum age to rent a car is usually 21, but it may vary depending on the rental company and location. Drivers under 25 may incur an additional young driver surcharge.",
+  "a3": "Some rental companies allow debit card rentals, but it’s subject to terms and conditions. A larger security deposit may be required, and not all car categories may be available for debit card customers.",
+  "a4": "Yes, many rental companies offer one-way rentals, allowing you to pick up a car in one location and drop it off at another. Additional fees may apply.",
+  "a5": "Most car rentals come with unlimited mileage, but some vehicles or special offers may have restrictions. Be sure to confirm mileage limits when booking.",
+  "a6": "Basic insurance coverage is usually included in the rental rate. However, additional insurance, such as collision damage waivers or personal accident insurance, can be purchased for extra protection.",
+  "a7": "Yes, most car rental companies allow you to add additional drivers. They must meet the same age and license requirements, and an additional fee may apply.",
+  "a8": "Returning the car after the agreed time may result in additional charges. Some companies offer a grace period, but it’s best to check with your rental provider for their specific policy.",
+  "a9": "In case of an accident, contact the rental company immediately and follow their instructions. For breakdowns, most rental cars are covered by roadside assistance services.",
+  "a10": "Car rental companies typically offer two options: (1) full-to-full, where you return the car with the same amount of fuel as when you picked it up, or (2) pre-purchase fuel, where you pay for a full tank upfront and can return the car empty."
 }
