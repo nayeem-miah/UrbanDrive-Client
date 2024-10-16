@@ -56,13 +56,32 @@ const CarDetails: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
 
 
-  const { data: reviews = [], currentPage: 1, totalPages: 1, totalReviews: 1, refetch: refetchReviews } = useQuery({
-    queryKey: ['reviews', car._id],
-    queryFn: async () => {
-      const response = await axiosPublic.get(`/reviews/${car._id}`);
-      return response.data;
+  const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 }, 
+        refetch: refetchReviews,
+        isLoading } = useQuery({
+  queryKey: ['reviews', car._id, page],
+  queryFn: async () => {
+    const response = await axiosPublic.get(`/reviews/${car._id}?page=${page}&limit=5`);
+    return response.data;
+  }
+});
+
+  const handleNextPage = () => {
+    if (page < reviewsData.totalPages) {
+      setPage(prev => prev + 1);
     }
-  });
+  };
+  // const handleNextPage =()=>{
+  //   if(page < totalPages){
+  //     setPage(page + 1);
+  //   }
+  // }
+
+  const handlePrevPage =()=>{
+    if(page > 1){
+      setPage(prev => prev -1);
+    }
+  }
 
 
   const calculateTotalCost = (start: Date, end: Date) => {
@@ -333,6 +352,8 @@ const CarDetails: React.FC = () => {
         </div>
       </div>
     </div>
+
+    {/* Ratings */}
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-6">
           <div className="text-2xl font-bold mb-4">Ratings </div>
           <div className="text-5xl text-indigo-600 font-bold">{car.averageRating}</div>
@@ -360,24 +381,46 @@ const CarDetails: React.FC = () => {
             <div className="mt-4 space-y-4"></div>
           </div> */}
         </div>
+        {/* Reviews */}
         <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
   <h2 className="text-3xl font-bold mb-6">Reviews</h2>
-  {reviews.length > 0 ? (
-    <div className="space-y-6">
-      {reviews.map((review: any) => (
-        <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
-          <div className="flex items-center mb-2">
-            <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
-            <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
-          </div>
-          <p className="text-gray-600">{review.comment}</p>
-          <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
+  {isLoading ? (
+  <div className="min-h-screen flex items-center justify-center">
+    <SyncLoader color="#593cfb" size={18} />
+  </div>
+) : reviewsData.reviews.length > 0 ? (
+  <div className="space-y-6">
+    {reviewsData.reviews.map((review: any) => (
+      <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
+        <div className="flex items-center mb-2">
+          <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
+          <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
         </div>
-      ))}
+        <p className="text-gray-600">{review.comment}</p>
+        <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
+      </div>
+    ))}
+    <div className="mt-4 flex justify-between">
+      <button 
+        onClick={handlePrevPage} 
+        disabled={page === 1}
+        className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+      >
+        Previous
+      </button>
+      <span>Page {page} of {reviewsData.totalPages}</span>
+      <button 
+        onClick={handleNextPage} 
+        disabled={page === reviewsData.totalPages}
+        className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+      >
+        Next
+      </button>
     </div>
-  ) : (
-    <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
-  )}
+  </div>
+) : (
+  <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
+)}
   
   {user ? (
     <ReviewForm carId={car._id.toString()} onReviewSubmitted={handleReviewSubmitted} />
