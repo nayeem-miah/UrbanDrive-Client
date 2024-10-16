@@ -33,7 +33,7 @@ const Cancel: React.FC = () => {
       >
         <Link
           to="/"
-          className="bg-yellow-500 text-white px-6 py-2 rounded transition-transform transform hover:scale-105 hover:bg-yellow-600"
+          className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4"
         >
           Return Home
         </Link>

@@ -47,24 +47,24 @@ const CarDetails: React.FC = () => {
   const [perDayCost, setPerDayCost] = useState(0);
   const [includedDriver, setIncludedDriver] = useState(false);
 
-  
+
 
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
     let cost = days * car.rental_price_per_day;
-  
+
     if (includedDriver) {
-      cost += cost * 0.2; 
+      cost += cost * 0.2;
     }
-  
+
     return cost;
   };
 
   useEffect(() => {
-    
+
     const newTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(newTotalCost);
-    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day); 
+    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange, includedDriver]);
 
@@ -98,16 +98,16 @@ const CarDetails: React.FC = () => {
       };
 
       const response = await axiosPublic.post('https://urban-driveserver.vercel.app/bookings', bookingData);
-      
+
       if (response.data.success && response.data.bookingId) {
         navigate(`/checkout/${response.data.bookingId}`);
       } else {
         console.error('Failed to create booking:', response.data.message || 'Unknown error');
-       
+
       }
     } catch (error) {
       console.error('Error creating booking:', error);
-      
+
     }
   };
 
@@ -187,7 +187,7 @@ const CarDetails: React.FC = () => {
           </div>
         </div>
 
-        
+
 
         <div className="mt-6">
           <h2 className="text-xl font-bold mb-2 text-gray-800">Description</h2>
@@ -223,7 +223,7 @@ const CarDetails: React.FC = () => {
           <a href="#" className="text-indigo-600 text-sm">Learn more</a>
         </div>
 
-        
+
       </div>
 
       <div className="flex-1">

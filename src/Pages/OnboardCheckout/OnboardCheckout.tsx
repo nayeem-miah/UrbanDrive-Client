@@ -7,6 +7,8 @@ import useAuth from '../../Hooks/useAuth';
 import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
 
 
 type UserInfo = {
@@ -31,7 +33,10 @@ const OnboardCheckout: React.FC = () => {
   const [bookingDetails, setBookingDetails] = useState<any>(null);
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
+
+  console.log(bookingDetails);
   const price = 560;
+  const axiosPublic = useAxiosPublic()
 
   useEffect(() => {
     if (user?.email) {
@@ -91,7 +96,7 @@ const OnboardCheckout: React.FC = () => {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
-  
+
       if (response.data.success) {
         Swal.fire({
           title: 'Booking Confirmed!',
@@ -112,8 +117,29 @@ const OnboardCheckout: React.FC = () => {
       console.error('Error updating booking:', error);
     }
   };
-  
 
+  const paymentInfo = {
+    price: bookingDetails?.totalCost,
+    currency: 'BDT',
+    email: user?.email,
+    name: user?.displayName,
+    bookingDetails:bookingDetails
+  }
+
+  const handlePayment = async () => {
+    try {
+      // post request
+      const { data } = await axiosPublic.post("/create-payment", paymentInfo);
+      const redirectUrl = data.paymentUrl;
+      // console.log(redirectUrl);
+      if (redirectUrl) {
+        window.location.replace(redirectUrl)
+      }
+    } catch (error: any) {
+      console.error("Error posting payment info:", error);
+      toast.error(error.message);
+    }
+  }
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -149,6 +175,8 @@ const OnboardCheckout: React.FC = () => {
         );
       case 3:
         return (
+          // <button className='btn btn-primary' onClick={handlePayment}>payment now</button>
+
           <input
             type="text"
             name="paymentMethod"
@@ -156,7 +184,7 @@ const OnboardCheckout: React.FC = () => {
             onChange={handleChange}
             placeholder="Enter payment details"
             className="w-full px-3 py-2 border rounded-md"
-            
+
           />
         );
       case 4:

@@ -10,6 +10,7 @@ interface PaymentData {
   purchaseDate: string;
   expiryDate: string;
   amount: number;
+  cus_name: string
 }
 
 const ManageMemberShip = () => {
@@ -17,11 +18,11 @@ const ManageMemberShip = () => {
   const { data: memberShip = [],isLoading } = useQuery({
     queryKey: ["all-membership"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/all-membership`);
+      const res = await axiosPublic.get(`/memberships-data`);
       return res.data;
     },
   });
-  // console.log(myHistory);
+  console.log(memberShip);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
@@ -69,7 +70,7 @@ const ManageMemberShip = () => {
                 {memberShip.map((item: PaymentData, idx: number) => (
                   <tr key={item._id}>
                     <th>{idx + 1}</th>
-                    <td>{item?.name || "Roksana"}</td>
+                    <td>{item?.cus_name || "Roksana"}</td>
                     <td>{item?.planName}</td>
                     <td>{formatDate(item?.purchaseDate)}</td>
                     <td>{formatDate(item?.expiryDate)}</td>
