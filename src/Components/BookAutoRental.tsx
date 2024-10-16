@@ -1,6 +1,7 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import car1 from '../assets/nissan.jpg';
 const BookAutoRental: React.FC = () => {
+  const {t} = useTranslation();
   return (
     <div
       className="relative min-h-screen bg-fixed bg-cover bg-center"
@@ -10,51 +11,51 @@ const BookAutoRental: React.FC = () => {
       {/* Add your image URL */}
       <div className="bg-black bg-opacity-50 min-h-screen flex flex-col justify-center items-center">
         <div className="text-center">
-          <h3 className=" lg:mt-24  tracking-wider font-lato text-white">
-            RENT NOW
+          <h3 className=" lg:mt-10  tracking-wider font-lato text-white">
+            {t("rentNow")}
           </h3>
           <h2 className="mt-4 lg:mb-8 text-3xl font-extrabold font-lato text-white">
-            Book Auto Rental
+            {t("bookAutoRental")}
           </h2>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-6 ml-2 mr-2 md:bg-gray-900 md:bg-opacity-75 md:p-4 lg:grid-cols-6 gap-3 lg:gap-6 mt-6 mb-6 lg:bg-gray-900 lg:bg-opacity-75 p-8 rounded-full">
           <select className="select w-full max-w-xs bg-transparent text-white border rounded-full p-3 h-12">
             <option disabled value="">
-              Choose Car Types
+              {t("chooseCarType")}
             </option>
             <option className="text-black" value="economy">
-              Economy Cars
+              {t("economyCars")}
             </option>
             <option className="text-black" value="luxury">
-              Luxury Cars
+              {t("bookAutoRental")}
             </option>
-            <option className="text-black" value="sport">
+            {/* <option className="text-black" value="sport">
               Sport Cars
-            </option>
+            </option> */}
             <option className="text-black" value="sedan">
-              Sedan
+              {t("sedan")}
             </option>
           </select>
 
           <select className="select w-full max-w-xs bg-transparent text-white border rounded-full p-3 h-12">
             <option className="text-black" disabled value="">
-              Pick Up Locations
+              {t("pickupLocation")}
             </option>
             <option className="text-black" value="uttora">
-              Uttora
+              {t("uttora")}
             </option>
             <option className="text-black" value="mirpur-1">
-              Mirpur-1
+              {t("mirpur1")}
             </option>
             <option className="text-black" value="saver">
-              Saver
+              {t("saver")}
             </option>
             <option className="text-black" value="ajimpur">
-              Ajimpur
+              {t("ajimpur")}
             </option>
             <option className="text-black" value="mirpur-2">
-              Mirpur-2
+              {t("mirpur2")}
             </option>
           </select>
 
@@ -67,22 +68,22 @@ const BookAutoRental: React.FC = () => {
 
           <select className="select w-full max-w-xs bg-transparent text-white border rounded-full p-3 h-12">
             <option disabled value="">
-              Drop Off Locations
+              {t("dropOffLocation")}
             </option>
             <option className="text-black" value="uttora">
-              Uttora
+              {t("uttora")}
             </option>
             <option className="text-black" value="mirpur-1">
-              Mirpur-1
+              {t("mirpur1")}
             </option>
             <option className="text-black" value="saver">
-              Saver
+              {t("saver")}
             </option>
             <option className="text-black" value="ajimpur">
-              Ajimpur
+              {t("ajimpur")}
             </option>
             <option className="text-black" value="mirpur-2">
-              Mirpur-2
+              {t("mirpur2")}
             </option>
           </select>
 
@@ -96,7 +97,7 @@ const BookAutoRental: React.FC = () => {
             id="return-date"
             type="button"
             className="block w-full max-w-xs shadow-sm sm:text-sm bg-gradient-to-r from-[#694ce9] to-[#9d10d4] font-bold  text-white border-none rounded-full p-3 h-12 cursor-pointer"
-            value="Rent Now"
+            value={t("rentNowButton")}
           />
         </div>
       </div>
