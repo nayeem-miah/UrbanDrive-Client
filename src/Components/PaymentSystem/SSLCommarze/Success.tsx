@@ -34,13 +34,13 @@ const Success: React.FC = () => {
                 <div className='space-x-3'>
                     <Link
                         to="/"
-                        className="bg-green-500 text-white px-6 py-2 rounded transition-transform transform hover:scale-105 hover:bg-green-600"
+                        className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4"
                     >
                         Go to Home
                     </Link>
                     <Link
                         to={`/dashboard/paymentHistory`}
-                        className="bg-green-500 text-white px-6 py-2 rounded transition-transform transform hover:scale-105 hover:bg-green-600"
+                        className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4"
                     >
                         Go to payment history
                     </Link>
