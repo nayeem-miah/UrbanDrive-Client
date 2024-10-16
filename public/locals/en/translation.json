@@ -27,5 +27,17 @@
   "mirpur2": "Mirpur-2",
   "pickupDate": "Pick-Up Date",
   "dropOffLocation": "Drop Off Locations",
-  "rentNowButton": "Rent Now"
+  "rentNowButton": "Rent Now",
+  "Dhaka": "Dhaka",
+  "Chittagong": "Chittagong",
+  "Rajshahi": "Rajshahi",
+  "Rongpur": "Rangpur",
+  "Sylhet": "Sylhet",
+  "Mymensingh": "Mymensingh",
+  "browseByDestination": "Browse By Destination",
+  "browseByCar": "Browse By Cars",
+  "toyota" :"Toyota",
+  "honda" : "Honda",
+  "nissan": "Nissan",
+  "suzuki": "Suzuki"
 }

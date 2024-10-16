@@ -28,5 +28,17 @@
   "pickupDate": "পিক আপ তারিখ",
   "dropOffLocation": "ড্রপ অফ স্থান",
   "returnDate": "ফেরার তারিখ",
-  "rentNowButton": "এখন ভাড়া করুন"
+  "rentNowButton": "এখন ভাড়া করুন",
+  "Dhaka": "ঢাকা",
+  "Chittagong": "চট্টগ্রাম",
+  "Rajshahi": "রাজশাহী",
+  "Rongpur": "রংপুর",
+  "Sylhet": "সিলেট",
+  "Mymensingh": "ময়মনসিংহ",
+  "browseByDestination" :"গন্তব্য অনুযায়ী ব্রাউজ করুন",
+  "browseByCar" : "গাড়ি অনুযায়ী ব্রাউজ করুন",
+  "toyota" :"টয়োটা",
+  "honda" : "হোন্ডা",
+  "nissan": "নিসান",
+  "suzuki": "সুজুকি"
 }
