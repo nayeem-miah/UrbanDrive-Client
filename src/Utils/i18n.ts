@@ -11,6 +11,11 @@ i18n
   .init({
     fallbackLng: "en", // Fallback language
     lng: "en", // Default language
+    detection: {
+      order: ['localStorage', 'cookie','navigator'],
+      caches: ['localStorage', 'cookie'],
+      lookupLocalStorage: 'i18nextLng',
+    },
     interpolation: {
       escapeValue: false, // React already escapes values, so we don't need this
     },

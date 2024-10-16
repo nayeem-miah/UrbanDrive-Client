@@ -22,7 +22,7 @@ import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 import Success from "../Components/PaymentSystem/SSLCommarze/Success";
 import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
-import TestTranslate from "../Components/TestTranslate";
+// import TestTranslate from "../Components/TestTranslate";
 
 
 const router = createBrowserRouter([
@@ -102,10 +102,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '/test',
-    element: <TestTranslate/>
-  },
+  // {
+  //   path: '/test',
+  //   element: <TestTranslate/>
+  // },
   {
     path: "/login",
     element: <LoginPage></LoginPage>,

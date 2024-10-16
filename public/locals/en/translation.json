@@ -1,4 +1,10 @@
 {
-  "welcome": "Welcome to the site",
-  "toggleLanguage": "Switch to Bangla"
+  "home": "Home",
+  "services": "Services",
+  "about": "About",
+  "contact": "Contact",
+  "updateUser": "Update User",
+  "becomeHost": "Become A Host",
+  "dashboard": "Dashboard",
+  "logout": "Logout"
 }
