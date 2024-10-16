@@ -10,12 +10,13 @@ interface PaymentData {
   purchaseDate: string;
   expiryDate: string;
   amount: number;
-  cus_name: string
+  cus_name: string,
+  status: string
 }
 
 const ManageMemberShip = () => {
   const axiosPublic = useAxiosPublic();
-  const { data: memberShip = [],isLoading } = useQuery({
+  const { data: memberShip = [], isLoading } = useQuery({
     queryKey: ["all-membership"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/memberships-data`);
@@ -68,14 +69,14 @@ const ManageMemberShip = () => {
               </thead>
               <tbody>
                 {memberShip.map((item: PaymentData, idx: number) => (
-                  <tr key={item._id}>
+                  item.status === "Success" && (<tr key={item._id}>
                     <th>{idx + 1}</th>
                     <td>{item?.cus_name || "Roksana"}</td>
                     <td>{item?.planName}</td>
                     <td>{formatDate(item?.purchaseDate)}</td>
                     <td>{formatDate(item?.expiryDate)}</td>
                     <td className="font-bold">{item?.amount}$</td>
-                  </tr>
+                  </tr>)
                 ))}
               </tbody>
             </table>
