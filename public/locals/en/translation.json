@@ -61,5 +61,28 @@
   "email": "info@urbandrive.com",
   "location": "Dhaka, Bangladesh.",
   "copyright": "© UrbanDrive 2024. All Rights Reserved.",
-  "sign_in": "Sign in Now"
+  "sign_in": "Sign in Now",
+  "choose_membership_plan": "Choose Your Membership Plan",
+  "month": "month",
+  "buy_now": "Buy Now",
+  "membership": {
+    "Basic Plan": "Basic Plan",
+    "Premium Plan": "Premium Plan",
+    "VIP Plan": "VIP Plan",
+    "Basic features for personal use": "Basic features for personal use",
+    "Advanced features for frequent users": "Advanced features for frequent users",
+    "All-inclusive features for professionals": "All-inclusive features for professionals",
+    "features": {
+      "Basic car rental options": "Basic car rental options",
+      "Access to all locations": "Access to all locations",
+      "Email support": "Email support",
+      "All Basic features": "All Basic features",
+      "Priority customer support": "Priority customer support",
+      "Exclusive deals and discounts": "Exclusive deals and discounts",
+      "All Premium features": "All Premium features",
+      "Personalized rental options": "Personalized rental options",
+      "24/7 dedicated support": "24/7 dedicated support"
+    }
+  }
+
 }

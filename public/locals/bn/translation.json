@@ -62,5 +62,27 @@
   "email": "info@urbandrive.com",
   "location": "ঢাকা, বাংলাদেশ।",
   "copyright": "© UrbanDrive ২০২৪। সর্বস্বত্ব সংরক্ষিত।",
-  "sign_in": "এখন সাইন ইন করুন"
+  "sign_in": "এখন সাইন ইন করুন",
+  "choose_membership_plan": "আপনার সদস্যতা পরিকল্পনা চয়ন করুন",
+  "month": "মাস",
+  "buy_now": "এখনই কিনুন",
+  "membership": {
+    "Basic Plan": "বেসিক প্ল্যান",
+    "Premium Plan": "প্রিমিয়াম প্ল্যান",
+    "VIP Plan": "ভিআইপি প্ল্যান",
+    "Basic features for personal use": "ব্যক্তিগত ব্যবহারের জন্য বেসিক বৈশিষ্ট্য",
+    "Advanced features for frequent users": "নিয়মিত ব্যবহারকারীদের জন্য উন্নত বৈশিষ্ট্য",
+    "All-inclusive features for professionals": "পেশাদারদের জন্য সমস্ত বৈশিষ্ট্য অন্তর্ভুক্ত",
+    "features": {
+      "Basic car rental options": "বেসিক গাড়ি ভাড়ার অপশন",
+      "Access to all locations": "সব লোকেশনে প্রবেশাধিকার",
+      "Email support": "ইমেইল সহায়তা",
+      "All Basic features": "সব বেসিক বৈশিষ্ট্য",
+      "Priority customer support": "প্রাধান্য গ্রাহক সহায়তা",
+      "Exclusive deals and discounts": "বিশেষ ডিল ও ডিসকাউন্ট",
+      "All Premium features": "সব প্রিমিয়াম বৈশিষ্ট্য",
+      "Personalized rental options": "ব্যক্তিগত গাড়ি ভাড়ার অপশন",
+      "24/7 dedicated support": "২৪/৭ নিবেদিত সহায়তা"
+    }
+  }
 }
