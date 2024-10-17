@@ -17,7 +17,7 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import { SyncLoader } from 'react-spinners';
 import { useQuery } from '@tanstack/react-query';
-import { Rating } from '@smastrom/react-rating';
+import { Rating, Star } from '@smastrom/react-rating';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 
 
@@ -354,88 +354,120 @@ const CarDetails: React.FC = () => {
     </div>
 
     {/* Ratings */}
-    <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-6">
-          <div className="text-2xl font-bold mb-4">Ratings </div>
-          <div className="text-5xl text-indigo-600 font-bold">{car.averageRating.toFixed(1)}</div>
-          <div className="text-gray-500 mb-6">({car.reviewCount} reviews)</div>
-
-          {Object.entries(car.categoryRatings || {}).map(([label, value], index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between mb-2">
-                <span>{label}</span>
-                <span>{Number(value).toFixed(1)}</span>
-              </div>
-              <motion.div
-                className="h-2 bg-gray-300 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${(Number(value) / 5) * 100}%` }}
-                transition={{ duration: 1.5 }}
-              >
-                <div className="h-full bg-indigo-600 rounded-full"></div>
-              </motion.div>
-            </div>
-          ))}
-
-          {/* <div className="mt-6">
-            <div className="font-semibold">Reviews</div>
-            <div className="mt-4 space-y-4"></div>
-          </div> */}
+<div className="p-6 bg-white rounded-lg shadow-lg mt-8">
+  <h2 className="text-3xl font-bold mb-4 text-indigo-600 text-center">Overall Ratings</h2>
+  
+  {/* Average Rating */}
+  <div className="flex justify-center items-center mb-6">
+    <p className="text-6xl font-extrabold text-indigo-600">
+      {car.averageRating.toFixed(1)}
+    </p>
+    <div className="ml-4">
+      <p className="text-lg text-gray-500">({car.reviewCount} reviews)</p>
+    </div>
+  </div>
+  
+  {/* Category Ratings */}
+  <div className="space-y-4">
+    {Object.entries(car.categoryRatings || {}).map(([label, value], index) => (
+      <div key={index} className="mb-2">
+        <div className="flex justify-between items-center text-gray-700 font-medium mb-1">
+          <span>{label.charAt(0).toUpperCase() + label.slice(1)}</span>
+          <span>{Number(value).toFixed(1)} / 5</span>
         </div>
+        <motion.div
+          className="h-2 bg-gray-200 rounded-full overflow-hidden"
+          initial={{ width: 0 }}
+          animate={{ width: `${(Number(value) / 5) * 100}%` }}
+          transition={{ duration: 1.5 }}
+        >
+          <div className="h-full bg-indigo-600 rounded-full"></div>
+        </motion.div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
         {/* Reviews */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
-  <h2 className="text-3xl font-bold mb-6">Reviews</h2>
+        <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
+  <h2 className="text-3xl font-bold mb-6 text-indigo-600 text-center">Customer Reviews</h2>
+
   {isLoading ? (
     <div className="min-h-screen flex items-center justify-center">
-      <SyncLoader color="#593cfb" size={18} />
+      <SyncLoader color="#4F46E5" size={18} />
     </div>
   ) : reviewsData.reviews.length > 0 ? (
-    <div className="space-y-6">
+    <div className="space-y-4 ">
       {reviewsData.reviews.map((review: any) => (
-        <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
-          <div className="flex items-center mb-2">
-            <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
-            <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
+        <div key={review._id} className="bg-gray-50 p-4 rounded-lg shadow-lg">
+
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center">
+              <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{ 
+                itemShapes: Star, 
+                activeFillColor: '#4F46E5', 
+                inactiveFillColor: '#CBD5E1' 
+              }} />
+              <span className="ml-3 font-semibold text-lg text-gray-800">{review.userName}</span>
+            </div>
+            <p className="text-sm text-gray-500">
+              {new Date(review.createdAt).toLocaleDateString()}
+            </p>
           </div>
-          <div className="grid grid-cols-3 gap-2 mb-2">
+
+          
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-3 ">
             {Object.entries(review.ratingDetails).map(([key, value]) => (
-              <div key={key} className="text-sm">
-                <span className="font-semibold">{key.charAt(0).toUpperCase() + key.slice(1)}:</span> {value as number}
+              <div key={key} className="text-center">
+                <p className="text-sm text-gray-600 font-semibold">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </p>
+                <p className="text-indigo-600 text-xl font-bold">{value as number}/5</p>
               </div>
-            ))} 
+            ))}
           </div>
-          <p className="text-gray-600">{review.comment}</p>
-          <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
+
+          {/* Review Comment */}
+          <p className="text-gray-700 text-sm leading-relaxed">{review.comment}</p>
         </div>
       ))}
-      <div className="mt-4 flex justify-between">
+
+      {/* Pagination Controls */}
+      <div className="mt-6 flex justify-between items-center">
         <button 
           onClick={handlePrevPage} 
           disabled={page === 1}
-          className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md disabled:bg-gray-400 hover:bg-indigo-700 transition duration-200"
         >
           Previous
         </button>
-        <span>Page {page} of {reviewsData.totalPages}</span>
+        <span className="text-gray-700 font-medium text-base">Page {page} of {reviewsData.totalPages}</span>
         <button 
           onClick={handleNextPage} 
           disabled={page === reviewsData.totalPages}
-          className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md disabled:bg-gray-400 hover:bg-indigo-700 transition duration-200"
         >
           Next
         </button>
       </div>
     </div>
   ) : (
-    <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
+    <p className="text-lg text-gray-600 text-center">No reviews yet. Be the first to review this car!</p>
   )}
-  
+
+  {/* Review Form or Login Prompt */}
   {user ? (
-    <ReviewForm carId={car._id.toString()} onReviewSubmitted={handleReviewSubmitted} />
+    <div className="mt-10">
+      <ReviewForm carId={car._id.toString()} onReviewSubmitted={handleReviewSubmitted} />
+    </div>
   ) : (
-    <p className="mt-6 text-gray-600">Please log in to leave a review.</p>
+    <p className="mt-6 text-lg text-gray-600 text-center">Please log in to leave a review.</p>
   )}
 </div>
+
+
+
 
   </div>
 </section>
