@@ -10,6 +10,7 @@ import Ruksana from '../assets/revi/juksana.jpg'
 import Najmul from '../assets/revi/nasmul.jpg'
 import Nayem from '../assets/revi/nayem.jpg'
 import Zihad from '../assets/revi/zahid.jpg'
+import { useTranslation } from 'react-i18next';
 
 // Define the shape of a review object
 // interface Review {
@@ -21,6 +22,7 @@ import Zihad from '../assets/revi/zahid.jpg'
 // }
 
 const Reviews: React.FC = () => {
+  const {t} = useTranslation();
   // const [reviews, setReviews] = useState<Review[]>([]); // Set the type of reviews
 
   // useEffect(() => {
@@ -37,12 +39,9 @@ const Reviews: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center">
           <h2 className="text-4xl font-bold relative inline-block mt-20 font-Merri">
-            What Clients Say
+            {t("reviewTitle")}
           </h2>
-          <p className="text-[#88837a] mt-1">
-            Client reviews drive UrbanDrive to deliver better and more efficient
-            service.
-          </p>
+          <p className="text-[#88837a] mt-1">C{t("reviewDescription")}</p>
           {/* <div className="ml-2 space-y-1">
             <p className="text-[#fff] font-semibold">Testimonials</p>
             <h1 className="text-4xl text-amber-600 font-bold"></h1>
@@ -62,18 +61,14 @@ const Reviews: React.FC = () => {
                     <img src={Aayman} alt={"Aayman Alfee"} />
                   </figure>
                   <div className="card-body">
-                    <Rating
-                      style={{ maxWidth: 180 }}
-                      value={5}
-                      readOnly
-                    />
+                    <Rating style={{ maxWidth: 180 }} value={5} readOnly />
                     <h2 className="card-title text-3xl">
-                      <span className="font-bold">Name:</span>{" "}
+                      <span className="font-bold">{t("name")}:</span>{" "}
                       {"Aayman Alfee Rahman"}
                     </h2>
                     <p>
                       <span className="font-bold text-primary">
-                        Clients Say:{" "}
+                        {t('clientSay')}:{" "}
                       </span>
                       <br />
                       <span className="text-[#88837a]">
@@ -93,12 +88,12 @@ const Reviews: React.FC = () => {
                   <div className="card-body">
                     <Rating style={{ maxWidth: 180 }} value={4} readOnly />
                     <h2 className="card-title text-3xl">
-                      <span className="font-bold">Name:</span>{" "}
+                      <span className="font-bold">{t("name")}</span>{" "}
                       {"Roksana Sikder"}
                     </h2>
                     <p>
                       <span className="font-bold text-amber-600">
-                        Clients Say:{" "}
+                        {t('clientSay')}:{" "}
                       </span>
                       <br />
                       <span className="text-[#88837a]">
@@ -118,11 +113,11 @@ const Reviews: React.FC = () => {
                   <div className="card-body">
                     <Rating style={{ maxWidth: 180 }} value={5} readOnly />
                     <h2 className="card-title text-3xl">
-                      <span className="font-bold">Name:</span> {"Nazmul Hosan"}
+                      <span className="font-bold">{t("name")}</span> {"Nazmul Hosan"}
                     </h2>
                     <p>
                       <span className="font-bold text-amber-600">
-                        Clients Say:{" "}
+                        {t('clientSay')}:{" "}
                       </span>
                       <br />
                       <span className="text-[#88837a]">
@@ -142,11 +137,11 @@ const Reviews: React.FC = () => {
                   <div className="card-body">
                     <Rating style={{ maxWidth: 180 }} value={5} readOnly />
                     <h2 className="card-title text-3xl">
-                      <span className="font-bold">Name:</span> {"NA YE EM"}
+                      <span className="font-bold">{t("name")}</span> {"NA YE EM"}
                     </h2>
                     <p>
                       <span className="font-bold text-amber-600">
-                        Clients Say:{" "}
+                        {t('clientSay')}:{" "}
                       </span>
                       <br />
                       <span className="text-[#88837a]">
@@ -166,11 +161,11 @@ const Reviews: React.FC = () => {
                   <div className="card-body">
                     <Rating style={{ maxWidth: 180 }} value={4} readOnly />
                     <h2 className="card-title text-3xl">
-                      <span className="font-bold">Name:</span> {"Zihad Hasan"}
+                      <span className="font-bold">{t("name")}</span> {"Zihad Hasan"}
                     </h2>
                     <p>
                       <span className="font-bold text-amber-600">
-                        Clients Say:{" "}
+                        {t('clientSay')}:{" "}
                       </span>
                       <br />
                       <span className="text-[#88837a]">
@@ -195,7 +190,7 @@ const Reviews: React.FC = () => {
                           value={review.rating}
                           readOnly
                         />
-                        <h2 className="card-title text-3xl"><span className='font-bold'>Name:</span> {review.name}</h2>
+                        <h2 className="card-title text-3xl"><span className='font-bold'>{t("name")}</span> {review.name}</h2>
                         <p>
                           <span className='font-bold text-amber-600'>One of the best words ever written for me:</span>
                           <br />

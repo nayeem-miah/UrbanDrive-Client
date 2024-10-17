@@ -19,7 +19,7 @@ const PaymentPage: React.FC = () => {
     return <div>Error: Invalid price</div>;
   }
 
-  const isMembershipPayment = planName === "membership"; 
+  const isMembershipPayment = planName === "membership";
 
   return (
     <div className="pt-20 min-h-[calc(100vh-180px)] bg-[url('https://img.freepik.com/premium-photo/bank-card-payment-black-hand-holding-3d-render_1106493-106452.jpg?w=1060')] bg-cover bg-center  items-center justify-center">
