@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
      { id: "", title: t("home") },
      { id: "services", title: t("services") },
      { id: "about", title: t("about") },
-     { id: "contact", title: t("contact") },
+     { id: "contact", title: t("Contact") },
    ];
 
   return (
