@@ -28,6 +28,7 @@ import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
 import Profile from "../Components/UserDashboard/Profile";
 import Favorite from "../Components/UserDashboard/Favorite";
 import Booked from "../Components/UserDashboard/Booked";
+import Membership from "../Components/Membership/Membership";
 
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "/cars",
         element: <Cars></Cars>,
+      },
+      {
+        path: "/membership",
+        element: <Membership></Membership>,
       },
       {
         path: "/membership-duration/:planName/:price",

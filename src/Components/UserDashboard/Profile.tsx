@@ -4,7 +4,6 @@ import { LuCheckCircle } from "react-icons/lu";
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import imageCompression from 'browser-image-compression';
 import { SyncLoader } from 'react-spinners';
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
