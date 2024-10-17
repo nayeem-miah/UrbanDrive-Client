@@ -9,6 +9,7 @@ import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 type UserInfo = {
@@ -33,7 +34,7 @@ const OnboardCheckout: React.FC = () => {
   const [bookingDetails, setBookingDetails] = useState<any>(null);
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const price = 560;
   const axiosPublic = useAxiosPublic()
 
@@ -47,7 +48,7 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
-        const response = await axios.get(`https://urban-driveserver.vercel.app/bookings/${bookingId}`);
+        const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
@@ -91,7 +92,7 @@ const OnboardCheckout: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.put(`https://urban-driveserver.vercel.app/bookings/${bookingId}`, {
+      const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
@@ -129,6 +130,7 @@ console.log(userInfo.driversLicense);
   }
 
   const handlePayment = async () => {
+    setIsLoading(true)
     try {
       // post request
       const { data } = await axiosPublic.post("/booking-create-payment", paymentInfo);
@@ -140,6 +142,8 @@ console.log(userInfo.driversLicense);
     } catch (error: any) {
       console.error("Error posting payment info:", error);
       toast.error(error.message);
+    }finally {
+      setIsLoading(false);
     }
   }
   const renderStepContent = (step: number) => {
@@ -193,8 +197,12 @@ console.log(userInfo.driversLicense);
         );
       case 4:
         return (
-          <button className='btn btn-primary' onClick={handlePayment}>payment now</button>
-
+          // <button className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4`} onClick={handlePayment}>payment now</button>
+          <button onClick={handlePayment}  className={`w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}` } disabled={isLoading} >
+          {
+           isLoading? <ImSpinner9  size={28} className="animate-spin m-auto text-green-600" />:  "Payment Now"
+          }
+         </button>
           // <input
           //   type="text"
           //   name="paymentMethod"
