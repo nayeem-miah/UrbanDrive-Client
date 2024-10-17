@@ -30,7 +30,6 @@ import Favorite from "../Components/UserDashboard/Favorite";
 import Booked from "../Components/UserDashboard/Booked";
 import Membership from "../Components/Membership/Membership";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +49,7 @@ const router = createBrowserRouter([
         element: <Contact></Contact>,
       },
 
+
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
@@ -61,26 +61,12 @@ const router = createBrowserRouter([
         element: <Cars></Cars>,
       },
       {
-        path: "/about",
-        element: <AboutUs></AboutUs>,
-      },
-      {
-        path: "/contact",
-        element: <Contact></Contact>,
-      },
-      {
         path: "/services",
         element: <Cars></Cars>,
       },
       {
         path: "/hostingForm",
         element: <HostingCarForm></HostingCarForm>,
-      },
-      {
-        path: "/cars/:id",
-        element: <CarDetails></CarDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/checkout/:bookingId",
