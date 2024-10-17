@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import car1 from '../assets/nissan.jpg';
+import { Link } from 'react-router-dom';
 const BookAutoRental: React.FC = () => {
   const {t} = useTranslation();
   return (
@@ -93,12 +94,14 @@ const BookAutoRental: React.FC = () => {
             className="block w-full max-w-xs  shadow-sm sm:text-sm bg-transparent text-white rounded-full p-3 h-12"
             // min={todayDate}
           />
-          <input
-            id="return-date"
-            type="button"
-            className="block w-full max-w-xs shadow-sm sm:text-sm bg-gradient-to-r from-[#694ce9] to-[#9d10d4] font-bold  text-white border-none rounded-full p-3 h-12 cursor-pointer"
-            value={t("rentNowButton")}
-          />
+          <Link to="/services">
+            <input
+              id=""
+              type="button"
+              className="block w-full max-w-xs shadow-sm sm:text-sm bg-gradient-to-r from-[#694ce9] to-[#9d10d4] font-bold  text-white border-none rounded-full p-3 h-12 cursor-pointer"
+              value={t("rentNowButton")}
+            />
+          </Link>
         </div>
       </div>
     </div>

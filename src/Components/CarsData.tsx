@@ -7,7 +7,25 @@ import toast from 'react-hot-toast';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { FaAward, FaMapLocationDot } from 'react-icons/fa6';
 
-const CarsData: React.FC = ({cars}) => {
+interface Car {
+  _id: string;
+  name: string;
+  image: string;
+  review: string;
+  availability: boolean;
+  model: string;
+  category: string;
+  price: number;
+  date: number;
+  description: string;
+  discount: number;
+  rating: number;
+  trip_count: number;
+  make: string;
+  seatCount: number;
+}
+
+const CarsData: React.FC<Car> = ({cars}) => {
     const axiosPublic = useAxiosPublic();
     const {user} = useAuth();
     const [favoriteCars, setFavoriteCars] = useState<string[]>([]);
@@ -15,23 +33,7 @@ const CarsData: React.FC = ({cars}) => {
     // interface CarsDataProps {
     //     cars: Car[]; // cars অ্যারে হিসেবে পাস হবে
     // }
-    interface Car {
-        _id: string;
-        name: string;
-        image: string;
-        review: string;
-        availability: boolean;
-        model: string;
-        category: string;
-        price: number;
-        date: number;
-        description: string;
-        discount: number;
-        rating: number;
-        trip_count: number;
-        make: string;
-        seatCount: number;
-      }
+    
     const removeFromFavoriteCars = async (carId: string) => {
         try {
           // console.log('গাড়ির ID মুছতে:', carId);
