@@ -4,12 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
-import useAuth from "../Hooks/useAuth";
 import CarsData from "./CarsData";
+import { useTranslation } from "react-i18next";
 
-const Cars: React.FC = () => {
+interface Car {
+  Car : []
+}
+
+const Cars: React.FC<Car> = () => {
   const axiosPublic = useAxiosPublic();
-  const {user} =useAuth();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("");
@@ -22,7 +25,8 @@ const Cars: React.FC = () => {
   const [searchItem] = useState("");
   const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
- const [homePickup,setHomePickup]=useState("");
+  const [homePickup,setHomePickup]=useState("");
+  const {t} = useTranslation();
 
 
   const {
@@ -181,33 +185,33 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       {/* Filters */}
       {/* Search Bar */}
       <div className=" mb-6">
-      <select
-          className=" w-2/3 md:w-1/3 lg:w-1/3 border-b border-gray-300 focus:outline-none  p-3 h-12"
+        <select
+          className=" w-2/3 md:w-1/3 lg:w-1/3 border-b border-gray-300 focus:outline-none p-3 h-12"
           id="locationSelect"
           value={userLocation ? JSON.stringify(userLocation) : ""}
           onChange={handleLocationChange}
-        >where
+        >
           <option disabled value="">
-            Select By Location
+            {t("locationSelect.selectPlaceholder")}
           </option>
-          <option value="current">Current Location</option>
-          <option value="anywhere">Anywhere</option>
+          <option value="current">{t("locationSelect.currentLocation")}</option>
+          <option value="anywhere">{t("locationSelect.anywhere")}</option>
         </select>
-    </div>
+      </div>
       <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6">
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
           value={category} // Set the current selected value
           onChange={handleCategoryChange} // Handle change
         >
           <option disabled value="">
-            Select by Category
+            {t("categorySelect.selectPlaceholder")}
           </option>
-          <option value="Electric">Electrice</option>
-          <option value="suv">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Luxury">Luxury</option>
-          <option value="Truck">Truck</option>
+          <option value="Electric">{t("categorySelect.electric")}</option>
+          <option value="suv">{t("categorySelect.suv")}</option>
+          <option value="Sedan">{t("categorySelect.sedan")}</option>
+          <option value="Luxury">{t("categorySelect.luxury")}</option>
+          <option value="Truck">{t("categorySelect.truck")}</option>
         </select>
 
         <select
@@ -216,57 +220,55 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
           onChange={handleSeatCountChange}
         >
           <option disabled value="">
-            Select by Seats
+            {t("seatSelect.selectPlaceholder")}
           </option>
-          <option value="4">4 or more</option>
-          <option value="5">5 or more</option>
-          <option value="6">6 or more</option>
-          <option value="7">7 or more</option>
-          <option value="8">8 or more</option>
+          <option value="4">{t("seatSelect.fourOrMore")}</option>
+          <option value="5">{t("seatSelect.fiveOrMore")}</option>
+          <option value="6">{t("seatSelect.sixOrMore")}</option>
+          <option value="7">{t("seatSelect.sevenOrMore")}</option>
+          <option value="8">{t("seatSelect.eightOrMore")}</option>
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
           value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
           onChange={handlePriceRangeChange}
         >
           <option disabled value="">
-            Select By Price Range
+            {t("priceSelect.selectPlaceholder")}
           </option>
-          <option value="0-50">$0 - $50</option>
-          <option value="51-100">$51 - $100</option>
-          <option value="101-200">$101 - $200</option>
-          <option value="201-500">$201 - $500</option>
-          <option value="501-1000">$501 - $1000</option>
-          <option value="1001-Infinity">Above $1000</option>
+          <option value="0-50">{t("priceSelect.range0to50")}</option>
+          <option value="51-100">{t("priceSelect.range51to100")}</option>
+          <option value="101-200">{t("priceSelect.range101to200")}</option>
+          <option value="201-500">{t("priceSelect.range201to500")}</option>
+          <option value="501-1000">{t("priceSelect.range501to1000")}</option>
+          <option value="1001-Infinity">{t("priceSelect.above1000")}</option>
         </select>
 
-        
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
-          value={homePickup} // Set the current selected value
-          onChange={handleHomePickup} // Handle change
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
+          value={homePickup}
+          onChange={handleHomePickup}
         >
           <option disabled value="">
-            Home-PickUp
+            {t("homePickup.selectPlaceholder")}
           </option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-          
+          <option value="yes">{t("homePickup.yes")}</option>
+          <option value="no">{t("homePickup.no")}</option>
         </select>
 
         <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
+          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)} // Handle sorting change
+          onChange={(e) => setSortOption(e.target.value)}
         >
           <option disabled value="">
-            Sort by
+            {t("sortOptions.selectPlaceholder")}
           </option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="date-desc">Date Added: Newest First</option>
-          <option value="date-asc">Date Added: Oldest First</option>
+          <option value="price-asc">{t("sortOptions.priceAsc")}</option>
+          <option value="price-desc">{t("sortOptions.priceDesc")}</option>
+          <option value="date-desc">{t("sortOptions.dateDesc")}</option>
+          <option value="date-asc">{t("sortOptions.dateAsc")}</option>
         </select>
       </div>
 
@@ -282,7 +284,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
           </p>
           <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
             <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
-              <CarsData cars ={cardata}></CarsData>
+              <CarsData cars={cardata}></CarsData>
             </div>
 
             <div className="z-0 h-[calc(100vh-50px)] sticky top-0">

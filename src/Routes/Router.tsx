@@ -70,10 +70,6 @@ const router = createBrowserRouter([
         element: <OnboardCheckout></OnboardCheckout>,
       },
       {
-        path: "/cars",
-        element: <Cars></Cars>,
-      },
-      {
         path: "/membership",
         element: <Membership></Membership>,
       },

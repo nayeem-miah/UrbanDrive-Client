@@ -41,7 +41,7 @@ const Registration: React.FC = () => {
         const userInfo = {
           name: data.name,
           email: data.email,
-          role: data.role,
+          role: "User",
         };
         axiosPublic.post("/users", userInfo).then((res) => {
           // console.log(res.data)

@@ -165,5 +165,48 @@
   "view_details": "View Details",
   "browse_cars": "Browse Cars",
   "1000" : "1000",
-  "day" : "DAY"
+  "day" : "DAY",
+  "locationSelect": {
+    "label": "Where",
+    "selectPlaceholder": "Select By Location",
+    "currentLocation": "Current Location",
+    "anywhere": "Anywhere"
+  },
+  "categorySelect": {
+    "selectPlaceholder": "Select by Category",
+    "electric": "Electric",
+    "suv": "SUV",
+    "sedan": "Sedan",
+    "luxury": "Luxury",
+    "truck": "Truck"
+  },
+  "seatSelect": {
+    "selectPlaceholder": "Select by Seats",
+    "fourOrMore": "4 or more",
+    "fiveOrMore": "5 or more",
+    "sixOrMore": "6 or more",
+    "sevenOrMore": "7 or more",
+    "eightOrMore": "8 or more"
+  },
+  "priceSelect": {
+    "selectPlaceholder": "Select By Price Range",
+    "range0to50": "$0 - $50",
+    "range51to100": "$51 - $100",
+    "range101to200": "$101 - $200",
+    "range201to500": "$201 - $500",
+    "range501to1000": "$501 - $1000",
+    "above1000": "Above $1000"
+  },
+  "homePickup": {
+    "selectPlaceholder": "Home-PickUp",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "sortOptions": {
+    "selectPlaceholder": "Sort by",
+    "priceAsc": "Price: Low to High",
+    "priceDesc": "Price: High to Low",
+    "dateDesc": "Date Added: Newest First",
+    "dateAsc": "Date Added: Oldest First"
+  }
 }
