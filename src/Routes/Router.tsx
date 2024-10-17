@@ -22,6 +22,7 @@ import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 import Success from "../Components/PaymentSystem/SSLCommarze/Success";
 import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
+import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,6 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-
 
       {
         path: "/cars/:id",
@@ -94,18 +94,23 @@ const router = createBrowserRouter([
   // payment success
   {
     path: "/success",
-    element: <Success />
+    element: <Success />,
   },
   // payment fail
   {
     path: "/fail",
-    element: <Fail />
+    element: <Fail />,
   },
   // payment cancel
   {
     path: "/cancel",
-    element: <Cancel />
+    element: <Cancel />,
   },
+  {
+    path: 'payment-history',
+    element: <PaymetHistory/>
+  },
+
   {
     path: "/dashboard",
     element: <Dashboard />,
@@ -119,21 +124,21 @@ const router = createBrowserRouter([
         element: <ManageUsers />,
       },
       {
+        path: "cars",
+        element: <TotalCarList />,
+      },
+      {
         path: "paymentHistory",
-        element: <ManagePaymentHistory />
+        element: <ManagePaymentHistory />,
       },
       {
-        path: 'cars',
-        element: <TotalCarList />
+        path: "bookings",
+        element: <AllBookings />,
       },
       {
-        path: 'bookings',
-        element: <AllBookings />
+        path: "manageMemberShip",
+        element: <ManageMemberShip />,
       },
-      {
-        path: 'manageMemberShip',
-        element: <ManageMemberShip />
-      }
     ],
   },
 ]);

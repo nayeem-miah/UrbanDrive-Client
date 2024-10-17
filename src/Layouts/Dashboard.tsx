@@ -1,16 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
-// import img from "../assets/urbandrive-high-resolution-logo.png";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
-// import { HiOutlineDocumentReport } from "react-icons/hi";
 import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { MdCardMembership, MdPayment } from "react-icons/md";
-// import { ClipLoader } from "react-spinners";
 import { AiFillMedicineBox } from "react-icons/ai";
 import React from "react";
 import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
+import { SyncLoader } from "react-spinners";
 
 type Role = "Admin" | "Host" | "User" | "";
 
@@ -20,12 +18,12 @@ const Dashboard: React.FC = () => {
   if (isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        {/* <ClipLoader color="#076cec" size={50} /> */}
+        <SyncLoader color="#593cfb" size={18} />
       </div>
     );
   }
 
-  console.log(role)
+  // console.log(role)
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-primary pt-8">
