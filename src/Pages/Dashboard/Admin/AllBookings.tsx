@@ -4,12 +4,13 @@ import { SyncLoader } from "react-spinners";
 
 interface bookings {
   _id: string;
-  user: string;
-  phoneNumber: string;
+  cus_email: string;
+  cus_phoneNumber: string;
   startDate: string;
   endDate: string;
   location : string;
-  totalCost: number
+  amount: number,
+  status: string
 }
 
 const AllBookings = () => {
@@ -21,7 +22,7 @@ const AllBookings = () => {
       return res.data;
     },
   });
-  // console.log(myHistory);
+  console.log(allBookings);
   const formatDate = (dateString : string) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
@@ -67,15 +68,15 @@ const AllBookings = () => {
               </thead>
               <tbody>
                 {allBookings.map((item: bookings, idx: number) => (
-                  <tr key={item._id}>
+                  item.status === "Success" && ( <tr key={item._id}>
                     <th>{idx + 1}</th>
-                    <td>{item?.user}</td>
+                    <td>{item?.cus_email}</td>
                     <td>{item?.location}</td>
-                    <td>{item?.phoneNumber}</td>
+                    <td>{item?.cus_phoneNumber}</td>
                     <td>{formatDate(item?.startDate)}</td>
                     <td>{formatDate(item?.endDate)}</td>
-                    <td className="font-bold">{item?.totalCost}$</td>
-                  </tr>
+                    <td className="font-bold">{item?.amount}$</td>
+                  </tr>)
                 ))}
               </tbody>
             </table>

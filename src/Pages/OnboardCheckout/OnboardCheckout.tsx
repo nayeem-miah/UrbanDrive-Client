@@ -9,13 +9,14 @@ import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 type UserInfo = {
   email: string;
   phoneNumber: string;
   driversLicense: File | null;
-  paymentMethod: string;
+  // paymentMethod: string;
 };
 
 const OnboardCheckout: React.FC = () => {
@@ -27,14 +28,13 @@ const OnboardCheckout: React.FC = () => {
     email: user?.email || '',
     phoneNumber: '',
     driversLicense: null,
-    paymentMethod: '',
+    // paymentMethod: '',
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [bookingDetails, setBookingDetails] = useState<any>(null);
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
-
-  console.log(bookingDetails);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const price = 560;
   const axiosPublic = useAxiosPublic()
 
@@ -76,7 +76,7 @@ const OnboardCheckout: React.FC = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      handleSubmit();
+      handleSubmit()
     }
   };
 
@@ -117,19 +117,23 @@ const OnboardCheckout: React.FC = () => {
       console.error('Error updating booking:', error);
     }
   };
-
+console.log(userInfo.driversLicense);
   const paymentInfo = {
     price: bookingDetails?.totalCost,
     currency: 'BDT',
-    email: user?.email,
+    email: user?.email || userInfo.email,
+    phoneNumber: userInfo?.phoneNumber,
+    driversLicense: userInfo?.driversLicense,
     name: user?.displayName,
-    bookingDetails:bookingDetails
+    bookingDetails: bookingDetails
+
   }
 
   const handlePayment = async () => {
+    setIsLoading(true)
     try {
       // post request
-      const { data } = await axiosPublic.post("/create-payment", paymentInfo);
+      const { data } = await axiosPublic.post("/booking-create-payment", paymentInfo);
       const redirectUrl = data.paymentUrl;
       // console.log(redirectUrl);
       if (redirectUrl) {
@@ -138,6 +142,8 @@ const OnboardCheckout: React.FC = () => {
     } catch (error: any) {
       console.error("Error posting payment info:", error);
       toast.error(error.message);
+    }finally {
+      setIsLoading(false);
     }
   }
   const renderStepContent = (step: number) => {
@@ -173,21 +179,8 @@ const OnboardCheckout: React.FC = () => {
             <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License</button>
           </div>
         );
+
       case 3:
-        return (
-          // <button className='btn btn-primary' onClick={handlePayment}>payment now</button>
-
-          <input
-            type="text"
-            name="paymentMethod"
-            value={userInfo.paymentMethod}
-            onChange={handleChange}
-            placeholder="Enter payment details"
-            className="w-full px-3 py-2 border rounded-md"
-
-          />
-        );
-      case 4:
         return bookingDetails ? (
           <div>
             <p>Please review your information and confirm.</p>
@@ -196,11 +189,29 @@ const OnboardCheckout: React.FC = () => {
             <p>Location: {bookingDetails.location}</p>
             <p>Total Cost: ${bookingDetails.totalCost}</p>
             <p>Phone Number: {userInfo.phoneNumber}</p>
-            <p>Payment Method: {userInfo.paymentMethod}</p>
+            {/* <p>Payment Method: {userInfo.paymentMethod}</p> */}
             <p>Driver's License: {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
           </div>
         ) : (
           <p>Loading booking details...</p>
+        );
+      case 4:
+        return (
+          // <button className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4`} onClick={handlePayment}>payment now</button>
+          <button onClick={handlePayment}  className={`w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}` } disabled={isLoading} >
+          {
+           isLoading? <ImSpinner9  size={28} className="animate-spin m-auto text-green-600" />:  "Payment Now"
+          }
+         </button>
+          // <input
+          //   type="text"
+          //   name="paymentMethod"
+          //   value={userInfo.paymentMethod}
+          //   onChange={handleChange}
+          //   placeholder="Enter payment details"
+          //   className="w-full px-3 py-2 border rounded-md"
+
+          // />
         );
       default:
         return null;
@@ -221,7 +232,7 @@ const OnboardCheckout: React.FC = () => {
               onClick={handleNextStep}
               className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
             >
-              {currentStep === steps.length - 1 ? 'Confirm' : 'Next'}
+              {currentStep !== steps.length - 1 ? 'Confirm' : 'Next'}
             </button>
           )}
         </div>
