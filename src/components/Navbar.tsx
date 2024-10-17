@@ -1,12 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import useAuth from '../Hooks/useAuth';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { SyncLoader } from "react-spinners";
 // import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
 
 const Navbar: React.FC = () => {
+  const axiosPublic = useAxiosPublic();
   const [isScrolled, setIsScrolled] = useState(false);
   const [toggle, setToggle] = useState(false);
   const { user, logOut } = useAuth();
+  const { t, i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState<string>(""); 
+  const {
+    data: userdata,  // Corrected line with comma
+    isLoading,
+    isFetching,
+} = useQuery({
+    queryKey: ["userdata",user?.email],
+    queryFn: async () => {
+        // if (!user?.email) return null; 
+        const response = await axiosPublic.get(`/user/${user?.email}`); 
+        return response.data;
+    },
+});
+
+
+  // Use useEffect to set the language on component mount
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("i18nextLng"); 
+    if (savedLanguage) {
+      setCurrentLanguage(savedLanguage); 
+      i18n.changeLanguage(savedLanguage);
+    } else {
+      setCurrentLanguage(i18n.language);
+    }
+  }, [i18n, currentLanguage]);
+
+  // Function to change language
+  const changeLanguage = (lng: string) => {
+    setCurrentLanguage(lng); 
+    i18n.changeLanguage(lng); 
+    localStorage.setItem("i18nextLng", lng);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,12 +56,28 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  const navLinks = [
-    { id: "", title: "Home" },
-    { id: "services", title: "Services" },
-    { id: "about", title: "About" },
-    { id: "contact", title: "Contact" },
-  ];
+   const navLinks = [
+     { id: "", title: t("home") },
+     { id: "services", title: t("services") },
+     { id: "about", title: t("about") },
+     { id: "contact", title: t("contact") },
+   ];
+   if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={18} />
+      </div>
+    );
+  }
+
+  // Fetching state spinner
+  if (isFetching) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={10} />
+      </div>
+    );
+  }
 
   return (
     <nav
@@ -33,9 +87,7 @@ const Navbar: React.FC = () => {
     >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <h2 className="text-2xl font-bold text-center">
-            UrbanDrive
-          </h2>
+          <h2 className="text-2xl font-bold text-center">UrbanDrive</h2>
         </Link>
       </div>
 
@@ -55,58 +107,87 @@ const Navbar: React.FC = () => {
           ))}
         </ul>
       </div>
-
       <div className="navbar-end">
         {/* Desktop  */}
-
+        <div className="flex items-center">
+          <button
+            className={`font-bold  ${
+              currentLanguage === "en" ? " text-secondary" : "text-white"
+            }`}
+            onClick={() => changeLanguage("en")}
+          >
+            English
+          </button>
+          <span className="ml-2 mr-2">|</span>
+          <button
+            className={`font-bold mr-3  ${
+              currentLanguage === "bn" ? " text-secondary" : "text-white"
+            }`}
+            onClick={() => changeLanguage("bn")}
+          >
+            বাংলা
+          </button>
+        </div>
         <div className="hidden lg:block">
           {user ? (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white">
-                  <img
-                    src={user?.photoURL || "/placeholder-avatar.jpg"}
-                    alt="User Avatar"
-                  />
+                {userdata?.photoURL ?  (<img src={userdata?.photoURL} className='rounded-full  w-32 h-32' alt="" />):( <img src={user?.photoURL} className='rounded-full  w-32 h-32' alt="" />)}
                 </div>
               </label>
-
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
               >
                 <li>
                   <Link to="/update-user" className="justify-between">
-                    Update User
-                    <span className="badge">New</span>
+                    {t("updateUser")}
                   </Link>
                 </li>
                 <li>
-                  <Link to="/favorite">Favorite</Link>
+                  <Link to="/favorite" className="justify-between">
+                    {t("Favorite")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/hostingForm">Become A Host</Link>
+                  <Link to="/booked" className="justify-between">
+                    {t("Bookings")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile" className="justify-between">
+                    {t("Profile")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/booked">Bookings</Link>
+                  <Link to="/hostingForm">{t("becomeHost")}</Link>
                 </li>
-                <li>
-                  <Link to="/dashboard/paymentHistory">Dashboard</Link>
+                <li className="">
+                  <Link to="/dashboard/paymentHistory">{t("dashboard")}</Link>
                 </li>
-                <li>
-                  <a onClick={logOut}>Logout</a>
+                <li className="hover:text-red-600 transition-colors duration-300">
+                  <a onClick={logOut}>{t("logout")}</a>
                 </li>
               </ul>
             </div>
           ) : (
-            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500 to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white">
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 font-bold font-Open">
-                <Link to="/login">Login</Link>
-              </span>
-            </button>
+            <>
+              <>
+                <button className="" onClick={() => changeLanguage("en")}>
+                  English
+                </button>
+                <span className="ml-2 mr-2">|</span>
+                <button className="mr-5" onClick={() => changeLanguage("bn")}>
+                  বাংলা
+                </button>
+              </>
+              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg hover:text-white dark:text-white">
+                <span className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+                  <Link to="/login">Login</Link>
+                </span>
+              </button>
+            </>
           )}
         </div>
 
@@ -210,7 +291,7 @@ const Navbar: React.FC = () => {
               <Link
                 to="/login"
                 onClick={() => setToggle(false)}
-                className="text-4xl font-bold text-green-500 hover:text-green-600 transition-colors duration-300"
+                className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
               >
                 Login
               </Link>

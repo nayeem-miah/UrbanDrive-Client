@@ -11,10 +11,10 @@ import { Pagination } from 'swiper/modules';
 
 import Hyundai from '../assets/Hyundai.png';
 import Nissan from '../assets/nissan.png';
-import Nissan2 from '../assets/nissan2.png';
-import Tata from '../assets/tata.png';
+// import Nissan2 from '../assets/nissan2.png';
 import Suzuki from '../assets/suzuki.jpg';
 import Toyota from '../assets/toyota.jpg';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -24,27 +24,22 @@ interface Destination {
 }
 
 
-const destinations: Destination[] = [
-  { name: "Hyundai", image:Hyundai }, 
-  { name: "Nissan", image: Nissan },
-  { name: "Tata", image: Tata},
-  { name: "Suzuki", image: Suzuki},
-  { name: "Toyota", image: Toyota },
 
-  { name: "Nissan", image: Nissan2 },
-  
-
-];
 
 
 const BrowseByCar: React.FC = () => {
-    
+    const {t} = useTranslation();
+    const destinations: Destination[] = [
+      { name: t("toyota"), image: Toyota },
+      { name: t("honda"), image: Hyundai },
+      { name: t("nissan"), image: Nissan },
+      { name: t("suzuki"), image: Suzuki },
+    ];
 return (
   <>
-    <div className='text-center'>
-      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Playfair">
-        Browse By Cars
-        <span className="block w-full h-4 bg-purple-200 absolute bottom-0 left-0 z-[-1]" />
+    <div className="text-center">
+      <h2 className="text-4xl font-bold relative inline-block mt-20 mb-10 font-Merri">
+        {t("browseByCar")}
       </h2>
     </div>
     <Swiper

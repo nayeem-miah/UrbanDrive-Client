@@ -7,6 +7,10 @@ import toast from 'react-hot-toast';
 import imageCompression from 'browser-image-compression';
 import { SyncLoader } from 'react-spinners';
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+
 const Profile: React.FC = () => {
     const { user,setUser } = useAuth();
     const axiosPublic = useAxiosPublic();
@@ -24,14 +28,14 @@ const Profile: React.FC = () => {
         isLoading,
         isFetching,
     } = useQuery({
-        queryKey: ["userdata"],
+        queryKey: ["userdata",user?.email],
         queryFn: async () => {
             // if (!user?.email) return null; 
             const response = await axiosPublic.get(`/user/${user?.email}`); 
             return response.data;
         },
     });
-    // console.log(userdata)
+    console.log(userdata)
    
 
     const formatJoinDate = (dateString: string) => {
@@ -41,57 +45,46 @@ const Profile: React.FC = () => {
     };
 
     const joinDate = user?.metadata?.creationTime ? formatJoinDate(user.metadata.creationTime) : '';
-   
-    
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            try {
-               
-                const options = {
-                    maxSizeMB: 0.5, 
-                    maxWidthOrHeight: 800, 
-                    useWebWorker: true,
-                };
-                const compressedFile = await imageCompression(file, options);
-
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setPhotoURL(reader.result as string);
-                };
-                reader.readAsDataURL(compressedFile); 
-
-            } catch (error) {
-                console.error('Image compression failed:', error);
-            }
-        }
-    };
-    const handleSave = async() => {
-        const updatedUser = {
-        photoURL: photoURL || user?.photoURL, 
+    const handleFileChange = async (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+          const formData = new FormData();
+          formData.append('image', file);  
+          try {
+              const res = await axiosPublic.post(image_hosting_api, formData);
+              const uploadedImageUrl = res.data.data.display_url;  
+              setPhotoURL(uploadedImageUrl);
+          } catch (error) {
+              console.error('Image upload failed:', error);
+              toast.error('Image upload failed');
+          }
+      }
+  };
+ 
+  const handleSave = async() => {
+    let uploadedImageUrl = photoURL || user?.photoURL; 
+    const updatedUser = {
+        photoURL: uploadedImageUrl,
         language,
         work,
-        email:user?.email,
+        email: user?.email,
         link,
-        phone // Ensure facebook is included
-       
-            
-        };
-        // console.log('Updated User:', updatedUser);
-        try {
-            const response = await axiosPublic.put('/user/profile', { updateData: updatedUser });
-            setUser(response.data);
-            toast.success('update userata successfully')
-            setTimeout(() => {
-                toast.success('update userata successfully')
-              }, 3000);
-             // Update the local state with the newly created user
-            setIsEditing(false); 
-        } catch (error) {
-            console.error('Error saving user data:', error);
-        } 
+        phone 
     };
+
+    try {
+        const response = await axiosPublic.put('/user/profile', { updateData: updatedUser });
+        setUser(response.data);
+        toast.success('User profile updated successfully');
+        setIsEditing(false);
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        toast.error('Failed to update user profile');
+    }
+};
+
+  
     const handleCancel = () => {
         setIsEditing(false); 
     };
@@ -118,7 +111,8 @@ const Profile: React.FC = () => {
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mx-auto' >
       <div className=''>
        <div className="relative ">
-       <img src={user?.photoURL} className='rounded-full  w-32 h-32' alt="" />
+        {userdata?.photoURL ?  (<img src={userdata?.photoURL} className='rounded-full  w-32 h-32' alt="" />):( <img src={user?.photoURL} className='rounded-full  w-32 h-32' alt="" />)}
+      
       
        {!isEditing && (
                             <button
@@ -261,7 +255,7 @@ const Profile: React.FC = () => {
       
        <h2 className='uppercase text-slate-500 text-sm font-lato font-semibold lg:mt-4'>Reviews from hosts</h2>
        <div className='flex gap-5 mt-3'>
-       <img src={user?.photoURL} className='rounded-full  w-18 h-18' alt="" />
+       {userdata?.photoURL ?  (<img src={userdata?.photoURL} className='rounded-full  w-32 h-32' alt="" />):( <img src={user?.photoURL} className='rounded-full  w-32 h-32' alt="" />)}
        <div>
        <div className="rating rating-sm ">
        <input type="radio" name="rating-9" className="mask mask-star-2" />
