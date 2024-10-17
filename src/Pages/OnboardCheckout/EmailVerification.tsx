@@ -53,13 +53,14 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({ email, onVerified
         </div>
       ) : (
         <div>
-          <p>We've sent a verification code to {email}. Please enter it below:</p>
+          <p className="mb-4">We've sent a verification code to {email}. Please enter it below:</p>
           <input
             type="text"
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}
             placeholder="Enter verification code"
-            className="w-full px-3 py-2 border rounded-md"
+            className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
+            
           />
           <button
             onClick={verifyCode}

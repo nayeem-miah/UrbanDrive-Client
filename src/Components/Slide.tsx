@@ -18,7 +18,7 @@ const Slide: React.FC<SlideProps> = ({ image, title, model, price }) => {
         backgroundImage: `url(${image})`,
       }}
     >
-      <div className="absolute inset-0 "></div>
+      <div className="absolute inset-0 opacity-80 "></div>
 
       <div className="relative z-10 flex justify-center items-center md:items-start lg:justify-start h-full p-8 md:p-16 lg:p-40">
         <div className="text-left">
