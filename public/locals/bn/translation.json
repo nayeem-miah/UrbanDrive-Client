@@ -6,6 +6,7 @@
   "Contact": "যোগাযোগ",
   "updateUser": "ব্যবহারকারী আপডেট করুন",
   "becomeHost": "হোস্ট হোন",
+  "payment": "পেমেন্ট",
   "dashboard": "ড্যাশবোর্ড",
   "logout": "লগ আউট",
   "rentalheading": "আমরা কেবল মাত্র",
@@ -164,5 +165,48 @@
   "view_details": "বিস্তারিত দেখুন",
   "browse_cars": "গাড়ি ব্রাউজ করুন",
   "1000" : "১০০০",
-  "day" : "দিন"
+  "day" : "দিন",
+  "locationSelect": {
+    "label": "কোথায়",
+    "selectPlaceholder": "অবস্থান দ্বারা নির্বাচন করুন",
+    "currentLocation": "বর্তমান অবস্থান",
+    "anywhere": "যে কোনো জায়গায়"
+  },
+  "categorySelect": {
+    "selectPlaceholder": "বিভাগ অনুযায়ী নির্বাচন করুন",
+    "electric": "ইলেকট্রিক",
+    "suv": "এসইউভি",
+    "sedan": "সেডান",
+    "luxury": "লাক্সারি",
+    "truck": "ট্রাক"
+  },
+  "seatSelect": {
+    "selectPlaceholder": "আসন অনুযায়ী নির্বাচন করুন",
+    "fourOrMore": "৪ বা তার বেশি",
+    "fiveOrMore": "৫ বা তার বেশি",
+    "sixOrMore": "৬ বা তার বেশি",
+    "sevenOrMore": "৭ বা তার বেশি",
+    "eightOrMore": "৮ বা তার বেশি"
+  },
+  "priceSelect": {
+    "selectPlaceholder": "দাম অনুযায়ী নির্বাচন করুন",
+    "range0to50": "$০ - $৫০",
+    "range51to100": "$৫১ - $১০০",
+    "range101to200": "$১০১ - $২০০",
+    "range201to500": "$২০১ - $৫০০",
+    "range501to1000": "$৫০১ - $১০০০",
+    "above1000": "$১০০০ এর উপরে"
+  },
+  "homePickup": {
+    "selectPlaceholder": "বাড়ি-পিকআপ",
+    "yes": "হ্যাঁ",
+    "no": "না"
+  },
+  "sortOptions": {
+    "selectPlaceholder": "সাজান",
+    "priceAsc": "মূল্য: কম থেকে বেশি",
+    "priceDesc": "মূল্য: বেশি থেকে কম",
+    "dateDesc": "তারিখ: নতুন আগে",
+    "dateAsc": "তারিখ: পুরাতন আগে"
+  }
 }   

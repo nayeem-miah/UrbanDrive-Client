@@ -13,6 +13,7 @@ import mymenshing from "../assets/mymensingh.png";
 import rongpur from "../assets/rongpur.png";
 import rajshahi from "../assets/rajshahi.jpg";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 interface Destination {
   name: string;
@@ -65,17 +66,19 @@ const BrowseByDestination: React.FC = () => {
       >
         {destinations.map((destination, index) => (
           <SwiperSlide key={index}>
-            <div
-              className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden mt-10"
-              style={{ backgroundImage: `url(${destination.image})` }}
-            >
-              {/* Overlay for text visibility */}
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h3 className="text-white text-lg font-semibold">
-                  {destination.name}
-                </h3>
+            <Link to="/services">
+              <div
+                className="relative h-48 w-full bg-cover bg-center rounded-lg overflow-hidden mt-10"
+                style={{ backgroundImage: `url(${destination.image})` }}
+              >
+                {/* Overlay for text visibility */}
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                  <h3 className="text-white text-lg font-semibold">
+                    {destination.name}
+                  </h3>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

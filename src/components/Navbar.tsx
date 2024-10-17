@@ -2,20 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import useRole from "../Hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { SyncLoader } from "react-spinners";
-// import logo from "../assets/urbandrive-high-resolution-logo-transparent.png";
+
+type Role = "Admin" | "Host" | "User" | "";
+
 
 const Navbar: React.FC = () => {
   const axiosPublic = useAxiosPublic();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [toggle, setToggle] = useState(false);
   const { user, logOut } = useAuth();
   const { t, i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState<string>(""); 
+  const [role]: [Role, boolean, boolean] = useRole();
   const {
-    data: userdata,  // Corrected line with comma
+    data: userData,  // Corrected line with comma
     isLoading,
     isFetching,
 } = useQuery({
@@ -46,15 +49,15 @@ const Navbar: React.FC = () => {
     localStorage.setItem("i18nextLng", lng);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsScrolled(window.scrollY > 50);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
    const navLinks = [
      { id: "", title: t("home") },
@@ -82,13 +85,14 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`navbar px-10 drop-shadow-lg fixed top-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-primary shadow-lg" : "bg-transparent"
-      }`}
+      className={`navbar px-10 drop-shadow-lg fixed top-0 left-0 z-50 transition-all duration-300
+         bg-primary shadow-lg h-20`}
     >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <h2 className="text-2xl font-bold text-center">UrbanDrive</h2>
+          <h2 className="text-2xl font-bold text-center">
+            Urban<span className="text-white">Drive</span>
+          </h2>
         </Link>
       </div>
 
@@ -98,9 +102,7 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link
                 to={`/${link.id}`}
-                className={`text-lg font-bold ${
-                  isScrolled ? "text-white" : "text-primary"
-                } hover:text-black`}
+                className={`text-lg font-bold text-white hover:text-black`}
               >
                 {link.title}
               </Link>
@@ -134,7 +136,19 @@ const Navbar: React.FC = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white">
-                {userdata?.photoURL ?  (<img src={userdata?.photoURL} className='rounded-full  w-32 h-32' alt="" />):( <img src={user?.photoURL} className='rounded-full  w-32 h-32' alt="" />)}
+                  {userData?.photoURL ? (
+                    <img
+                      src={userData?.photoURL ?? ""}
+                      className="rounded-full w-32 h-32"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      src={user?.photoURL ?? ""}
+                      className="rounded-full w-32 h-32"
+                      alt=""
+                    />
+                  )}
                 </div>
               </label>
               <ul
@@ -165,8 +179,13 @@ const Navbar: React.FC = () => {
                   <Link to="/hostingForm">{t("becomeHost")}</Link>
                 </li>
                 <li className="">
-                  <Link to="/dashboard/paymentHistory">{t("dashboard")}</Link>
+                  <Link to="/payment-history">{t("payment")}</Link>
                 </li>
+                {role === "Admin" && (
+                  <li>
+                    <Link to="/dashboard/adminhome">{t("dashboard")}</Link>
+                  </li>
+                )}
                 <li className="hover:text-red-600 transition-colors duration-300">
                   <a onClick={logOut}>{t("logout")}</a>
                 </li>
