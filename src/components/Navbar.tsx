@@ -91,6 +91,9 @@ const Navbar: React.FC = () => {
                   <Link to="/profile">Profile</Link>
                 </li>
                 <li>
+                  <Link to="/booked">Bookings</Link>
+                </li>
+                <li>
                   <Link to="/dashboard/paymentHistory">Dashboard</Link>
                 </li>
                 <li>

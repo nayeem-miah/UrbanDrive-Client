@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-
+import React, {  useState } from 'react';
 import useAuth from '../../Hooks/useAuth';
-import EditProfile from './EditeProfile';
 import { LuCheckCircle } from "react-icons/lu";
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import imageCompression from 'browser-image-compression';
+import { SyncLoader } from 'react-spinners';
 
 const Profile: React.FC = () => {
     const { user,setUser } = useAuth();
@@ -44,15 +44,27 @@ const Profile: React.FC = () => {
    
     
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-          
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPhotoURL(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            try {
+               
+                const options = {
+                    maxSizeMB: 0.5, 
+                    maxWidthOrHeight: 800, 
+                    useWebWorker: true,
+                };
+                const compressedFile = await imageCompression(file, options);
+
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setPhotoURL(reader.result as string);
+                };
+                reader.readAsDataURL(compressedFile); 
+
+            } catch (error) {
+                console.error('Image compression failed:', error);
+            }
         }
     };
     const handleSave = async() => {
@@ -84,6 +96,22 @@ const Profile: React.FC = () => {
         setIsEditing(false); 
     };
 
+    if (isLoading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <SyncLoader color="#593cfb" size={18} />
+          </div>
+        );
+      }
+    
+      // Fetching state spinner
+      if (isFetching) {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <SyncLoader color="#593cfb" size={10} />
+          </div>
+        );
+      }
     return (
         <div className='container mx-auto lg:p-24'>
             
@@ -112,9 +140,9 @@ const Profile: React.FC = () => {
                 type="file" 
                 id="photoURL" 
                 onChange={handleFileChange} 
-                className='hidden' // ইনপুট ফাইলটি লুকিয়ে রাখুন
+                className='hidden' 
             />
-            {/* যদি ছবি আপলোড করা হয়, তাহলে এটি দেখাতে পারেন */}
+           
             {photoURL && <img src={photoURL} alt="Profile Preview" className='mt-4 rounded-full w-32 h-32' />}
           </div>:<div></div>}
       
@@ -131,7 +159,7 @@ const Profile: React.FC = () => {
   </div>
   {isEditing && (
                         <div>
-                            {/* ফোন নম্বর ফিল্ড */}
+                          
                             <div className='flex flex-col mt-3'>
                                 <label htmlFor="phone" className='ml-1 mb-2'>Phone Number</label>
                                 <input

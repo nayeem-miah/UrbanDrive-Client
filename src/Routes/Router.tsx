@@ -27,6 +27,7 @@ import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
 import Profile from "../Components/UserDashboard/Profile";
 import Favorite from "../Components/UserDashboard/Favorite";
+import Booked from "../Components/UserDashboard/Booked";
 
 
 const router = createBrowserRouter([
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
   {
     path: "/favorite",
     element: <Favorite />
+  },
+  {
+    path: "/booked",
+    element: <Booked />
   },
   {
     path: "/dashboard",
