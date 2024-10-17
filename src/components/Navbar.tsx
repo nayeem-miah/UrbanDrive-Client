@@ -3,17 +3,32 @@ import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import useRole from "../Hooks/useRole";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { SyncLoader } from "react-spinners";
 
 type Role = "Admin" | "Host" | "User" | "";
 
 
 const Navbar: React.FC = () => {
-  // const [isScrolled, setIsScrolled] = useState(false);
+  const axiosPublic = useAxiosPublic();
   const [toggle, setToggle] = useState(false);
   const { user, logOut } = useAuth();
   const { t, i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState<string>(""); 
   const [role]: [Role, boolean, boolean] = useRole();
+  const {
+    data: userData,  // Corrected line with comma
+    isLoading,
+    isFetching,
+} = useQuery({
+    queryKey: ["userdata",user?.email],
+    queryFn: async () => {
+        // if (!user?.email) return null; 
+        const response = await axiosPublic.get(`/user/${user?.email}`); 
+        return response.data;
+    },
+});
 
 
   // Use useEffect to set the language on component mount
@@ -48,8 +63,25 @@ const Navbar: React.FC = () => {
      { id: "", title: t("home") },
      { id: "services", title: t("services") },
      { id: "about", title: t("about") },
+     { id: "membership", title: t("memberships") },
      { id: "contact", title: t("Contact") },
    ];
+   if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={18} />
+      </div>
+    );
+  }
+
+  // Fetching state spinner
+  if (isFetching) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={10} />
+      </div>
+    );
+  }
 
   return (
     <nav
@@ -104,10 +136,19 @@ const Navbar: React.FC = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white">
-                  <img
-                    src={user?.photoURL || "/placeholder-avatar.jpg"}
-                    alt="User Avatar"
-                  />
+                  {userData?.photoURL ? (
+                    <img
+                      src={userData?.photoURL ?? ""}
+                      className="rounded-full w-32 h-32"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      src={user?.photoURL ?? ""}
+                      className="rounded-full w-32 h-32"
+                      alt=""
+                    />
+                  )}
                 </div>
               </label>
               <ul
@@ -117,6 +158,21 @@ const Navbar: React.FC = () => {
                 <li>
                   <Link to="/update-user" className="justify-between">
                     {t("updateUser")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/favorite" className="justify-between">
+                    {t("Favorite")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/booked" className="justify-between">
+                    {t("Bookings")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/profile" className="justify-between">
+                    {t("Profile")}
                   </Link>
                 </li>
                 <li>
