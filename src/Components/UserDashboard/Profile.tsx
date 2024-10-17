@@ -11,11 +11,11 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 
 const Profile: React.FC = () => {
-    const { user,setUser } = useAuth();
+    const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
     // console.log('user:', user);
     const [isEditing, setIsEditing] = useState(false);
-    const [displayName, setDisplayName] = useState(user?.displayName || '');
+    // const [displayName, setDisplayName] = useState(user?.displayName || '');
     const [language, setLanguage] = useState(user?.language || ''); 
     const [work, setWork] = useState(user?.work || ''); 
     const [link, setLink] = useState(user?.link || ''); 
@@ -34,7 +34,7 @@ const Profile: React.FC = () => {
             return response.data;
         },
     });
-    console.log(userdata)
+    // console.log(userdata)
    
 
     const formatJoinDate = (dateString: string) => {
@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
 
     const joinDate = user?.metadata?.creationTime ? formatJoinDate(user.metadata.creationTime) : '';
 
-    const handleFileChange = async (e) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
           const formData = new FormData();
@@ -62,7 +62,7 @@ const Profile: React.FC = () => {
   };
  
   const handleSave = async() => {
-    let uploadedImageUrl = photoURL || user?.photoURL; 
+    const uploadedImageUrl = photoURL || user?.photoURL; 
     const updatedUser = {
         photoURL: uploadedImageUrl,
         language,
@@ -234,22 +234,26 @@ const Profile: React.FC = () => {
         </div>):(<div></div>)}
         <h1 className='uppercase text-slate-500 text-sm font-lato font-semibold tracking-wider'>About    {user?.displayName},</h1>
             
-        {userdata?.link && userdata.link.length > 0 && (
-  <h3>
-    {userdata.link.map((link, index) => (
-      <div key={index}> {/* Wrap each link in a div */}
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline"
-        >
-          {link}
+        {userdata?.link && (
+    Array.isArray(userdata.link) ? (
+        userdata.link.length > 0 && (
+            <ul>
+                {userdata.link.map((link: string, index: number) => (
+                    <li key={index}>
+                        <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                            {link}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        )
+    ) : (
+        <a href={userdata.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+            {userdata.link}
         </a>
-      </div>
-    ))}
-  </h3>
+    )
 )}
+
     
       
        <h2 className='uppercase text-slate-500 text-sm font-lato font-semibold lg:mt-4'>Reviews from hosts</h2>

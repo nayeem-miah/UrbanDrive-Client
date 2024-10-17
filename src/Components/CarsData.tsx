@@ -6,15 +6,15 @@ import useAuth from '../Hooks/useAuth';
 import toast from 'react-hot-toast';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { FaAward, FaMapLocationDot } from 'react-icons/fa6';
-
-const CarsData: React.FC = ({cars}) => {
+interface CarsDataProps {
+    cars:Car[]; 
+  }
+const CarsData: React.FC<CarsDataProps> = ({cars}) => {
     const axiosPublic = useAxiosPublic();
     const {user} = useAuth();
     const [favoriteCars, setFavoriteCars] = useState<string[]>([]);
     // console.log('carsdata:',cars)
-    // interface CarsDataProps {
-    //     cars: Car[]; // cars অ্যারে হিসেবে পাস হবে
-    // }
+    
     interface Car {
         _id: string;
         name: string;
