@@ -117,6 +117,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const authInfo: AuthContextType = {
     user,
+    setUser,
     loading,
     createUser,
     signIn,

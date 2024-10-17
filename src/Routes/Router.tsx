@@ -11,6 +11,9 @@ import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
+
+
+import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
@@ -22,6 +25,10 @@ import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 import Success from "../Components/PaymentSystem/SSLCommarze/Success";
 import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
+import Profile from "../Components/UserDashboard/Profile";
+import Favorite from "../Components/UserDashboard/Favorite";
+import Booked from "../Components/UserDashboard/Booked";
+import Membership from "../Components/Membership/Membership";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +73,14 @@ const router = createBrowserRouter([
         element: <OnboardCheckout></OnboardCheckout>,
       },
       {
+        path: "/cars",
+        element: <Cars></Cars>,
+      },
+      {
+        path: "/membership",
+        element: <Membership></Membership>,
+      },
+      {
         path: "/membership-duration/:planName/:price",
         element: <MembershipDuration></MembershipDuration>,
       },
@@ -105,6 +120,18 @@ const router = createBrowserRouter([
   {
     path: "/cancel",
     element: <Cancel />
+  },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
+  {
+    path: "/favorite",
+    element: <Favorite />
+  },
+  {
+    path: "/booked",
+    element: <Booked />
   },
   {
     path: "/dashboard",

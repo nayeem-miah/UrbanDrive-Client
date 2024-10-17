@@ -1,22 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { MdOutlineDiscount } from "react-icons/md";
-import { MdOutlineStar } from "react-icons/md";
-import { FaAward } from "react-icons/fa";
-import { FaMapLocationDot } from "react-icons/fa6";
-// import { RxMagnifyingGlass } from "react-icons/rx";
-
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
-
-
-
+import useAuth from "../Hooks/useAuth";
+import CarsData from "./CarsData";
 
 const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
+  const {user} =useAuth();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("");
@@ -29,34 +22,15 @@ const Cars: React.FC = () => {
   const [searchItem] = useState("");
   const [searchLocation] = useState('');
   const [cars,setCars] = useState([]);
- const [driver,setDriver]=useState('');
  const [homePickup,setHomePickup]=useState("");
- 
 
-  interface Car {
-    _id: string;
-    name: string;
-    image: string;
-    review: string;
-    availability: boolean;
-    model: string;
-    category: string;
-    price: number;
-    date: number;
-    description: string;
-    discount: number;
-    rating: number;
-    trip_count: number;
-    make: string;
-    seatCount: number;
-  }
 
   const {
     data: cardata = [],
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem,driver,homePickup],
+    queryKey: ["car", currentPage, category, maxPrice, minPrice, sortOption,searchItem,homePickup],
     queryFn: async () => {
       const response = await axiosPublic.get("/cars", {
         params: {
@@ -72,8 +46,8 @@ const Cars: React.FC = () => {
           lng: userLocation?.lng,
           location: searchLocation,
           maxDistance: 50000,
-          driver:driver,
-          homePickup:homePickup
+          homePickup:homePickup,
+          
         },
       });
       setTotalPages(response.data.totalPages);
@@ -82,8 +56,32 @@ const Cars: React.FC = () => {
       return response.data.Cars;
     },
   });
+  useEffect(() => {
+    const askForLocationPermission = () => {
+      if (window.confirm("Do you want to use your location?")) {
+        getCurrentLocation(); 
+      } else {
+        alert("Your location is not allowed to be used.");
+      }
+    };
 
+    askForLocationPermission();
+  }, []);
 
+ 
+   // Fetch user's current location
+   const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        setUserLocation({ lat, lng });
+        fetchCars(lat, lng, 5000);
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
       const response = await axiosPublic.get("/SearchCars", {
@@ -98,19 +96,6 @@ const Cars: React.FC = () => {
       // console.log('allcars:',response.data) 
     } catch (error) {
       console.error("Error fetching cars:", error);
-    }
-  };
-   // Fetch user's current location
-   const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        setUserLocation({ lat, lng });
-        fetchCars(lat, lng, 5000);
-      });
-    } else {
-      alert("Geolocation is not supported by this browser.");
     }
   };
 
@@ -145,9 +130,6 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-  };
-  const handleDriverSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDriver(e.target.value);
   };
   const handleHomePickup = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setHomePickup(e.target.value);
@@ -259,18 +241,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
           <option value="1001-Infinity">Above $1000</option>
         </select>
 
-        <select
-          className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
-          value={driver} // Set the current selected value
-          onChange={handleDriverSelect} // Handle change
-        >
-          <option disabled value="">
-            Select by Driver
-          </option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-          
-        </select>
+        
         <select
           className="select w-full border border-gray-300  rounded-2xl p-3 h-12 focus:outline-none"
           value={homePickup} // Set the current selected value
@@ -311,63 +282,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
           </p>
           <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
             <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
-              {Array.isArray(cardata) && cardata.length > 0 ? (
-                <div className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
-                  {cardata.map((car: Car) => (
-                    <Link to={`/cars/${car._id}`}>
-                      <div
-                        key={car._id}
-                        className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
-                      >
-                        <figure className="w-full lg:w-[50%]">
-                          <img
-                            className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                            src={car.image}
-                            alt={car.name}
-                          />
-                        </figure>
-                        <div className="card-body w-full lg:w-2/3 flex-1">
-                          <h2 className="card-title">{car.model}</h2>
-                          <p className="text-ellipsis">
-                            {car.description.slice(0, 80)}....
-                          </p>
-                          {car.rating > 0 ? (
-                            <p className="flex gap-1">
-                              {car.rating}
-                              <MdOutlineStar className="text-[#f0bb0c] mt-1" />{" "}
-                              ({car.trip_count} trips){" "}
-                              <FaAward className="mt-1 text-primary font-bold" />{" "}
-                              <span className="font-bold">All-Star-Host</span>
-                            </p>
-                          ) : (
-                            <p>New listing</p>
-                          )}
-                          <p className="flex gap-1">
-                            <FaMapLocationDot className="mt-1" />
-                            {car.make}
-                          </p>
-                          {car.discount > 0 ? (
-                            <span className="flex gap-1 text-[#0f923b] ">
-                              <MdOutlineDiscount className="mt-1" /> Discount:{" "}
-                              {car.discount}%
-                            </span>
-                          ) : (
-                            <p></p>
-                          )}
-
-                          <div className="card-actions justify-end">
-                            <span className="text-primary font-bold text-xl">
-                              ${car.price}/day
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <p>No cars available</p>
-              )}
+              <CarsData cars ={cardata}></CarsData>
             </div>
 
             <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
