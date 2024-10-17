@@ -2,7 +2,7 @@
   "home": "হোম",
   "services": "সেবা",
   "about": "আমাদের সম্পর্কে",
-  "contact": "যোগাযোগ",
+  "Contact": "যোগাযোগ",
   "updateUser": "ব্যবহারকারী আপডেট করুন",
   "becomeHost": "হোস্ট হোন",
   "dashboard": "ড্যাশবোর্ড",
@@ -139,5 +139,24 @@
     "title": "যোগাযোগ করুন",
     "description": "কোন প্রশ্ন আছে? আমাদের সাথে যোগাযোগ করুন {email} এ।",
     "email": "info@urbandrive.com"
-  }
+  },
+  "contact": {
+    "heading": "যোগাযোগ করুন",
+    "description": "যেকোনো প্রশ্নের জন্য আমাদের সাথে যোগাযোগ করুন",
+    "email": "ইমেল করুন",
+    "address": "আমাদের ঠিকানা",
+    "submit": "জমা দিন",
+    "get_in_touch": "যোগাযোগ করুন",
+    "name_placeholder": "আপনার নাম*",
+    "email_placeholder": "আপনার ইমেল*",
+    "number_placeholder": "আপনার নাম্বার*",
+    "subject_placeholder": "বিষয়*",
+    "message_placeholder": "আপনার বার্তা",
+    "dhaka_location": "ঢাকা, বাংলাদেশ",
+    "interested_renting": "গাড়ি ভাড়ায় আগ্রহী?",
+    "dont_hesitate": "দয়া করে আমাদের একটি বার্তা পাঠান।",
+    "live_chat": "লাইভ চ্যাট",
+    "rent_now": "এখন ভাড়া করুন"
+  },
+  "rentYourCar" : "আপনার গাড়ি ভাড়া দিন"
 }   

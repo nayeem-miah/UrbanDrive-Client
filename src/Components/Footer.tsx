@@ -170,7 +170,7 @@ const Footer: React.FC = () => {
               />
             </p>
 
-            <p className="mt-4 text-sm text-[#1f1e1e] font-medium sm:mt-0 dark:text-gray-300">
+            <p className="mt-4 text-sm text-black font-medium sm:mt-0">
               © UrbanDrive {currentYear}. {t("copyright")}
             </p>
           </div>

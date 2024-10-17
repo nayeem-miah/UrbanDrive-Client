@@ -1,6 +1,6 @@
 .background-container {
 	position: relative;
-	background-image: url('../../assets/nissan.jpg');
+	background: linear-gradient(#00000080, #00000080),url('../../assets/nissan.jpg');
 	background-size: cover;
 	background-position: center;
 	height: 100vh;
