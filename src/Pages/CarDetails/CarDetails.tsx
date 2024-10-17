@@ -12,7 +12,7 @@ import { DateRange, RangeKeyDict } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
 import { motion } from 'framer-motion';
-import { ICar, RatingData } from '../../Types/car';
+import { ICar } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import { SyncLoader } from 'react-spinners';
@@ -28,12 +28,12 @@ const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
   const {user} = useAuth();
-  const ratingsData: RatingData[] = [
-    { label: 'Cleanliness', value: 3.0 },
-    { label: 'Communication', value: 2.0 },
-    { label: 'Convenience', value: 5.0 },
+  // const ratingsData: RatingData[] = [
+  //   { label: 'Cleanliness', value: 3.0 },
+  //   { label: 'Communication', value: 2.0 },
+  //   { label: 'Convenience', value: 5.0 },
 
-  ];
+  // ];
 
 
 
@@ -53,7 +53,7 @@ const CarDetails: React.FC = () => {
   const [perDayCost, setPerDayCost] = useState(0);
   const [includedDriver, setIncludedDriver] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
 
 
   const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 }, 
@@ -210,7 +210,7 @@ const CarDetails: React.FC = () => {
         <p className="text-lg text-gray-600 mb-4 font-lato">{car.model}</p>
 
         <div className="flex items-center mb-6">
-          <span className="text-2xl font-bold text-indigo-600 mr-2">{car.averageRating}</span>
+          <span className="text-2xl font-bold text-indigo-600 mr-2">{car.averageRating.toFixed(1)}</span>
           <FaStar className="w-6 h-6 fill-indigo-600" />
           <span className="text-gray-600 ml-1">({car.reviewCount} reviews)</span>
         </div>
@@ -356,19 +356,19 @@ const CarDetails: React.FC = () => {
     {/* Ratings */}
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-6">
           <div className="text-2xl font-bold mb-4">Ratings </div>
-          <div className="text-5xl text-indigo-600 font-bold">{car.averageRating}</div>
+          <div className="text-5xl text-indigo-600 font-bold">{car.averageRating.toFixed(1)}</div>
           <div className="text-gray-500 mb-6">({car.reviewCount} reviews)</div>
 
-          {ratingsData.map((rating, index) => (
+          {Object.entries(car.categoryRatings || {}).map(([label, value], index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-2">
-                <span>{rating.label}</span>
-                <span>{rating.value}</span>
+                <span>{label}</span>
+                <span>{Number(value).toFixed(1)}</span>
               </div>
               <motion.div
                 className="h-2 bg-gray-300 rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: `${(rating.value / 5) * 100}%` }}
+                animate={{ width: `${(Number(value) / 5) * 100}%` }}
                 transition={{ duration: 1.5 }}
               >
                 <div className="h-full bg-indigo-600 rounded-full"></div>
@@ -381,46 +381,54 @@ const CarDetails: React.FC = () => {
             <div className="mt-4 space-y-4"></div>
           </div> */}
         </div>
+
         {/* Reviews */}
         <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
   <h2 className="text-3xl font-bold mb-6">Reviews</h2>
   {isLoading ? (
-  <div className="min-h-screen flex items-center justify-center">
-    <SyncLoader color="#593cfb" size={18} />
-  </div>
-) : reviewsData.reviews.length > 0 ? (
-  <div className="space-y-6">
-    {reviewsData.reviews.map((review: any) => (
-      <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
-        <div className="flex items-center mb-2">
-          <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
-          <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
-        </div>
-        <p className="text-gray-600">{review.comment}</p>
-        <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
-      </div>
-    ))}
-    <div className="mt-4 flex justify-between">
-      <button 
-        onClick={handlePrevPage} 
-        disabled={page === 1}
-        className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
-      >
-        Previous
-      </button>
-      <span>Page {page} of {reviewsData.totalPages}</span>
-      <button 
-        onClick={handleNextPage} 
-        disabled={page === reviewsData.totalPages}
-        className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
-      >
-        Next
-      </button>
+    <div className="min-h-screen flex items-center justify-center">
+      <SyncLoader color="#593cfb" size={18} />
     </div>
-  </div>
-) : (
-  <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
-)}
+  ) : reviewsData.reviews.length > 0 ? (
+    <div className="space-y-6">
+      {reviewsData.reviews.map((review: any) => (
+        <div key={review._id} className="bg-gray-100 p-4 rounded-lg">
+          <div className="flex items-center mb-2">
+            <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly />
+            <span className="ml-2 font-bold text-gray-700">{review.userName}</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 mb-2">
+            {Object.entries(review.ratingDetails).map(([key, value]) => (
+              <div key={key} className="text-sm">
+                <span className="font-semibold">{key.charAt(0).toUpperCase() + key.slice(1)}:</span> {value as number}
+              </div>
+            ))} 
+          </div>
+          <p className="text-gray-600">{review.comment}</p>
+          <p className="text-sm text-gray-500 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
+        </div>
+      ))}
+      <div className="mt-4 flex justify-between">
+        <button 
+          onClick={handlePrevPage} 
+          disabled={page === 1}
+          className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+        >
+          Previous
+        </button>
+        <span>Page {page} of {reviewsData.totalPages}</span>
+        <button 
+          onClick={handleNextPage} 
+          disabled={page === reviewsData.totalPages}
+          className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  ) : (
+    <p className="text-gray-600">No reviews yet. Be the first to review this car!</p>
+  )}
   
   {user ? (
     <ReviewForm carId={car._id.toString()} onReviewSubmitted={handleReviewSubmitted} />
