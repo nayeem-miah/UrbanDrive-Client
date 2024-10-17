@@ -5,7 +5,7 @@ import { Rating, Star } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
-import toast from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface ReviewFormProps {
   carId: string;
@@ -120,54 +120,57 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 bg-white p-8 rounded-lg shadow-md w-full">
-      <h3 className="text-4xl font-bold mb-6 text-indigo-600">Share Your Detailed Experience</h3>
-      
-      {/* Expanded Rating Categories with Descriptions */}
-      <div className="flex flex-wrap justify-center mb-12">
-        {ratingCategories.map((category) => (
-          <div key={category.name} className="w-full md:w-1/2 xl:w-1/4 p-6 text-center">
-            <h4 className="text-2xl font-bold mb-2 text-gray-700">{category.label}</h4>
-            <Rating
-              style={{ maxWidth: 200 }}
-              value={category.value}
-              onChange={(value: number) => handleRatingChange(category.name, value)}
-              itemStyles={customStarStyle}
-            />
-            <p className="text-gray-500 text-sm mt-2">Rate your experience with {category.label}</p>
-          </div>
-        ))}
-      </div>
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 bg-white p-8 rounded-lg shadow-md w-full">
+        <h3 className="text-4xl font-bold mb-6 text-indigo-600">Share Your Detailed Experience</h3>
+        
+        
+        <div className="flex flex-wrap justify-center mb-12">
+          {ratingCategories.map((category) => (
+            <div key={category.name} className="w-full md:w-1/2 xl:w-1/4 p-6 text-center">
+              <h4 className="text-2xl font-bold mb-2 text-gray-700">{category.label}</h4>
+              <Rating
+                style={{ maxWidth: 200 }}
+                value={category.value}
+                onChange={(value: number) => handleRatingChange(category.name, value)}
+                itemStyles={customStarStyle}
+              />
+              <p className="text-gray-500 text-sm mt-2">Rate your experience with {category.label}</p>
+            </div>
+          ))}
+        </div>
 
-      {/* Overall Rating Display with Context */}
-      <div className="mb-12 text-center">
-        <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Overall Rating</h4>
-        <p className="text-5xl font-bold text-indigo-600">{calculateAverageRating().toFixed(1)} / 5</p>
-        <p className="text-gray-500 text-sm mt-2">Based on your ratings above</p>
-      </div>
+       
+        <div className="mb-12 text-center">
+          <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Overall Rating</h4>
+          <p className="text-5xl font-bold text-indigo-600">{calculateAverageRating().toFixed(1)} / 5</p>
+          <p className="text-gray-500 text-sm mt-2">Based on your ratings above</p>
+        </div>
 
-      {/* Expanded Comment Section with Guidance */}
-      <div className="mb-8">
-        <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Detailed Review</h4>
-        <textarea
-          {...register('comment', { required: 'Review comment is required' })}
-          className="w-full p-4 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          placeholder="Please share your detailed thoughts, likes, dislikes, and suggestions..."
-          rows={8}
-        />
-        {errors.comment && (
-          <p className="text-red-500 text-sm italic mt-2">{errors.comment.message as string}</p>
-        )}
-        <p className="text-gray-500 text-sm mt-2">Your feedback is invaluable to us. Thank you for taking the time!</p>
-      </div>
+        
+        <div className="mb-8">
+          <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Detailed Review</h4>
+          <textarea
+            {...register('comment', { required: 'Review comment is required' })}
+            className="w-full p-4 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            placeholder="Please share your detailed thoughts, likes, dislikes, and suggestions..."
+            rows={8}
+          />
+          {errors.comment && (
+            <p className="text-red-500 text-sm italic mt-2">{errors.comment.message as string}</p>
+          )}
+          <p className="text-gray-500 text-sm mt-2">Your feedback is invaluable to us. Thank you for taking the time!</p>
+        </div>
 
-      <button 
-        type="submit" 
-        className="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition duration-300 w-full text-lg font-bold"
-      >
-        Submit Your Comprehensive Review
-      </button>
-    </form>
+        <button 
+          type="submit" 
+          className="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition duration-300 w-full text-lg font-bold"
+        >
+          Submit Your Comprehensive Review
+        </button>
+      </form>
+    </>
   );
 };
 
