@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
      { id: "services", title: t("services") },
      { id: "about", title: t("about") },
      { id: "membership", title: t("memberships") },
-     { id: "contact", title: t("contact") },
+     { id: "contact", title: t("Contact") },
    ];
    if (isLoading) {
     return (

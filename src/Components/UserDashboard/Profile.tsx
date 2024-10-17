@@ -105,7 +105,7 @@ const Profile: React.FC = () => {
         );
       }
     return (
-        <div className='container mx-auto lg:p-24'>
+        <div className='container mx-auto p-2 lg:p-24'>
             
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mx-auto' >
       <div className=''>
