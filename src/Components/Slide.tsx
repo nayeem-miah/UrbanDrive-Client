@@ -1,14 +1,16 @@
 import React from "react";
 import { Fade } from "react-awesome-reveal";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 interface SlideProps {
   image: string;
   title: string;
   model: string;
-  price: number;
+  price: string;
 }
 
 const Slide: React.FC<SlideProps> = ({ image, title, model, price }) => {
+  const {t} = useTranslation();
   return (
     <div
       className="relative w-full bg-center bg-cover h-[38rem]"
@@ -28,19 +30,22 @@ const Slide: React.FC<SlideProps> = ({ image, title, model, price }) => {
 
           <Fade direction="down" cascade>
             <p className="mt-4 text-2xl text-white ">
-              {model} $<span className="text font-Open bg-primary rounded-lg  ">{price}</span> /
-              DAY
+              {model} ৳
+              <span className="text font-Open bg-primary rounded-lg  ">
+                {price}
+              </span>{" "}
+              / {t("day")}
             </p>
 
-            <Link to='/cars'>
+            <Link to="/cars">
               <div className="flex mt-8 space-x-4">
                 <button className="relative inline-flex items-center justify-center px-4 hover:text-primary hover:bg-white mb-2 overflow-hidden text-base sm:text-lg  text-white bg-primary rounded-lg font-bold">
-                  View Details
+                  {t("view_details")}
                 </button>
 
                 <button className="relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-base sm:text-lg font-medium text-white rounded-lg group hover:text-white border-2 border-primary focus:ring-yellow-400 dark:focus:ring-yellow-800">
                   <span className="relative px-3 sm:px-4 lg:px-4 py-2 sm:py-3 lg:py-[18px] transition-all ease-in duration-75 bg-transparent rounded-md group-hover:bg-primary font-Open font-bold">
-                    Browse Cars
+                    {t("browse_cars")}
                   </span>
                 </button>
               </div>
