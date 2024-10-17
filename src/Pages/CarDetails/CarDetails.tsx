@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {  useLoaderData, useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css';
@@ -201,13 +200,15 @@ const CarDetails: React.FC = () => {
       {/* Car Details */}
       <section className="bg-white text-gray-800">
   <div className="max-w-6xl mx-auto p-8">
-    <div className="flex flex-col md:flex-row justify-between items-start gap-20">
-      {/* Left Section */}
-      <div className="flex-1">
-        <h1 className="text-4xl font-extrabold mb-2 font-merri text-gray-900">
-          {car.make} <span className="text-gray-500">{"(" + car.category + ")"}</span>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+    {/* Left Section */}
+    <div className="flex-1 w-full lg:w-2/3">
+      <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h1 className="text-4xl font-extrabold mb-2 text-gray-900">
+          {car.make} {car.model}
         </h1>
-        <p className="text-lg text-gray-600 mb-4 font-lato">{car.model}</p>
+        <p className="text-lg text-gray-600 mb-4">{car.category}</p>
 
         <div className="flex items-center mb-6">
           <span className="text-2xl font-bold text-indigo-600 mr-2">{car.averageRating.toFixed(1)}</span>
@@ -216,142 +217,164 @@ const CarDetails: React.FC = () => {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 text-gray-800">
-          <div className="flex items-center">
-            <FaGasPump className="w-6 h-6 mr-3 text-indigo-600" /> <span>22 MPG</span>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6 text-gray-800">
+          <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+            <FaGasPump className="w-8 h-8 text-indigo-600 mb-2" />
+            <span className="text-sm font-medium">22 MPG</span>
           </div>
-          <div className="flex items-center">
-            <MdElectricCar className="w-6 h-6 mr-3 text-indigo-600" /><span>Gas (Premium)</span>
+          <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+            <MdElectricCar className="w-8 h-8 text-indigo-600 mb-2" />
+            <span className="text-sm font-medium">Gas (Premium)</span>
           </div>
-          <div className="flex items-center">
-            <GiCarDoor className="w-6 h-6 mr-3 text-indigo-600" /><span>4 Doors</span>
+          <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+            <GiCarDoor className="w-8 h-8 text-indigo-600 mb-2" />
+            <span className="text-sm font-medium">4 Doors</span>
           </div>
-          <div className="flex items-center">
-            <GiCarSeat className="w-6 h-6 mr-3 text-indigo-600" /><span>{car.seatCount} Seats</span>
+          <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+            <GiCarSeat className="w-8 h-8 text-indigo-600 mb-2" />
+            <span className="text-sm font-medium">{car.seatCount} Seats</span>
           </div>
         </div>
 
         {/* Description */}
-        <div className="mt-8">
+        <div className="mb-8">
           <h2 className="text-2xl font-bold mb-3 text-gray-800">Description</h2>
           <p className="text-gray-600 leading-relaxed">{car.description}</p>
         </div>
 
         {/* Features */}
-        <div className="mt-8">
+        <div>
           <h2 className="text-2xl font-bold mb-3 text-gray-800">Features</h2>
-          <ul className="text-gray-600 list-disc pl-5">
+          <ul className="grid grid-cols-2 gap-2">
             {car.features.map((feature, index) => (
-              <li key={index}>{feature}</li>
+              <li key={index} className="flex items-center text-gray-600">
+                <svg className="w-4 h-4 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                {feature}
+              </li>
             ))}
           </ul>
         </div>
-
-        {/* Hosted By Section */}
-        <h1 className="text-2xl font-bold mb-6 mt-12 text-indigo-600">Hosted By</h1>
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="flex items-center mb-6">
-            <img src="https://via.placeholder.com/80" alt="Host" className="w-16 h-16 rounded-full mr-4" />
-            <div>
-              <h3 className="font-semibold text-gray-800">{car.name}</h3>
-              <p className="text-sm text-gray-600">All-Star Host</p>
-            </div>
-          </div>
-          <p className="text-sm text-gray-600 mb-4">131 trips • {car.date}</p>
-          <div className="flex items-center text-indigo-600">
-            <FaStar className="w-5 h-5 fill-indigo-600 mr-1" />
-            <span className="font-bold mr-1">5.0</span>
-          </div>
-          <p className="text-sm text-gray-600 mt-3">
-            <IoIosInformationCircleOutline className="w-4 h-4 inline mr-1" />
-            All-Star Hosts like Name are the top-rated and most experienced hosts on UrbanDrive.
-          </p>
-          <a href="#" className="text-indigo-600 text-sm underline">Learn more</a>
-        </div>
       </div>
 
-      {/* Right Section (Pricing and Booking) */}
-      <div className="flex-1">
-        <span className="text-4xl font-bold text-indigo-700 mb-4 block">{perDayCost.toFixed(2)}/day</span>
+      {/* Hosted By Section */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold mb-6 text-indigo-600">Hosted By</h2>
+        <div className="flex items-center mb-6">
+          <img src="https://via.placeholder.com/80" alt="Host" className="w-16 h-16 rounded-full mr-4" />
+          <div>
+            <h3 className="font-semibold text-gray-800 text-lg">{car.name}</h3>
+            <p className="text-sm text-gray-600">All-Star Host</p>
+          </div>
+        </div>
+        <p className="text-sm text-gray-600 mb-4">131 trips • Joined {car.date}</p>
+        <div className="flex items-center text-indigo-600 mb-4">
+          <FaStar className="w-5 h-5 fill-indigo-600 mr-1" />
+          <span className="font-bold mr-1">5.0</span>
+        </div>
+        <p className="text-sm text-gray-600 mb-4">
+          <IoIosInformationCircleOutline className="w-4 h-4 inline mr-1" />
+          All-Star Hosts like {car.name} are the top-rated and most experienced hosts on UrbanDrive.
+        </p>
+        <a href="#" className="text-indigo-600 text-sm font-medium hover:underline">Learn more</a>
+      </div>
+    </div>
+
+    {/* Right Section (Pricing and Booking) */}
+    <div className="flex-1 w-full lg:w-1/3 sticky top-10">
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <span className="text-4xl font-bold text-indigo-700 mb-2 block">{perDayCost.toFixed(2)} BDT/day</span>
         <p className="text-sm text-gray-600 mb-6">Price before taxes</p>
 
-        <div className="bg-gray-100 p-6 rounded-lg shadow-lg text-gray-800">
-          <div className="mb-6">
-            <span className="text-2xl font-bold">${totalCost}</span>
-            <p className="text-sm text-gray-600">Total for {differenceInDays(dateRange[0].endDate, dateRange[0].startDate) + 1} days</p>
-          </div>
+        <div className="mb-6">
+          <span className="text-2xl font-bold text-gray-900">{totalCost} BDT</span>
+          <p className="text-sm text-gray-600">Total for {differenceInDays(dateRange[0].endDate, dateRange[0].startDate) + 1} days</p>
+        </div>
 
-          {/* Trip Dates */}
-          <div className="mb-6">
-            <p className="text-sm font-semibold mb-1">Trip dates</p>
-            <div
-              className="flex justify-between items-center border border-gray-300 p-3 rounded cursor-pointer bg-gray-200"
-              onClick={() => setShowCalendar(!showCalendar)}
-            >
-              <span>{format(dateRange[0].startDate, 'MM/dd/yyyy')} - {format(dateRange[0].endDate, 'MM/dd/yyyy')}</span>
-            </div>
-          </div>
-
-          {/* Include Driver */}
-          <div className='mb-6 flex items-center'>
-            <input
-              type="checkbox"
-              checked={includedDriver}
-              onChange={(e) => setIncludedDriver(e.target.checked)}
-              className='w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500'
-            />
-            <span className='text-gray-800 text-sm ml-2'>Include driver (+20% total cost)</span>
-          </div>
-
-          {includedDriver && (
-            <div className="mb-6">
-              <p className="text-sm text-gray-600">Driver fee (20% of base cost)</p>
-              <span className="font-bold">${(totalCost - totalCost / 1.2).toFixed(2)}</span>
-            </div>
-          )}
-
-          {/* Calendar */}
-          {showCalendar && (
-            <DateRange
-              editableDateInputs={true}
-              onChange={handleSelect}
-              moveRangeOnFirstSelection={false}
-              ranges={dateRange}
-              className="mb-6"
-              rangeColors={['#4F46E5']}
-              color="#4F46E5"
-            />
-          )}
-
-          {/* Location */}
-          <div className="mb-6">
-            <p className="text-sm font-semibold mb-1">Pickup & return location</p>
-            <select value={location} onChange={(e) => setLocation(e.target.value)} className="w-full border border-gray-300 p-3 rounded bg-gray-200 text-gray-800">
-              <option value="">Select location</option>
-              <option value="uttara">Uttara</option>
-              <option value="Gazipur">Dhaka</option>
-              <option value="Gulshan">Gulshan</option>
-              <option value="Badda">Badda</option>
-              <option value="Khilkhet">Khilkhet</option>
-              <option value="Airport">Airport</option>
-            </select>
-          </div>
-
-          {/* Continue Button */}
-          <button onClick={handleContinue} className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-2 rounded-md hover:bg-indigo-800 transition-colors">
-            Continue
-          </button>
-
-          {/* Cancellation Policy */}
-          <div className="flex items-center mt-6">
-            <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path>
+        {/* Trip Dates */}
+        <div className="mb-6">
+          <p className="text-sm font-semibold mb-2">Trip dates</p>
+          <div
+            className="flex justify-between items-center border border-gray-300 p-3 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
+            onClick={() => setShowCalendar(!showCalendar)}
+          >
+            <span>{format(dateRange[0].startDate, 'MMM dd, yyyy')} - {format(dateRange[0].endDate, 'MMM dd, yyyy')}</span>
+            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
-            <p className="text-sm text-gray-600">Free cancellation before Sep 28</p>
           </div>
+        </div>
+
+        {/* Include Driver */}
+        <div className='mb-6 flex items-center'>
+          <input
+            type="checkbox"
+            id="includeDriver"
+            checked={includedDriver}
+            onChange={(e) => setIncludedDriver(e.target.checked)}
+            className='w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
+          />
+          <label htmlFor="includeDriver" className='text-gray-700 text-sm ml-2 cursor-pointer'>Include driver (+20% total cost)</label>
+        </div>
+
+        {includedDriver && (
+          <div className="mb-6 p-4 bg-indigo-50 rounded-lg">
+            <p className="text-sm text-gray-600">Driver fee (20% of base cost)</p>
+            <span className="font-bold text-indigo-600">${(totalCost - totalCost / 1.2).toFixed(2)}</span>
+          </div>
+        )}
+
+        {/* Calendar */}
+        {showCalendar && (
+          <DateRange
+            editableDateInputs={true}
+            onChange={handleSelect}
+            moveRangeOnFirstSelection={false}
+            ranges={dateRange}
+            className="mb-6"
+            rangeColors={['#4F46E5']}
+            color="#4F46E5"
+          />
+        )}
+
+        {/* Location */}
+        <div className="mb-6">
+          <p className="text-sm font-semibold mb-2">Pickup & return location</p>
+          <select 
+            value={location} 
+            onChange={(e) => setLocation(e.target.value)} 
+            className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <option value="">Select location</option>
+            <option value="uttara">Uttara</option>
+            <option value="Gazipur">Dhaka</option>
+            <option value="Gulshan">Gulshan</option>
+            <option value="Badda">Badda</option>
+            <option value="Khilkhet">Khilkhet</option>
+            <option value="Airport">Airport</option>
+          </select>
+        </div>
+
+        {/* Continue Button */}
+        <button 
+          onClick={handleContinue} 
+          className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Continue
+        </button>
+
+        {/* Cancellation Policy */}
+        <div className="flex items-center mt-6">
+          <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          </svg>
+          <p className="text-sm text-gray-600">Free cancellation before Sep 28</p>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     {/* Ratings */}
 <div className="p-6 bg-white rounded-lg shadow-lg mt-8">
@@ -398,10 +421,10 @@ const CarDetails: React.FC = () => {
       <SyncLoader color="#4F46E5" size={18} />
     </div>
   ) : reviewsData.reviews.length > 0 ? (
-    <div className="space-y-4 ">
+    <div className="space-y-4">
       {reviewsData.reviews.map((review: any) => (
-        <div key={review._id} className="bg-gray-50 p-4 rounded-lg shadow-lg">
-
+        <div key={review._id} className="bg-gray-50 p-4 rounded-lg shadow-sm">
+          
           <div className="flex justify-between items-center mb-3">
             <div className="flex items-center">
               <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{ 
