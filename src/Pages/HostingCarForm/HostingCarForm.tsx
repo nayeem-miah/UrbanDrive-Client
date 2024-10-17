@@ -10,6 +10,7 @@ import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { imageUpload } from '../../utils/ImageUpload';
 
 
 interface FormData {
@@ -19,6 +20,10 @@ interface FormData {
   hostInfo: { name: string; phone: string };
   membershipAndPlan: { plan: string };
   additionalInfo: { description: string };
+  carImage: File[];
+  carImages: File[];
+  carImageUrl: string;
+  carImageUrls: string[];
 }
 
 const HostingCarForm: React.FC = () => {
@@ -28,23 +33,41 @@ const HostingCarForm: React.FC = () => {
   const { trigger, handleSubmit } = methods;
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
-   try {
-    const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
-    console.log('Car hosted successfully:', response.data);
-    Swal.fire({
-      title: 'Car Hosted Successfully',
-      text: 'Your car has been successfully hosted.',
-      icon: 'success',
-      confirmButtonText: 'Home'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = '/';
+    try {
+      // Upload single car image
+      if (data.carImage && data.carImage[0]) {
+        const carImageUrl = await imageUpload(data.carImage[0]);
+        data.carImageUrl = carImageUrl;
       }
-    });
-  } catch (error) {
-    console.error('Error hosting car:', error);
-  }
+
+      // Upload multiple car images
+      if (data.carImages && data.carImages.length > 0) {
+        const carImageUrls = await Promise.all(Array.from(data.carImages).map(imageUpload));
+        data.carImageUrls = carImageUrls;
+      }
+
+      // backend
+      const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+      console.log('Car hosted successfully:', response.data);
+      Swal.fire({
+        title: 'Car Hosted Successfully',
+        text: 'Your car has been successfully hosted.',
+        icon: 'success',
+        confirmButtonText: 'Home'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/';
+        }
+      });
+    } catch (error) {
+      console.error('Error hosting car:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'There was an error hosting your car. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   const handleNext = async () => {
@@ -98,16 +121,16 @@ const HostingCarForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mt-28 mb-24 mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-6 font-Playfair text-center">Host Your Car</h1>
-      <hr className="border-2 border-gray-300 mb-6" />
-      <div className="flex flex-col lg:flex-row justify-between">
-        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r ">
+    <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Host Your Car</h1>
+      
+      <div className="flex flex-col lg:flex-row justify-between ">
+        <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
           <StepIndicator steps={steps} currentStep={currentStep} />
         </div>
-        <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0">
+        <div className="w-full lg:w-2/3 lg:pl-6 mt-8 lg:mt-0 ">
           <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="">
               {renderStepContent()}
               <div className="flex justify-between mt-6">
                 <button
@@ -129,7 +152,7 @@ const HostingCarForm: React.FC = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
+                    className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all duration-300 ease-in-out"
                   >
                     Submit
                   </button>
