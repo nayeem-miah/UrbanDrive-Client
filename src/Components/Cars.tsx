@@ -89,12 +89,15 @@ const Cars: React.FC<Car> = () => {
         const lng = position.coords.longitude;
         setUserLocation({ lat, lng });
         fetchCars(lat, lng, 5000);
+        console.log('lat:',lat,'lng:',lng)
         
       });
     } else {
       alert("Location permission not yet granted.");
     }
   };
+  console.log('User Location:', userLocation);
+
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
       const response = await axiosPublic.get("/SearchCars", {
@@ -106,7 +109,7 @@ const Cars: React.FC<Car> = () => {
         },
       });
       setCars(response.data);
-      // console.log('allcars:',response.data) 
+      console.log('allcars:',response.data) 
     } catch (error) {
       console.error("Error fetching cars:", error);
     }
