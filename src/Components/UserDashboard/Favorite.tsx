@@ -10,7 +10,7 @@ import { SyncLoader } from 'react-spinners';
 
 const Favorite: React.FC = () => {
     const axiosPublic = useAxiosPublic();
-    const { user } = useAuth();
+    const { user,loading } = useAuth();
 
     const {
         data: favoriteCars = [],
@@ -25,7 +25,13 @@ const Favorite: React.FC = () => {
         staleTime: 10000,
     });
     // console.log('favoritecar:',favoriteCars)
-
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <SyncLoader color="#593cfb" size={10} /> {/* লোডিং স্পিনার */}
+            </div>
+        );
+    }
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
