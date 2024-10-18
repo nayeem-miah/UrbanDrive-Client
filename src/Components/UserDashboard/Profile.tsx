@@ -11,7 +11,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 
 const Profile: React.FC = () => {
-    const { user } = useAuth();
+    const { user ,setUser} = useAuth();
     const axiosPublic = useAxiosPublic();
     // console.log('user:', user);
     const [isEditing, setIsEditing] = useState(false);
