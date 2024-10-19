@@ -5,21 +5,40 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { SyncLoader } from "react-spinners";
+import { Link } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+interface User {
+  email: string;
+  displayName: string;
+  photoURL: string;
+  language?: string;
+  work?: string;
+  link?: string;
+  phone?: string;
+  metadata?: {
+    creationTime: string;
+  };
+}
 
 const Profile: React.FC = () => {
-  const { user, setUser } = useAuth();
+  // const { user }: { user: Partial<User> | null } = useAuth();
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
+
+  // const { user ,setUser} = useAuth();
   const axiosPublic = useAxiosPublic();
   // console.log('user:', user);
   const [isEditing, setIsEditing] = useState(false);
-  // const [displayName, setDisplayName] = useState(user?.displayName || "");
-  const [language, setLanguage] = useState(user?.language || "");
-  const [work, setWork] = useState(user?.work || "");
-  const [link, setLink] = useState(user?.link || "");
+  // const [displayName, setDisplayName] = useState(user?.displayName || '');
+  const [language, setLanguage] = useState<string>(user?.language || ""); // টাইপ স্পেসিফাই করা
+  const [work, setWork] = useState<string>(user?.work || "");
+  const [link, setLink] = useState<string>(user?.link || "");
+  const [phone, setPhone] = useState<string>(user?.phone || "");
   const [photoURL, setPhotoURL] = useState("");
-  const [phone, setPhone] = useState(user?.phone || "");
 
   const {
     data: userdata, // Corrected line with comma
@@ -28,12 +47,12 @@ const Profile: React.FC = () => {
   } = useQuery({
     queryKey: ["userdata", user?.email],
     queryFn: async () => {
-      // if (!user?.email) return null;
+      if (!user?.email) return null;
       const response = await axiosPublic.get(`/user/${user?.email}`);
       return response.data;
     },
   });
-  console.log(userdata);
+  // console.log(userdata)
 
   const formatJoinDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -49,7 +68,7 @@ const Profile: React.FC = () => {
     ? formatJoinDate(user.metadata.creationTime)
     : "";
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const formData = new FormData();
@@ -66,7 +85,7 @@ const Profile: React.FC = () => {
   };
 
   const handleSave = async () => {
-    let uploadedImageUrl = photoURL || user?.photoURL;
+    const uploadedImageUrl = photoURL || user?.photoURL;
     const updatedUser = {
       photoURL: uploadedImageUrl,
       language,
@@ -77,10 +96,10 @@ const Profile: React.FC = () => {
     };
 
     try {
-      const response = await axiosPublic.put("/user/profile", {
+         await axiosPublic.put("/user/profile", {
         updateData: updatedUser,
       });
-      setUser(response.data);
+      // setUser(response.data);
       toast.success("User profile updated successfully");
       setIsEditing(false);
     } catch (error) {
@@ -92,11 +111,18 @@ const Profile: React.FC = () => {
   const handleCancel = () => {
     setIsEditing(false);
   };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={10} /> {/* লোডিং স্পিনার */}
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <SyncLoader color="#593cfb" size={18} />
+        <SyncLoader color="#593cfb" size={10} />
       </div>
     );
   }
@@ -109,6 +135,9 @@ const Profile: React.FC = () => {
       </div>
     );
   }
+  //       console.log('User photoURL:', user?.photoURL);
+  // console.log('Userdata photoURL:', userdata?.photoURL);
+
   return (
     <div className="container mx-auto p-2 lg:p-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mx-auto">
@@ -279,24 +308,34 @@ const Profile: React.FC = () => {
             About {user?.displayName},
           </h1>
 
-          {userdata?.link && userdata.link.length > 0 && (
-            <h3>
-              {userdata.link.map((link, index) => (
-                <div key={index}>
-                  {" "}
-                  {/* Wrap each link in a div */}
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                  >
-                    {link}
-                  </a>
-                </div>
-              ))}
-            </h3>
-          )}
+          {userdata?.link &&
+            (Array.isArray(userdata.link) ? (
+              userdata.link.length > 0 && (
+                <ul>
+                  {userdata.link.map((link: string, index: number) => (
+                    <li key={index}>
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )
+            ) : (
+              <a
+                href={userdata.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {userdata.link}
+              </a>
+            ))}
 
           <h2 className="uppercase text-slate-500 text-sm font-lato font-semibold lg:mt-4">
             Reviews from hosts
@@ -373,6 +412,11 @@ const Profile: React.FC = () => {
             <div></div>
           )}
         </div>
+        <Link to="/">
+          <button className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium ">
+            Home
+          </button>
+        </Link>
       </div>
     </div>
   );

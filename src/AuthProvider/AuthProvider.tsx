@@ -28,6 +28,11 @@ interface AuthContextType {
   logOut: () => Promise<void>;
   googleSignIn: () => Promise<any>;
   updateUserProfile: (name: string, photo: string) => Promise<void>;
+  setUser?: React.Dispatch<React.SetStateAction<User | null>>;
+  language?: string;
+  work?: string;
+  link?: string;
+  phone?: string;
 }
 
 // Default value for context
