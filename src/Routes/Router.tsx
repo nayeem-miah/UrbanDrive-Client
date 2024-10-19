@@ -7,10 +7,10 @@ import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
-import Cars from "../Components/Cars";
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
+import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
 import HostingCarForm from "../Pages/HostingCarForm/HostingCarForm";
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
@@ -22,6 +22,9 @@ import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 import Success from "../Components/PaymentSystem/SSLCommarze/Success";
 import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
+
+import Membership from "../Components/Membership/Membership";
+import Cars from "../Components/Cars";
 
 const router = createBrowserRouter([
   {
@@ -42,12 +45,11 @@ const router = createBrowserRouter([
         element: <Contact></Contact>,
       },
 
-
       {
         path: "/cars/:id",
         element: <CarDetails></CarDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/cars",
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
-        element: <Cars></Cars>,
+        element: <Cars ></Cars>,
       },
       {
         path: "/hostingForm",
@@ -64,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout/:bookingId",
         element: <OnboardCheckout></OnboardCheckout>,
+      },
+      {
+        path: "/membership",
+        element: <Membership></Membership>,
       },
       {
         path: "/membership-duration/:planName/:price",
@@ -94,17 +100,21 @@ const router = createBrowserRouter([
   // payment success
   {
     path: "/success",
-    element: <Success />
+    element: <Success />,
   },
   // payment fail
   {
     path: "/fail",
-    element: <Fail />
+    element: <Fail />,
   },
   // payment cancel
   {
     path: "/cancel",
-    element: <Cancel />
+    element: <Cancel />,
+  },
+  {
+    path: 'payment-history',
+    element: <PaymetHistory/>
   },
   {
     path: "/dashboard",
@@ -119,21 +129,21 @@ const router = createBrowserRouter([
         element: <ManageUsers />,
       },
       {
+        path: "cars",
+        element: <TotalCarList />,
+      },
+      {
         path: "paymentHistory",
-        element: <ManagePaymentHistory />
+        element: <ManagePaymentHistory />,
       },
       {
-        path: 'cars',
-        element: <TotalCarList />
+        path: "bookings",
+        element: <AllBookings />,
       },
       {
-        path: 'bookings',
-        element: <AllBookings />
+        path: "manageMemberShip",
+        element: <ManageMemberShip />,
       },
-      {
-        path: 'manageMemberShip',
-        element: <ManageMemberShip />
-      }
     ],
   },
 ]);
