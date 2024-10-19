@@ -44,6 +44,7 @@ const defaultAuthContext: AuthContextType = {
   logOut: async () => { /* no-op */ },
   googleSignIn: async () => { /* no-op */ },
   updateUserProfile: async () => { /* no-op */ },
+  setUser: () => { /* no-op */ },
 };
 
 

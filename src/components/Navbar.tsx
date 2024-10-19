@@ -193,15 +193,6 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <>
-              <>
-                <button className="" onClick={() => changeLanguage("en")}>
-                  English
-                </button>
-                <span className="ml-2 mr-2">|</span>
-                <button className="mr-5" onClick={() => changeLanguage("bn")}>
-                  বাংলা
-                </button>
-              </>
               <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg hover:text-white dark:text-white">
                 <span className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
                   <Link to="/login">Login</Link>

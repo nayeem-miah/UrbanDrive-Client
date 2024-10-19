@@ -9,6 +9,8 @@ import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from 'react-hot-toast';
 import { imageUpload } from '../../Utils/ImageUpload';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 
@@ -16,7 +18,8 @@ type UserInfo = {
   email: string;
   phoneNumber: string;
   driversLicense: File | null;
-  paymentMethod: string;
+  paymentMethod: string | boolean | undefined;
+
 };
 
 const OnboardCheckout: React.FC = () => {
@@ -35,8 +38,9 @@ const OnboardCheckout: React.FC = () => {
   const [skipEmailVerification, setSkipEmailVerification] = useState(false);
   const [skipDriversLicense, setSkipDriversLicense] = useState(false);
   const price = 560;
-  const [loading, setLoading] = useState(true); 
-
+  const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     if (user?.email) {
       setUserInfo((prevInfo) => ({
@@ -47,13 +51,13 @@ const OnboardCheckout: React.FC = () => {
 
     const fetchBookingDetails = async () => {
       try {
-        setLoading(true); 
+        setLoading(true);
         const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -94,12 +98,12 @@ const OnboardCheckout: React.FC = () => {
           return;
         }
         break;
-      case 3:
-        if (!userInfo.paymentMethod) {
-          toast.error('Please enter your payment method.');
-          return;
-        }
-        break;
+      // case 3:
+      //   if (!userInfo.paymentMethod) {
+      //     toast.error('Please enter your payment method.');
+      //     return;
+      //   }
+      //   break;
       default:
         break;
     }
@@ -123,15 +127,15 @@ const OnboardCheckout: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      
+
       if (!skipDriversLicense && userInfo.driversLicense) {
-        
+
         const driversLicenseUrl = await imageUpload(userInfo.driversLicense);
-        
-        userInfo.driversLicense = driversLicenseUrl; 
+
+        userInfo.driversLicense = driversLicenseUrl;
       }
 
-     
+
 
       const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
         ...userInfo,
@@ -157,7 +161,37 @@ const OnboardCheckout: React.FC = () => {
       console.error('Error updating booking:', error);
     }
   };
-  
+
+
+
+  const paymentInfo = {
+    price: bookingDetails?.totalCost,
+    currency: 'BDT',
+    email: user?.email || userInfo.email,
+    phoneNumber: userInfo?.phoneNumber,
+    driversLicense: userInfo?.driversLicense,
+    name: user?.displayName,
+    bookingDetails: bookingDetails
+
+  }
+
+  const handlePayment = async () => {
+    setIsLoading(true)
+    try {
+      // post request
+      const { data } = await axiosPublic.post("/booking-create-payment", paymentInfo);
+      const redirectUrl = data.paymentUrl;
+      // console.log(redirectUrl);
+      if (redirectUrl) {
+        window.location.replace(redirectUrl)
+      }
+    } catch (error: any) {
+      console.error("Error posting payment info:", error);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -173,15 +207,15 @@ const OnboardCheckout: React.FC = () => {
           <div>
             <label htmlFor="phoneNumber" className="block font-semibold mb-2">Phone Number</label>
             <input
-          
-          type="tel"
-          name="phoneNumber"
-          value={userInfo.phoneNumber}
-          onChange={handleChange}
-          placeholder="Enter your mobile number"
-         className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
-          required
-        />
+
+              type="tel"
+              name="phoneNumber"
+              value={userInfo.phoneNumber}
+              onChange={handleChange}
+              placeholder="Enter your mobile number"
+              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
+              required
+            />
           </div>
         );
       case 2:
@@ -197,22 +231,8 @@ const OnboardCheckout: React.FC = () => {
             <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License</button>
           </div>
         );
+
       case 3:
-        return (
-          <div>
-            <label htmlFor="paymentMethod" className="block font-semibold mb-2">Payment Method</label>
-            <input
-            type="text"
-            name="paymentMethod"
-            value={userInfo.paymentMethod}
-            onChange={handleChange}
-            placeholder="Enter payment details"
-            className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
-            
-          />
-          </div>
-        );
-      case 4:
         return bookingDetails ? (
           <div className="p-6 bg-gray-100 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-4 text-indigo-600">Review Your Information</h2>
@@ -229,6 +249,16 @@ const OnboardCheckout: React.FC = () => {
         ) : (
           <p className="text-center text-gray-500">Loading booking details...</p>
         );
+      case 4:
+        return (
+          <div>
+            <button onClick={handlePayment} className={`w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
+              {
+                isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-green-600" /> : "Payment Now"
+              }
+            </button>
+          </div>
+        );
       default:
         return null;
     }
@@ -243,7 +273,7 @@ const OnboardCheckout: React.FC = () => {
   return (
     <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
       <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Complete Your Booking</h1>
-      
+
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="flex flex-col lg:flex-row w-full">
           <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
@@ -266,11 +296,17 @@ const OnboardCheckout: React.FC = () => {
               )}
               <button
                 onClick={currentStep === steps.length - 1 ? handleSubmit : handleNextStep}
-                className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                disabled={!!userInfo?.paymentMethod}
+                className={`px-6 py-2 rounded-md transition-colors text-white
+              ${userInfo?.paymentMethod
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+                  }`}
               >
-                {currentStep === steps.length - 1 ? 'Submit' : 'Next'} 
+                {currentStep === steps.length - 1 ? 'Submit' : 'Next'}
                 <span className="ml-2">{currentStep === steps.length - 1 ? '' : '→'}</span>
               </button>
+
             </div>
           </div>
         </div>

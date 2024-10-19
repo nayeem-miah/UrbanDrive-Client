@@ -5,7 +5,6 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { SyncLoader } from "react-spinners";
-import { Link } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -96,7 +95,7 @@ const Profile: React.FC = () => {
     };
 
     try {
-         await axiosPublic.put("/user/profile", {
+      await axiosPublic.put("/user/profile", {
         updateData: updatedUser,
       });
       // setUser(response.data);
@@ -412,11 +411,6 @@ const Profile: React.FC = () => {
             <div></div>
           )}
         </div>
-        <Link to="/">
-          <button className="w-full bg-primary border-2 outline-none border-primary text-white p-2 rounded-lg mb-6 hover:bg-white hover:border-primary hover:text-primary font-medium ">
-            Home
-          </button>
-        </Link>
       </div>
     </div>
   );
