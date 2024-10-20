@@ -7,6 +7,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
+
 import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
@@ -22,7 +23,9 @@ import ManageMemberShip from "../Pages/Dashboard/Admin/ManageMemberShip";
 import Success from "../Components/PaymentSystem/SSLCommarze/Success";
 import Fail from "../Components/PaymentSystem/SSLCommarze/Fail";
 import Cancel from "../Components/PaymentSystem/SSLCommarze/Cancel";
-
+import Profile from "../Components/UserDashboard/Profile";
+import Favorite from "../Components/UserDashboard/Favorite";
+import Booked from "../Components/UserDashboard/Booked";
 import Membership from "../Components/Membership/Membership";
 import Cars from "../Components/Cars";
 
@@ -57,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
-        element: <Cars ></Cars>,
+        element: <Cars></Cars>,
       },
       {
         path: "/hostingForm",
@@ -115,6 +118,18 @@ const router = createBrowserRouter([
   {
     path: 'payment-history',
     element: <PaymetHistory/>
+  },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
+  {
+    path: "/favorite",
+    element: <Favorite />
+  },
+  {
+    path: "/booked",
+    element: <Booked />
   },
   {
     path: "/dashboard",

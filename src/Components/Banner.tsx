@@ -11,19 +11,20 @@ import slide3 from '../assets/slides/matt-henry-1n-Vbpp-FJl-s-unsplash.png'
 
 import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Slide from './Slide';
+import { useTranslation } from 'react-i18next';
 
 const Banner: React.FC = () => {
+  const {t} = useTranslation();
   return (
     <>
       <Swiper
         spaceBetween={30}
-        effect={'fade'}
+        effect={"fade"}
         autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
+          delay: 5000,
+          disableOnInteraction: false,
         }}
         loop={true}
-        
         pagination={{
           clickable: true,
         }}
@@ -31,18 +32,32 @@ const Banner: React.FC = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <Slide image={slide1} title='CAR RENTAL' model={'Volkswagen Jetta'} price={100}></Slide>
+          <Slide
+            image={slide1}
+            title={t("CarRental")}
+            model={"Land Cruiser"}
+            price={t("1000")}
+          ></Slide>
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={slide2} title='CAR RENTAL' model={'Volkswagen Jetta'} price={100}></Slide>
+          <Slide
+            image={slide2}
+            title={t("CarRental")}
+            model={"Land Cruiser"}
+            price={t("1000")}
+          ></Slide>
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={slide3} title='CAR RENTAL' model={'Volkswagen Jetta'} price={100}></Slide>
+          <Slide
+            image={slide3}
+            title={t("CarRental")}
+            model={"Land Cruiser"}
+            price={t("1000")}
+          ></Slide>
         </SwiperSlide>
-        
       </Swiper>
     </>
-  )
+  );
 }
 
 export default Banner
