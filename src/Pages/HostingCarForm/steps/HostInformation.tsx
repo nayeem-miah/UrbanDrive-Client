@@ -1,11 +1,14 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
+
+
+
 const HostInformation: React.FC = () => {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <>
+    <div>
       <div className="mb-4">
         <label htmlFor="hostName" className="block font-semibold mb-2">Host Name</label>
         <input
@@ -59,7 +62,7 @@ const HostInformation: React.FC = () => {
           <p className="text-red-500">{errors.carImages.message}</p>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

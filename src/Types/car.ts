@@ -1,6 +1,5 @@
-
 export interface ICar {
-    id: number;
+    _id: number;
     make: string;
     model: string;
     year: number;
@@ -21,9 +20,7 @@ export interface ICar {
     seatCount: number;
     trip_count: number;
     plan_type: string;
-}
-
-export interface RatingData {
-  label: string;
-  value: number;
+    averageRating: number;
+    reviewCount: number;
+    categoryRatings: Array<{ label: string; value: number }>;
 }

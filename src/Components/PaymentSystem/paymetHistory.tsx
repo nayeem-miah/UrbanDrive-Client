@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 interface PaymentData {
   _id: string;
@@ -20,13 +22,13 @@ const PaymetHistory = () => {
             return res.data;
         },
     });
-    // console.log(myHistory);
-
+    
     return (
-      <div>
-        <div>
+      <>
+      <Navbar/>
+        <div className="max-w-6xl mx-auto px-4 mb-10">
           <div className="mt-8">
-            <h2 className="text-3xl font-bold mb-6 text-center underline">
+            <h2 className="text-3xl font-bold mb-6 text-center underline mt-16">
               Payment History
             </h2>
           </div>
@@ -77,7 +79,8 @@ const PaymetHistory = () => {
             </div>
           )}
         </div>
-      </div>
+        <Footer/>
+      </>
     );
 };
 
