@@ -61,11 +61,11 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className={`navbar px-10 fixed top-0 left-0 z-50 transition-all duration-300 `}>
+    <nav className={`navbar px-10 fixed top-0 left-0 bg-primary z-50 transition-all duration-300 `}>
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
           <h2 className={`text-2xl font-bold text-center `}>
-            Urban<span  className="text-primary">Drive</span>
+            Urban<span  className="text-white">Drive</span>
           </h2>
         </Link>
       </div>
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link
                 to={`/${link.id}`}
-                className={`text-lg font-medium hover:text-gray-300`}
+                className={`text-lg text-white font-medium hover:text-white font-Merri`}
               >
                 {link.title}
               </Link>
@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
                   />
                 </div>
               </label>
-              <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base rounded-box w-52">
                 <li><Link to="/update-user">{t("updateUser")}</Link></li>
                 <li><Link to="/favorite">{t("Favorite")}</Link></li>
                 <li><Link to="/booked">{t("Bookings")}</Link></li>
@@ -156,21 +156,9 @@ const Navbar: React.FC = () => {
           className="lg:hidden z-50 relative w-6 h-6"
           onClick={() => setToggle(!toggle)}
         >
-          <span
-            className={`absolute h-0.5 w-full  transform transition-all duration-300 ease-in-out ${
-              toggle ? "rotate-45 top-3" : "rotate-0 top-1"
-            }`}
-          />
-          <span
-            className={`absolute h-0.5 w-full  transform transition-all duration-300 ease-in-out ${
-              toggle ? "opacity-0 translate-x-3" : "opacity-100"
-            } top-3`}
-          />
-          <span
-            className={`absolute h-0.5 w-full  transform transition-all duration-300 ease-in-out ${
-              toggle ? "-rotate-45 top-3" : "rotate-0 top-5"
-            }`}
-          />
+          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'rotate-45 top-3' : 'rotate-0 top-1'}`} />
+          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'opacity-0 translate-x-3' : 'opacity-100'} top-3`} />
+          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? '-rotate-45 top-3' : 'rotate-0 top-5'}`} />
         </button>
       </div>
 
@@ -198,7 +186,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Links */}
-        <ul className="space-y-8 font-Merri">
+        <ul className="space-y-8 font-Merri text-center">
           {navLinks.map((link, index) => (
             <li
               key={link.id}
