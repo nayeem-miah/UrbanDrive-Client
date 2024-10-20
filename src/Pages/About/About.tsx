@@ -8,6 +8,7 @@ import {
   FaBullseye,
   FaBook,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const AboutUs = () => {
   const { t } = useTranslation();
@@ -36,12 +37,22 @@ const AboutUs = () => {
     },
   ];
 
+  const heroVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-indigo-500 to-indigo-700">
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        <motion.div
+          className="relative z-10 text-center max-w-4xl mx-auto px-4"
+          initial="hidden"
+          animate="visible"
+          variants={heroVariants}
+        >
           <h1 className="text-5xl md:text-7xl font-semibold text-white mb-6 font-Playfair tracking-wider">
             {t("about_us.title")}
           </h1>
@@ -49,7 +60,7 @@ const AboutUs = () => {
             {t("about_us.description")}
           </p>
           <FaChevronDown className="w-10 h-10 text-white animate-bounce mx-auto mt-12" />
-        </div>
+        </motion.div>
       </section>
 
       {/* Vision Section */}
@@ -93,24 +104,24 @@ const AboutUs = () => {
 
       {/* Core Values Section */}
       <section className="py-24 border-b-2 bg-gray-50">
-  <div className="container mx-auto px-4">
-    <h2 className="text-4xl font-bold text-center mb-16 font-Playfair">
-      {t("core_values.title")}
-    </h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {coreValues.map((value, index) => (
-        <div 
-          key={index} 
-          className="bg-white rounded-lg shadow-md p-8 text-center group hover:shadow-2xl hover:scale-105 transition-all duration-500"
-        >
-          <value.icon className="w-12 h-12 mx-auto mb-6 text-blue-600 group-hover:text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
-          <p className="text-gray-600 leading-relaxed">{value.description}</p>
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-16 font-Playfair">
+            {t("core_values.title")}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {coreValues.map((value, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-lg shadow-md p-8 text-center group hover:shadow-2xl hover:scale-105 transition-all duration-500"
+              >
+                <value.icon className="w-12 h-12 mx-auto mb-6 text-blue-600 group-hover:text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Story Section */}
       <section className="py-24 bg-gradient-to-r from-indigo-900 to-indigo-800 text-white">
@@ -132,14 +143,12 @@ const AboutUs = () => {
             <h2 className="text-4xl font-bold mb-8 font-Playfair">{t("get_in_touch.title")}</h2>
             <p className="text-xl text-gray-600 mb-8">{t("get_in_touch.description")}</p>
             <a
-  href={`mailto:${t("get_in_touch.email")}`}
-  className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300"
->
-  <FaEnvelope className="w-5 h-5" />
-  <span>{t("get_in_touch.contact_button")}</span>
-</a>
-
-
+              href={`mailto:${t("get_in_touch.email")}`}
+              className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+            >
+              <FaEnvelope className="w-5 h-5" />
+              <span>{t("get_in_touch.contact_button")}</span>
+            </a>
           </div>
         </div>
       </section>
