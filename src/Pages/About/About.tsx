@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import {
   FaChevronDown,
@@ -39,6 +38,20 @@ const AboutUs = () => {
 
   const heroVariants = {
     hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  };
+
+  const teamMemberVariants = {
+    hover: { scale: 1.1, transition: { duration: 0.3 } },
+  };
+
+  const valueVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  const storyVariants = {
+    hidden: { opacity: 0, y: 100 },
     visible: { opacity: 1, y: 0, transition: { duration: 1 } },
   };
 
@@ -85,9 +98,14 @@ const AboutUs = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-12 max-w-5xl mx-auto">
             {teamMembers.map((member, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-48 h-48 mx-auto mb-6 relative group">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-700 transform group-hover:scale-105 group-hover:opacity-90 transition-all duration-500" />
+              <motion.div
+                key={index}
+                className="text-center group"
+                whileHover="hover"
+                variants={teamMemberVariants}
+              >
+                <div className="w-48 h-48 mx-auto mb-6 relative">
+                  <motion.div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-700" />
                   <img
                     src={`/api/placeholder/192/192`}
                     alt={member.name}
@@ -96,7 +114,7 @@ const AboutUs = () => {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
                 <p className="text-indigo-600 font-medium">{member.role}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -110,14 +128,18 @@ const AboutUs = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {coreValues.map((value, index) => (
-              <div 
-                key={index} 
+              <motion.div
+                key={index}
                 className="bg-white rounded-lg shadow-md p-8 text-center group hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                initial="hidden"
+                whileInView="visible"
+                variants={valueVariants}
+                viewport={{ once: true }}
               >
                 <value.icon className="w-12 h-12 mx-auto mb-6 text-blue-600 group-hover:text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{value.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -125,7 +147,13 @@ const AboutUs = () => {
 
       {/* Story Section */}
       <section className="py-24 bg-gradient-to-r from-indigo-900 to-indigo-800 text-white">
-        <div className="container mx-auto px-4">
+        <motion.div
+          className="container mx-auto px-4"
+          initial="hidden"
+          whileInView="visible"
+          variants={storyVariants}
+          viewport={{ once: true }}
+        >
           <div className="max-w-3xl mx-auto text-center">
             <FaBook className="w-16 h-16 mx-auto mb-8 opacity-80" />
             <h2 className="text-4xl font-bold mb-8 font-Playfair">{t("story.title")}</h2>
@@ -133,7 +161,7 @@ const AboutUs = () => {
               {t("story.description")}
             </p>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Contact Section */}
@@ -142,13 +170,15 @@ const AboutUs = () => {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl font-bold mb-8 font-Playfair">{t("get_in_touch.title")}</h2>
             <p className="text-xl text-gray-600 mb-8">{t("get_in_touch.description")}</p>
-            <a
-              href={`mailto:${t("get_in_touch.email")}`}
+            <motion.a
+              href={`mailto:${t("get_in_touch.email")}`} 
               className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+              whileHover={{ scale: 1.1 }} 
+              whileTap={{ scale: 0.95 }} 
             >
-              <FaEnvelope className="w-5 h-5" />
-              <span>{t("get_in_touch.contact_button")}</span>
-            </a>
+              <FaEnvelope className="w-5 h-5" /> 
+              <span>{t("get_in_touch.contact_button")}</span> 
+            </motion.a>
           </div>
         </div>
       </section>
