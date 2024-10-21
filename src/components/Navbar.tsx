@@ -6,6 +6,8 @@ import useRole from "../Hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { SyncLoader } from "react-spinners";
+import { FaUserEdit, FaHeart, FaBookmark, FaUser, FaBuilding, FaCreditCard, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 type Role = "Admin" | "Host" | "User" | "";
 
@@ -120,27 +122,55 @@ const Navbar: React.FC = () => {
                   />
                 </div>
               </label>
-              <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52">
-                <li><Link to="/update-user">{t("updateUser")}</Link></li>
-                <li><Link to="/favorite">{t("Favorite")}</Link></li>
-                <li><Link to="/booked">{t("Bookings")}</Link></li>
-                <li><Link to="/profile">{t("Profile")}</Link></li>
-                <li><Link to="/hostingForm">{t("becomeHost")}</Link></li>
-                <li><Link to="/payment-history">{t("payment")}</Link></li>
+              <ul className="mt-3 z-[1] p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-lg w-56">
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/update-user" className="flex items-center p-2 text-gray-700">
+                    <FaUserEdit className="mr-2" /> {t("updateUser")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/favorite" className="flex items-center p-2 text-gray-700">
+                    <FaHeart className="mr-2" /> {t("Favorite")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/booked" className="flex items-center p-2 text-gray-700">
+                    <FaBookmark className="mr-2" /> {t("Bookings")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/profile" className="flex items-center p-2 text-gray-700">
+                    <FaUser className="mr-2" /> {t("Profile")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/hostingForm" className="flex items-center p-2 text-gray-700">
+                    <FaBuilding className="mr-2" /> {t("becomeHost")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link to="/payment-history" className="flex items-center p-2 text-gray-700">
+                    <FaCreditCard className="mr-2" /> {t("payment")}
+                  </Link>
+                </li>
                 {role === "Admin" && (
-                  <li><Link to="/dashboard/adminhome">{t("dashboard")}</Link></li>
+                  <li className="hover:bg-gray-100 rounded-md">
+                    <Link to="/dashboard/adminhome" className="flex items-center p-2 text-gray-700">
+                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                    </Link>
+                  </li>
                 )}
-                <li className="hover:text-red-600 transition-colors duration-300">
-  <button 
-    onClick={(e) => {
-      e.preventDefault();
-      logOut();
-    }}
-    className="w-full text-left px-4 py-2"
-  >
-    {t("logout")}
-  </button>
-</li>
+                <li className="hover:bg-red-100 rounded-md">
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      logOut();
+                    }}
+                    className="flex items-center w-full p-2 text-red-600"
+                  >
+                    <FaSignOutAlt className="mr-2" /> {t("logout")}
+                  </button>
+                </li>
               </ul>
             </div>
           ) : (
