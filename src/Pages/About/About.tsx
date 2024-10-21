@@ -56,7 +56,7 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-br from-indigo-500 to-indigo-800">
         <motion.div
@@ -171,7 +171,7 @@ const AboutUs = () => {
             <p className="text-xl text-gray-600 mb-8">{t("get_in_touch.description")}</p>
             <motion.a
               href={`mailto:${t("get_in_touch.email")}`} 
-              className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white px-8 py-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300"
               whileHover={{ scale: 1.1 }} 
               whileTap={{ scale: 0.95 }} 
             >
