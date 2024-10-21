@@ -56,17 +56,16 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-indigo-500 to-indigo-700">
-        <div className="absolute inset-0 bg-black/50" />
+      <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-br from-indigo-500 to-indigo-800">
         <motion.div
           className="relative z-10 text-center max-w-4xl mx-auto px-4"
           initial="hidden"
           animate="visible"
           variants={heroVariants}
         >
-          <h1 className="text-5xl md:text-7xl font-semibold text-white mb-6 font-Playfair tracking-wider">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-Playfair tracking-wider">
             {t("about_us.title")}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 font-Merri">
@@ -80,7 +79,7 @@ const AboutUs = () => {
       <section className="py-24 border-b-2 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-semibold text-gray-900 mb-6 font-Playfair tracking-wide">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6 font-Playfair tracking-wide">
               {t("vision.title")}
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed font-Merri">
@@ -146,7 +145,7 @@ const AboutUs = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-24 bg-gradient-to-r from-indigo-900 to-indigo-800 text-white">
+      <section className="py-24 bg-gradient-to-br from-indigo-900 to-indigo-700 text-white">
         <motion.div
           className="container mx-auto px-4"
           initial="hidden"
@@ -177,7 +176,7 @@ const AboutUs = () => {
               whileTap={{ scale: 0.95 }} 
             >
               <FaEnvelope className="w-5 h-5" /> 
-              <span>{t("get_in_touch.contact_button")}</span> 
+              <span>{t("Send")}</span> 
             </motion.a>
           </div>
         </div>
