@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MdEmail, MdLocationOn, MdAccessTime } from 'react-icons/md';
 import { FaPhone } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 const Contact: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -25,8 +26,36 @@ const Contact: React.FC = () => {
     { icon: <FaPhone size={32} />, title: t('contact.phone'), content: '+880 1234 567890' },
   ];
 
+  interface IFormInputs {
+    name: string;
+    email: string;
+    phone: string;
+    subject: string;
+    message: string;
+  }
 
-  
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>();
+
+  const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
+    try {
+      // Here you would typically send the form data to your backend
+      console.log('Form data:', data);
+      // Example API call (replace with your actual API endpoint)
+      // const response = await fetch('/api/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(data),
+      // });
+      // if (response.ok) {
+      //   // Handle success (e.g., show a success message)
+      // } else {
+      //   // Handle errors
+      // }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
 
   return (
     <div className="contact">
@@ -82,52 +111,56 @@ const Contact: React.FC = () => {
           </h2>
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="w-full lg:w-1/2">
-              <form  className="bg-white shadow-xl rounded-lg p-8">
+              <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow-2xl rounded-2xl p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
+                    {...register("name", { required: "Name is required" })}
                     type="text"
-                    name="name"
                     placeholder={t('contact.name_placeholder')}
-                    
-                    className={`w-full p-3 border rounded-lg text-black `}
+                    className={`w-full p-3 border rounded-lg text-black ${errors.name ? 'border-red-500' : ''}`}
                   />
-                 
+                  {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
                   <input
+                    {...register("email", { 
+                      required: "Email is required",
+                      pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "Invalid email address"
+                      }
+                    })}
                     type="email"
-                    name="email"
                     placeholder={t('contact.email_placeholder')}
-
-                    className={`w-full p-3 border rounded-lg text-black `}
+                    className={`w-full p-3 border rounded-lg text-black ${errors.email ? 'border-red-500' : ''}`}
                   />
+                  {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
                   <input
+                    {...register("phone")}
                     type="tel"
-                    name="phone"
                     placeholder={t('contact.number_placeholder')}
-                    
                     className="w-full p-3 border rounded-lg text-black"
                   />
 
                   <input
+                    {...register("subject", { required: "Subject is required" })}
                     type="text"
-                    name="subject"
                     placeholder={t('contact.subject_placeholder')}
-                    
-                    className="w-full p-3 border rounded-lg text-black"
+                    className={`w-full p-3 border rounded-lg text-black ${errors.subject ? 'border-red-500' : ''}`}
                   />
+                  {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
                 </div>
                 <textarea
-                  name="message"
+                  {...register("message", { required: "Message is required" })}
                   placeholder={t('contact.message_placeholder')}
                   rows={5}
-
-                  className={`w-full p-3 mt-4 border rounded-lg text-black `}
+                  className={`w-full p-3 mt-4 border rounded-lg text-black ${errors.message ? 'border-red-500' : ''}`}
                 ></textarea>
+                {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
 
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 mt-6 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold rounded-lg hover:opacity-90 transition-opacity duration-300"
+                  className="w-full px-6 py-3 mt-6 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold rounded-2xl hover:opacity-90 transition-opacity duration-300"
                 >
                   {t('contact.submit')}
                 </button>
@@ -136,7 +169,7 @@ const Contact: React.FC = () => {
 
             {/* Map Section */}
             <div className="w-full lg:w-1/2">
-              <div className="h-[400px] rounded-lg overflow-hidden shadow-xl">
+              <div className="h-[410px] rounded-lg overflow-hidden shadow-2xl">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14599.241897333992!2d90.41001779011839!3d23.82533761273339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1727014318933!5m2!1sen!2sbd"
                   className="w-full h-full border-0"
