@@ -3,10 +3,13 @@ import { MdEmail, MdLocationOn, MdAccessTime } from 'react-icons/md';
 import { FaPhone } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
 
 const Contact: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const { t } = useTranslation();
+  const axiosPublic = useAxiosPublic();
   
 
   useEffect(() => {
@@ -38,22 +41,18 @@ const Contact: React.FC = () => {
 
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     try {
-      // Here you would typically send the form data to your backend
+      
       console.log('Form data:', data);
-      // Example API call (replace with your actual API endpoint)
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data),
-      // });
-      // if (response.ok) {
-      //   // Handle success (e.g., show a success message)
-      // } else {
-      //   // Handle errors
-      // }
+      
+      const response = await axiosPublic.post('/contact', data);
+      if (response.status === 200) {
+        toast.success('Message sent successfully!');
+      } else {
+        toast.error('Failed to send message. Please try again.');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Handle error (e.g., show an error message to the user)
+      toast.error('Failed to send message. Please try again.');
     }
   };
 
