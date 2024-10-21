@@ -5,10 +5,12 @@ import { TbArrowUpRight } from "react-icons/tb";
 import { useTranslation } from 'react-i18next';
 
 const CarRental: React.FC = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const features = [t("feature1"), t("feature2")];
+
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <div className="grid grid-cols-1  gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">
         {/* First div: Content animates from top */}
         <motion.div
           className="mx-auto justify-center items-center"
@@ -43,49 +45,31 @@ const CarRental: React.FC = () => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
           >
-            <div className="flex items-center">
-              <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
+            {features.map((feature, index) => (
+              <div key={index} className="flex items-center">
+                <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <span className="ml-3 text-[#42413e] font-lato">
+                  {feature}
+                </span>
               </div>
-              <span className="ml-3 text-[#42413e] font-lato">
-                {t("feature1")}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
-                <svg
-                  className="w-6 h-6 text-white "
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <span className="ml-3 text-[#3d3c39] font-lato">
-                {t("feature2")}
-              </span>
-            </div>
+            ))}
           </motion.div>
           <motion.button
-            className="flex   outline-none  bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white p-2 rounded-lg mb-6  font-medium mt-4"
+            className="flex outline-none bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white p-2 rounded-lg mb-6 font-medium mt-4"
             initial={{ y: 100, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
@@ -102,11 +86,15 @@ const CarRental: React.FC = () => {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8, ease: "easeInOut" }}
         >
-          <img
-            className="h-[470px] w-[420px] rounded-3xl transition-transform duration-300 group-hover:scale-105"
-            src={carRental}
-            alt="carRental"
-          />
+          <div className="relative overflow-hidden rounded-3xl shadow-lg transition-transform duration-300 group">
+            <img
+              className="h-auto w-full aspect-[420/470] object-cover transition-transform duration-300 group-hover:scale-105"
+              src={carRental}
+              alt="A luxurious car available for rental"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 group-hover:opacity-30"></div>
+          </div>
         </motion.div>
       </div>
     </div>

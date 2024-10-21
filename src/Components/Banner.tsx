@@ -5,9 +5,9 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './style.css'
-import slide1 from '../assets/slides/zenigame-photo-oa-Z9-WEVW7g8-unsplash.png'
-import slide2 from '../assets/slides/pavel-anoshin-7-NLF1j-VQTi-I-unsplash (1).png'
-import slide3 from '../assets/slides/matt-henry-1n-Vbpp-FJl-s-unsplash.png'
+import slide4 from '../assets/slides/slide4.png'
+import slide5 from '../assets/slides/slide5.png'
+import slide6 from '../assets/slides/slide6.png'
 
 import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Slide from './Slide';
@@ -33,7 +33,7 @@ const Banner: React.FC = () => {
       >
         <SwiperSlide>
           <Slide
-            image={slide1}
+            image={slide4}
             title={t("CarRental")}
             model={"Land Cruiser"}
             price={t("1000")}
@@ -41,18 +41,18 @@ const Banner: React.FC = () => {
         </SwiperSlide>
         <SwiperSlide>
           <Slide
-            image={slide2}
+            image={slide5}
             title={t("CarRental")}
             model={"Land Cruiser"}
-            price={t("1000")}
+            price={t("1200")}
           ></Slide>
         </SwiperSlide>
         <SwiperSlide>
           <Slide
-            image={slide3}
+            image={slide6}
             title={t("CarRental")}
             model={"Land Cruiser"}
-            price={t("1000")}
+            price={t("1300")}
           ></Slide>
         </SwiperSlide>
       </Swiper>

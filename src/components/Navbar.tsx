@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link
                 to={`/${link.id}`}
-                className={`text-lg text-white font-medium hover:text-white font-Merri`}
+                className="text-lg text-gray-200 font-medium hover:text-secondary underline-offset-4 hover:underline transition-colors duration-300 focus:text-secondary"
               >
                 {link.title}
               </Link>
@@ -85,25 +85,21 @@ const Navbar: React.FC = () => {
         </ul>
       </div>
 
-      <div className="navbar-end">
+       <div className="navbar-end">
         {/* Language Switcher - Desktop */}
         <div className="hidden lg:flex items-center">
           <button
             className={`font-bold ${
-              currentLanguage === "en" 
-                ? "text-secondary" 
-                :  'text-white'
+              currentLanguage === "en" ? "text-secondary" : "text-gray-200"
             }`}
             onClick={() => changeLanguage("en")}
           >
             English
           </button>
-          <span className={`ml-2 mr-2 `}>|</span>
+          <span className="ml-2 mr-2 text-gray-200">|</span>
           <button
             className={`font-bold mr-3 ${
-              currentLanguage === "bn" 
-                ? "text-secondary" 
-                :  'text-white'
+              currentLanguage === "bn" ? "text-secondary" : "text-gray-200"
             }`}
             onClick={() => changeLanguage("bn")}
           >
@@ -116,15 +112,15 @@ const Navbar: React.FC = () => {
           {user ? (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full border-2 border-white">
-                  <img
+                <div className="w-10 rounded-full border-2 border-white shadow-lg">
+                  <img  
                     src={userData?.photoURL || user?.photoURL || ""}
                     className="rounded-full w-32 h-32"
                     alt="User avatar"
                   />
                 </div>
               </label>
-              <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base rounded-box w-52">
+              <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52">
                 <li><Link to="/update-user">{t("updateUser")}</Link></li>
                 <li><Link to="/favorite">{t("Favorite")}</Link></li>
                 <li><Link to="/booked">{t("Bookings")}</Link></li>
@@ -135,19 +131,27 @@ const Navbar: React.FC = () => {
                   <li><Link to="/dashboard/adminhome">{t("dashboard")}</Link></li>
                 )}
                 <li className="hover:text-red-600 transition-colors duration-300">
-                  <a onClick={logOut}>{t("logout")}</a>
-                </li>
+  <button 
+    onClick={(e) => {
+      e.preventDefault();
+      logOut();
+    }}
+    className="w-full text-left px-4 py-2"
+  >
+    {t("logout")}
+  </button>
+</li>
               </ul>
             </div>
           ) : (
             <Link
-              to="/login"
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-500 to-navy-700 group-hover:from-teal-500 group-hover:to-navy-700 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-400 dark:focus:ring-yellow-800"
-            >
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                Sign Up
-              </span>
-            </Link>
+  to="/login"
+  className="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden text-sm font-bold text-white rounded-lg group bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+>
+  <span className="relative">
+    {t("SignUp")}
+  </span>
+</Link>
           )}
         </div>
 
@@ -234,7 +238,7 @@ const Navbar: React.FC = () => {
                 }}
                 className="text-2xl font-bold text-red-500 hover:text-red-600 transition-colors duration-300"
               >
-                {t("logout")}
+                Logout
               </button>
             </li>
           ) : (
