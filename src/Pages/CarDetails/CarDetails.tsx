@@ -27,12 +27,7 @@ const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
   const {user} = useAuth();
-  // const ratingsData: RatingData[] = [
-  //   { label: 'Cleanliness', value: 3.0 },
-  //   { label: 'Communication', value: 2.0 },
-  //   { label: 'Convenience', value: 5.0 },
 
-  // ];
 
 
 
