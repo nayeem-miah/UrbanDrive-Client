@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { FaAward, FaMapLocationDot } from 'react-icons/fa6';
 import { MdOutlineDiscount, MdOutlineStar } from 'react-icons/md';
 import { SyncLoader } from 'react-spinners';
+import Navbar from '../Navbar';
+
+
 
 const Favorite: React.FC = () => {
     const axiosPublic = useAxiosPublic();
@@ -56,6 +59,7 @@ const Favorite: React.FC = () => {
 
     return (
         <div>
+            <Navbar></Navbar>
             <h2 className='text-3xl font-bold font-lato lg:mt-12 lg:mb-10 lg:ml-2'>Favorites Cars</h2>
         {favoriteCars.length > 0 ? (
             <div className="grid mt-5 grid-cols-1 gap-4 lg:gap-6">
@@ -150,11 +154,12 @@ const Favorite: React.FC = () => {
                 <div className="card-actions gap-2 items-center justify-end mt-2">
                     <span className="text-primary font-bold text-xl">${car.price}/day</span>
                     <Link to={`/cars/${car._id}`}>
-                        <button className="bg-blue-700 p-2 rounded-lg text-white">Details</button>
+                        <button className="bg-blue-600 p-2 rounded-lg text-white">Details</button>
                     </Link>
                 </div>
             </div>
         </div>
+       
     </div>
 ))}
 
@@ -167,7 +172,9 @@ const Favorite: React.FC = () => {
         ) : (
             <p>No cars available</p> // If no favorite cars
         )}
+      
     </div>
+
         
     );
 };

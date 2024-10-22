@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineDiscount, MdOutlineStar } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
@@ -32,6 +32,21 @@ const CarsData: React.FC<CarsDataProps> = ({cars}) => {
         make: string;
         seatCount: number;
       }
+      useEffect(() => {
+        const fetchFavoriteCars = async () => {
+            if (user?.email) {
+                try {
+                    const response = await axiosPublic.get(`/favoritesCars/${user.email}`);
+                    const favoriteCarIds = response.data.map((car: Car) => car._id);
+                    setFavoriteCars(favoriteCarIds);
+                } catch (error) {
+                    console.error('Error fetching favorite cars:', error);
+                }
+            }
+        };
+
+        fetchFavoriteCars();
+    }, [user, axiosPublic]);
     const removeFromFavoriteCars = async (carId: string) => {
         try {
           // console.log('গাড়ির ID মুছতে:', carId);
@@ -93,7 +108,7 @@ const CarsData: React.FC<CarsDataProps> = ({cars}) => {
 
                         </div>
                           
-                          <p className="text-ellipsis">
+                          <p className="text-ellipsis overflow-hidden hover:overflow-visible transition-all duration-300 hover:max-h-full hover:whitespace-normal">
                             {car.description.slice(0, 80)}....
                           </p>
                           {car.rating > 0 ? (

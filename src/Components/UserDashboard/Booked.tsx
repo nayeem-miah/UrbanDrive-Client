@@ -3,6 +3,8 @@ import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import { SyncLoader } from 'react-spinners';
+import Navbar from '../Navbar';
+
 
 const Booked: React.FC = () => {
   const { user } = useAuth();
@@ -49,13 +51,14 @@ const Booked: React.FC = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <h2 className='text-3xl font-lato font-bold lg:mt-8 lg:ml-2'>Bookings</h2>
       {allBookings.length === 0 ? (
         <div className="h-screen-minus-20px flex items-center justify-center">
           <h2 className="text-3xl font-bold">No bookings found...</h2>
         </div>
       ) : (
-        <div className="overflow-x-auto border rounded lg:mt-10">
+        <div className="overflow-x-auto border rounded lg:mt-16 lg:mb-16">
           <table className="table table-xs font-medium">
             <thead className="bg-primary text-white">
               <tr className="text-base">
@@ -82,6 +85,7 @@ const Booked: React.FC = () => {
           </table>
         </div>
       )}
+     
     </div>
   );
 };
