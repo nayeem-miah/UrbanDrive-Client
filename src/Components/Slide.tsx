@@ -13,7 +13,7 @@ const Slide: React.FC<SlideProps> = ({ image, title, model, price }) => {
   const {t} = useTranslation();
   return (
     <div
-      className="relative w-full bg-center bg-cover h-[38rem]"
+      className="relative mt-10 w-full bg-center bg-cover h-[38rem]"
       style={{
         backgroundImage: `url(${image})`,
       }}

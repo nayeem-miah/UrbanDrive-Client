@@ -21,8 +21,6 @@ import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 
 
 
-
-
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
@@ -33,7 +31,6 @@ const CarDetails: React.FC = () => {
   //   { label: 'Convenience', value: 5.0 },
 
   // ];
-
 
 
   const [scrollY, setScrollY] = useState(0);

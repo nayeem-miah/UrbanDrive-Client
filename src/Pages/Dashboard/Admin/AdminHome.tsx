@@ -28,7 +28,7 @@ const AdminHome: React.FC = () => {
 
   interface bookings {
     _id: string;
-    user: string;
+    userName: string;
     phoneNumber: string;
     startDate: string;
     endDate: string;
@@ -51,10 +51,10 @@ const AdminHome: React.FC = () => {
       </div>
     );
   }
- 
+
 
   const piOptions = {
-    title: "My Daily Activities",
+    title: "Daily Activities",
   };
   // line hcart
   const lineChartData = [
@@ -158,10 +158,13 @@ const AdminHome: React.FC = () => {
               {bookings.map((item: bookings, idx: number) => (
                 <tr key={item._id}>
                   <th>{idx + 1}</th>
-                  <td>{item?.user}</td>
+                  <td>{item?.userName}</td>
                   <td>{item?.location}</td>
                   <td>{formatDate(item?.startDate)}</td>
-                  <td className="font-bold">{item?.totalCost}$</td>
+                  <td className="font-bold">
+                    {item?.totalCost}
+                    <span className="text-xl">৳</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
