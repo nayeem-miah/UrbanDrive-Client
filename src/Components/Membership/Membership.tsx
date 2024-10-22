@@ -23,16 +23,16 @@ const Membership: React.FC = () => {
   });
 
   return (
-    <div className="mt-24 p-5">
+    <div className="mt-24 p-5 bg-background">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-10 text-gray-800 font-Merri">
+        <h1 className="text-4xl font-bold text-center mb-10 text-primary font-Merri">
           {t("choose_membership_plan")} {/* Translatable text */}
         </h1>
 
         {/* Display loader while data is loading */}
         {isLoading ? (
           <div className="min-h-screen flex items-center justify-center">
-            <SyncLoader color="#593cfb" size={10} />
+            <SyncLoader color="#003366" size={10} />
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -40,21 +40,21 @@ const Membership: React.FC = () => {
             {membershipdata.map((membership: any) => (
               <div
                 key={membership._id}
-                className="bg-[#fdfcfb] rounded-lg shadow-lg p-6"
+                className="bg-white rounded-lg shadow-lg p-6 border border-secondary transition-transform hover:scale-105"
               >
-                <h2 className="text-2xl font-bold mb-4 text-gray-700">
+                <h2 className="text-2xl font-bold mb-4 text-primary font-Playfair">
                   {t(`membership.${membership.planName}`)}{" "}
                   {/* Dynamically translate the plan name */}
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-text mb-4 font-Open">
                   {t(`membership.${membership.description}`)}{" "}
                   {/* Dynamically translate the description */}
                 </p>
-                <p className="text-xl font-bold text-gray-800 mb-4">
+                <p className="text-xl font-bold text-primary mb-4 font-poppins">
                   ${membership.price} / {t("month")}{" "}
                   {/* Use translated "month" */}
                 </p>
-                <ul className="list-disc list-inside mb-6 text-gray-600">
+                <ul className="list-disc list-inside mb-6 text-text font-lato">
                   {/* {membership.features.map((feature: string, index: number) => (
                     <li key={index}>{t(`membership.features.${feature}`)}</li> // Dynamically translate features
                   ))} */}
@@ -62,7 +62,7 @@ const Membership: React.FC = () => {
                 <Link
                   to={`/membership-duration/${membership.planName}/${membership.price}`}
                 >
-                  <button className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+                  <button className="w-full bg-accent text-white font-bold py-2 px-4 rounded hover:bg-opacity-90 transition-colors font-poppins">
                     {t("buy_now")} {/* Translatable Buy Now button */}
                   </button>
                 </Link>

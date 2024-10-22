@@ -71,7 +71,7 @@ const BookAutoRental: React.FC = () => {
 
             <Link to="/services" className="md:col-span-2">
               <button
-                className="w-full bg-accent text-white font-bold rounded-full p-3 h-12 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent hover:bg-opacity-90"
+                className="w-full bg-accent text-white font-bold text-xl flex justify-center items-center drop-shadow-lg rounded-full p-3 h-12 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent hover:bg-opacity-90"
               >
                 {t("rentNowButton")}
               </button>
