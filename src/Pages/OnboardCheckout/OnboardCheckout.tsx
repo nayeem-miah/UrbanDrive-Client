@@ -18,7 +18,7 @@ type UserInfo = {
   email: string;
   phoneNumber: string;
   driversLicense: File | null;
-  paymentMethod: string | boolean | undefined;
+  // paymentMethod: string | boolean | undefined;
 
 };
 
@@ -31,7 +31,7 @@ const OnboardCheckout: React.FC = () => {
     email: user?.email || '',
     phoneNumber: '',
     driversLicense: null,
-    paymentMethod: '',
+    // paymentMethod: '',
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [bookingDetails, setBookingDetails] = useState<any>(null);
@@ -242,22 +242,19 @@ const OnboardCheckout: React.FC = () => {
               <p className="text-lg"><span className="font-bold">Location:</span> {bookingDetails.location}</p>
               <p className="text-lg"><span className="font-bold">Total Cost:</span> ${bookingDetails.totalCost}</p>
               <p className="text-lg"><span className="font-bold">Phone Number:</span> {userInfo.phoneNumber}</p>
-              <p className="text-lg"><span className="font-bold">Payment Method:</span> {userInfo.paymentMethod}</p>
+              {/* <p className="text-lg"><span className="font-bold">Payment Method:</span> {userInfo.paymentMethod}</p> */}
               <p className="text-lg"><span className="font-bold">Driver's License:</span> {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
             </div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-500">Loading booking details...</p>
-        );
-      case 4:
-        return (
-          <div>
+            <div>
             <button onClick={handlePayment} className={`w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
               {
                 isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-green-600" /> : "Payment Now"
               }
             </button>
           </div>
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">Loading booking details...</p>
         );
       default:
         return null;
@@ -296,12 +293,13 @@ const OnboardCheckout: React.FC = () => {
               )}
               <button
                 onClick={currentStep === steps.length - 1 ? handleSubmit : handleNextStep}
-                disabled={!!userInfo?.paymentMethod}
-                className={`px-6 py-2 rounded-md transition-colors text-white
-              ${userInfo?.paymentMethod
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
-                  }`}
+                className='px-6 py-2 rounded-md transition-colors text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+              //   disabled={!!userInfo?.driversLicense}
+              //   className={`px-6 py-2 rounded-md transition-colors text-white
+              // ${userInfo?.
+              //       ? 'bg-gray-400 cursor-not-allowed'
+              //       : 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+              //     }`}
               >
                 {currentStep === steps.length - 1 ? 'Submit' : 'Next'}
                 <span className="ml-2">{currentStep === steps.length - 1 ? '' : '→'}</span>
