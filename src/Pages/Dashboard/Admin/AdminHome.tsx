@@ -6,6 +6,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
 import { Chart } from "react-google-charts";
+import DynamicPieChart from "./Charts/DynamicPieChart";
 const AdminHome: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { data = [], isLoading } = useQuery({
@@ -50,13 +51,7 @@ const AdminHome: React.FC = () => {
       </div>
     );
   }
-  // pi chart
-  const piChartData = [
-    ["Task", "Hours per Day"],
-    ["accepted", 7],
-    ["pending", 5],
-    ["cancel", 3],
-  ];
+ 
 
   const piOptions = {
     title: "My Daily Activities",
@@ -133,13 +128,7 @@ const AdminHome: React.FC = () => {
       <div className="py-9 lg:py-11">
         <h3>{piOptions.title} </h3>
         {/* pi charts */}
-        <Chart
-          chartType="PieChart"
-          data={piChartData}
-          // options={options}
-          width={"100%"}
-          height={"400px"}
-        />
+        <DynamicPieChart />
         {/* line chart */}
         <h3>{lineOptions.title} </h3>
         <Chart
@@ -147,7 +136,7 @@ const AdminHome: React.FC = () => {
           width="100%"
           height="400px"
           data={lineChartData}
-          // options={lineOptions}
+        // options={lineOptions}
         />
       </div>
       <div className="mt-6">

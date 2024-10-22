@@ -20,7 +20,7 @@ const TotalCarList = () => {
       return res.data;
     },
   });
-//   console.log(TotalCar);
+  console.log(TotalCar);
 
  const handleDelete = (id : string) => {
    Swal.fire({

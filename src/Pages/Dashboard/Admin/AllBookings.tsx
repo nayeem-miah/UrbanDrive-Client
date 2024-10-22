@@ -18,7 +18,7 @@ const AllBookings = () => {
   const { data: allBookings = [], isLoading } = useQuery({
     queryKey: ["allBookings"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/allBookings`);
+      const res = await axiosPublic.get(`/bookings-data`);
       return res.data;
     },
   });
