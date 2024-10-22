@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
+import slide1 from "../../assets/slides/slide1.jpg";
 
 const Contact: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -60,8 +61,11 @@ const Contact: React.FC = () => {
     <div className="contact">
       {/* Hero Section */}
       <section className="relative">
-        <div className="relative h-[60vh] flex items-center justify-center bg-gradient-to-br from-indigo-500 to-indigo-800">
-          <div className="absolute inset-0"></div>
+        <div 
+          className="relative h-[60vh] flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url(${slide1})` }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           <div className="z-10 text-center px-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
               {t('contact.heading')}
