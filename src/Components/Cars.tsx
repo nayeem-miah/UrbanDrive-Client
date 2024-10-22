@@ -7,11 +7,8 @@ import { SyncLoader } from "react-spinners";
 import CarsData from "./CarsData";
 import { useTranslation } from "react-i18next";
 
-interface Car {
-  Car : []
-}
 
-const Cars: React.FC<Car> = () => {
+const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
