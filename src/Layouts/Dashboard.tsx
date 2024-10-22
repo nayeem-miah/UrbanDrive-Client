@@ -10,7 +10,7 @@ import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
 import { SyncLoader } from "react-spinners";
 
-type Role = "Admin" | "Host" | "User" | "";
+type Role = "Admin" | "Host" | "";
 
 const Dashboard: React.FC = () => {
   const [role, isPending]: [Role, boolean, boolean] = useRole();
@@ -78,19 +78,25 @@ const Dashboard: React.FC = () => {
             {role === "Host" && (
               <>
                 <li>
-                  <NavLink to="/dashboard/sellerHome">
-                    <AiFillMedicineBox />
-                    Seller Home
+                  <NavLink to="/dashboard/hostOverview">
+                    <TfiLayoutGrid2 />
+                    Overview
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/manageMedicine">
-                    <AiFillMedicineBox />
-                    Manage Medicines
+                  <NavLink to="/dashboard/myCars">
+                    <FaCarRear />
+                    Manage cars
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/paymentHistory">
+                  <NavLink to="/dashboard/hostManageBookings">
+                    <AiFillMedicineBox />
+                    Manage Bookings
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/hostPayments">
                     <MdPayment />
                     Payment history
                   </NavLink>
@@ -102,19 +108,6 @@ const Dashboard: React.FC = () => {
                 </li>
               </>
             )}
-
-            {/* User Section */}
-            {role === "User" && (
-              <>
-                <li className="mb-2">
-                  <NavLink to="/dashboard/paymentHistory">
-                    <MdPayment />
-                    Payment history
-                  </NavLink>
-                </li>
-              </>
-            )}
-
             <hr />
 
             <li>

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 import useAxiosPublic from "./useAxiosPublic";
 
-type Role = "Admin" | "Host" | "User" | "";
+type Role = "Admin" | "Host" | "";
 
 const useRole = (): [Role, boolean, boolean] => {
   const { user, loading } = useAuth();

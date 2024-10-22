@@ -54,11 +54,11 @@ const Membership: React.FC = () => {
                   ${membership.price} / {t("month")}{" "}
                   {/* Use translated "month" */}
                 </p>
-                <ul className="list-disc list-inside mb-6 text-gray-600">
+                {/* <ul className="list-disc list-inside mb-6 text-gray-600">
                   {membership.features.map((feature: string, index: number) => (
                     <li key={index}>{t(`membership.features.${feature}`)}</li> // Dynamically translate features
                   ))}
-                </ul>
+                </ul> */}
                 <Link
                   to={`/membership-duration/${membership.planName}/${membership.price}`}
                 >

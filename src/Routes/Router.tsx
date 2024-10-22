@@ -27,6 +27,10 @@ import Favorite from "../Components/UserDashboard/Favorite";
 import Booked from "../Components/UserDashboard/Booked";
 import Membership from "../Components/Membership/Membership";
 import Cars from "../Components/Cars";
+import HostOverview from "../Pages/Dashboard/Host/HostOverview";
+import HostManageBookings from "../Pages/Dashboard/Host/HostManageBookings";
+import HostPayments from "../Pages/Dashboard/Host/HostPayments";
+import RequestAdvertisement from "../Pages/Dashboard/Host/RequestAdvertisement";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
-        element: <Cars ></Cars>,
+        element: <Cars></Cars>,
       },
       {
         path: "/hostingForm",
@@ -115,20 +119,20 @@ const router = createBrowserRouter([
     element: <Cancel />,
   },
   {
-    path: 'payment-history',
-    element: <PaymetHistory/>
+    path: "payment-history",
+    element: <PaymetHistory />,
   },
   {
     path: "/profile",
-    element: <Profile />
+    element: <Profile />,
   },
   {
     path: "/favorite",
-    element: <Favorite />
+    element: <Favorite />,
   },
   {
     path: "/booked",
-    element: <Booked />
+    element: <Booked />,
   },
   {
     path: "/dashboard",
@@ -157,6 +161,22 @@ const router = createBrowserRouter([
       {
         path: "manageMemberShip",
         element: <ManageMemberShip />,
+      },
+      {
+        path: "hostOverview",
+        element: <HostOverview />,
+      },
+      {
+        path: "myCars",
+        element: <HostManageBookings />,
+      },
+      {
+        path: "hostPayments",
+        element: <HostPayments />,
+      },
+      {
+        path: "requestAdvertise",
+        element: <RequestAdvertisement/>
       },
     ],
   },

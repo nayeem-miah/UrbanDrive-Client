@@ -43,7 +43,7 @@ const Favorite: React.FC = () => {
 
   if (isFetching) {
     return (
-      <div>
+      <div className="min-h-screen flex items-center justify-center">
         <SyncLoader color="#593cfb" size={10} />
       </div>
     ); // Optionally, handle the updating state separately
