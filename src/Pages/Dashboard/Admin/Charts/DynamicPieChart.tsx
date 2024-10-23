@@ -57,6 +57,7 @@ const DynamicPieChart: React.FC = () => {
 
     return (
         <div>
+          
             <Chart
                 chartType="PieChart"
                 data={piChartData}
