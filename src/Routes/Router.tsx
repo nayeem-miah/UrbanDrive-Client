@@ -30,6 +30,7 @@ import HostOverview from "../Pages/Dashboard/Host/HostOverview";
 import HostManageBookings from "../Pages/Dashboard/Host/HostManageBookings";
 import HostPayments from "../Pages/Dashboard/Host/HostPayments";
 import RequestAdvertisement from "../Pages/Dashboard/Host/RequestAdvertisement";
+import HostManageCars from "../Pages/Dashboard/Host/HostManageCars";
 
 const router = createBrowserRouter([
   {
@@ -154,8 +155,12 @@ const router = createBrowserRouter([
         element: <HostOverview />,
       },
       {
-        path: "myCars",
+        path: "hostManageBookings",
         element: <HostManageBookings />,
+      },
+      {
+        path: "myCars",
+        element: <HostManageCars/>
       },
       {
         path: "hostPayments",
@@ -163,7 +168,7 @@ const router = createBrowserRouter([
       },
       {
         path: "requestAdvertise",
-        element: <RequestAdvertisement/>
+        element: <RequestAdvertisement />,
       },
     ],
   },
