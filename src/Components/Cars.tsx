@@ -8,11 +8,8 @@ import CarsData from "./CarsData";
 import { useTranslation } from "react-i18next";
 import Filter from "./Filter";
 
-interface Car {
-  Car : []
-}
 
-const Cars: React.FC<Car> = () => {
+const Cars: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

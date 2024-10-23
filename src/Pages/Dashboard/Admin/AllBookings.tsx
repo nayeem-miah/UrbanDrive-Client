@@ -67,17 +67,20 @@ const AllBookings = () => {
                 </tr>
               </thead>
               <tbody>
-                {allBookings.map((item: bookings, idx: number) => (
-                  item.status === "Success" && ( <tr key={item._id}>
-                    <th>{idx + 1}</th>
-                    <td>{item?.cus_email}</td>
-                    <td>{item?.location}</td>
-                    <td>{item?.cus_phoneNumber}</td>
-                    <td>{formatDate(item?.startDate)}</td>
-                    <td>{formatDate(item?.endDate)}</td>
-                    <td className="font-bold">{item?.amount}$</td>
-                  </tr>)
-                ))}
+                {allBookings.map(
+                  (item: bookings, idx: number) =>
+                    item.status === "Success" && (
+                      <tr key={item._id}>
+                        <th>{idx + 1}</th>
+                        <td>{item?.cus_email}</td>
+                        <td>{item?.location}</td>
+                        <td>{item?.cus_phoneNumber}</td>
+                        <td>{formatDate(item?.startDate)}</td>
+                        <td>{formatDate(item?.endDate)}</td>
+                        <td className="font-bold">{item?.amount}৳</td>
+                      </tr>
+                    )
+                )}
               </tbody>
             </table>
           </div>
