@@ -25,7 +25,7 @@ const Success: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           Thank you for your payment. Your transaction was completed
-          successfully.
+          successfully.!!!
         </motion.p>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -40,10 +40,10 @@ const Success: React.FC = () => {
               Go to Home
             </Link>
             <Link
-              to={`/payment-history`}
+              to={`/dashboard`}
               className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4"
             >
-              Go to payment history
+              Go to Dashboard
             </Link>
           </div>
         </motion.div>

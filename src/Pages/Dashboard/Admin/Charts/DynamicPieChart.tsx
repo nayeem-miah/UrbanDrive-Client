@@ -1,12 +1,11 @@
-
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import axios from "axios";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import { ClipLoader } from "react-spinners";
 
 interface BookingData {
     _id: string;
     hostIsApproved: string;
-
 }
 
 const DynamicPieChart: React.FC = () => {
@@ -16,28 +15,36 @@ const DynamicPieChart: React.FC = () => {
         ["Pending", 0],
         ["Cancel", 0],
     ]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const axiosPublic = useAxiosPublic();
+
     const options = {
         title: "Booking Approval Status",
         colors: ["#4CAF50", "#FFEB3B", "#F44336"],
+        pieSliceText: 'label',
+        legend: { position: 'top' },
     };
+
     useEffect(() => {
         const fetchChartData = async () => {
+            setLoading(true);
+            setError(null);
             try {
-                // Fetch the data from your backend API
-                const response = await axios.get<BookingData[]>("http://localhost:8000/bookings-data");
+                const response = await axiosPublic.get<BookingData[]>("/bookings-data");
                 const bookingData = response.data;
 
                 const statusCounts = bookingData.reduce(
                     (acc, booking) => {
-                        if (booking.hostIsApproved === "Success") acc.success += 1;
-                        else if (booking.hostIsApproved === "pending") acc.pending += 1;
-                        else acc.cancel += 1;
+                        const status = booking.hostIsApproved.toLowerCase();
+                        if (status === "success") acc.success += 1;
+                        else if (status === "pending") acc.pending += 1;
+                        else if (status === "cancel") acc.cancel += 1;
                         return acc;
                     },
                     { success: 0, pending: 0, cancel: 0 }
                 );
 
-                // Update the Pie Chart data
                 const updatedData: (string | number)[][] = [
                     ["Status", "Count"],
                     ["Success", statusCounts.success],
@@ -46,13 +53,23 @@ const DynamicPieChart: React.FC = () => {
                 ];
 
                 setPiChartData(updatedData);
-            } catch (error) {
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setError("Error fetching booking data: " + error.message);
+                } else {
+                    setError("An unknown error occurred.");
+                }
                 console.error("Error fetching booking data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchChartData();
-    }, []);
+    }, [axiosPublic]);
+
+    if (loading) return <ClipLoader size={50} color="#36D7B7" />; 
+    if (error) return <div>{error}</div>;
 
     return (
         <div>
