@@ -46,6 +46,7 @@ const MembershipDuration: React.FC = () => {
       if (redirectUrl) {
         window.location.replace(redirectUrl);
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error posting payment info:", error);
       toast.error(error.message);

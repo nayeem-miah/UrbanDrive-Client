@@ -115,7 +115,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
   
   const customStarStyle = {
     itemShapes: Star,
-    activeFillColor: '#4F46E5', 
+    activeFillColor: '#FF9933', 
     inactiveFillColor: '#CBD5E1' 
   };
 
@@ -123,13 +123,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 bg-white p-8 rounded-lg shadow-md w-full">
-        <h3 className="text-4xl font-bold mb-6 text-indigo-600">Share Your Detailed Experience</h3>
+        <h3 className="text-4xl font-bold mb-6 text-primary">Share Your Detailed Experience</h3>
         
         
         <div className="flex flex-wrap justify-center mb-12">
           {ratingCategories.map((category) => (
             <div key={category.name} className="w-full md:w-1/2 xl:w-1/4 p-6 text-center">
-              <h4 className="text-2xl font-bold mb-2 text-gray-700">{category.label}</h4>
+              <h4 className="text-2xl font-bold mb-2 text-text">{category.label}</h4>
               <Rating
                 style={{ maxWidth: 200 }}
                 value={category.value}
@@ -143,14 +143,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
 
        
         <div className="mb-12 text-center">
-          <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Overall Rating</h4>
-          <p className="text-5xl font-bold text-indigo-600">{calculateAverageRating().toFixed(1)} / 5</p>
+          <h4 className="text-2xl font-bold mb-2 text-text">Your Overall Rating</h4>
+          <p className="text-5xl font-bold text-primary">{calculateAverageRating().toFixed(1)} / 5</p>
           <p className="text-gray-500 text-sm mt-2">Based on your ratings above</p>
         </div>
 
         
         <div className="mb-8">
-          <h4 className="text-2xl font-bold mb-2 text-gray-700">Your Detailed Review</h4>
+          <h4 className="text-2xl font-bold mb-2 text-text">Your Detailed Review</h4>
           <textarea
             {...register('comment', { required: 'Review comment is required' })}
             className="w-full p-4 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -165,7 +165,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
 
         <button 
           type="submit" 
-          className="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition duration-300 w-full text-lg font-bold"
+          className="bg-primary text-white py-3 px-6 rounded hover:bg-primary/90 transition duration-300 w-full text-lg font-bold"
         >
           Submit Your Comprehensive Review
         </button>
