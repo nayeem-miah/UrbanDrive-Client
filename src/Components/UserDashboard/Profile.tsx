@@ -54,7 +54,7 @@ const [phone, setPhone] = useState<string>(user?.phone || '');
             return response.data;
         },
     });
-    console.log(userdata)
+    // console.log(userdata)
    
 
     const formatJoinDate = (dateString: string) => {

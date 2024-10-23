@@ -94,7 +94,7 @@ const Cars: React.FC = () => {
       alert("Location permission not yet granted.");
     }
   };
-  console.log('User Location:', userLocation);
+  // console.log('User Location:', userLocation);
 
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {

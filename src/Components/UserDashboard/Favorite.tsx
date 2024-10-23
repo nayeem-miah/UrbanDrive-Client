@@ -5,18 +5,10 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 // import { IoMdHeart, } from "react-icons/io";
-<<<<<<< HEAD
-import { FaAward, FaMapLocationDot } from 'react-icons/fa6';
-import { MdOutlineDiscount, MdOutlineStar } from 'react-icons/md';
-import { SyncLoader } from 'react-spinners';
-import Navbar from '../Navbar';
-
-
-=======
 import { FaAward, FaMapLocationDot } from "react-icons/fa6";
 import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
 import { SyncLoader } from "react-spinners";
->>>>>>> 64aee5e135a736cbbece6b7b58c1764a89aed689
+import Navbar from "../Navbar";
 
 const Favorite: React.FC = () => {
   const axiosPublic = useAxiosPublic();
@@ -37,38 +29,6 @@ const Favorite: React.FC = () => {
   // console.log('favoritecar:',favoriteCars)
   if (loading) {
     return (
-<<<<<<< HEAD
-        <div>
-            <Navbar></Navbar>
-            <h2 className='text-3xl font-bold font-lato lg:mt-12 lg:mb-10 lg:ml-2'>Favorites Cars</h2>
-        {favoriteCars.length > 0 ? (
-            <div className="grid mt-5 grid-cols-1 gap-4 lg:gap-6">
-                {/* If there's only one favorite car */}
-                {favoriteCars.length === 1 ? (
-                    <div key={favoriteCars[0]._id} className="card w-[500px] h-[300px] lg:card-side bg-base-100 shadow-xl rounded-2xl group">
-                        <figure className="w-full lg:w-[50%]">
-                            <img
-                                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                                src={favoriteCars[0].image}
-                                alt={favoriteCars[0].name}
-                            />
-                        </figure>
-                        <div className="card-body w-full lg:w-2/3 flex-1">
-                            <div className="flex justify-between">
-                                <h2 className="card-title">{favoriteCars[0].model}</h2>
-                                
-                            </div>
-                            <p className="text-ellipsis">
-                                {favoriteCars[0].description.slice(0, 80)}....
-                            </p>
-                            {favoriteCars.rating > 0 ? (
-                    <p className="flex gap-1">
-                        {favoriteCars.rating}
-                        <MdOutlineStar className="text-[#f0bb0c] mt-1" /> ({favoriteCars.trip_count} trips){" "}
-                        <FaAward className="mt-1 text-primary font-bold" />{" "}
-                        <span className="font-bold">All-Star-Host</span>
-                    </p>
-=======
       <div className="min-h-screen flex items-center justify-center">
         <SyncLoader color="#593cfb" size={10} /> {/* লোডিং স্পিনার */}
       </div>
@@ -100,6 +60,7 @@ const Favorite: React.FC = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <h2 className="text-3xl font-bold font-lato lg:mt-12 lg:mb-10 lg:ml-2">
         Favorites Cars
       </h2>
@@ -133,7 +94,6 @@ const Favorite: React.FC = () => {
                     <FaAward className="mt-1 text-primary font-bold" />{" "}
                     <span className="font-bold">All-Star-Host</span>
                   </p>
->>>>>>> 64aee5e135a736cbbece6b7b58c1764a89aed689
                 ) : (
                   <p>New listing</p>
                 )}
@@ -150,12 +110,6 @@ const Favorite: React.FC = () => {
                   <p></p>
                 )}
                 <div className="card-actions gap-2 items-center justify-end mt-2">
-<<<<<<< HEAD
-                    <span className="text-primary font-bold text-xl">${car.price}/day</span>
-                    <Link to={`/cars/${car._id}`}>
-                        <button className="bg-blue-600 p-2 rounded-lg text-white">Details</button>
-                    </Link>
-=======
                   <span className="text-primary font-bold text-xl">
                     ${favoriteCars[0].rental_price_per_day}/day
                   </span>
@@ -164,19 +118,9 @@ const Favorite: React.FC = () => {
                       Details
                     </button>
                   </Link>
->>>>>>> 64aee5e135a736cbbece6b7b58c1764a89aed689
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-        </div>
-       
-    </div>
-))}
-
-
-
-=======
           ) : (
             // If there are multiple favorite cars
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -230,22 +174,11 @@ const Favorite: React.FC = () => {
                           </button>
                         </Link>
                       </div>
->>>>>>> 64aee5e135a736cbbece6b7b58c1764a89aed689
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-<<<<<<< HEAD
-        ) : (
-            <p>No cars available</p> // If no favorite cars
-        )}
-      
-    </div>
-
-        
-    );
-=======
           )}
         </div>
       ) : (
@@ -253,7 +186,6 @@ const Favorite: React.FC = () => {
       )}
     </div>
   );
->>>>>>> 64aee5e135a736cbbece6b7b58c1764a89aed689
 };
 
 export default Favorite;

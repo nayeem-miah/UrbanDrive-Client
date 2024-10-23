@@ -94,12 +94,12 @@ const Membership: React.FC = () => {
               key={membership._id}
               className="bg-[#fdfcfb] rounded-lg shadow-lg p-6 flex flex-col h-full"
             >
-              <div className='flex  items-center text-2xl font-bold mb-4 text-gray-800'>
+              <div className=' text-2xl font-bold mb-4 text-gray-800'>
               <h2 className="text-2xl font-bold mb-4 text-gray-800">
-                {t(`membership.${membership.planName}`)}{" "}
+                {t(`${membership.planName}`)}{" "}
                 {/* Dynamically translate the plan name */}
               </h2>
-              <p className="text-2xl font-bold text-gray-800 mb-4 ml-3">
+              <p className="text-2xl font-bold text-gray-800 mb-4 ">
                 {membership.price}<span className='text-xl font-extrabold'>৳</span> / {t("month")}
                 {/* Use translated "month" */}
               </p>

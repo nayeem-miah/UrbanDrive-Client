@@ -18,6 +18,7 @@ const Booked: React.FC = () => {
       return response.data;
     },
   });
+  
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -54,7 +55,7 @@ const Booked: React.FC = () => {
       <Navbar></Navbar>
       <h2 className='text-3xl font-lato font-bold lg:mt-8 lg:ml-2'>Bookings</h2>
       {allBookings.length === 0 ? (
-        <div className="h-screen-minus-20px flex items-center justify-center">
+        <div className="h-screen-minus-20px flex items-center justify-center lg:mt-8">
           <h2 className="text-3xl font-bold">No bookings found...</h2>
         </div>
       ) : (
