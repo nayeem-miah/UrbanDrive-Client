@@ -153,7 +153,7 @@ const OnboardCheckout: React.FC = () => {
     }
   };
 
-
+// console.log(bookingDetails);
 
   const paymentInfo = {
     price: bookingDetails?.totalCost,
@@ -162,7 +162,11 @@ const OnboardCheckout: React.FC = () => {
     phoneNumber: userInfo?.phoneNumber,
     driversLicense: userInfo?.driversLicense,
     name: user?.displayName,
-    bookingDetails: bookingDetails
+    bookingDetails: bookingDetails,
+    hostEmail : bookingDetails?.hostEmail,
+    hostName : bookingDetails?.hostName,
+    model : bookingDetails?.model,
+    make : bookingDetails?.make,
 
   }
 
