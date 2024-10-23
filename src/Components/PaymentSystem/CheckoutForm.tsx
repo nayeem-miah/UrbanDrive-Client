@@ -111,6 +111,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
 
         try {
            await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
+           await axiosPublic.patch("/update-plan", { email: user?.email, planName: planName });
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for membership`);
           setTimeout(() => {

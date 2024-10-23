@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import useRole from "../Hooks/useRole";
-// import { useQuery } from "@tanstack/react-query";
-// import useAxiosPublic from "../Hooks/useAxiosPublic";
-// import { SyncLoader } from "react-spinners";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { SyncLoader } from "react-spinners";
 import {
-  FaUserEdit,
+  // FaUserEdit,
   // FaHeart,
   FaBookmark,
   FaUser,
@@ -16,12 +16,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa6";
 
 type Role = "Admin" | "Host" | "User" | "";
 
 const Navbar: React.FC = () => {
-  // const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
   const [toggle, setToggle] = useState(false);
 
   const { user, logOut } = useAuth();
@@ -29,17 +29,18 @@ const Navbar: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<string>("");
   const [role]: [Role, boolean, boolean] = useRole();
 
-  // const {
-  //   data: userData,
-  //   isLoading,
-  //   isFetching,
-  // } = useQuery({
-  //   queryKey: ["userdata", user?.email],
-  //   queryFn: async () => {
-  //     const response = await axiosPublic.get(`/user/${user?.email}`);
-  //     return response.data;
-  //   },
-  // });
+  const {
+    data: userData,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["userdata", user?.email],
+    queryFn: async () => {
+      const response = await axiosPublic.get(`/user/${user?.email}`);
+      return response.data;
+    },
+  });
+  // console.log(userData)
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("i18nextLng");
@@ -65,13 +66,13 @@ const Navbar: React.FC = () => {
     { id: "contact", title: t("Contact") },
   ];
 
-  // if (isLoading || isFetching) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center">
-  //       <SyncLoader color="#593cfb" size={isLoading ? 18 : 10} />
-  //     </div>
-  //   );
-  // }
+  if (isLoading || isFetching) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <SyncLoader color="#593cfb" size={isLoading ? 18 : 10} />
+      </div>
+    );
+  }
 
   return (
     <nav
@@ -128,34 +129,39 @@ const Navbar: React.FC = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2 border-white shadow-lg">
-                  {user?.photoURL ? (
+                  {userData?.photoURL ? (
+                    <img
+                      src={userData.photoURL}
+                      className="rounded-full w-32 h-32"
+                      alt="User avatar"
+                    />
+                  ) : (
                     <img
                       src={user.photoURL}
                       className="rounded-full w-32 h-32"
                       alt="User avatar"
                     />
-                  ) : (
-                    <FaCircleUser className="w-32 h-32" />
+                    // <FaCircleUser className="w-32 h-32" />
                   )}
                 </div>
               </label>
               <ul className="mt-3 z-[1] p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-lg w-56">
-                <li className="hover:bg-gray-100 rounded-md">
+                {/* <li className="hover:bg-gray-100 rounded-md">
                   <Link
                     to="/update-user"
                     className="flex items-center p-2 text-gray-700"
                   >
                     <FaUserEdit className="mr-2" /> {t("updateUser")}
                   </Link>
-                </li>
-                {/* <li className="hover:bg-gray-100 rounded-md">
+                </li> */}
+                <li className="hover:bg-gray-100 rounded-md">
                   <Link
                     to="/favorite"
                     className="flex items-center p-2 text-gray-700"
                   >
                     <FaHeart className="mr-2" /> {t("Favorite")}
                   </Link>
-                </li> */}
+                </li>
                 <li className="hover:bg-gray-100 rounded-md">
                   <Link
                     to="/booked"
@@ -306,14 +312,14 @@ const Navbar: React.FC = () => {
           {/* Mobile User Menu */}
           {user ? (
             <li className="space-y-4 text-center">
-              {/* <div className="avatar mb-4">
+              <div className="avatar mb-4">
                 <div className="w-24 rounded-full ring ring-primary">
                   <img
                     src={userData?.photoURL || user?.photoURL || ""}
                     alt="User avatar"
                   />
                 </div>
-              </div> */}
+              </div>
               <Link
                 to="/profile"
                 className="block text-2xl font-bold text-gray-800 hover:text-gray-600"

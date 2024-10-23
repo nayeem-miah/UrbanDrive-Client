@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams,  } from 'react-router-dom';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ const MembershipDuration: React.FC = () => {
   const axiosPublic = useAxiosPublic()
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   const { planName, price } = useParams<{ planName: string; price: string }>();
   const [duration, setDuration] = useState<number>(1);
   const parsedPrice = price ? parseFloat(price) : NaN;
@@ -72,16 +73,16 @@ const MembershipDuration: React.FC = () => {
       </select>
 
       <p className="text-xl font-bold text-gray-700">
-        TotalPrice: ${calculatedPrice}
+        TotalPrice: {calculatedPrice}<span className='text-xl font-extrabold'> ৳</span>
       </p>
 
-      {/* <Link to={`/payment/${planName}/${calculatedPrice}`}> */}
+      <Link to={`/payment/${planName}/${calculatedPrice}`}>
         <button onClick={handleSubmitPayment}  className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}` } disabled={isLoading} >
          {
           isLoading? <ImSpinner9  size={28} className="animate-spin m-auto text-green-600" />:  "Payment"
          }
         </button>
-      {/* </Link> */}
+      </Link>
     </div>
   );
 };
