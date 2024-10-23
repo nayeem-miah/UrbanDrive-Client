@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import axios from "axios";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 
 interface BookingData {
     _id: string;
@@ -16,6 +16,7 @@ const DynamicPieChart: React.FC = () => {
         ["Pending", 0],
         ["Cancel", 0],
     ]);
+    const axiosPublic = useAxiosPublic()
     const options = {
         title: "Booking Approval Status",
         colors: ["#4CAF50", "#FFEB3B", "#F44336"],
@@ -24,7 +25,7 @@ const DynamicPieChart: React.FC = () => {
         const fetchChartData = async () => {
             try {
                 // Fetch the data from your backend API
-                const response = await axios.get<BookingData[]>("http://localhost:8000/bookings-data");
+                const response = await axiosPublic.get<BookingData[]>("/bookings-data");
                 const bookingData = response.data;
 
                 const statusCounts = bookingData.reduce(

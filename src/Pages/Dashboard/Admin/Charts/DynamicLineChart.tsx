@@ -17,7 +17,7 @@ const DynamicLineChart: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:8000/bookings-data');
       const bookings: BookingData[] = response.data; // Axios returns data in the response object
-console.log(bookings);
+// console.log(bookings);
       // Map the fetched data to the format required for the chart
       const chartData = bookings.map(item => {
         const date = new Date(item.startDate); // Parse the date
