@@ -23,7 +23,7 @@ const ManageMemberShip = () => {
       return res.data;
     },
   });
-  console.log(memberShip);
+  // console.log(memberShip);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {

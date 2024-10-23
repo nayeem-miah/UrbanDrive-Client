@@ -24,7 +24,11 @@ import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
+
+  // const hostEmail = car.email
   const {user} = useAuth();
+
+
   // const ratingsData: RatingData[] = [
   //   { label: 'Cleanliness', value: 3.0 },
   //   { label: 'Communication', value: 2.0 },
@@ -52,7 +56,7 @@ const CarDetails: React.FC = () => {
   // const [totalPages, setTotalPages] = useState(1);
 
 
-  const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 }, 
+  const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 },
         refetch: refetchReviews,
         isLoading } = useQuery({
   queryKey: ['reviews', car._id, page],
@@ -83,19 +87,19 @@ const CarDetails: React.FC = () => {
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
     let cost = days * car.rental_price_per_day;
-  
+
     if (includedDriver) {
-      cost += cost * 0.2; 
+      cost += cost * 0.2;
     }
-  
+
     return cost;
   };
 
   useEffect(() => {
-    
+
     const newTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(newTotalCost);
-    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day); 
+    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange, includedDriver]);
 
@@ -115,31 +119,35 @@ const CarDetails: React.FC = () => {
     }
   };
 
-
+console.log(car.email);
   const handleContinue = async () => {
     try {
       const bookingData = {
         user_email: user?.email,
-        userName: user?.displayName, 
+        userName: user?.displayName,
         carId: car._id.toString(),
         startDate: dateRange[0].startDate,
         endDate: dateRange[0].endDate,
         location: location,
         totalCost: totalCost,
-        includedDriver: includedDriver
+        includedDriver: includedDriver,
+        hostEmail: car?.email,
+        hostName: car?.name,
+        model: car?.model,
+        make: car?.make,
       };
 
       const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
-      
+
       if (response.data.success && response.data.bookingId) {
         navigate(`/checkout/${response.data.bookingId}`);
       } else {
         console.error('Failed to create booking:', response.data.message || 'Unknown error');
-       
+
       }
     } catch (error) {
       console.error('Error creating booking:', error);
-      
+
     }
   };
 
@@ -338,9 +346,9 @@ const CarDetails: React.FC = () => {
         {/* Location */}
         <div className="mb-6">
           <p className="text-sm font-semibold mb-2">Pickup & return location</p>
-          <select 
-            value={location} 
-            onChange={(e) => setLocation(e.target.value)} 
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Select location</option>
@@ -354,8 +362,8 @@ const CarDetails: React.FC = () => {
         </div>
 
         {/* Continue Button */}
-        <button 
-          onClick={handleContinue} 
+        <button
+          onClick={handleContinue}
           className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Continue
@@ -376,7 +384,7 @@ const CarDetails: React.FC = () => {
     {/* Ratings */}
 <div className="p-6 bg-white rounded-lg shadow-lg mt-8">
   <h2 className="text-3xl font-bold mb-4 text-indigo-600 text-center">Overall Ratings</h2>
-  
+
   {/* Average Rating */}
   <div className="flex justify-center items-center mb-6">
     <p className="text-6xl font-extrabold text-indigo-600">
@@ -386,7 +394,7 @@ const CarDetails: React.FC = () => {
       <p className="text-lg text-gray-500">({car.reviewCount} reviews)</p>
     </div>
   </div>
-  
+
   {/* Category Ratings */}
   <div className="space-y-4">
     {Object.entries(car.categoryRatings || {}).map(([label, value], index) => (
@@ -421,13 +429,13 @@ const CarDetails: React.FC = () => {
     <div className="space-y-4">
       {reviewsData.reviews.map((review: any) => (
         <div key={review._id} className="bg-gray-50 p-4 rounded-lg shadow-sm">
-          
+
           <div className="flex justify-between items-center mb-3">
             <div className="flex items-center">
-              <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{ 
-                itemShapes: Star, 
-                activeFillColor: '#4F46E5', 
-                inactiveFillColor: '#CBD5E1' 
+              <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{
+                itemShapes: Star,
+                activeFillColor: '#4F46E5',
+                inactiveFillColor: '#CBD5E1'
               }} />
               <span className="ml-3 font-semibold text-lg text-gray-800">{review.userName}</span>
             </div>
@@ -436,7 +444,7 @@ const CarDetails: React.FC = () => {
             </p>
           </div>
 
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-3 ">
             {Object.entries(review.ratingDetails).map(([key, value]) => (
               <div key={key} className="text-center">
@@ -455,16 +463,16 @@ const CarDetails: React.FC = () => {
 
       {/* Pagination Controls */}
       <div className="mt-6 flex justify-between items-center">
-        <button 
-          onClick={handlePrevPage} 
+        <button
+          onClick={handlePrevPage}
           disabled={page === 1}
           className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md disabled:bg-gray-400 hover:bg-indigo-700 transition duration-200"
         >
           Previous
         </button>
         <span className="text-gray-700 font-medium text-base">Page {page} of {reviewsData.totalPages}</span>
-        <button 
-          onClick={handleNextPage} 
+        <button
+          onClick={handleNextPage}
           disabled={page === reviewsData.totalPages}
           className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md disabled:bg-gray-400 hover:bg-indigo-700 transition duration-200"
         >
