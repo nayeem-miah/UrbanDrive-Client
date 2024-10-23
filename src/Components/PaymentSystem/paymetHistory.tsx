@@ -27,7 +27,7 @@ const PaymetHistory = () => {
       <>
       <Navbar/>
         <div className="max-w-6xl mx-auto px-4 mb-10">
-          <div className="mt-8">
+          <div className="pt-16">
             <h2 className="text-3xl font-bold mb-6 text-center underline mt-16">
               Payment History
             </h2>

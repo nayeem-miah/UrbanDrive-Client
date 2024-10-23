@@ -7,7 +7,6 @@ import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
-import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
@@ -80,18 +79,6 @@ const router = createBrowserRouter([
       {
         path: "/membership-duration/:planName/:price",
         element: <MembershipDuration></MembershipDuration>,
-      },
-      {
-        path: "/payment/:planName/:totalPrice",
-        element: <PaymentPage></PaymentPage>,
-      },
-      {
-        path: "/payment/:totalPrice",
-        element: (
-          // <PrivetRouts>
-          <PaymentPage></PaymentPage>
-          // </PrivetRouts>
-        ),
       },
     ],
   },
