@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
-import { ClipLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners"; // Importing a spinner
 
 interface BookingData {
     _id: string;
@@ -36,7 +36,7 @@ const DynamicPieChart: React.FC = () => {
 
                 const statusCounts = bookingData.reduce(
                     (acc, booking) => {
-                        const status = booking.hostIsApproved.toLowerCase();
+                        const status = booking.hostIsApproved;
                         if (status === "success") acc.success += 1;
                         else if (status === "pending") acc.pending += 1;
                         else if (status === "cancel") acc.cancel += 1;
@@ -68,7 +68,7 @@ const DynamicPieChart: React.FC = () => {
         fetchChartData();
     }, [axiosPublic]);
 
-    if (loading) return <ClipLoader size={50} color="#36D7B7" />; 
+    if (loading) return <ClipLoader size={50} color="#36D7B7" />; // Use a spinner for loading
     if (error) return <div>{error}</div>;
 
     return (
