@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
             <span className="text-white">U</span>rban
             <span className="text-white">Drive</span>
           </h2>
-          <ul className="menu space-y-1 mt-3 text-base font-medium">
+          <ul className="menu space-y-1 mt-3 text-base font-medium text-white">
             {/* Admin Section */}
             {role === "Admin" && (
               <>
