@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IoPersonSharp } from "react-icons/io5";
 import person from "../../../assets/person.png";
 import { FaCarRear } from "react-icons/fa6";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
-import DynamicPieChart from "./Charts/DynamicPieChart";
-import DynamicLineChart from "./Charts/DynamicLineChart";
-const AdminHome: React.FC = () => {
+import { Chart } from "react-google-charts";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+
+const HostOverview: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { data = [], isLoading } = useQuery({
     queryKey: ["query-stats"],
@@ -51,12 +50,38 @@ const AdminHome: React.FC = () => {
       </div>
     );
   }
-
+  // pi chart
+  const piChartData = [
+    ["Task", "Hours per Day"],
+    ["accepted", 7],
+    ["pending", 5],
+    ["cancel", 3],
+  ];
 
   const piOptions = {
     title: "Daily Activities",
   };
-
+  // line hcart
+  const lineChartData = [
+    [
+      { type: "number", label: "x" },
+      { type: "number", label: "values" },
+      { id: "i0", type: "number", role: "interval" },
+      { id: "i1", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+      { id: "i2", type: "number", role: "interval" },
+    ],
+    [1, 100, 90, 110, 85, 96, 104, 120],
+    [2, 120, 95, 130, 90, 113, 124, 140],
+    [3, 130, 105, 140, 100, 117, 133, 139],
+    [4, 90, 85, 95, 85, 88, 92, 95],
+    [5, 70, 74, 63, 67, 69, 70, 72],
+    [6, 30, 39, 22, 21, 28, 34, 40],
+    [7, 80, 77, 83, 70, 77, 85, 90],
+    [8, 100, 90, 110, 85, 95, 102, 110],
+  ];
 
   const lineOptions = {
     title: "Price, per days",
@@ -80,7 +105,7 @@ const AdminHome: React.FC = () => {
               <img className="w-11 h-11" src={person} alt="" />
             </div>
             <div className="stat-title font-bold text-white">
-              Total Car Owner
+              Total revenue
             </div>
             <div className="stat-value">{data?.hostCount}</div>
           </div>
@@ -108,11 +133,22 @@ const AdminHome: React.FC = () => {
       <div className="py-9 lg:py-11">
         <h3>{piOptions.title} </h3>
         {/* pi charts */}
-        <DynamicPieChart />
+        <Chart
+          chartType="PieChart"
+          data={piChartData}
+          // options={options}
+          width={"100%"}
+          height={"400px"}
+        />
         {/* line chart */}
         <h3>{lineOptions.title} </h3>
-
-        <DynamicLineChart/>
+        <Chart
+          chartType="LineChart"
+          width="100%"
+          height="400px"
+          data={lineChartData}
+          // options={lineOptions}
+        />
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-4 text-left">
@@ -150,4 +186,4 @@ const AdminHome: React.FC = () => {
   );
 };
 
-export default AdminHome;
+export default HostOverview;

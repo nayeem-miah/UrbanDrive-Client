@@ -21,13 +21,14 @@ import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 
 
 
-
-
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
+
+  // const hostEmail = car.email
   const {user} = useAuth();
 
+  // ];
 
 
 
@@ -50,7 +51,7 @@ const CarDetails: React.FC = () => {
   // const [totalPages, setTotalPages] = useState(1);
 
 
-  const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 }, 
+  const { data: reviewsData = { reviews: [], currentPage: 1, totalPages: 1, totalReviews: 0 },
         refetch: refetchReviews,
         isLoading } = useQuery({
   queryKey: ['reviews', car._id, page],
@@ -81,19 +82,19 @@ const CarDetails: React.FC = () => {
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
     let cost = days * car.rental_price_per_day;
-  
+
     if (includedDriver) {
-      cost += cost * 0.2; 
+      cost += cost * 0.2;
     }
-  
+
     return cost;
   };
 
   useEffect(() => {
-    
+
     const newTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(newTotalCost);
-    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day); 
+    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange, includedDriver]);
 
@@ -113,31 +114,35 @@ const CarDetails: React.FC = () => {
     }
   };
 
-
+console.log(car.email);
   const handleContinue = async () => {
     try {
       const bookingData = {
         user_email: user?.email,
-        userName: user?.displayName, 
+        userName: user?.displayName,
         carId: car._id.toString(),
         startDate: dateRange[0].startDate,
         endDate: dateRange[0].endDate,
         location: location,
         totalCost: totalCost,
-        includedDriver: includedDriver
+        includedDriver: includedDriver,
+        hostEmail: car?.email,
+        hostName: car?.name,
+        model: car?.model,
+        make: car?.make,
       };
 
       const response = await axiosPublic.post('http://localhost:8000/bookings', bookingData);
-      
+
       if (response.data.success && response.data.bookingId) {
         navigate(`/checkout/${response.data.bookingId}`);
       } else {
         console.error('Failed to create booking:', response.data.message || 'Unknown error');
-       
+
       }
     } catch (error) {
       console.error('Error creating booking:', error);
-      
+
     }
   };
 

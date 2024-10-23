@@ -6,6 +6,7 @@ import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
 import CarsData from "./CarsData";
 import { useTranslation } from "react-i18next";
+// import Filter from "./Filter";
 
 
 const Cars: React.FC = () => {
@@ -93,7 +94,7 @@ const Cars: React.FC = () => {
       alert("Location permission not yet granted.");
     }
   };
-  console.log('User Location:', userLocation);
+  // console.log('User Location:', userLocation);
 
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
@@ -199,28 +200,29 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   // console.log(handlePreviousPage());
 
   return (
-    <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
-      {/* Filters */}
-      {/* Search Bar */}
-      <div className=" mb-6">
+    <div className="bg-background min-h-screen pt-8 px-4 md:px-8 lg:px-16">
+      <h1 className="text-4xl font-poppins font-bold text-primary mb-8">Find Your Perfect Ride</h1>
+
+      {/* Location Select */}
+      <div className="mb-6">
         <select
-          className=" w-2/3 md:w-1/3 lg:w-1/3 border-b border-gray-300 focus:outline-none p-3 h-12"
+          className="w-full md:w-1/2 lg:w-1/3 border-b-2 border-primary focus:outline-none p-3 h-12 bg-transparent text-text"
           id="locationSelect"
           value={userLocation ? JSON.stringify(userLocation) : ""}
           onChange={handleLocationChange}
         >
-          <option disabled value="">
-            {t("locationSelect.selectPlaceholder")}
-          </option>
+          <option disabled value="">{t("locationSelect.selectPlaceholder")}</option>
           <option value="current">{t("locationSelect.currentLocation")}</option>
           <option value="anywhere">{t("locationSelect.anywhere")}</option>
         </select>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6">
+
+      {/* Filters */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={category} // Set the current selected value
-          onChange={handleCategoryChange} // Handle change
+          className="w-full border-2 border-primary rounded-lg p-3 h-12 focus:outline-none bg-white text-text"
+          value={category}
+          onChange={handleCategoryChange}
         >
           <option disabled value="">
             {t("categorySelect.selectPlaceholder")}
@@ -233,7 +235,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
+          className="w-full border-2 border-primary rounded-lg p-3 h-12 focus:outline-none bg-white text-text"
           value={seatCount ?? ""}
           onChange={handleSeatCountChange}
         >
@@ -248,7 +250,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
+          className="w-full border-2 border-primary rounded-lg p-3 h-12 focus:outline-none bg-white text-text"
           value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
           onChange={handlePriceRangeChange}
         >
@@ -264,7 +266,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
+          className="w-full border-2 border-primary rounded-lg p-3 h-12 focus:outline-none bg-white text-text"
           value={homePickup}
           onChange={handleHomePickup}
         >
@@ -276,7 +278,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         </select>
 
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
+          className="w-full border-2 border-primary rounded-lg p-3 h-12 focus:outline-none bg-white text-text"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
@@ -292,20 +294,19 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
       {/* Loading Spinner */}
       {isLoading ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <SyncLoader color="#593cfb" size={10} />
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <SyncLoader color="#003366" size={12} />
         </div>
       ) : (
-        <div className="ml-1 lg:ml-2">
-          <p className="text-2xl font-bold  mt-4 lg:mt-8">
-            {totalCars} + cars available
+        <div>
+          <p className="text-2xl font-lato font-bold text-text mb-6">
+            {totalCars}+ cars available
           </p>
-          <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
-            <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
-              <CarsData cars={cardata}></CarsData>
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div className="overflow-y-auto h-[calc(100vh-200px)] pr-4 space-y-6">
+              <CarsData cars={cardata} />
             </div>
-
-            <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
+            <div className="h-[calc(100vh-200px)] sticky top-0 rounded-lg overflow-hidden shadow-lg">
               <MapComponent cars={cars} userLocation={userLocation} />
             </div>
           </div>
@@ -313,23 +314,20 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       )}
 
       {/* Pagination */}
-      <div className="mx-auto text-center m-16">
+      <div className="flex justify-center items-center space-x-4 my-8">
         <button
-          className="btn btn-active btn-primary mr-4 rounded-md"
+          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span>
-          {" "}
-          Page {currentPage} of {totalPages}{" "}
+        <span className="text-text font-lato">
+          Page {currentPage} of {totalPages}
         </span>
         <button
-          className="btn btn-active btn-primary ml-4 rounded-md"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
           Next

@@ -69,7 +69,7 @@ const BrowseByDestination: React.FC = () => {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 <div 
-                  className="h-64 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  className="h-64 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                   style={{ backgroundImage: `url(${destination.image})` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
@@ -97,11 +97,11 @@ const BrowseByDestination: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <style>{`
+      {/* <style>{`
         .swiper-wrapper {
           margin: 20px 0;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };

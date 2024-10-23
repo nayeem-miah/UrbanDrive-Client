@@ -105,12 +105,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
           transactionId: paymentIntent.id,
           amount: price,
           purchaseDate: new Date(),
-          expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // এক বছরের মেয়াদ
+          expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
           membershipPlan:planName,
         };
 
         try {
            await axiosPublic.post("/membership-payment", { paymentInfo, membershipInfo });
+           await axiosPublic.patch("/update-plan", { email: user?.email, planName: planName });
           setCardSuccess(paymentIntent.id);
           toast.success(`${user?.email} payment successful for membership`);
           setTimeout(() => {

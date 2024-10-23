@@ -6,7 +6,15 @@ import useRole from "../Hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { SyncLoader } from "react-spinners";
-import { FaUserEdit, FaHeart, FaBookmark, FaUser, FaBuilding, FaCreditCard,  FaSignOutAlt } from "react-icons/fa";
+import {
+  // FaUserEdit,
+  // FaHeart,
+  FaBookmark,
+  FaUser,
+  FaBuilding,
+  FaCreditCard,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 
 type Role = "Admin" | "Host" | "User" | "";
@@ -20,15 +28,18 @@ const Navbar: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<string>("");
   const [role]: [Role, boolean, boolean] = useRole();
 
-  
-
-  const { data: userData, isLoading, isFetching } = useQuery({
+  const {
+    data: userData,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["userdata", user?.email],
     queryFn: async () => {
       const response = await axiosPublic.get(`/user/${user?.email}`);
       return response.data;
     },
   });
+  // console.log(userData)
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("i18nextLng");
@@ -63,7 +74,9 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className={`navbar px-10 fixed top-0 left-0 bg-primary z-50 transition-all duration-300 `}>
+    <nav
+      className={`navbar px-10 fixed top-0 left-0 bg-primary z-50 transition-all duration-300 `}
+    >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
           <h2 className={`text-2xl font-bold text-center `}>
@@ -88,7 +101,7 @@ const Navbar: React.FC = () => {
       </div>
 
       <div className="navbar-end">
-        {/* Language switcher */}
+        {/* Language Switcher - Desktop */}
         <div className="hidden lg:flex items-center">
           <button
             className={`font-bold ${
@@ -122,7 +135,7 @@ const Navbar: React.FC = () => {
               </div>
             </label>
             <ul className="mt-3 z-[1] p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-lg w-56">
-              <li className="hover:bg-gray-100 rounded-md">
+              {/* <li className="hover:bg-gray-100 rounded-md">
                 <Link to="/update-user" className="flex items-center p-2 text-gray-700">
                   <FaUserEdit className="mr-2" /> {t("updateUser")}
                 </Link>
@@ -131,7 +144,7 @@ const Navbar: React.FC = () => {
                 <Link to="/favorite" className="flex items-center p-2 text-gray-700">
                   <FaHeart className="mr-2" /> {t("Favorite")}
                 </Link>
-              </li>
+              </li> */}
               <li className="hover:bg-gray-100 rounded-md">
                 <Link to="/booked" className="flex items-center p-2 text-gray-700">
                   <FaBookmark className="mr-2" /> {t("Bookings")}
@@ -203,14 +216,18 @@ const Navbar: React.FC = () => {
         {/* Language Switcher - Mobile */}
         <div className="flex items-center mb-8">
           <button
-            className={`font-bold ${currentLanguage === "en" ? "text-secondary" : "text-gray-800"}`}
+            className={`font-bold ${
+              currentLanguage === "en" ? "text-secondary" : "text-gray-800"
+            }`}
             onClick={() => changeLanguage("en")}
           >
             English
           </button>
           <span className="mx-2 text-gray-800">|</span>
           <button
-            className={`font-bold ${currentLanguage === "bn" ? "text-secondary" : "text-gray-800"}`}
+            className={`font-bold ${
+              currentLanguage === "bn" ? "text-secondary" : "text-gray-800"
+            }`}
             onClick={() => changeLanguage("bn")}
           >
             বাংলা
@@ -218,7 +235,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Links */}
-        <ul className="space-y-8 font-Merri text-center">
+        <ul className="space-y-4 font-Merri text-center">
           {navLinks.map((link, index) => (
             <li
               key={link.id}
@@ -229,7 +246,7 @@ const Navbar: React.FC = () => {
             >
               <Link
                 to={`/${link.id}`}
-                className="text-4xl font-bold text-text hover:text-primary transition-colors duration-300"
+                className="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors duration-300"
                 onClick={() => setToggle(false)}
               >
                 {link.title}
@@ -242,7 +259,10 @@ const Navbar: React.FC = () => {
             <li className="space-y-4 text-center">
               <div className="avatar mb-4">
                 <div className="w-24 rounded-full ring ring-primary">
-                  <img src={userData?.photoURL || user?.photoURL || ""} alt="User avatar" />
+                  <img
+                    src={userData?.photoURL || user?.photoURL || ""}
+                    alt="User avatar"
+                  />
                 </div>
               </div>
               <Link
@@ -264,7 +284,7 @@ const Navbar: React.FC = () => {
                   logOut();
                   setToggle(false);
                 }}
-                className="text-2xl font-bold text-accent hover:text-primary transition-colors duration-300"
+                className="text-2xl font-bold text-red-500 hover:text-red-600 transition-colors duration-300"
               >
                 Logout
               </button>

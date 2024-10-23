@@ -7,8 +7,6 @@ import ErrorPage from "../Pages/ErrorPage";
 import Registration from "../Pages/Login/Registration/Registration";
 import Contact from "../Pages/Contact/Contact";
 import CarDetails from "../Pages/CarDetails/CarDetails";
-
-import PaymentPage from "../Components/PaymentSystem/PaymentPage";
 import Dashboard from "../Layouts/Dashboard";
 import OnboardCheckout from "../Pages/OnboardCheckout/OnboardCheckout";
 import PaymetHistory from "../Components/PaymentSystem/paymetHistory";
@@ -28,6 +26,10 @@ import Favorite from "../Components/UserDashboard/Favorite";
 import Booked from "../Components/UserDashboard/Booked";
 import Membership from "../Components/Membership/Membership";
 import Cars from "../Components/Cars";
+import HostOverview from "../Pages/Dashboard/Host/HostOverview";
+import HostManageBookings from "../Pages/Dashboard/Host/HostManageBookings";
+import HostPayments from "../Pages/Dashboard/Host/HostPayments";
+import RequestAdvertisement from "../Pages/Dashboard/Host/RequestAdvertisement";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +62,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/services",
-        element: <Cars ></Cars>,
+        element: <Cars></Cars>,
       },
       {
         path: "/hostingForm",
@@ -77,18 +79,6 @@ const router = createBrowserRouter([
       {
         path: "/membership-duration/:planName/:price",
         element: <MembershipDuration></MembershipDuration>,
-      },
-      {
-        path: "/payment/:planName/:totalPrice",
-        element: <PaymentPage></PaymentPage>,
-      },
-      {
-        path: "/payment/:totalPrice",
-        element: (
-          // <PrivetRouts>
-          <PaymentPage></PaymentPage>
-          // </PrivetRouts>
-        ),
       },
     ],
   },
@@ -116,20 +106,20 @@ const router = createBrowserRouter([
     element: <Cancel />,
   },
   {
-    path: 'payment-history',
-    element: <PaymetHistory/>
+    path: "payment-history",
+    element: <PaymetHistory />,
   },
   {
     path: "/profile",
-    element: <Profile />
+    element: <Profile />,
   },
   {
     path: "/favorite",
-    element: <Favorite />
+    element: <Favorite />,
   },
   {
     path: "/booked",
-    element: <Booked />
+    element: <Booked />,
   },
   {
     path: "/dashboard",
@@ -158,6 +148,22 @@ const router = createBrowserRouter([
       {
         path: "manageMemberShip",
         element: <ManageMemberShip />,
+      },
+      {
+        path: "hostOverview",
+        element: <HostOverview />,
+      },
+      {
+        path: "myCars",
+        element: <HostManageBookings />,
+      },
+      {
+        path: "hostPayments",
+        element: <HostPayments />,
+      },
+      {
+        path: "requestAdvertise",
+        element: <RequestAdvertisement/>
       },
     ],
   },
