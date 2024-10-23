@@ -6,9 +6,9 @@ import Footer from "../Footer";
 
 interface PaymentData {
   _id: string;
-  transactionId: string;
-  date: string;
-  status: "Paid" | "pending";
+  paymentId: string;
+  tran_date: string;
+  card_type: string;
 }
 
 
@@ -18,14 +18,16 @@ const PaymetHistory = () => {
     const { data: myHistory = [] } = useQuery({
         queryKey: ["myHistory"],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/myHistory/${user?.email}`);
+            const res = await axiosPublic.get(
+              `/myHistory/${user?.email}`
+            );
             return res.data;
         },
     });
     
     return (
       <>
-      <Navbar/>
+        <Navbar />
         <div className="max-w-6xl mx-auto px-4 mb-10">
           <div className="pt-16">
             <h2 className="text-3xl font-bold mb-6 text-center underline mt-16">
@@ -46,17 +48,19 @@ const PaymetHistory = () => {
                     <th>#</th>
                     <th>Name</th>
                     <th>Transaction Id</th>
+                    <th>Transaction Id</th>
                     <th>Date</th>
                     {/* <th>Status</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {myHistory.map((item : PaymentData, idx : number) => (
+                  {myHistory.map((item: PaymentData, idx: number) => (
                     <tr key={item._id}>
                       <th>{idx + 1}</th>
                       <td>{user?.displayName}</td>
-                      <td>{item.transactionId}</td>
-                      <td>{item.date}</td>
+                      <td>{item?.paymentId}</td>
+                      <td>{item?.card_type}</td>
+                      <td>{item?.tran_date}</td>
                       {/* <td
                         className={`inline-flex items-center justify-center font-bold`}
                       >
@@ -79,7 +83,7 @@ const PaymetHistory = () => {
             </div>
           )}
         </div>
-        <Footer/>
+        <Footer />
       </>
     );
 };
