@@ -106,11 +106,11 @@ const AdminHome: React.FC = () => {
 
       {/* chart */}
       <div className="py-9 lg:py-11">
-        <h3>{piOptions.title} </h3>
+        <h3 className="py-8 font-bold">{piOptions.title} </h3>
         {/* pi charts */}
         <DynamicPieChart />
         {/* line chart */}
-        <h3>{lineOptions.title} </h3>
+        <h3 className="py-8 font-bold">{lineOptions.title} </h3>
 
         <DynamicLineChart/>
       </div>
