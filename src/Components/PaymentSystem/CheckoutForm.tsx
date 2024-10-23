@@ -105,7 +105,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, planName }) => {
           transactionId: paymentIntent.id,
           amount: price,
           purchaseDate: new Date(),
-          expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // এক বছরের মেয়াদ
+          expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
           membershipPlan:planName,
         };
 
