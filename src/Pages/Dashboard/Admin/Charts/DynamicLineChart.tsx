@@ -26,24 +26,22 @@ const DynamicLineChart: React.FC = () => {
                 return;
             }
 
-            // Find the minimum start date to calculate days from
             const minDate = Math.min(...bookings.map(item => new Date(item.startDate).getTime()));
 
-            // Map the fetched data to the format required for the chart
+        //    console.log(minDate);
             const chartData = bookings.map(item => {
                 const date = new Date(item.startDate);
-                const formattedDate = date.toLocaleDateString(); // Format the date for x-axis
-                return [formattedDate, item.amount]; // Use formatted date for the x-axis
+                const formattedDate = date.toLocaleDateString();
+                return [formattedDate, item.amount];
             });
 
             // Set the chart data
             setData(prevData => [...prevData, ...chartData]);
         } catch (error: unknown) {
-            // Type assertion to access error message safely
             if (error instanceof Error) {
                 setError("Error fetching data: " + error.message);
             } else {
-                setError("An unknown error occurred."); // Handle unknown error type
+                setError("An unknown error occurred.");
             }
             console.error('Error fetching data:', error);
         } finally {
