@@ -25,7 +25,7 @@ const Success: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           Thank you for your payment. Your transaction was completed
-          successfully.
+          successfully.!!!
         </motion.p>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
