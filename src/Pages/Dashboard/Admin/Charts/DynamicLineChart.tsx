@@ -1,60 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
-import axios from 'axios'; // Importing Axios
+import useAxiosPublic from '../../../../Hooks/useAxiosPublic';
 
 interface BookingData {
-  startDate: string; // The date property from your API
-  amount: number;    // The amount property for the price
+    startDate: string;
+    amount: number;
 }
 
 const DynamicLineChart: React.FC = () => {
-  const [data, setData] = useState<(string | number)[][]>([
-    ['Days', 'Price'], // Initial headers
-  ]);
+    const [data, setData] = useState<(string | number)[][]>([
+        ['Days', 'Price'],
+    ]);
+    const axiosPublic = useAxiosPublic()
 
-  // Function to fetch data from the API using Axios
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/bookings-data');
-      const bookings: BookingData[] = response.data; // Axios returns data in the response object
-// console.log(bookings);
-      // Map the fetched data to the format required for the chart
-      const chartData = bookings.map(item => {
-        const date = new Date(item.startDate); // Parse the date
-        const day = date.toLocaleDateString(); // Format the date as needed
-        return [day, item.amount]; // Use amount for the price
-      });
+    const fetchData = async () => {
+        try {
+            const response = await axiosPublic.get('/bookings-data');
+            const bookings: BookingData[] = response.data;
+            const chartData = bookings.map(item => {
+                const date = new Date(item.startDate);
+                const day = date.toLocaleDateString();
+                return [day, item.amount];
+            });
 
-      setData(prevData => [...prevData, ...chartData]); // Update the chart data
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+            setData(prevData => [...prevData, ...chartData]);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-  useEffect(() => {
-    fetchData(); // Fetch data when the component mounts
-  }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-  // Chart options
-  const options = {
-    title: 'Price Over Days',
-    curveType: 'function',
-    legend: { position: 'bottom' },
-    hAxis: { title: 'Days' }, // X-axis labeled as 'Days'
-    vAxis: { title: 'Price (in $)' }, // Y-axis labeled as 'Price'
-  };
+    const options = {
+        title: 'Price Over Days',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        hAxis: { title: 'Days' },
+        vAxis: { title: 'Price (in $)' },
+    };
 
-  return (
-    <div>
-      <Chart
-        chartType="LineChart"
-        width="100%"
-        height="400px"
-        data={data}
-        options={options}
-      />
-    </div>
-  );
+    return (
+        <div>
+            <Chart
+                chartType="LineChart"
+                width="100%"
+                height="400px"
+                data={data}
+                options={options}
+            />
+        </div>
+    );
 };
 
 export default DynamicLineChart;
