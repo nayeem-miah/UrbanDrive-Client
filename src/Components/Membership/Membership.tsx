@@ -104,60 +104,20 @@ const Membership: React.FC = () => {
                 {/* Use translated "month" */}
               </p>
 
-<<<<<<< HEAD
-        {/* Display loader while data is loading */}
-        {isLoading ? (
-          <div className="min-h-screen flex items-center justify-center">
-            <SyncLoader color="#593cfb" size={10} />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Map over the membership data and dynamically render plans */}
-            {membershipdata.map((membership: any) => (
-              <div
-                key={membership._id}
-                className="bg-[#fdfcfb] rounded-lg shadow-lg p-6"
-              >
-                <h2 className="text-2xl font-bold mb-4 text-gray-700">
-                  {t(`membership.${membership.planName}`)}{" "}
-                  {/* Dynamically translate the plan name */}
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  {t(`membership.${membership.description}`)}{" "}
-                  {/* Dynamically translate the description */}
-                </p>
-                <p className="text-xl font-bold text-gray-800 mb-4">
-                  ${membership.price} / {t("month")}{" "}
-                  {/* Use translated "month" */}
-                </p>
-                <ul className="list-disc list-inside mb-6 text-gray-600">
-                  {membership?.features?.map((feature: string, index: number) => (
-                    <li key={index}>{t(`membership.features.${feature}`)}</li> // Dynamically translate features
-                  ))}
-                </ul>
-                <Link
-                  to={`/membership-duration/${membership.planName}/${membership.price}`}
-                >
-                  <button className="w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
-                    {t("buy_now")} {/* Translatable Buy Now button */}
-                  </button>
-                </Link>
-=======
->>>>>>> a0f9d26fe2b9d9cdbf36aab3cc5cceec29bbbb8b
               </div>
               <div className="flex-grow mb-4">
               <p className="text-gray-600 mb-4">
                 {t(`membership.${membership.description}`)}{" "}
                 {/* Dynamically translate the description */}
               </p>
-             
+
               <p className="text-gray-600 mb-2 font-bold">
                 {membership.discount} {t("discount")}
               </p>
               <p className="text-gray-600 mb-2 font-bold">
                 {t("tissueFree")}
               </p>
-              
+
               <p className="text-gray-600 mb-2">
   <span className="font-bold">{t("cardamage_responsibility")}:</span> {membership.carDamageResponsibility}
 </p>
@@ -178,8 +138,8 @@ const Membership: React.FC = () => {
               )}
 
               </div>
-              
-              
+
+
               <Link
                    to={`/membership-duration/${membership.planName}/${membership.price}`}
               >

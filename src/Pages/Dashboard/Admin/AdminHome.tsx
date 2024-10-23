@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
 import { Chart } from "react-google-charts";
 import DynamicPieChart from "./Charts/DynamicPieChart";
+import DynamicLineChart from "./Charts/DynamicLineChart";
 const AdminHome: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { data = [], isLoading } = useQuery({
@@ -131,13 +132,14 @@ const AdminHome: React.FC = () => {
         <DynamicPieChart />
         {/* line chart */}
         <h3>{lineOptions.title} </h3>
-        <Chart
+        {/* <Chart
           chartType="LineChart"
           width="100%"
           height="400px"
           data={lineChartData}
         // options={lineOptions}
-        />
+        /> */}
+        <DynamicLineChart/>
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-4 text-left">
