@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaAward, FaMapLocationDot } from "react-icons/fa6";
 import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
 import { SyncLoader } from "react-spinners";
+import Navbar from "../Navbar";
 
 const Favorite: React.FC = () => {
   const axiosPublic = useAxiosPublic();
@@ -59,6 +60,7 @@ const Favorite: React.FC = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <h2 className="text-3xl font-bold font-lato lg:mt-12 lg:mb-10 lg:ml-2">
         Favorites Cars
       </h2>

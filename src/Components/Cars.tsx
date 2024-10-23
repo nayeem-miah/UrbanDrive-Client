@@ -6,6 +6,7 @@ import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
 import CarsData from "./CarsData";
 import { useTranslation } from "react-i18next";
+import Filter from "./Filter";
 
 
 const Cars: React.FC = () => {
@@ -93,7 +94,7 @@ const Cars: React.FC = () => {
       alert("Location permission not yet granted.");
     }
   };
-  console.log('User Location:', userLocation);
+  // console.log('User Location:', userLocation);
 
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
@@ -175,24 +176,24 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   };
 
   
-  // const formatDate = (dateString: number) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString("en-GB"); 
-  // };
+  const formatDate = (dateString: number) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB"); 
+  };
 
-  // const handleNextPage = () => {
-  //   if (currentPage < totalPages) {
-  //     setCurrentPage(currentPage + 1);
-  //     refetch(); 
-  //   }
-  // };
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      refetch(); 
+    }
+  };
 
-  // const handlePreviousPage = () => {
-  //   if (currentPage > 1) {
-  //     setCurrentPage(currentPage - 1);
-  //     refetch();
-  //   }
-  // };
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
   // console.log(totalCars);
   // console.log(formatDate(123));
   // console.log(handleNextPage());
@@ -289,6 +290,7 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
           <option value="date-asc">{t("sortOptions.dateAsc")}</option>
         </select>
       </div>
+     
 
       {/* Loading Spinner */}
       {isLoading ? (
