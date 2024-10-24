@@ -1,14 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
-import useRole from "../Hooks/useRole";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { MdCardMembership, MdPayment } from "react-icons/md";
 import { AiFillMedicineBox } from "react-icons/ai";
-import React from "react";
 import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
 import { SyncLoader } from "react-spinners";
+import useRole from "../Hooks/useRole";
+import React from "react";
 
 type Role = "Admin" | "Host" | "";
 
@@ -23,105 +23,202 @@ const Dashboard: React.FC = () => {
     );
   }
 
-  // console.log(role)
   return (
-    <div className="flex">
-      <div className="w-64 min-h-screen bg-primary pt-8">
-        <div>
-          {/* <img className="ml-2 w-[70px] lg:w-[80px]" src={img} alt="logo" /> */}
-          <h2 className="text-2xl font-bold text-center">
-            <span className="text-white">U</span>
-            <span className="text-secondary">rban</span>
-            <span className="text-white">Drive</span>
+    <div className="flex min-h-screen bg-background">
+      <aside className="w-64 bg-primary shadow-lg">
+        <div className="px-6 py-8">
+          <h2 className="text-2xl font-bold text-white text-center">
+            <span className="text-accent">U</span>rban
+            <span className="text-accent">Drive</span>
           </h2>
-          <ul className="menu space-y-1 mt-3 text-base font-medium text-white">
-            {/* Admin Section */}
-            {role === "Admin" && (
-              <>
-                <li>
-                  <NavLink to="/dashboard/adminHome">
-                    <TfiLayoutGrid2 />
-                    Overview
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/manageUser">
-                    <FaUserAlt />
-                    Manage users
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/cars">
-                    <FaCarRear />
-                    Manage Cars
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/paymentHistory">
-                    <FaCoins /> Payment History
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/bookings">
-                    <TbBrandBooking />
-                    Bookings
-                  </NavLink>
-                </li>
-                <li className="mb-2">
-                  <NavLink to="/dashboard/manageMemberShip">
-                    <MdCardMembership /> Manage Membership
-                  </NavLink>
-                </li>
-              </>
-            )}
-
-            {/* Host Section */}
-            {role === "Host" && (
-              <>
-                <li>
-                  <NavLink to="/dashboard/hostOverview">
-                    <TfiLayoutGrid2 />
-                    Overview
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/myCars">
-                  <FaCarRear />
-                    Manage cars
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/hostManageBookings">
-                    <AiFillMedicineBox />
-                    Manage Bookings
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/hostPayments">
-                    <MdPayment />
-                    Payment history
-                  </NavLink>
-                </li>
-                <li className="mb-2">
-                  <NavLink to="/dashboard/requestAdvertise">
-                    <RiAdvertisementLine /> Manage banner advertise
-                  </NavLink>
-                </li>
-              </>
-            )}
-            <hr />
-
-            <li>
-              <NavLink to="/">
-                <FaHome /> Home
-              </NavLink>
-            </li>
-          </ul>
         </div>
-      </div>
-      <div className="flex-1 p-4 lg:p-8">
-        <Outlet />
-      </div>
+
+        <nav className="px-4 py-4">
+          {role === "Admin" && (
+            <div className="space-y-2">
+              <NavLink
+                to="/dashboard/adminHome"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <TfiLayoutGrid2 className="w-4 h-4" />
+                Overview
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/manageUser"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <FaUserAlt className="w-4 h-4" />
+                Manage Users
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/cars"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <FaCarRear className="w-4 h-4" />
+                Manage Cars
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/paymentHistory"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <FaCoins className="w-4 h-4" />
+                Payment History
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/bookings"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <TbBrandBooking className="w-4 h-4" />
+                Bookings
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/manageMemberShip"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <MdCardMembership className="w-4 h-4" />
+                Manage Membership
+              </NavLink>
+            </div>
+          )}
+
+          {role === "Host" && (
+            <div className="space-y-2">
+              <NavLink
+                to="/dashboard/hostOverview"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <TfiLayoutGrid2 className="w-4 h-4" />
+                Overview
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/myCars"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <FaCarRear className="w-4 h-4" />
+                Manage Cars
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/hostManageBookings"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <AiFillMedicineBox className="w-4 h-4" />
+                Manage Bookings
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/hostPayments"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <MdPayment className="w-4 h-4" />
+                Payment History
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/requestAdvertise"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`
+                }
+              >
+                <RiAdvertisementLine className="w-4 h-4" />
+                Manage Advertisements
+              </NavLink>
+            </div>
+          )}
+
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                  isActive
+                    ? 'bg-white/10 text-white'
+                    : 'text-white/80 hover:bg-white/5 hover:text-white'
+                }`
+              }
+            >
+              <FaHome className="w-4 h-4" />
+              Home
+            </NavLink>
+          </div>
+        </nav>
+      </aside>
+
+      <main className="flex-1 overflow-auto">
+        <div className="p-8">
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 };

@@ -24,7 +24,7 @@ const DynamicLineChartHost: React.FC = () => {
 
             // Ensure there are bookings to process
             if (bookings.length === 0) {
-                setError("No booking data available.");
+                setError("No booking data available.!!!. so line chart is not available...");
                 setLoading(false);
                 return;
             }

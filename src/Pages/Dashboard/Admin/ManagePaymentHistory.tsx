@@ -29,61 +29,46 @@ const formatDate = (dateString: string) => {
   });
 };
   return (
-    <div>
-      <div>
-        <div className="mt-4">
-          <h2 className="text-3xl font-bold mb-6 text-center underline">
-            Payment History
+    <div className="bg-background text-text font-poppins">
+      <div className="mt-4">
+        <h2 className="text-3xl font-bold mb-6 text-primary">
+          Payment History
+        </h2>
+      </div>
+      {paymentHistory.length === 0 ? (
+        <div className="h-screen-minus-20px flex items-center justify-center">
+          <h2 className="text-3xl font-bold">
+            You have not purchased anything yet...
           </h2>
         </div>
-        {paymentHistory.length === 0 ? (
-          <div className="h-screen-minus-20px flex items-center justify-center">
-            <h2 className="text-3xl font-bold">
-              You have not purchased anything yet...
-            </h2>
-          </div>
-        ) : (
-          <div className="overflow-x-auto border rounded mt-16">
-            <table className="table font-medium">
-              <thead className="bg-primary text-white">
-                <tr className="text-base">
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Transaction Id</th>
-                  <th>Date</th>
-                  {/* <th>Status</th> */}
+      ) : (
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="text-left border-b border-gray-200">
+                  <th className="pb-3 text-[#003366]">#</th>
+                  <th className="pb-3 text-[#003366]">Name</th>
+                  <th className="pb-3 text-[#003366]">Transaction Id</th>
+                  <th className="pb-3 text-[#003366]">Card Type</th>
+                  <th className="pb-3 text-[#003366]">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {paymentHistory.map((item: PaymentData, idx: number) => (
-                  <tr key={item._id}>
-                    <th>{idx + 1}</th>
-                    <td>{item?.name}</td>
-                    <td>{item?.paymentId}</td>
-                    <td>{item?.card_type}</td>
-                    <td>{formatDate(item?.tran_date)}</td>
-                    {/* <td
-                        className={`inline-flex items-center justify-center font-bold`}
-                      >
-                        <p
-                          className={`font-medium rounded-lg ${
-                            item?.status === "Paid" &&
-                            "bg-emerald-100/60 p-2 text-emerald-500"
-                          } ${
-                            item?.status === "pending" &&
-                            "text-yellow-500 p-2 font-bold bg-yellow-100/60"
-                          }  `}
-                        >
-                          {item.status}
-                        </p>
-                      </td> */}
+                  <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-4">{idx + 1}</td>
+                    <td className="py-4">{item?.name}</td>
+                    <td className="py-4">{item?.paymentId}</td>
+                    <td className="py-4">{item?.card_type}</td>
+                    <td className="py-4">{formatDate(item?.tran_date)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

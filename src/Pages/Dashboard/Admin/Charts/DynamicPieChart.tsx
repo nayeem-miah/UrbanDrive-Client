@@ -34,7 +34,7 @@ const DynamicPieChart: React.FC = () => {
                 const response = await axiosPublic.get<BookingData[]>("/bookings-data");
                 const bookingData = response.data;
                 if (bookingData.length === 0) {
-                    setError("No booking data available.!!!");
+                    setError("No booking data available.!!!. so pi chart is not available...");
                     setLoading(false);
                     return;
                 }

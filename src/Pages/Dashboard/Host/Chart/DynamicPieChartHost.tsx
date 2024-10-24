@@ -37,7 +37,7 @@ const DynamicPieChartHost: React.FC = () => {
                 const bookingData = response.data;
                 // Ensure there are bookings to process
             if (bookingData.length === 0) {
-                setError("No booking data available.!!!");
+                setError("No booking data available.!!!. so pi chart is not available...");
                 setLoading(false);
                 return;
             }

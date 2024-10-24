@@ -8,7 +8,7 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from 'react-hot-toast';
-import { imageUpload } from '../../Utils/ImageUpload';
+import { imageUpload } from '../../utils/ImageUpload';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { ImSpinner9 } from 'react-icons/im';
 
@@ -194,7 +194,7 @@ const OnboardCheckout: React.FC = () => {
         return (
           <div>
             <EmailVerification email={userInfo.email} onVerified={() => setIsEmailVerified(true)} />
-            <button onClick={handleSkipEmailVerification} className="mt-4 text-blue-600">Skip Email Verification</button>
+            <button onClick={handleSkipEmailVerification} className="mt-4 text-secondary">Skip Email Verification</button>
           </div>
         );
       case 1:
@@ -202,13 +202,12 @@ const OnboardCheckout: React.FC = () => {
           <div>
             <label htmlFor="phoneNumber" className="block font-semibold mb-2">Phone Number</label>
             <input
-
               type="tel"
               name="phoneNumber"
               value={userInfo.phoneNumber}
               onChange={handleChange}
               placeholder="Enter your mobile number"
-              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
+              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-secondary hover:shadow-lg hover:border-secondary bg-background"
               required
             />
           </div>
@@ -221,16 +220,16 @@ const OnboardCheckout: React.FC = () => {
               type="file"
               name="driversLicense"
               onChange={handleChange}
-              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
+              className="text-sm custom-input w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-secondary hover:shadow-lg hover:border-secondary bg-background"
             />
-            <button onClick={handleSkipDriversLicense} className="mt-4 text-blue-600">Skip Driver's License</button>
+            <button onClick={handleSkipDriversLicense} className="mt-4 text-secondary">Skip Driver's License</button>
           </div>
         );
 
       case 3:
         return bookingDetails ? (
-          <div className="p-6 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-4 text-indigo-600">Review Your Information</h2>
+          <div className="p-6 bg-background rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4 text-primary">Review Your Information</h2>
             <div className="space-y-2">
               <p className="text-lg"><span className="font-bold">Start Date:</span> {new Date(bookingDetails.startDate).toLocaleDateString()}</p>
               <p className="text-lg"><span className="font-bold">End Date:</span> {new Date(bookingDetails.endDate).toLocaleDateString()}</p>
@@ -240,15 +239,15 @@ const OnboardCheckout: React.FC = () => {
               <p className="text-lg"><span className="font-bold">Driver's License:</span> {skipDriversLicense ? 'Skipped' : userInfo.driversLicense ? 'Uploaded' : 'Not uploaded'}</p>
             </div>
             <div>
-              <button onClick={handlePayment} className={`w-full bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
+              <button onClick={handlePayment} className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
                 {
-                  isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-green-600" /> : "Payment Now"
+                  isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-accent" /> : "Payment Now"
                 }
               </button>
             </div>
           </div>
         ) : (
-          <p className="text-center text-gray-500">Loading booking details...</p>
+          <p className="text-center text-text">Loading booking details...</p>
         );
       default:
         return null;
@@ -262,8 +261,9 @@ const OnboardCheckout: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Complete Your Booking</h1>
+    <div className='bg-white'>
+      <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-primary decoration-2 text-primary">Complete Your Booking</h1>
 
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="flex flex-col lg:flex-row w-full">
@@ -280,24 +280,24 @@ const OnboardCheckout: React.FC = () => {
               {currentStep > 0 && (
                 <button
                   onClick={handlePreviousStep}
-                  className="bg-gray-600 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors"
+                  className="bg-text text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors"
                 >
                   <span className="mr-2">←</span> Previous
                 </button>
               )}
               <button
                 onClick={currentStep === steps.length - 1 ? handleSubmit : handleNextStep}
-                className='px-6 py-2 rounded-md transition-colors text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+                className='px-6 py-2 rounded-md transition-colors text-white bg-primary hover:bg-secondary cursor-pointer'
               >
                 {currentStep === steps.length - 1 ? 'Submit' : 'Next'}
                 <span className="ml-2">{currentStep === steps.length - 1 ? '' : '→'}</span>
               </button>
-
             </div>
           </div>
         </div>
       </div>
       <Toaster />
+    </div>
     </div>
   );
 };
