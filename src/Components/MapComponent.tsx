@@ -70,7 +70,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ cars = [], userLocation }) 
   return (
     <div className="relative h-full w-full">
       {/* Legend Overlay */}
-      <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-4 transition-all duration-300 hover:bg-white">
+      <div className="absolute top-4 right-4 z-[1000] bg-white rounded-lg shadow-lg p-4">
         <div className="flex items-center space-x-2 mb-3 text-primary font-semibold">
           <LuNavigation className="w-5 h-5" />
           <span>Map Guide</span>
