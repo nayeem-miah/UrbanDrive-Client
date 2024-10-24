@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import useRole from "../Hooks/useRole";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { SyncLoader } from "react-spinners";
+// import { useQuery } from "@tanstack/react-query";
+// import useAxiosPublic from "../Hooks/useAxiosPublic";
+// import { SyncLoader } from "react-spinners";
 import {
   // FaUserEdit,
   // FaHeart,
@@ -16,11 +16,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import { FaCircleUser, FaHeart } from "react-icons/fa6";
 
 type Role = "Admin" | "Host" | "User" | "";
 
 const Navbar: React.FC = () => {
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
   const [toggle, setToggle] = useState(false);
 
   const { user, logOut } = useAuth();
@@ -28,17 +29,17 @@ const Navbar: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<string>("");
   const [role]: [Role, boolean, boolean] = useRole();
 
-  const {
-    data: userData,
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ["userdata", user?.email],
-    queryFn: async () => {
-      const response = await axiosPublic.get(`/user/${user?.email}`);
-      return response.data;
-    },
-  });
+  // const {
+  //   data: userData,
+  //   isLoading,
+  //   isFetching,
+  // } = useQuery({
+  //   queryKey: ["userdata", user?.email],
+  //   queryFn: async () => {
+  //     const response = await axiosPublic.get(`/user/${user?.email}`);
+  //     return response.data;
+  //   },
+  // });
   // console.log(userData)
 
   useEffect(() => {
@@ -65,13 +66,13 @@ const Navbar: React.FC = () => {
     { id: "contact", title: t("Contact") },
   ];
 
-  if (isLoading || isFetching) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <SyncLoader color="#593cfb" size={isLoading ? 18 : 10} />
-      </div>
-    );
-  }
+  // if (isLoading || isFetching) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <SyncLoader color="#593cfb" size={isLoading ? 18 : 10} />
+  //     </div>
+  //   );
+  // }
 
   return (
     <nav
@@ -91,7 +92,7 @@ const Navbar: React.FC = () => {
             <li key={link.id}>
               <Link
                 to={`/${link.id}`}
-                className="text-lg text-gray-200 font-bold hover:text-secondary underline-offset-4 hover:underline transition-colors duration-300 focus:text-secondary"
+                className="text-lg text-gray-200 font-medium hover:text-secondary underline-offset-4 hover:underline transition-colors duration-300 focus:text-secondary"
               >
                 {link.title}
               </Link>
@@ -122,94 +123,141 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* User menu or login button */}
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full border-2 border-white shadow-lg">
-                <img  
-                  src={userData?.photoURL || user?.photoURL || ""}
-                  className="rounded-full w-32 h-32"
-                  alt="User avatar"
-                />
-              </div>
-            </label>
-            <ul className="mt-3 z-[1] p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-lg w-56">
-              {/* <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/update-user" className="flex items-center p-2 text-gray-700">
-                  <FaUserEdit className="mr-2" /> {t("updateUser")}
-                </Link>
-              </li>
-              <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/favorite" className="flex items-center p-2 text-gray-700">
-                  <FaHeart className="mr-2" /> {t("Favorite")}
-                </Link>
-              </li> */}
-              <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/booked" className="flex items-center p-2 text-gray-700">
-                  <FaBookmark className="mr-2" /> {t("Bookings")}
-                </Link>
-              </li>
-              <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/profile" className="flex items-center p-2 text-gray-700">
-                  <FaUser className="mr-2" /> {t("Profile")}
-                </Link>
-              </li>
-              <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/hostingForm" className="flex items-center p-2 text-gray-700">
-                  <FaBuilding className="mr-2" /> {t("becomeHost")}
-                </Link>
-              </li>
-              <li className="hover:bg-gray-100 rounded-md">
-                <Link to="/payment-history" className="flex items-center p-2 text-gray-700">
-                  <FaCreditCard className="mr-2" /> {t("payment")}
-                </Link>
-              </li>
-              {role === "Admin" && (
+        {/* Desktop Menu */}
+        <div className="hidden lg:block">
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full border-2 border-white shadow-lg">
+                  {user?.photoURL ? (
+                    <img
+                      src={user?.photoURL}
+                      className="rounded-full w-32 h-32"
+                      alt="User avatar"
+                    />
+                  ) : (
+                    <FaCircleUser className="w-32 h-32" />
+                  )}
+                </div>
+              </label>
+              <ul className="mt-3 z-[1] p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-lg w-56">
+                {/* <li className="hover:bg-gray-100 rounded-md">
+                  <Link
+                    to="/update-user"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaUserEdit className="mr-2" /> {t("updateUser")}
+                  </Link>
+                </li> */}
                 <li className="hover:bg-gray-100 rounded-md">
-                  <Link to="/dashboard/adminhome" className="flex items-center p-2 text-gray-700">
-                    <MdDashboard className="mr-2" /> {t("dashboard")}
+                  <Link
+                    to="/favorite"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaHeart className="mr-2" /> {t("Favorite")}
                   </Link>
                 </li>
-              )}
-              <li className="hover:bg-red-100 rounded-md">
-                <button 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    logOut();
-                  }}
-                  className="flex items-center w-full p-2 text-red-600"
-                >
-                  <FaSignOutAlt className="mr-2" /> {t("logout")}
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <Link
-            to="/login"
-            className="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden text-sm font-bold text-white rounded-lg group bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-          >
-            <span className="relative">
-              {t("SignUp")}
-            </span>
-          </Link>
-        )}
-        
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link
+                    to="/booked"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaBookmark className="mr-2" /> {t("Bookings")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link
+                    to="/profile"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaUser className="mr-2" /> {t("Profile")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link
+                    to="/hostingForm"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaBuilding className="mr-2" /> {t("becomeHost")}
+                  </Link>
+                </li>
+                <li className="hover:bg-gray-100 rounded-md">
+                  <Link
+                    to="/payment-history"
+                    className="flex items-center p-2 text-gray-700"
+                  >
+                    <FaCreditCard className="mr-2" /> {t("payment")}
+                  </Link>
+                </li>
+                {role === "Admin" && (
+                  <li className="hover:bg-gray-100 rounded-md">
+                    <Link
+                      to="/dashboard/adminhome"
+                      className="flex items-center p-2 text-gray-700"
+                    >
+                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                    </Link>
+                  </li>
+                )}
+                {role === "Host" && (
+                  <li className="hover:bg-gray-100 rounded-md">
+                    <Link
+                      to="/dashboard/hostOverview"
+                      className="flex items-center p-2 text-gray-700"
+                    >
+                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                    </Link>
+                  </li>
+                )}
+                <li className="hover:bg-red-100 rounded-md">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      logOut();
+                    }}
+                    className="flex items-center w-full p-2 text-red-600"
+                  >
+                    <FaSignOutAlt className="mr-2" /> {t("logout")}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden text-sm font-bold text-white rounded-lg group bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            >
+              <span className="relative">{t("SignUp")}</span>
+            </Link>
+          )}
+        </div>
+
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden z-50 relative w-6 h-6"
           onClick={() => setToggle(!toggle)}
         >
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'rotate-45 top-3' : 'rotate-0 top-1'}`} />
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? 'opacity-0 translate-x-3' : 'opacity-100'} top-3`} />
-          <span className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${toggle ? '-rotate-45 top-3' : 'rotate-0 top-5'}`} />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "rotate-45 top-3" : "rotate-0 top-1"
+            }`}
+          />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "opacity-0 translate-x-3" : "opacity-100"
+            } top-3`}
+          />
+          <span
+            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+              toggle ? "-rotate-45 top-3" : "rotate-0 top-5"
+            }`}
+          />
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-background z-40 flex flex-col justify-center items-center transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 bg-base-100 z-40 flex flex-col justify-center items-center transition-all duration-500 lg:hidden ${
           toggle ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
@@ -235,12 +283,14 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Links */}
-        <ul className="space-y-4 font-Merri text-center">
+        <ul className="space-y-3 font-Merri text-center">
           {navLinks.map((link, index) => (
             <li
               key={link.id}
               className={`transform transition-all duration-300 ${
-                toggle ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                toggle
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
@@ -256,15 +306,15 @@ const Navbar: React.FC = () => {
 
           {/* Mobile User Menu */}
           {user ? (
-            <li className="space-y-4 text-center">
-              <div className="avatar mb-4">
+            <li className="space-y-3 text-center">
+              {/* <div className="avatar mb-4">
                 <div className="w-24 rounded-full ring ring-primary">
                   <img
-                    src={userData?.photoURL || user?.photoURL || ""}
+                    src={user?.photoURL || user?.photoURL || ""}
                     alt="User avatar"
                   />
                 </div>
-              </div>
+              </div> */}
               <Link
                 to="/profile"
                 className="block text-2xl font-bold text-gray-800 hover:text-gray-600"
@@ -292,7 +342,9 @@ const Navbar: React.FC = () => {
           ) : (
             <li
               className={`transform transition-all duration-300 ${
-                toggle ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                toggle
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
               style={{ transitionDelay: `${navLinks.length * 100}ms` }}
             >

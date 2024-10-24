@@ -22,7 +22,7 @@ const AllBookings = () => {
       return res.data;
     },
   });
-  console.log(allBookings);
+  // console.log(allBookings);
   const formatDate = (dateString : string) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {

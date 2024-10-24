@@ -131,6 +131,7 @@ const AdminHome: React.FC = () => {
           </div>
         </div>
 
+
         <div className="bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-xl font-bold text-[#1F2937] mb-6">Recent Bookings</h2>
           <div className="overflow-x-auto">
@@ -141,8 +142,13 @@ const AdminHome: React.FC = () => {
                   <th className="pb-3 text-[#003366]">Location</th>
                   <th className="pb-3 text-[#003366]">Start Date</th>
                   <th className="pb-3 text-[#003366]">Amount</th>
-                </tr>
-              </thead>
+
+      
+     
+              </tr>
+            </thead>
+       
+             
               <tbody>
                 {bookings.map((item: bookings) => (
                   <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50">
