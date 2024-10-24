@@ -63,7 +63,7 @@ const DynamicLineChartHost: React.FC = () => {
     }, []);
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (error) return <div className='text-red-400'>{error}</div>;
     return (
         <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
@@ -78,7 +78,7 @@ const DynamicLineChartHost: React.FC = () => {
                     stroke="#8884d8"
                     activeDot={{ r: 8 }}
                     isAnimationActive={true}
-                    animationDuration={500} 
+                    animationDuration={500}
                 />
             </LineChart>
         </ResponsiveContainer>

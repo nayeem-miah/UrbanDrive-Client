@@ -35,7 +35,12 @@ const DynamicPieChartHost: React.FC = () => {
             try {
                 const response = await axiosPublic.get<BookingData[]>(`/hostHistory/${user?.email}`);
                 const bookingData = response.data;
-
+                // Ensure there are bookings to process
+            if (bookingData.length === 0) {
+                setError("No booking data available.!!!");
+                setLoading(false);
+                return;
+            }
                 const statusCounts = bookingData.reduce(
                     (acc, booking) => {
                         const status = booking.hostIsApproved;
@@ -71,7 +76,7 @@ const DynamicPieChartHost: React.FC = () => {
     }, [axiosPublic]);
 
     if (loading) return <ClipLoader size={50} color="#36D7B7" />; // Use a spinner for loading
-    if (error) return <div>{error}</div>;
+    if (error) return <div className="text-red-400">{error}</div>;
 
     return (
         <div>

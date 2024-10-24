@@ -33,7 +33,11 @@ const DynamicPieChart: React.FC = () => {
             try {
                 const response = await axiosPublic.get<BookingData[]>("/bookings-data");
                 const bookingData = response.data;
-
+                if (bookingData.length === 0) {
+                    setError("No booking data available.!!!");
+                    setLoading(false);
+                    return;
+                }
                 const statusCounts = bookingData.reduce(
                     (acc, booking) => {
                         const status = booking.hostIsApproved;
