@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import useAxiosPublic from '../../../../Hooks/useAxiosPublic';
+import useAuth from '../../../../Hooks/useAuth';
 
 interface BookingData {
     startDate: string;
@@ -12,12 +13,13 @@ const DynamicLineChartHost: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string | null>(null); // Error state
     const axiosPublic = useAxiosPublic();
+    const { user } = useAuth()
 
     const fetchData = async () => {
         setLoading(true); // Start loading
         setError(null); // Reset error state
         try {
-            const response = await axiosPublic.get('/bookings-data');
+            const response = await axiosPublic.get(`/hostHistory/${user?.email}`);
             const bookings: BookingData[] = response.data;
 
             // Ensure there are bookings to process
