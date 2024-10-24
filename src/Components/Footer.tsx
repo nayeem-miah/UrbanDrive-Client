@@ -15,8 +15,8 @@ const Footer: React.FC = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "text-[#3a37e4]  font-bold hover:underline"
-              : "font-bold hover:underline text-[#3a37e4]"
+              ? "text-primary font-bold hover:underline"
+              : "font-bold hover:underline text-primary"
           }
         >
           {t("home")}
@@ -39,8 +39,8 @@ const Footer: React.FC = () => {
           to="/about"
           className={({ isActive }) =>
             isActive
-              ? "text-[#3a37e4] font-bold hover:underline"
-              : "font-bold hover:underline text-[#3a37e4]"
+              ? "text-primary font-bold hover:underline"
+              : "font-bold hover:underline text-primary"
           }
         >
           <h2>{t("about_urban_drive")}</h2>
@@ -64,8 +64,8 @@ const Footer: React.FC = () => {
           to="/Services"
           className={({ isActive }) =>
             isActive
-              ? "text-[#3a37e4] font-bold hover:underline "
-              : "font-bold text-[#3a37e4]  hover:underline"
+              ? "text-primary font-bold hover:underline "
+              : "font-bold text-primary  hover:underline"
           }
         >
           {t("services")}
@@ -86,8 +86,8 @@ const Footer: React.FC = () => {
           to="/contact"
           className={({ isActive }) =>
             isActive
-              ? "text-[#3a37e4] font-bold hover:underline"
-              : "font-bold hover:underline text-[#3a37e4]"
+              ? "text-primary font-bold hover:underline"
+              : "font-bold hover:underline text-primary"
           }
         >
           {t("contact_us")}
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
               <Link to={"/register"}>
                 <p
                   aria-label="Sign up for newsletter"
-                  className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white p-2 rounded-lg mb-6 transition-colors duration-300 hover:bg-black hover:text-white font-medium flex justify-between items-center"
+                  className="bg-gradient-to-r from-primary to-secondary text-white p-2 rounded-lg mb-6 transition-colors duration-300 hover:bg-black hover:text-white font-medium flex justify-between items-center"
                 >
                   <span>{t("sign_in")}</span>
                   <svg
