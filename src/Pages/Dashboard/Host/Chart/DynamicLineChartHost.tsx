@@ -10,13 +10,13 @@ interface BookingData {
 
 const DynamicLineChartHost: React.FC = () => {
     const [data, setData] = useState<{ date: string; price: number }[]>([]);
-    const [loading, setLoading] = useState<boolean>(true); // Loading state
-    const [error, setError] = useState<string | null>(null); // Error state
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth()
 
     const fetchData = async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         setError(null); // Reset error state
         try {
             const response = await axiosPublic.get(`/hostHistory/${user?.email}`);
@@ -54,17 +54,16 @@ const DynamicLineChartHost: React.FC = () => {
             setError("Error fetching data: " + (error.message || "Unknown error"));
             console.error('Error fetching data:', error);
         } finally {
-            setLoading(false); // End loading
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchData(); // Fetch data when the component mounts
+        fetchData();
     }, []);
 
-    if (loading) return <div>Loading...</div>; // Show loading indicator
-    if (error) return <div>{error}</div>; // Show error message
-
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
     return (
         <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
@@ -78,8 +77,8 @@ const DynamicLineChartHost: React.FC = () => {
                     dataKey="price"
                     stroke="#8884d8"
                     activeDot={{ r: 8 }}
-                    isAnimationActive={true} // Enable animation
-                    animationDuration={500} // Set animation duration
+                    isAnimationActive={true}
+                    animationDuration={500} 
                 />
             </LineChart>
         </ResponsiveContainer>
