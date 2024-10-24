@@ -39,53 +39,53 @@ const AllBookings = () => {
     );
   }
   return (
-    <div>
-      <div>
-        <div className="mt-4">
-          <h2 className="text-3xl font-bold mb-6 text-center underline">
-            All Bookings
+    <div className="bg-background text-text font-poppins">
+      <div className="mt-4">
+        <h2 className="text-3xl font-bold mb-6 text-primary">
+          All Bookings
+        </h2>
+      </div>
+      {allBookings.length === 0 ? (
+        <div className="h-screen-minus-20px flex items-center justify-center">
+          <h2 className="text-3xl font-bold">
+            No bookings have been made yet...
           </h2>
         </div>
-        {allBookings.length === 0 ? (
-          <div className="h-screen-minus-20px flex items-center justify-center">
-            <h2 className="text-3xl font-bold">
-              Any Bookings haven't done yet...
-            </h2>
-          </div>
-        ) : (
-          <div className="overflow-x-auto border rounded mt-16">
-            <table className="table table-xs font-medium">
-              <thead className="bg-primary text-white">
-                <tr className="text-base">
-                  <th>#</th>
-                  <th>User</th>
-                  <th>Location</th>
-                  <th>Phone Number</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Cost</th>
+      ) : (
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="text-left border-b border-gray-200">
+                  <th className="pb-3 text-[#003366]">#</th>
+                  <th className="pb-3 text-[#003366]">User</th>
+                  <th className="pb-3 text-[#003366]">Location</th>
+                  <th className="pb-3 text-[#003366]">Phone Number</th>
+                  <th className="pb-3 text-[#003366]">Start Date</th>
+                  <th className="pb-3 text-[#003366]">End Date</th>
+                  <th className="pb-3 text-[#003366]">Cost</th>
                 </tr>
               </thead>
               <tbody>
                 {allBookings.map(
                   (item: bookings, idx: number) =>
                     item.status === "Success" && (
-                      <tr key={item._id}>
-                        <th>{idx + 1}</th>
-                        <td>{item?.cus_email}</td>
-                        <td>{item?.location}</td>
-                        <td>{item?.cus_phoneNumber}</td>
-                        <td>{formatDate(item?.startDate)}</td>
-                        <td>{formatDate(item?.endDate)}</td>
-                        <td className="font-bold">{item?.amount}৳</td>
+                      <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-4">{idx + 1}</td>
+                        <td className="py-4">{item?.cus_email}</td>
+                        <td className="py-4">{item?.location}</td>
+                        <td className="py-4">{item?.cus_phoneNumber}</td>
+                        <td className="py-4">{formatDate(item?.startDate)}</td>
+                        <td className="py-4">{formatDate(item?.endDate)}</td>
+                        <td className="py-4 font-bold">{item?.amount}৳</td>
                       </tr>
                     )
                 )}
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
