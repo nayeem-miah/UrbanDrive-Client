@@ -71,11 +71,11 @@ const ManageMemberShip = () => {
                 {memberShip.map((item: PaymentData, idx: number) => (
                   item.status === "Success" && (<tr key={item._id}>
                     <th>{idx + 1}</th>
-                    <td>{item?.cus_name || "Roksana"}</td>
+                    <td>{item?.cus_name}</td>
                     <td>{item?.planName}</td>
                     <td>{formatDate(item?.purchaseDate)}</td>
                     <td>{formatDate(item?.expiryDate)}</td>
-                    <td className="font-bold">{item?.amount}$</td>
+                    <td className="font-bold">{item?.amount} BDT</td>
                   </tr>)
                 ))}
               </tbody>

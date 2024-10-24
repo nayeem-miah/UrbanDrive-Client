@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { SyncLoader } from "react-spinners";
-import { MdModeEdit } from "react-icons/md";
+import useAuth from "../../../Hooks/useAuth";
 
 interface CarData {
   _id: string;
@@ -14,6 +14,7 @@ interface CarData {
 
 const HostManageCars = () => {
   const axiosPublic = useAxiosPublic();
+  const {user} = useAuth();
   const {
     data: TotalCar = [],
     refetch,
@@ -21,7 +22,7 @@ const HostManageCars = () => {
   } = useQuery({
     queryKey: ["Car"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/totalCars`);
+      const res = await axiosPublic.get(`/hostHistory/${user?.email}`);
       return res.data;
     },
   });
@@ -106,8 +107,8 @@ const HostManageCars = () => {
                       >
                         Delete
                       </button>{" "}
-                      <button className="btn btn-success text-lg">
-                        <MdModeEdit />
+                      <button className="btn btn-success text-white">
+                        Edit
                       </button>
                     </td>
                   </tr>

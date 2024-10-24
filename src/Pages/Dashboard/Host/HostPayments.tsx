@@ -21,7 +21,7 @@ const HostPayments = () => {
       return res.data;
     },
   });
-  console.log(myHistory)
+  // console.log(myHistory)
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleString("en-US", {
