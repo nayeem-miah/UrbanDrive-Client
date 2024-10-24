@@ -5,9 +5,9 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 interface PaymentData {
   _id: string;
   name: string;
-  transactionId: string;
-  date: string;
-  status: "Paid" | "pending";
+  paymentId: string;
+  tran_date: string;
+  card_type: string;
 }
 
 const ManagePaymentHistory = () => {
@@ -59,8 +59,9 @@ const formatDate = (dateString: string) => {
                   <tr key={item._id}>
                     <th>{idx + 1}</th>
                     <td>{item?.name}</td>
-                    <td>{item?.transactionId}</td>
-                    <td>{formatDate(item?.date)}</td>
+                    <td>{item?.paymentId}</td>
+                    <td>{item?.card_type}</td>
+                    <td>{formatDate(item?.tran_date)}</td>
                     {/* <td
                         className={`inline-flex items-center justify-center font-bold`}
                       >
