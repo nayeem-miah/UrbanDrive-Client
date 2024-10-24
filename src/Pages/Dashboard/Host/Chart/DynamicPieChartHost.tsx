@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import { ClipLoader } from "react-spinners"; // Importing a spinner
+import useAuth from "../../../../Hooks/useAuth";
 
 interface BookingData {
     _id: string;
@@ -18,6 +19,7 @@ const DynamicPieChartHost: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const axiosPublic = useAxiosPublic();
+    const { user } = useAuth()
 
     const options = {
         title: "Booking Approval Status",
@@ -31,7 +33,7 @@ const DynamicPieChartHost: React.FC = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axiosPublic.get<BookingData[]>("/bookings-data");
+                const response = await axiosPublic.get<BookingData[]>(`/hostHistory/${user?.email}`);
                 const bookingData = response.data;
 
                 const statusCounts = bookingData.reduce(

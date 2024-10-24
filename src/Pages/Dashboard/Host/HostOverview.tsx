@@ -67,7 +67,7 @@ const HostOverview: React.FC = () => {
   };
 
   return (
-    <div className="text-2xl">
+    <div className="text-2xl ">
       <div className="mt-3">
         <h2 className="text-3xl font-bold mb-4 text-left mt-2 font-Merri">
           Overview
