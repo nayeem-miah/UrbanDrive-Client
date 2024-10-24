@@ -80,8 +80,9 @@ const Navbar: React.FC = () => {
     >
       <div className="navbar-start">
         <Link to="/" className="flex-shrink-0">
-          <h2 className={`text-2xl font-bold text-center `}>
-            Urban<span className="text-white">Drive</span>
+          <h2 className="text-2xl font-bold text-white text-center">
+            <span className="text-accent">U</span>rban
+            <span className="text-accent">Drive</span>
           </h2>
         </Link>
       </div>
