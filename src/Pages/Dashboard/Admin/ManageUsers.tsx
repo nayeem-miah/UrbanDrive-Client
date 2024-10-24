@@ -32,7 +32,7 @@ const ManageUsers = () => {
 
   const options: RoleOption[] = [
     { role: "Admin" },
-    { role: "Seller" },
+    { role: "Host" },
     { role: "User" },
   ];
 
