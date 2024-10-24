@@ -5,9 +5,9 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './style.css'
-import slide4 from '../assets/slides/slide4.png'
-import slide5 from '../assets/slides/slide5.png'
-import slide6 from '../assets/slides/slide6.png'
+import slide4 from '../assets/slides/slide7.png'
+import slide5 from '../assets/slides/slide8.jpg'
+import slide6 from '../assets/slides/slide9.jpg'
 
 import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Slide from './Slide';
