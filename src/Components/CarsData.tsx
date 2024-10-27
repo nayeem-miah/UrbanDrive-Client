@@ -24,7 +24,7 @@ const CarsData: React.FC<CarsDataProps> = ({ cars }) => {
     availability: boolean;
     model: string;
     category: string;
-    price: number;
+    rental_price_per_day: number;
     date: number;
     description: string;
     discount: number;
@@ -147,7 +147,7 @@ const CarsData: React.FC<CarsDataProps> = ({ cars }) => {
 
                   <div className="flex items-center justify-between mt-4">
                     <span className="text-primary font-bold text-lg">
-                      ${car.price}/day
+                      BDT{car?.rental_price_per_day}/day
                     </span>
                     <Link to={`/cars/${car._id}`}>
                       <button className="bg-secondary text-white text-sm px-4 py-3 font-bold drop-shadow-md rounded-lg transition-transform duration-300 hover:scale-105">

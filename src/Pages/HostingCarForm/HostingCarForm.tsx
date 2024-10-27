@@ -10,7 +10,7 @@ import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
-import { imageUpload } from '../../utils/ImageUpload';
+import { imageUpload } from '../../Utils/ImageUpload';
 
 
 interface FormData {
@@ -47,7 +47,7 @@ const HostingCarForm: React.FC = () => {
       }
 
       // backend
-      const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+      const response = await axiosPublic.post('https://urban-driveserver.vercel.app/hostCar', data);
       console.log('Car hosted successfully:', response.data);
       Swal.fire({
         title: 'Car Hosted Successfully',

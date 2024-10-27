@@ -9,15 +9,9 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useState,
-  FC,
-} from "react";
+import { createContext, ReactNode, useEffect, useState, FC } from "react";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-import {auth} from '../Firebase/FireBase.config'
+import { auth } from "../Firebase/FireBase.config";
 
 // Define the shape of the context
 interface AuthContextType {
@@ -28,7 +22,7 @@ interface AuthContextType {
   logOut: () => Promise<void>;
   googleSignIn: () => Promise<any>;
   updateUserProfile: (name: string, photo: string) => Promise<void>;
-  setUser?: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   language?: string;
   work?: string;
   link?: string;
@@ -39,14 +33,25 @@ interface AuthContextType {
 const defaultAuthContext: AuthContextType = {
   user: null,
   loading: true,
-  createUser: async () => { /* no-op */ },
-  signIn: async () => { /* no-op */ },
-  logOut: async () => { /* no-op */ },
-  googleSignIn: async () => { /* no-op */ },
-  updateUserProfile: async () => { /* no-op */ },
-  setUser: () => { /* no-op */ },
+  createUser: async () => {
+    /* no-op */
+  },
+  signIn: async () => {
+    /* no-op */
+  },
+  logOut: async () => {
+    /* no-op */
+  },
+  googleSignIn: async () => {
+    /* no-op */
+  },
+  updateUserProfile: async () => {
+    /* no-op */
+  },
+  setUser: () => {
+    /* no-op */
+  },
 };
-
 
 export const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
@@ -56,11 +61,10 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null); // Ensure it's User | null
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  const axiosPublic = useAxiosPublic()
-
+  const axiosPublic = useAxiosPublic();
 
   // sign up
   const createUser = (email: string, password: string) => {
@@ -94,20 +98,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // if (currentUser) {
-      //   // get token from client site and store it
-      //   const userInfo = { email: currentUser.email };
-      //   axiosPublic.post("/jwt", userInfo).then((res) => {
-      //     if (res.data.token) {
-      //       localStorage.setItem("access-token", res.data.token);
-      //       setLoading(false);
-      //     }
-      //   });
-      // } else {
-      //   localStorage.removeItem("access-token");
-      //   setLoading(false);
-      // }
-      setLoading(false)
+      setLoading(false);
     });
     return () => {
       unSubscribe();
@@ -123,7 +114,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const authInfo: AuthContextType = {
     user,
-    setUser,
+    setUser, // Now required, not optional
     loading,
     createUser,
     signIn,
@@ -133,9 +124,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={authInfo}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 
