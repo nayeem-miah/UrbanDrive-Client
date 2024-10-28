@@ -8,7 +8,7 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from 'react-hot-toast';
-import { imageUpload } from '../../utils/ImageUpload';
+import { imageUpload } from '../../Utils/ImageUpload';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { ImSpinner9 } from 'react-icons/im';
 
@@ -49,7 +49,7 @@ const OnboardCheckout: React.FC = () => {
     const fetchBookingDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/bookings/${bookingId}`);
+        const response = await axios.get(`https://urban-driveserver.vercel.app/bookings/${bookingId}`);
         setBookingDetails(response.data);
       } catch (error) {
         console.error('Error fetching booking details:', error);
@@ -128,7 +128,7 @@ const OnboardCheckout: React.FC = () => {
 
 
 
-      const response = await axios.put(`http://localhost:8000/bookings/${bookingId}`, {
+      const response = await axios.put(`https://urban-driveserver.vercel.app/bookings/${bookingId}`, {
         ...userInfo,
         driversLicense: skipDriversLicense ? undefined : userInfo.driversLicense,
       });
