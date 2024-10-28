@@ -21,7 +21,7 @@ const DynamicPieChart: React.FC = () => {
 
     const options = {
         title: "Booking Approval Status",
-        colors: ["#4CAF50", "#FFEB3B", "#F44336"],
+        colors: ["#4CAF50", "#36D7B7", "#F44336"],
         pieSliceText: 'label',
         legend: { position: 'top' },
     };
