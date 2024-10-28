@@ -6,7 +6,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { FaAward, FaMapLocationDot } from "react-icons/fa6";
+import { FaAward, FaCar, } from "react-icons/fa6";
 interface CarsDataProps {
   cars: any;
 }
@@ -24,14 +24,15 @@ const CarsData: React.FC<CarsDataProps> = ({ cars }) => {
     availability: boolean;
     model: string;
     category: string;
-    price: number;
+    rental_price_per_day: number;
     date: number;
     description: string;
     discount: number;
-    rating: number;
+    averageRating: number;
     trip_count: number;
     make: string;
     seatCount: number;
+    features: string[];
   }
   const removeFromFavoriteCars = async (carId: string) => {
     try {
@@ -61,80 +62,106 @@ const CarsData: React.FC<CarsDataProps> = ({ cars }) => {
   return (
     <div>
       {Array.isArray(cars) && cars.length > 0 ? (
-        <div className="grid mt-5 grid-cols-1  gap-4 lg:gap-6 ">
+        <div className="grid mt-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
           {cars.map((car: Car) => (
             <div
               key={car._id}
-              className="card lg:card-side bg-base-100 shadow-xl rounded-2xl group"
+              className="bg-background shadow-md rounded-2xl overflow-hidden group transition-shadow duration-300 hover:shadow-2xl"
             >
-              <figure className="w-full lg:w-[50%]">
-                <img
-                  className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                  src={car.image}
-                  alt={car.name}
-                />
-              </figure>
-              <div className="card-body w-full lg:w-2/3 flex-1">
-                <div className="flex justify-between">
-                  <h2 className="card-title">{car.model}</h2>
-                  {favoriteCars.includes(car._id) ? (
-                    <IoMdHeart
-                      onClick={() => removeFromFavoriteCars(car._id)}
-                      className="text-xl"
-                      style={{ cursor: "pointer", color: "black" }}
-                    />
-                  ) : (
-                    <IoMdHeartEmpty
-                      onClick={() => addToFavoriteCars(car)}
-                      className="text-xl"
-                      style={{ cursor: "pointer" }}
-                    />
+              <div className="flex flex-col lg:flex-row">
+                <figure className="w-full lg:w-1/3 h-48 lg:h-auto overflow-hidden relative">
+                  <img
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    src={car.image}
+                    alt={car.name}
+                  />
+                  {car.discount > 0 && (
+                    <div className="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                      <MdOutlineDiscount className="text-lg" />
+                      {car.discount}% OFF
+                    </div>
                   )}
-                </div>
+                </figure>
+                <div className="w-full lg:w-2/3 p-4 lg:p-6 flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <h2 className="text-lg font-bold text-primary">{car.model} ({car.category})</h2>
+                      
+                      {favoriteCars.includes(car._id) ? (
+                        <IoMdHeart
+                          onClick={() => removeFromFavoriteCars(car._id)}
+                          className="text-2xl cursor-pointer text-accent transition-transform duration-200 hover:scale-125"
+                        />
+                      ) : (
+                        <IoMdHeartEmpty
+                          onClick={() => addToFavoriteCars(car)}
+                          className="text-2xl cursor-pointer text-primary transition-transform duration-200 hover:scale-125"
+                        />
+                      )}
+                    </div>
 
-                <p className="text-ellipsis">
-                  {car.description.slice(0, 80)}....
-                </p>
-                {car.rating > 0 ? (
-                  <p className="flex gap-1">
-                    {car.rating}
-                    <MdOutlineStar className="text-[#f0bb0c] mt-1" /> (
-                    {car.trip_count} trips){" "}
-                    <FaAward className="mt-1 text-primary font-bold" />{" "}
-                    <span className="font-bold">All-Star-Host</span>
-                  </p>
-                ) : (
-                  <p>New listing</p>
-                )}
-                <p className="flex gap-1">
-                  <FaMapLocationDot className="mt-1" />
-                  {car.make}
-                </p>
-                {car.discount > 0 ? (
-                  <span className="flex gap-1 text-[#0f923b] ">
-                    <MdOutlineDiscount className="mt-1" /> Discount:{" "}
-                    {car.discount}%
-                  </span>
-                ) : (
-                  <p></p>
-                )}
+                    <div className="flex items-center justify-between mt-2 text-sm text-text">
+                      <p className="flex items-center gap-1">
+                        {car.averageRating > 0 ? (
+                          <>
+                            {car.averageRating}
+                            <MdOutlineStar className="text-accent" />
+                            ({car.trip_count} trips)
+                          </>
+                        ) : (
+                          "New listing"
+                        )}
+                      </p>
+                      <p className="flex items-center gap-1">
+                        <FaCar className="text-secondary" />
+                        {car.make}
+                      </p>
+                    </div>
 
-                <div className="card-actions gap-2 items-center justify-end mt-2">
-                  <span className="text-primary font-bold text-xl">
-                    ${car.price}/day
-                  </span>
-                  <Link to={`/cars/${car._id}`}>
-                    <button className="bg-blue-700 p-2 rounded-lg text-white ">
-                      Details
-                    </button>
-                  </Link>
+                    <div className="overflow-hidden transition-all duration-300 ease-in-out max-h-0 group-hover:max-h-64 opacity-0 group-hover:opacity-100">
+                      <div className="mt-3 space-y-2 text-sm text-text">
+                        <div className="flex flex-wrap gap-2">
+                          {car.features.slice(0, 3).map((feature, index) => (
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-primary bg-opacity-10 text-primary rounded-full text-xs"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                        {car.availability ? (
+                          <p className="text-secondary">Available Now</p>
+                        ) : (
+                          <p className="text-accent">Currently Unavailable</p>
+                        )}
+                        {car.averageRating > 0 && (
+                          <p className="flex gap-1 items-center">
+                            <FaAward className="text-secondary" />
+                            <span className="font-bold">All-Star Host</span>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-4">
+                    <span className="text-primary font-bold text-lg">
+                      BDT{car?.rental_price_per_day}/day
+                    </span>
+                    <Link to={`/cars/${car._id}`}>
+                      <button className="bg-secondary text-white text-sm px-4 py-3 font-bold drop-shadow-md rounded-lg transition-transform duration-300 hover:scale-105">
+                        Details
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>No cars available</p>
+        <p className="text-text">No cars available</p>
       )}
     </div>
   );

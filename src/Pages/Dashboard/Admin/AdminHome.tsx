@@ -1,11 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { IoPersonSharp } from "react-icons/io5";
-import person from "../../../assets/person.png";
-import { FaCarRear } from "react-icons/fa6";
+import { FaCarRear, FaDollarSign } from "react-icons/fa6";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
-import { Chart } from "react-google-charts";
+import DynamicPieChart from "./Charts/DynamicPieChart";
+import DynamicLineChart from "./Charts/DynamicLineChart";
+
+function StatCard({ icon: Icon, title, value, bgColor }: { 
+  icon: React.ElementType, 
+  title: string, 
+  value: string | number,
+  bgColor: string 
+}) {
+  return (
+    <div className={`${bgColor} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-md font-bold drop-shadow-md ">{title}</p>
+          <p className="text-2xl font-bold mt-2">{value}</p>
+        </div>
+        <Icon className="w-10 h-10 opacity-80" />
+      </div>
+    </div>
+  );
+}
+
 const AdminHome: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { data = [], isLoading } = useQuery({
@@ -27,7 +47,7 @@ const AdminHome: React.FC = () => {
 
   interface bookings {
     _id: string;
-    user: string;
+    userName: string;
     phoneNumber: string;
     startDate: string;
     endDate: string;
@@ -50,38 +70,12 @@ const AdminHome: React.FC = () => {
       </div>
     );
   }
-  // pi chart
-  const piChartData = [
-    ["Task", "Hours per Day"],
-    ["accepted", 7],
-    ["pending", 5],
-    ["cancel", 3],
-  ];
+
 
   const piOptions = {
-    title: "My Daily Activities",
+    title: "Daily Activities",
   };
-  // line hcart
-  const lineChartData = [
-    [
-      { type: "number", label: "x" },
-      { type: "number", label: "values" },
-      { id: "i0", type: "number", role: "interval" },
-      { id: "i1", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-    ],
-    [1, 100, 90, 110, 85, 96, 104, 120],
-    [2, 120, 95, 130, 90, 113, 124, 140],
-    [3, 130, 105, 140, 100, 117, 133, 139],
-    [4, 90, 85, 95, 85, 88, 92, 95],
-    [5, 70, 74, 63, 67, 69, 70, 72],
-    [6, 30, 39, 22, 21, 28, 34, 40],
-    [7, 80, 77, 83, 70, 77, 85, 90],
-    [8, 100, 90, 110, 85, 95, 102, 110],
-  ];
+
 
   const lineOptions = {
     title: "Price, per days",
@@ -92,91 +86,89 @@ const AdminHome: React.FC = () => {
   };
 
   return (
-    <div className="text-2xl">
-      <div className="mt-3">
-        <h2 className="text-3xl font-bold mb-4 text-left mt-2 font-Merri">
-          Overview
-        </h2>
-      </div>
-      <>
-        <div className="stats mt-3">
-          <div className="stat space-y-3 bg-green-400">
-            <div className="stat-figure text-secondary">
-              <img className="w-11 h-11" src={person} alt="" />
-            </div>
-            <div className="stat-title font-bold text-white">
-              Total Car Owner
-            </div>
-            <div className="stat-value">{data?.hostCount}</div>
-          </div>
+    <div className="min-h-screen bg-[#F3F4F6]">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-[#1F2937] text-3xl font-bold">Dashboard Overview</h1>
+          <p className="text-gray-600 mt-2">Welcome to your admin dashboard</p>
+        </div>
 
-          <div className="stat space-y-3 bg-blue-500">
-            <div className="stat-figure text-secondary">
-              <IoPersonSharp className="w-11 h-11" />
-            </div>
-            <div className="stat-title text-white font-bold">
-              Total Passenger
-            </div>
-            <div className="stat-value">{data?.passengerCount}</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <StatCard 
+            icon={IoPersonSharp}
+            title="Car Owners"
+            value={data?.hostCount}
+            bgColor="bg-[#003366]"
+          />
+          <StatCard 
+            icon={IoPersonSharp}
+            title="Total Passengers"
+            value={data?.passengerCount}
+            bgColor="bg-[#14B8A6]"
+          />
+          <StatCard 
+            icon={FaCarRear}
+            title="Available Cars"
+            value={data?.carCount}
+            bgColor="bg-[#003366]"
+          />
+          <StatCard 
+            icon={FaDollarSign}
+            title="Total Revenue"
+            value={`৳${data?.revenue || 0}`}
+            bgColor="bg-[#14B8A6]"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-[#1F2937] mb-4">{piOptions.title}</h2>
+            <DynamicPieChart />
           </div>
-          <div className="stat space-y-3 bg-red-400 w-[275px]">
-            <div className="stat-figure text-secondary">
-              <FaCarRear className="w-11 h-11" />
-            </div>
-            <div className="stat-title text-white font-bold">Total Car</div>
-            <div className="stat-value">{data?.carCount}</div>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-[#1F2937] mb-4">{lineOptions.title}</h2>
+            <DynamicLineChart />
           </div>
         </div>
-      </>
 
-      {/* chart */}
-      <div className="py-9 lg:py-11">
-        <h3>{piOptions.title} </h3>
-        {/* pi charts */}
-        <Chart
-          chartType="PieChart"
-          data={piChartData}
-          // options={options}
-          width={"100%"}
-          height={"400px"}
-        />
-        {/* line chart */}
-        <h3>{lineOptions.title} </h3>
-        <Chart
-          chartType="LineChart"
-          width="100%"
-          height="400px"
-          data={lineChartData}
-          // options={lineOptions}
-        />
-      </div>
-      <div className="mt-6">
-        <h2 className="text-xl font-bold mb-4 text-left">
-          Recent car bookings
-        </h2>
-        <div className="overflow-x-auto border rounded mt-5">
-          <table className="table font-medium">
-            <thead className="bg-primary text-white">
-              <tr className="text-base">
-                <th>#</th>
-                <th>User</th>
-                <th>Location</th>
-                <th>Start Date</th>
-                <th>Cost</th>
+
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-[#1F2937] mb-6">Recent Bookings</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="text-left border-b border-gray-200">
+                  <th className="pb-3 text-[#003366]">User</th>
+                  <th className="pb-3 text-[#003366]">Location</th>
+                  <th className="pb-3 text-[#003366]">Start Date</th>
+                  <th className="pb-3 text-[#003366]">Amount</th>
+
+      
+     
               </tr>
             </thead>
-            <tbody>
-              {bookings.map((item: bookings, idx: number) => (
-                <tr key={item._id}>
-                  <th>{idx + 1}</th>
-                  <td>{item?.user}</td>
-                  <td>{item?.location}</td>
-                  <td>{formatDate(item?.startDate)}</td>
-                  <td className="font-bold">{item?.totalCost}$</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+       
+             
+              <tbody>
+                {bookings.map((item: bookings) => (
+                  <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-4">
+                      <div className="flex items-center">
+                        
+                        <span className="ml-3">{item.userName}</span>
+                      </div>
+                    </td>
+                    <td className="py-4">{item.location}</td>
+                    <td className="py-4">{formatDate(item.startDate)}</td>
+                    <td className="py-4 font-medium">
+                      {item.totalCost}
+                      <span className="text-xl">৳</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

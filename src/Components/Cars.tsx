@@ -6,6 +6,7 @@ import MapComponent from "./MapComponent";
 import { SyncLoader } from "react-spinners";
 import CarsData from "./CarsData";
 import { useTranslation } from "react-i18next";
+// import Filter from "./Filter";
 
 
 const Cars: React.FC = () => {
@@ -25,6 +26,13 @@ const Cars: React.FC = () => {
   const [homePickup,setHomePickup]=useState("");
   const {t} = useTranslation();
   const [permissionGranted, setPermissionGranted] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({
+    category: "",
+    seatCount: "",
+    priceRange: "",
+    homePickup: "",
+    sortOption: "",
+  });
 
 
   const {
@@ -93,7 +101,7 @@ const Cars: React.FC = () => {
       alert("Location permission not yet granted.");
     }
   };
-  console.log('User Location:', userLocation);
+  // console.log('User Location:', userLocation);
 
   const fetchCars = async (lat: number, lng: number, maxDistance: number) => {
     try {
@@ -167,11 +175,13 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setMinPrice(min);
       setMaxPrice(max);
     }
+    setSelectedFilters(prev => ({ ...prev, priceRange: value }));
   };
 
   const handleSeatCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSeatCount(value ? Number(value) : null);
+    setSelectedFilters(prev => ({ ...prev, seatCount: value }));
   };
 
   
@@ -199,141 +209,140 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   // console.log(handlePreviousPage());
 
   return (
-    <div className="mt-10 pt-4 md:mt-12 md:p-5 lg:mt-16 lg:pt-8">
-      {/* Filters */}
-      {/* Search Bar */}
-      <div className=" mb-6">
-        <select
-          className=" w-2/3 md:w-1/3 lg:w-1/3 border-b border-gray-300 focus:outline-none p-3 h-12"
-          id="locationSelect"
-          value={userLocation ? JSON.stringify(userLocation) : ""}
-          onChange={handleLocationChange}
-        >
-          <option disabled value="">
-            {t("locationSelect.selectPlaceholder")}
-          </option>
-          <option value="current">{t("locationSelect.currentLocation")}</option>
-          <option value="anywhere">{t("locationSelect.anywhere")}</option>
-        </select>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-6">
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={category} // Set the current selected value
-          onChange={handleCategoryChange} // Handle change
-        >
-          <option disabled value="">
-            {t("categorySelect.selectPlaceholder")}
-          </option>
-          <option value="Electric">{t("categorySelect.electric")}</option>
-          <option value="suv">{t("categorySelect.suv")}</option>
-          <option value="Sedan">{t("categorySelect.sedan")}</option>
-          <option value="Luxury">{t("categorySelect.luxury")}</option>
-          <option value="Truck">{t("categorySelect.truck")}</option>
-        </select>
+    <div className="bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2 mt-10">Find Your Perfect Ride</h1>
+          <p className="text-gray-600">Discover and book the perfect car for your next adventure</p>
+        </div> */}
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={seatCount ?? ""}
-          onChange={handleSeatCountChange}
-        >
-          <option disabled value="">
-            {t("seatSelect.selectPlaceholder")}
-          </option>
-          <option value="4">{t("seatSelect.fourOrMore")}</option>
-          <option value="5">{t("seatSelect.fiveOrMore")}</option>
-          <option value="6">{t("seatSelect.sixOrMore")}</option>
-          <option value="7">{t("seatSelect.sevenOrMore")}</option>
-          <option value="8">{t("seatSelect.eightOrMore")}</option>
-        </select>
+        {/* Location Select */}
+        
 
+        {/* Filters Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-16 mb-2">
         <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
-          onChange={handlePriceRangeChange}
-        >
-          <option disabled value="">
-            {t("priceSelect.selectPlaceholder")}
-          </option>
-          <option value="0-50">{t("priceSelect.range0to50")}</option>
-          <option value="51-100">{t("priceSelect.range51to100")}</option>
-          <option value="101-200">{t("priceSelect.range101to200")}</option>
-          <option value="201-500">{t("priceSelect.range201to500")}</option>
-          <option value="501-1000">{t("priceSelect.range501to1000")}</option>
-          <option value="1001-Infinity">{t("priceSelect.above1000")}</option>
-        </select>
+            className="w-full p-3 bg-white border border-accent rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+            id="locationSelect"
+            value={userLocation ? JSON.stringify(userLocation) : ""}
+            onChange={handleLocationChange}
+          >
+            <option disabled value="">{t("locationSelect.selectPlaceholder")}</option>
+            <option value="current">{t("locationSelect.currentLocation")}</option>
+            <option value="anywhere">{t("locationSelect.anywhere")}</option>
+          </select>
+          <select
+            className="w-full p-3 bg-white border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <option disabled value="">{t("categorySelect.selectPlaceholder")}</option>
+            <option value="Electric">{t("categorySelect.electric")}</option>
+            <option value="suv">{t("categorySelect.suv")}</option>
+            <option value="Sedan">{t("categorySelect.sedan")}</option>
+            <option value="Luxury">{t("categorySelect.luxury")}</option>
+            <option value="Truck">{t("categorySelect.truck")}</option>
+          </select>
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={homePickup}
-          onChange={handleHomePickup}
-        >
-          <option disabled value="">
-            {t("homePickup.selectPlaceholder")}
-          </option>
-          <option value="yes">{t("homePickup.yes")}</option>
-          <option value="no">{t("homePickup.no")}</option>
-        </select>
+          <select
+            className={`w-full p-3 bg-white border rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 ${
+              selectedFilters.seatCount ? 'border-primary bg-blue-50' : 'border-gray-200'
+            }`}
+            value={seatCount ?? ""}
+            onChange={handleSeatCountChange}
+          >
+            <option disabled value="">{t("seatSelect.selectPlaceholder")}</option>
+            <option value="4">{t("seatSelect.fourOrMore")}</option>
+            <option value="5">{t("seatSelect.fiveOrMore")}</option>
+            <option value="6">{t("seatSelect.sixOrMore")}</option>
+            <option value="7">{t("seatSelect.sevenOrMore")}</option>
+            <option value="8">{t("seatSelect.eightOrMore")}</option>
+          </select>
 
-        <select
-          className="select w-full border border-gray-300 rounded-2xl p-3 h-12 focus:outline-none"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option disabled value="">
-            {t("sortOptions.selectPlaceholder")}
-          </option>
-          <option value="price-asc">{t("sortOptions.priceAsc")}</option>
-          <option value="price-desc">{t("sortOptions.priceDesc")}</option>
-          <option value="date-desc">{t("sortOptions.dateDesc")}</option>
-          <option value="date-asc">{t("sortOptions.dateAsc")}</option>
-        </select>
-      </div>
+          <select
+            className={`w-full p-3 bg-white border rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 ${
+              selectedFilters.priceRange ? 'border-primary bg-blue-50' : 'border-gray-200'
+            }`}
+            value={minPrice && maxPrice ? `${minPrice}-${maxPrice}` : ""}
+            onChange={handlePriceRangeChange}
+          >
+            <option disabled value="">{t("priceSelect.selectPlaceholder")}</option>
+            <option value="0-50">{t("priceSelect.range0to50")}</option>
+            <option value="51-100">{t("priceSelect.range51to100")}</option>
+            <option value="101-200">{t("priceSelect.range101to200")}</option>
+            <option value="201-500">{t("priceSelect.range201to500")}</option>
+            <option value="501-1000">{t("priceSelect.range501to1000")}</option>
+            <option value="1001-Infinity">{t("priceSelect.above1000")}</option>
+          </select>
 
-      {/* Loading Spinner */}
-      {isLoading ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <SyncLoader color="#593cfb" size={10} />
+          <select
+            className={`w-full p-3 bg-white border rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 ${
+              selectedFilters.homePickup ? 'border-primary bg-blue-50' : 'border-gray-200'
+            }`}
+            value={homePickup}
+            onChange={handleHomePickup}
+          >
+            <option disabled value="">{t("homePickup.selectPlaceholder")}</option>
+            <option value="yes">{t("homePickup.yes")}</option>
+            <option value="no">{t("homePickup.no")}</option>
+          </select>
+
+          <select
+            className={`w-full p-3 bg-white border rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 ${
+              selectedFilters.sortOption ? 'border-primary bg-blue-50' : 'border-gray-200'
+            }`}
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option disabled value="">{t("sortOptions.selectPlaceholder")}</option>
+            <option value="price-asc">{t("sortOptions.priceAsc")}</option>
+            <option value="price-desc">{t("sortOptions.priceDesc")}</option>
+            <option value="date-desc">{t("sortOptions.dateDesc")}</option>
+            <option value="date-asc">{t("sortOptions.dateAsc")}</option>
+          </select>
         </div>
-      ) : (
-        <div className="ml-1 lg:ml-2">
-          <p className="text-2xl font-bold  mt-4 lg:mt-8">
-            {totalCars} + cars available
-          </p>
-          <div className="grid mt-5 grid-cols-1  lg:grid-cols-2 gap-4 lg:gap-6 mb-5 ">
-            <div className="overflow-y-auto h-[calc(100vh-100px)] pr-4">
-              <CarsData cars={cardata}></CarsData>
-            </div>
 
-            <div className="z-0 h-[calc(100vh-50px)] sticky top-0">
-              <MapComponent cars={cars} userLocation={userLocation} />
+        {/* Loading Spinner */}
+        {isLoading ? (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <SyncLoader color="#003366" size={12} />
+          </div>
+        ) : (
+          <div>
+            <p className="text-2xl  font-bold text-text mb-6">
+             Browse {totalCars}+ cars
+            </p>
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="overflow-y-auto h-full pr-4 space-y-6">
+                <CarsData cars={cardata} />
+              </div>
+              <div className="h-[calc(100vh-200px)] sticky top-0 rounded-lg overflow-hidden shadow-lg">
+                <MapComponent cars={cars} userLocation={userLocation} />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Pagination */}
-      <div className="mx-auto text-center m-16">
-        <button
-          className="btn btn-active btn-primary mr-4 rounded-md"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          {" "}
-          Page {currentPage} of {totalPages}{" "}
-        </span>
-        <button
-          className="btn btn-active btn-primary ml-4 rounded-md"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+        {/* Pagination */}
+        <div className="flex justify-center items-center space-x-4 my-8">
+          <button
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="text-text font-lato">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -9,91 +9,54 @@ const CarRental: React.FC = () => {
   const features = [t("feature1"), t("feature2")];
 
   return (
-    <div className="max-w-7xl mx-auto px-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 mx-auto mt-6 ml-2 mr-2 lg:gap-20 lg:ml-12 lg:mr-12 lg:p-10 md:ml-10 md:mr-10 md:p-6 md:gap-12">
-        {/* First div: Content animates from top */}
+    <div className="max-w-7xl mx-auto px-4 py-16">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-2 items-center">
         <motion.div
-          className="mx-auto justify-center items-center"
-          initial={{ y: -100, opacity: 0 }}
+          className="space-y-6"
+          initial={{ y: -50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h3 className="text-amber-600 font-bold tracking-wider mt-1 ml-2 font-lato"></h3>
-          <motion.h1
-            className="font-bold text-4xl font-lato mt-6 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-transparent bg-clip-text"
-            initial={{ y: -100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-          >
+          <h1 className="font-bold text-4xl md:text-5xl font-lato bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">
             {t("rentalheading")} <br />
-            <span className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-transparent bg-clip-text">
-              {t("rentalheading2")}
-            </span>
-          </motion.h1>
-          <motion.p
-            className="mt-4 font-lato text-[#504e4b]"
-            initial={{ y: -100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-          >
+            {t("rentalheading2")}
+          </h1>
+          <p className="text-lg text-gray-600 font-lato">
             {t("renatalsubheading")}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="flex flex-col gap-2 mt-4"
-            initial={{ y: -100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-          >
+          <div className="space-y-4">
             {features.map((feature, index) => (
-              <div key={index} className="flex items-center">
-                <div className="h-10 w-10 flex items-center justify-center bg-gradient-to-r from-[#3d83d3] to-[#a306fd] rounded-full">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
+              <div key={index} className="flex items-center space-x-3">
+                <div className="h-10 w-10 flex items-center justify-center bg-accent rounded-full">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="ml-3 text-[#42413e] font-lato">
-                  {feature}
-                </span>
+                <span className="text-text font-lato">{feature}</span>
               </div>
             ))}
-          </motion.div>
-          <motion.button
-            className="flex outline-none bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white p-2 rounded-lg mb-6 font-medium mt-4"
-            initial={{ y: 100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-          >
+          </div>
+
+          <button className="inline-flex items-center px-6 py-3 bg-accent text-white rounded-lg font-medium transition-transform hover:scale-105 hover:bg-opacity-90">
             {t("readMore")}
             <TbArrowUpRight className="text-xl ml-2" />
-          </motion.button>
+          </button>
         </motion.div>
 
-        {/* Second div: Image animates from the bottom */}
         <motion.div
-          className=""
-          initial={{ y: 100, opacity: 0 }}
+          initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="relative overflow-hidden rounded-3xl shadow-lg transition-transform duration-300 group">
+          <div className="relative overflow-hidden rounded-3xl shadow-lg group">
             <img
-              className="h-auto w-full aspect-[420/470] object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               src={carRental}
               alt="A luxurious car available for rental"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 group-hover:opacity-30"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-30 transition-opacity duration-300 group-hover:opacity-40"></div>
           </div>
         </motion.div>
       </div>

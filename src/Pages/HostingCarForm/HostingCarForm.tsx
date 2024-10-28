@@ -10,7 +10,7 @@ import HostInformation from './steps/HostInformation';
 import Membership from './steps/Membership';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
-import { imageUpload } from '../../utils/ImageUpload';
+import { imageUpload } from '../../Utils/ImageUpload';
 
 
 interface FormData {
@@ -47,7 +47,7 @@ const HostingCarForm: React.FC = () => {
       }
 
       // backend
-      const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+      const response = await axiosPublic.post('https://urban-driveserver.vercel.app/hostCar', data);
       console.log('Car hosted successfully:', response.data);
       Swal.fire({
         title: 'Car Hosted Successfully',
@@ -122,7 +122,7 @@ const HostingCarForm: React.FC = () => {
 
   return (
     <div className="max-w-6xl my-28 mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-indigo-500 decoration-2 text-indigo-500">Host Your Car</h1>
+      <h1 className="text-5xl font-bold mb-6 font-Playfair text-center underline decoration-primary decoration-2 text-primary">Host Your Car</h1>
       
       <div className="flex flex-col lg:flex-row justify-between ">
         <div className="w-full lg:w-1/3 lg:pr-6 lg:border-r">
@@ -145,14 +145,14 @@ const HostingCarForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all duration-300 ease-in-out"
+                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all duration-300 ease-in-out"
                   >
                     Next <span className="ml-2">→</span>
                   </button>
                 ) : (
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all duration-300 ease-in-out"
+                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all duration-300 ease-in-out"
                   >
                     Submit
                   </button>
