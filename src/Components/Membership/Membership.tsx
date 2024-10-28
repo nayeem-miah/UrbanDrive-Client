@@ -5,11 +5,22 @@ import { FiCheck, FiLoader } from "react-icons/fi";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useTranslation } from "react-i18next";
 
+interface MembershipPlan {
+  _id: string;
+  planName: string;
+  price: number;
+  description: string;
+  discount: string;
+  carDamageResponsibility: string;
+  specialOffer?: string;
+  additionalServices?: Record<string, string>;
+}
+
 const Membership = () => {
   const axiosPublic = useAxiosPublic();
   const { t } = useTranslation();
 
-  const { data: membershipdata = [], isLoading } = useQuery({
+  const { data: membershipdata = [], isLoading } = useQuery<MembershipPlan[]>({
     queryKey: ["memberships"],
     queryFn: async () => {
       const response = await axiosPublic.get("/memberships");
@@ -37,7 +48,7 @@ const Membership = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {membershipdata.map((membership: any) => {
+            {membershipdata.map((membership: MembershipPlan) => {
               const isPopular = membership.price === 700
               
               return (
