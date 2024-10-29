@@ -3,7 +3,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { SyncLoader } from "react-spinners";
 import useAuth from "../../../Hooks/useAuth";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface CarData {
   _id: string;
@@ -16,8 +16,9 @@ interface CarData {
 const HostManageCars = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
-  const [selectedCar, setSelectedCar] = useState<CarData | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const { data: TotalCar = [], refetch, isLoading } = useQuery({
     queryKey: ["Car"],
@@ -51,29 +52,21 @@ const HostManageCars = () => {
     });
   };
 
-  const handleEditClick = (car: CarData) => {
-    setSelectedCar(car);
-    setIsEditModalOpen(true);
-  };
 
   const handleEditSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (selectedCar) {
-      try {
-        await axiosPublic.put(`/car/update/${selectedCar._id}`, selectedCar);
-        setIsEditModalOpen(false);
-        refetch();
-        Swal.fire("Updated!", "Car details have been updated.", "success");
-      } catch (error) {
-        Swal.fire("Error!", "Failed to update car details.", "error");
-      }
-    }
+
+    // try {
+    //   await axiosPublic.patch(`/updateManageCar/${selectedCar._id}`,
+    //   setIsEditModalOpen(false);
+    //   refetch();
+    //   Swal.fire("Updated!", "Car details have been updated.", "success");
+    // } catch (error) {
+    //   Swal.fire("Error!", "Failed to update car details.", "error");
+    // }
+
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setSelectedCar((prevCar) => (prevCar ? { ...prevCar, [name]: value } : prevCar));
-  };
 
   if (isLoading) {
     return (
@@ -82,7 +75,6 @@ const HostManageCars = () => {
       </div>
     );
   }
-  console.log(selectedCar);
   return (
     <div>
       <div className="mt-4">
@@ -123,7 +115,7 @@ const HostManageCars = () => {
                       Delete
                     </button>
                     <button
-                      onClick={() => handleEditClick(item)}
+                      onClick={openModal}
                       className="btn btn-success text-white"
                     >
                       Edit
@@ -136,42 +128,80 @@ const HostManageCars = () => {
         </div>
       )}
 
-      {/* Edit Modal */}
-      {isEditModalOpen && selectedCar && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="relative w-full max-w-md p-6 bg-white rounded-md shadow-lg">
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-96 relative">
             <button
-              onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 hover:bg-red-500 p-2 rounded"
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-600 hover:text-red-400 font-bold text-3xl"
             >
-              ✕
+              &times;
             </button>
-            <h3 className="text-2xl font-bold mb-4">Edit Car Details</h3>
-            <form onSubmit={handleEditSubmit}>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">Car Model</label>
+            <h2 className="text-xl font-semibold mb-4">updated Cars</h2>
+            <form onSubmit={handleEditSubmit} className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md space-y-4">
+              {/* Make Input */}
+              <div>
+                <label htmlFor="make" className="block text-gray-700 font-medium mb-2">Make:</label>
                 <input
                   type="text"
+                  id="make"
                   name="make"
-                  value={selectedCar.make}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border rounded"
+                  placeholder="Enter make"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">Rental Price per Day</label>
+
+              {/* Model Input */}
+              <div>
+                <label htmlFor="model" className="block text-gray-700 font-medium mb-2">Model:</label>
+                <input
+                  type="text"
+                  id="model"
+                  name="model"
+                  placeholder="Enter model"
+                  required
+                  // value={formData.model}
+                  // onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              {/* Amount Input */}
+              <div>
+                <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">Amount:</label>
                 <input
                   type="number"
-                  name="rental_price_per_day"
-                  value={selectedCar.rental_price_per_day}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border rounded"
+                  id="amount"
+                  name="amount"
+                  placeholder="Enter amount"
+                  required
+                  // value={formData.amount || ''}
+                  // onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-full text-white">
-                Save updated
+
+              {/* File Upload Input */}
+              <div>
+                <label htmlFor="file" className="block text-gray-700 font-medium mb-2">Upload File:</label>
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  accept=".jpg, .jpeg, .png, .pdf"
+
+                  // onChange={handleFileChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">
+                Submit
               </button>
             </form>
+
           </div>
         </div>
       )}
