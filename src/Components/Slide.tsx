@@ -43,7 +43,7 @@ const Slide: React.FC<SlideProps> = ({ image, title, model, price }) => {
                 </button>
               </Link>
 
-              <Link to="/cars" className="group">
+              <Link to="/services" className="group">
                 <button className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden text-lg text-primary bg-white rounded-lg font-bold transition duration-300 ease-in-out transform group-hover:scale-105 group-hover:bg-primary group-hover:text-white border-2 border-primary">
                   {t("browse_cars")}
                 </button>

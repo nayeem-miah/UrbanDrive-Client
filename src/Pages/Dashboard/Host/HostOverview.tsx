@@ -57,7 +57,7 @@ const HostOverview: React.FC = () => {
     title: "Daily Activities",
   };
 
-// line chart title 
+// line chart title
   const lineOptions = {
     title: "Price, per days",
     curveType: "function",
@@ -105,14 +105,16 @@ const HostOverview: React.FC = () => {
       </>
 
       {/* chart */}
-      <div className="py-9 lg:py-11">
-        <h3>{piOptions.title} </h3>
-        {/* pi charts */}
-       <DynamicPieChartHost/>
-        {/* line chart */}
-        <h3>{lineOptions.title} </h3>
-        <DynamicLineChartHost/>
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-[#1F2937] mb-4">{piOptions.title}</h2>
+            <DynamicPieChartHost />
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-[#1F2937] mb-4">{lineOptions.title}</h2>
+            <DynamicLineChartHost />
+          </div>
+        </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-4 text-left">
           Recent car bookings

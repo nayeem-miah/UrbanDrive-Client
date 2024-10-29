@@ -239,7 +239,7 @@ const Registration: React.FC = () => {
           </form>
           <button
             onClick={handleGoogleLogIn}
-            className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white"
+            className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white hover:bg-primary"
           >
             Sign up with Google
           </button>
