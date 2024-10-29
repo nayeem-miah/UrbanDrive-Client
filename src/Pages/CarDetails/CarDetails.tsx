@@ -10,7 +10,7 @@ import { addDays, differenceInDays, format } from 'date-fns';
 import { DateRange, RangeKeyDict } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ICar } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
@@ -19,7 +19,19 @@ import { useQuery } from '@tanstack/react-query';
 import { Rating, Star } from '@smastrom/react-rating';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm';
 
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 }
+};
 
+const staggerChildren = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -215,24 +227,41 @@ console.log(car.email);
                   </div>
 
                   {/* Features Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6 text-text">
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                  <motion.div 
+                    variants={staggerChildren}
+                    initial="initial"
+                    animate="animate"
+                    className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6 text-text"
+                  >
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <FaGasPump className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">22 MPG</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <MdElectricCar className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">Gas (Premium)</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <GiCarDoor className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">4 Doors</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <GiCarSeat className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">{car.seatCount} Seats</span>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
                   {/* Description */}
                   <div className="mb-8">
@@ -325,19 +354,27 @@ console.log(car.email);
 
                   {/* Calendar */}
                   {showCalendar && (
-                    <div className="w-full overflow-x-auto -mx-2 px-2">
-                      <DateRange
-                        editableDateInputs={true}
-                        onChange={handleSelect}
-                        moveRangeOnFirstSelection={false}
-                        ranges={dateRange}
-                        className="mb-6 w-full"
-                        rangeColors={['#4F46E5']}
-                        color="#4F46E5"
-                        months={window.innerWidth < 768 ? 1 : 2}
-                        direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
-                      />
-                    </div>
+                    <AnimatePresence>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="w-full overflow-x-auto -mx-2 px-2"
+                      >
+                        <DateRange
+                          editableDateInputs={true}
+                          onChange={handleSelect}
+                          moveRangeOnFirstSelection={false}
+                          ranges={dateRange}
+                          className="mb-6 w-full"
+                          rangeColors={['#4F46E5']}
+                          color="#4F46E5"
+                          months={window.innerWidth < 768 ? 1 : 2}
+                          direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
                   )}
 
                   {/* Location */}
@@ -414,7 +451,13 @@ console.log(car.email);
           </div>
 
           {/* Reviews */}
-          <div className="mt-12 bg-white p-2 sm:p-6 rounded-lg shadow-lg">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-12 bg-white p-2 sm:p-6 rounded-lg shadow-lg"
+          >
             <h2 className="text-3xl font-bold mb-6 text-primary text-center">Customer Reviews</h2>
 
             {isLoading ? (
@@ -424,8 +467,15 @@ console.log(car.email);
             ) : reviewsData.reviews.length > 0 ? (
               <div className="space-y-4">
                 {reviewsData.reviews.map((review: any) => (
-                  <div key={review._id} className="bg-background p-4 rounded-lg shadow-sm">
-                    
+                  <motion.div
+                    key={review._id}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-background p-4 rounded-lg shadow-sm"
+                  >
                     <div className="flex justify-between items-center mb-3">
                       <div className="flex items-center">
                         <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{ 
@@ -454,7 +504,7 @@ console.log(car.email);
 
                     {/* Review Comment */}
                     <p className="text-text text-sm leading-relaxed">{review.comment}</p>
-                  </div>
+                  </motion.div>
                 ))}
 
                 {/* Pagination Controls */}
@@ -488,7 +538,7 @@ console.log(car.email);
             ) : (
               <p className="mt-6 text-lg text-text text-center">Please log in to leave a review.</p>
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
