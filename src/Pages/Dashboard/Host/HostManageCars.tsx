@@ -27,6 +27,16 @@ const HostManageCars = () => {
       return res.data;
     },
   });
+  const singleCarObject: CarData = TotalCar.reduce((acc: any, car: any) => ({ ...acc, ...car }), {} as CarData);
+
+
+// Destructure the combined object
+const { make, model,amount,_id } = singleCarObject;
+
+
+
+
+
   const handleDelete = (id: string) => {
     Swal.fire({
       title: "Are you sure?",
@@ -52,18 +62,28 @@ const HostManageCars = () => {
     });
   };
 
-
+//  update car value
   const handleEditSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const from = event.target;
+    const make = from.make.value;
+    const model = from.model.value;
+    const amount = from.amount.value;
 
-    // try {
-    //   await axiosPublic.patch(`/updateManageCar/${selectedCar._id}`,
-    //   setIsEditModalOpen(false);
-    //   refetch();
-    //   Swal.fire("Updated!", "Car details have been updated.", "success");
-    // } catch (error) {
-    //   Swal.fire("Error!", "Failed to update car details.", "error");
-    // }
+    try {
+      const updatedValue = {
+        make: make,
+        model: model,
+        amount: amount,
+      }
+     
+      await axiosPublic.patch(`/updateManageCar/${_id}`, updatedValue);
+      setIsModalOpen(false)
+      refetch();
+      Swal.fire("Updated!", "Car details have been updated.", "success");
+    } catch (error) {
+      Swal.fire("Error!", "Failed to update car details.", "error");
+    }
 
   };
 
@@ -146,6 +166,7 @@ const HostManageCars = () => {
                   type="text"
                   id="make"
                   name="make"
+                  defaultValue={make}
                   placeholder="Enter make"
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
@@ -159,7 +180,8 @@ const HostManageCars = () => {
                   type="text"
                   id="model"
                   name="model"
-                  placeholder="Enter model"
+                  defaultValue={model}
+                  // placeholder="Enter model"
                   required
                   // value={formData.model}
                   // onChange={handleChange}
@@ -174,6 +196,8 @@ const HostManageCars = () => {
                   type="number"
                   id="amount"
                   name="amount"
+
+                  defaultValue={amount}
                   placeholder="Enter amount"
                   required
                   // value={formData.amount || ''}
