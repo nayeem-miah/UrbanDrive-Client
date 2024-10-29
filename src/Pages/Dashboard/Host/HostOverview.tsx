@@ -52,12 +52,12 @@ const HostOverview: React.FC = () => {
     );
   }
 
-
+//  oi chart title
   const piOptions = {
     title: "Daily Activities",
   };
 
-
+// line chart title 
   const lineOptions = {
     title: "Price, per days",
     curveType: "function",
