@@ -35,7 +35,7 @@ const DynamicPieChartHost: React.FC = () => {
             try {
                 const response = await axiosPublic.get<BookingData[]>(`/hostHistory/${user?.email}`);
                 const bookingData = response.data;
-                console.log(bookingData);
+                // console.log(bookingData);
                 // Ensure there are bookings to process
             if (bookingData.length === 0) {
                 setError("No booking data available.!!!. so pi chart is not available...");
