@@ -197,12 +197,12 @@ console.log(car.email);
 
       {/* Car Details */}
       <section className="bg-background text-text">
-        <div className="max-w-6xl mx-auto p-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+        <div className="max-w-7xl mx-auto p-2 sm:p-8">
+          <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 py-6 sm:py-12">
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-12">
               {/* Left Section */}
               <div className="flex-1 w-full lg:w-2/3">
-                <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8">
                   <h1 className="text-4xl font-extrabold mb-2 text-primary">
                     {car.make} {car.model}
                   </h1>
@@ -257,7 +257,7 @@ console.log(car.email);
                 </div>
 
                 {/* Hosted By Section */}
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8">
                   <h2 className="text-2xl font-bold mb-6 text-primary">Hosted By</h2>
                   <div className="flex items-center mb-6">
                     <img src="https://via.placeholder.com/80" alt="Host" className="w-16 h-16 rounded-full mr-4" />
@@ -281,7 +281,7 @@ console.log(car.email);
 
               {/* Right Section (Pricing and Booking) */}
               <div className="flex-1 w-full lg:w-1/3 sticky top-10">
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                <div className="bg-white rounded-xl shadow-lg p-2 sm:p-6">
                   <span className="text-4xl font-bold text-primary mb-2 block">{perDayCost.toFixed(2)} BDT/day</span>
                   <p className="text-sm text-text mb-6">Price before taxes</p>
 
@@ -325,15 +325,19 @@ console.log(car.email);
 
                   {/* Calendar */}
                   {showCalendar && (
-                    <DateRange
-                      editableDateInputs={true}
-                      onChange={handleSelect}
-                      moveRangeOnFirstSelection={false}
-                      ranges={dateRange}
-                      className="mb-6"
-                      rangeColors={['#4F46E5']}
-                      color="#4F46E5"
-                    />
+                    <div className="w-full overflow-x-auto -mx-2 px-2">
+                      <DateRange
+                        editableDateInputs={true}
+                        onChange={handleSelect}
+                        moveRangeOnFirstSelection={false}
+                        ranges={dateRange}
+                        className="mb-6 w-full"
+                        rangeColors={['#4F46E5']}
+                        color="#4F46E5"
+                        months={window.innerWidth < 768 ? 1 : 2}
+                        direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+                      />
+                    </div>
                   )}
 
                   {/* Location */}
@@ -375,7 +379,7 @@ console.log(car.email);
           </div>
 
           {/* Ratings */}
-          <div className="p-6 bg-white rounded-lg shadow-lg mt-8">
+          <div className="p-2 sm:p-6 bg-white rounded-lg shadow-lg mt-8">
             <h2 className="text-3xl font-bold mb-4 text-primary text-center">Overall Ratings</h2>
             
             {/* Average Rating */}
@@ -410,7 +414,7 @@ console.log(car.email);
           </div>
 
           {/* Reviews */}
-          <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
+          <div className="mt-12 bg-white p-2 sm:p-6 rounded-lg shadow-lg">
             <h2 className="text-3xl font-bold mb-6 text-primary text-center">Customer Reviews</h2>
 
             {isLoading ? (
