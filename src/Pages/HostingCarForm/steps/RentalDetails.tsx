@@ -8,15 +8,15 @@ const RentalDetails: React.FC = () => {
 
   
   const durationOptions = [
-    { value: 'daily', label: 'Daily' },
-    { value: 'weekly', label: 'Weekly' },
-    { value: 'monthly', label: 'Monthly' },
+    { value: 'Daily', label: 'Daily' },
+    { value: 'Weekly', label: 'Weekly' },
+    { value: 'Monthly', label: 'Monthly' },
   ];
 
 
   const availabilityOptions = [
-    { value: 'available', label: 'Available' },
-    { value: 'notAvailable', label: 'Not Available' },
+    { value: true, label: 'Available' },
+    { value: false, label: 'Not Available' },
   ];
 
   const handleDurationChange = (selectedOption: any) => {
@@ -30,16 +30,19 @@ const RentalDetails: React.FC = () => {
   return (
     <>
       <div className="mb-4">
-        <label htmlFor="price" className="block font-semibold mb-2">Price Per Day</label>
+        <label htmlFor="price" className="block font-semibold mb-2">Price Per Day (৳)</label>
         <input
           id="price"
           type="number"
-          placeholder='100'
+          placeholder='2200'
           className="text-sm custom-input w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-indigo-500 hover:shadow-lg hover:border-indigo-300 bg-gray-100"
-          {...register('rentalDetails.price', { required: 'Price is required' })}
+          {...register('rentalDetails.price_per_day', { 
+            required: 'Price is required',
+            min: { value: 1, message: 'Price must be greater than 0' }
+          })}
         />
-        {errors.rentalDetails && 'price' in errors.rentalDetails && typeof errors.rentalDetails.price?.message === 'string' && (
-          <p className="text-red-500">{errors.rentalDetails.price.message}</p>
+        {errors.rentalDetails && 'price_per_day' in errors.rentalDetails && typeof errors.rentalDetails.price_per_day?.message === 'string' && (
+          <p className="text-red-500">{errors.rentalDetails.price_per_day.message}</p>
         )}
       </div>
 
