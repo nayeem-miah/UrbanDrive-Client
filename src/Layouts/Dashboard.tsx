@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { RiAdvertisementLine } from "react-icons/ri";
-import { MdCardMembership, MdPayment } from "react-icons/md";
+import { MdCardMembership, MdOutlinePendingActions, MdPayment } from "react-icons/md";
 import { AiFillMedicineBox } from "react-icons/ai";
 import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
@@ -144,9 +144,7 @@ const Dashboard: React.FC = () => {
                   }`
                 }
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
+                <MdOutlinePendingActions className="w-4 h-4" />
                 Pending Cars
               </NavLink>
             </div>

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { SyncLoader } from 'react-spinners';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import { FaCheckCircle } from 'react-icons/fa';
+import { FiMail, FiTag, FiUser, FiXCircle } from 'react-icons/fi';
+import { FaCar } from 'react-icons/fa6';
+// import { LuLoader2 } from 'react-icons/lu';
+import { SyncLoader } from 'react-spinners';
 
 interface PendingCar {
   _id: string;
@@ -142,63 +146,88 @@ const PendingCars: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <SyncLoader color="#593cfb" size={18} />
+      <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <SyncLoader color="#003366" />
+          <p className="text-[#1F2937] font-medium">Loading pending requests...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4">
-      <h2 className="text-3xl font-bold mb-6">Pending Cars for Approval</h2>
-      
-      {pendingCars.length === 0 ? (
-        <div className="text-center py-8">
-          <p className="text-gray-500">No pending cars for approval</p>
+    <div className="min-h-screen bg-[#F3F4F6] p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center gap-3 mb-8">
+          <FaCar className="w-8 h-8 text-[#003366]" />
+          <h1 className="text-3xl font-bold text-[#1F2937]">Pending Vehicle Requests</h1>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pendingCars.map((car) => (
-            <div key={car._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <img 
-                src={car.image} 
-                alt={`${car.make} ${car.model}`} 
-                className="w-full h-48 object-cover"
-              />
-              
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">
-                  {car.make} {car.model} ({car.year})
-                </h3>
-                
-                <div className="space-y-2 mb-4">
-                  <p className="text-gray-600">Category: {car.category}</p>
-                  <p className="text-gray-600">Price: ${car.price_per_day}/day</p>
-                  <p className="text-gray-600">Host: {car.name || 'N/A'}</p>
-                  <p className="text-gray-600">Email: {car.email || 'N/A'}</p>
-                </div>
 
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleApprove(car._id)}
-                    className="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
-                  >
-                    Approve
-                  </button>
-                  <button
-                    onClick={() => handleReject(car._id)}
-                    className="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-                  >
-                    Reject
-                  </button>
+        {pendingCars.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+            <FaCar className="w-16 h-16 text-[#14B8A6] mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-[#1F2937] mb-2">No Pending Requests</h2>
+            <p className="text-gray-500">All vehicle requests have been processed.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pendingCars.map((car) => (
+              <div key={car._id} className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform hover:scale-[1.02] hover:shadow-md">
+                <div className="relative">
+                  <img 
+                    src={car.image} 
+                    alt={`${car.make} ${car.model}`} 
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-[#F59E0B] text-white px-3 py-1 rounded-full text-sm font-medium">
+                    ${car.price_per_day}/day
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-[#003366] mb-4">
+                    {car.make} {car.model} <span className="text-[#14B8A6]">({car.year})</span>
+                  </h3>
+                  
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-2 text-[#1F2937]">
+                      <FiTag className="w-5 h-5 text-[#14B8A6]" />
+                      <span>{car.category}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-[#1F2937]">
+                      <FiUser className="w-5 h-5 text-[#14B8A6]" />
+                      <span>{car.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-[#1F2937]">
+                      <FiMail className="w-5 h-5 text-[#14B8A6]" />
+                      <span className="text-sm">{car.email}</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => handleApprove(car._id)}
+                      className="flex items-center justify-center gap-2 bg-[#14B8A6] text-white px-4 py-2.5 rounded-lg hover:bg-[#0E8A7D] transition-colors"
+                    >
+                      <FaCheckCircle className="w-5 h-5" />
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => handleReject(car._id)}
+                      className="flex items-center justify-center gap-2 bg-white text-red-500 border-2 border-red-500 px-4 py-2.5 rounded-lg hover:bg-red-50 transition-colors"
+                    >
+                      <FiXCircle className="w-5 h-5" />
+                      Reject
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
 
 export default PendingCars;
