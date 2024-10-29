@@ -178,7 +178,7 @@ console.log(car.email);
         <div
           className="bg-cover bg-center h-[60vh] flex items-center justify-center relative overflow-hidden"
           style={{
-            backgroundImage: `url(${slide1})`,
+            backgroundImage: `url(${car.image || slide1})`,
             backgroundPositionY: `${scrollY * 0.5}px`,
             willChange: "transform"
           }}
