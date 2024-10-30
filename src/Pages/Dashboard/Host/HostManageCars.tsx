@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { SyncLoader } from "react-spinners";
 import useAuth from "../../../Hooks/useAuth";
 import { useState } from "react";
+import { ImSpinner9 } from "react-icons/im";
 
 interface CarData {
   _id: string;
@@ -20,6 +21,7 @@ const HostManageCars = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const [Loading, setLoading] = useState<boolean>(false);
   const { data: TotalCar = [], refetch, isLoading } = useQuery({
     queryKey: ["Car"],
     queryFn: async () => {
@@ -30,8 +32,8 @@ const HostManageCars = () => {
   const singleCarObject: CarData = TotalCar.reduce((acc: any, car: any) => ({ ...acc, ...car }), {} as CarData);
 
 
-// Destructure the combined object
-const { make, model,amount,_id } = singleCarObject;
+  // Destructure the combined object
+  const { make, model, amount, _id } = singleCarObject;
 
 
 
@@ -62,7 +64,7 @@ const { make, model,amount,_id } = singleCarObject;
     });
   };
 
-//  update car value
+  //  update car value
   const handleEditSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const from = event.target;
@@ -76,11 +78,12 @@ const { make, model,amount,_id } = singleCarObject;
         model: model,
         amount: amount,
       }
-     
+      setLoading(true)
       await axiosPublic.patch(`/updateManageCar/${_id}`, updatedValue);
       setIsModalOpen(false)
       refetch();
       Swal.fire("Updated!", "Car details have been updated.", "success");
+      setLoading(false)
     } catch (error) {
       Swal.fire("Error!", "Failed to update car details.", "error");
     }
@@ -221,8 +224,11 @@ const { make, model,amount,_id } = singleCarObject;
               </div>
 
               {/* Submit Button */}
-              <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">
-                Submit
+
+              <button className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
+                {
+                  isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-accent" /> : "Payment Now"
+                }
               </button>
             </form>
 
