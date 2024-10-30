@@ -230,7 +230,7 @@ const HostManageCars = () => {
           {Loading ? (
             <ImSpinner9 size={28} className="animate-spin m-auto text-accent" />
           ) : (
-            "Payment Now"
+            "updated Now"
           )}
         </button>
       </form>
