@@ -157,90 +157,87 @@ const HostManageCars = () => {
         </div>
       )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-96 relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-600 hover:text-red-400 font-bold text-3xl"
-            >
-              &times;
-            </button>
-            <h2 className="text-xl font-semibold mb-4">updated Cars</h2>
-            <form onSubmit={handleEditSubmit} className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md space-y-4">
-              {/* Make Input */}
-              <div>
-                <label htmlFor="make" className="block text-gray-700 font-medium mb-2">Make:</label>
-                <input
-                  type="text"
-                  id="make"
-                  name="make"
-                  defaultValue={make}
-                  placeholder="Enter make"
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                />
-              </div>
+{isModalOpen && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 relative">
+      <button
+        onClick={closeModal}
+        className="absolute top-2 right-2 text-gray-600 hover:text-red-400 font-bold text-3xl"
+      >
+        &times;
+      </button>
+      <h2 className="text-xl font-semibold mb-4">Updated Cars</h2>
+      <form onSubmit={handleEditSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
 
-              {/* Model Input */}
-              <div>
-                <label htmlFor="model" className="block text-gray-700 font-medium mb-2">Model:</label>
-                <input
-                  type="text"
-                  id="model"
-                  name="model"
-                  defaultValue={model}
-                  // placeholder="Enter model"
-                  required
-                  // value={formData.model}
-                  // onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
-              {/* Amount Input */}
-              <div>
-                <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">Amount:</label>
-                <input
-                  type="number"
-                  id="amount"
-                  name="amount"
-
-                  defaultValue={amount}
-                  placeholder="Enter amount"
-                  required
-                  // value={formData.amount || ''}
-                  // onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
-              {/* File Upload Input */}
-              <div>
-                <label htmlFor="file" className="block text-gray-700 font-medium mb-2">Upload File:</label>
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  accept=".jpg, .jpeg, .png, .pdf"
-
-                  // onChange={handleFileChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
-              {/* Submit Button */}
-
-              <button className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${Loading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
-                {
-                  Loading ? <ImSpinner9 size={28} className="animate-spin m-auto text-accent" /> : "Payment Now"
-                }
-              </button>
-            </form>
-
-          </div>
+        {/* Make Input */}
+        <div>
+          <label htmlFor="make" className="block text-gray-700 font-medium mb-2">Make:</label>
+          <input
+            type="text"
+            id="make"
+            name="make"
+            defaultValue={make}
+            placeholder="Enter make"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          />
         </div>
-      )}
+
+        {/* Model Input */}
+        <div>
+          <label htmlFor="model" className="block text-gray-700 font-medium mb-2">Model:</label>
+          <input
+            type="text"
+            id="model"
+            name="model"
+            defaultValue={model}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        {/* Amount Input */}
+        <div>
+          <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">Amount:</label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            defaultValue={amount}
+            placeholder="Enter amount"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        {/* File Upload Input */}
+        <div>
+          <label htmlFor="file" className="block text-gray-700 font-medium mb-2">Upload File:</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".jpg, .jpeg, .png, .pdf"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${Loading ? 'cursor-not-allowed' : ''}`}
+          disabled={isLoading}
+        >
+          {Loading ? (
+            <ImSpinner9 size={28} className="animate-spin m-auto text-accent" />
+          ) : (
+            "Payment Now"
+          )}
+        </button>
+      </form>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
