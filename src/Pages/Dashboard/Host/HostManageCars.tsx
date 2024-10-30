@@ -12,6 +12,8 @@ interface CarData {
   rental_price_per_day: number;
   availability: boolean;
   image: string;
+  model: string;
+  amount: number;
 }
 
 const HostManageCars = () => {
@@ -22,6 +24,7 @@ const HostManageCars = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const [Loading, setLoading] = useState<boolean>(false);
+
   const { data: TotalCar = [], refetch, isLoading } = useQuery({
     queryKey: ["Car"],
     queryFn: async () => {
@@ -29,8 +32,9 @@ const HostManageCars = () => {
       return res.data;
     },
   });
+  // console.log(TotalCar);
+  // convert single object
   const singleCarObject: CarData = TotalCar.reduce((acc: any, car: any) => ({ ...acc, ...car }), {} as CarData);
-
 
   // Destructure the combined object
   const { make, model, amount, _id } = singleCarObject;
@@ -65,30 +69,32 @@ const HostManageCars = () => {
   };
 
   //  update car value
-  const handleEditSubmit = async (event: React.FormEvent) => {
+  const handleEditSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const from = event.target;
-    const make = from.make.value;
-    const model = from.model.value;
-    const amount = from.amount.value;
-
+    const form = event.currentTarget;
+    const make = form.make.value;
+    const model = form.model.value;
+    const amount = form.amount.value;
+    // updated data
     try {
       const updatedValue = {
         make: make,
         model: model,
         amount: amount,
-      }
-      setLoading(true)
+      };
+
+      setLoading(true);
       await axiosPublic.patch(`/updateManageCar/${_id}`, updatedValue);
-      setIsModalOpen(false)
+      setIsModalOpen(false);
       refetch();
       Swal.fire("Updated!", "Car details have been updated.", "success");
-      setLoading(false)
     } catch (error) {
       Swal.fire("Error!", "Failed to update car details.", "error");
+    } finally {
+      setLoading(false);
     }
-
   };
+
 
 
   if (isLoading) {
@@ -225,9 +231,9 @@ const HostManageCars = () => {
 
               {/* Submit Button */}
 
-              <button className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${isLoading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
+              <button className={`w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-2 px-4 rounded mt-4 ${Loading ? ' cursor-not-allowed' : ''}`} disabled={isLoading} >
                 {
-                  isLoading ? <ImSpinner9 size={28} className="animate-spin m-auto text-accent" /> : "Payment Now"
+                  Loading ? <ImSpinner9 size={28} className="animate-spin m-auto text-accent" /> : "Payment Now"
                 }
               </button>
             </form>
