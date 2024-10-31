@@ -87,7 +87,7 @@ const SupportChat = () => {
     members: { $in: ['support-agent'] }
   };
   
-  const sort = { last_message_at: -1 };
+  const sort = { last_message_at: 1 } as const;
 
   const CustomChannelPreview = ({ channel, setActiveChannel }: any) => {
     const customer = Object.keys(channel.state.members)
@@ -142,7 +142,7 @@ const SupportChat = () => {
                 <Window>
                   <ChannelHeader />
                   <MessageList />
-                  <MessageInput focus />
+                  <MessageInput  />
                 </Window>
                 <Thread />
               </Channel>

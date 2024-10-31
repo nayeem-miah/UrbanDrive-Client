@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { StreamChat } from 'stream-chat';
 import {
   Chat,
   Channel,
   Window,
-  ChannelHeader,
+  
   MessageList,
   MessageInput,
   Thread,
-  LoadingIndicator,
+  
 } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/v2/index.css';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -26,6 +28,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, setIsOpen }) => {
   const [error, setError] = useState<string | null>(null);
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let chatClient: StreamChat | null = null;
@@ -133,7 +136,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, setIsOpen }) => {
               <p className="text-red-500 mb-4">{error}</p>
               {!user && (
                 <button 
-                  onClick={() => {/* Navigate to login */}}
+                  onClick={() => {navigate('/login')}}
                   className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
                 >
                   Log In
@@ -145,7 +148,9 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, setIsOpen }) => {
           <Chat client={client} theme="messaging light">
             <Channel channel={channel}>
               <Window>
-                <MessageList />
+                <MessageList 
+                  messageActions={['edit', 'delete', 'flag', 'mute', 'pin', 'quote', 'reply']}
+                />
                 <MessageInput />
               </Window>
               <Thread />

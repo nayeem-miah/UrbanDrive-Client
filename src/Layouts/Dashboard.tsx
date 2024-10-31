@@ -8,12 +8,13 @@ import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
 import { SyncLoader } from "react-spinners";
 import useRole from "../Hooks/useRole";
-import React from "react";
+import React, { useState } from "react";
 
 type Role = "Admin" | "Host" | "";
 
 const Dashboard: React.FC = () => {
   const [role, isPending]: [Role, boolean, boolean] = useRole();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   if (isPending) {
     return (
@@ -24,8 +25,39 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <aside className="w-64 bg-primary shadow-lg">
+    <div className="flex min-h-screen bg-background relative">
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 bg-primary p-2 rounded-lg"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+          />
+        </svg>
+      </button>
+
+      <div
+        className={`fixed inset-0 bg-black/50 z-30 md:hidden transition-opacity duration-300 ${
+          isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsSidebarOpen(false)}
+      />
+
+      <aside
+        className={`fixed md:static w-64 bg-primary shadow-lg z-40 h-full transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 transition-transform duration-300 ease-in-out`}
+      >
         <div className="px-6 py-8">
           <h2 className="text-2xl font-bold text-white text-center">
             <span className="text-accent">U</span>rban
@@ -242,8 +274,8 @@ const Dashboard: React.FC = () => {
         </nav>
       </aside>
 
-      <main className="flex-1 overflow-auto">
-        <div className="p-8">
+      <main className="flex-1 overflow-auto md:ml-0">
+        <div className="p-4 md:p-8">
           <Outlet />
         </div>
       </main>
