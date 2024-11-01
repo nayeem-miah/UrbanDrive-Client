@@ -78,7 +78,7 @@ const SupportChat = () => {
 
   if (!client) return (
     <div className="h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary border-opacity-75"></div>
     </div>
   );
 
@@ -98,59 +98,95 @@ const SupportChat = () => {
 
     return (
       <div 
-        className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
-          isActive ? 'bg-gray-100' : ''
+        className={`p-4 hover:bg-gray-50 cursor-pointer transition-all duration-200 border-b border-gray-100 ${
+          isActive ? 'bg-blue-50 hover:bg-blue-50' : ''
         }`}
         onClick={() => {
           console.log('Channel clicked:', channel.id);
           setActiveChannel(channel);
         }}
       >
-        <div className="font-medium">Customer: {customer}</div>
-        <div className="text-sm text-gray-500 truncate">
-          {lastMessage?.text || 'No messages yet'}
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center text-white font-medium">
+            {customer?.charAt(0)?.toUpperCase() || '?'}
+          </div>
+          <div className="flex-1">
+            <div className="font-medium text-sm md:text-base text-gray-800">
+              Customer: {customer}
+            </div>
+            <div className="text-xs md:text-sm text-gray-500 truncate mt-1">
+              {lastMessage?.text || 'No messages yet'}
+            </div>
+          </div>
+          {/* Optional: Add an unread indicator or timestamp */}
+          {lastMessage?.created_at && (
+            <div className="text-xs text-gray-400">
+              {new Date(lastMessage.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          )}
         </div>
       </div>
     );
   };
 
   return (
-    <div className="h-[800px] bg-white rounded-lg shadow-lg">
+    <div className="h-[calc(100vh-100px)] md:h-[800px] mt-12 bg-white rounded-xl shadow-2xl overflow-hidden">
       <Chat client={client} theme="messaging light">
-        <div className="flex h-full">
-          <div className="w-1/3 border-r">
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold">Support Conversations</h2>
-              <p className="text-sm text-gray-500">
-                {activeChannel ? `Chatting with: ${activeChannel.data?.name || 'Customer'}` : 'Select a chat'}
+        <div className="flex flex-col md:flex-row h-full">
+          {/* Sidebar */}
+          <div className={`${activeChannel ? 'hidden' : 'flex'} md:flex md:w-[380px] bg-gray-50 flex-col border-r border-gray-200`}>
+            <div className="p-6 bg-white border-b border-gray-200 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-800">Support Conversations</h2>
+              <p className="text-sm text-gray-500 mt-1">
+                {activeChannel ? `Chatting with: ${activeChannel.data?.name || 'Customer'}` : 'Select a conversation to begin'}
               </p>
             </div>
-            <ChannelList 
-              filters={filters} 
-              sort={sort}
-              Preview={(previewProps) => (
-                <CustomChannelPreview 
-                  {...previewProps} 
-                  setActiveChannel={handleChannelSelect}
-                />
-              )}
-            />
+            <div className="flex-1 overflow-y-auto">
+              <ChannelList 
+                filters={filters} 
+                sort={sort}
+                Preview={(previewProps) => (
+                  <CustomChannelPreview 
+                    {...previewProps} 
+                    setActiveChannel={handleChannelSelect}
+                  />
+                )}
+              />
+            </div>
           </div>
-          <div className="w-2/3">
+
+          {/* Chat Area */}
+          <div className={`${activeChannel ? 'flex' : 'hidden'} md:flex flex-1 flex-col bg-white`}>
             {activeChannel ? (
               <Channel channel={activeChannel}>
                 <Window>
-                  <ChannelHeader />
+                  <div className="flex items-center p-4 md:p-6 border-b border-gray-200 bg-white shadow-sm">
+                    <button 
+                      className="md:hidden mr-4 text-gray-600 hover:text-gray-800 transition-colors"
+                      onClick={() => setActiveChannel(null)}
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <ChannelHeader />
+                  </div>
                   <MessageList />
-                  <MessageInput  />
+                  <MessageInput />
                 </Window>
                 <Thread />
               </Channel>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-500">
-                <div className="text-center">
-                  <p className="mb-2">Select a conversation to start chatting</p>
-                  <p className="text-sm">Active chats will appear in the left sidebar</p>
+              <div className="h-full flex items-center justify-center bg-gray-50">
+                <div className="text-center p-8 max-w-md">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center">
+                    <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Support Chat</h3>
+                  <p className="text-gray-500 mb-1">Select a conversation to start chatting</p>
+                  <p className="text-sm text-gray-400">Active chats will appear in the sidebar</p>
                 </div>
               </div>
             )}

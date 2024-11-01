@@ -3,11 +3,14 @@ import person from "../../../assets/person.png";
 import { FaCarRear } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
-import { Chart } from "react-google-charts";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import DynamicPieChartHost from "./Chart/DynamicPieChartHost";
+import DynamicLineChartHost from "./Chart/DynamicLineChartHost";
+import useAuth from "../../../Hooks/useAuth";
 
 const HostOverview: React.FC = () => {
   const axiosPublic = useAxiosPublic();
+  const { user } = useAuth()
   const { data = [], isLoading } = useQuery({
     queryKey: ["query-stats"],
     queryFn: async () => {
@@ -20,7 +23,7 @@ const HostOverview: React.FC = () => {
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/recent-bookings");
+      const res = await axiosPublic.get(`/recent-bookings/${user?.email}`);
       return res.data;
     },
   });
@@ -33,6 +36,8 @@ const HostOverview: React.FC = () => {
     endDate: string;
     location: string;
     totalCost: number;
+    amount: number;
+    cus_email: string;
   }
 
   const formatDate = (dateString: string) => {
@@ -50,39 +55,13 @@ const HostOverview: React.FC = () => {
       </div>
     );
   }
-  // pi chart
-  const piChartData = [
-    ["Task", "Hours per Day"],
-    ["accepted", 7],
-    ["pending", 5],
-    ["cancel", 3],
-  ];
 
+  //  oi chart title
   const piOptions = {
     title: "Daily Activities",
   };
-  // line hcart
-  const lineChartData = [
-    [
-      { type: "number", label: "x" },
-      { type: "number", label: "values" },
-      { id: "i0", type: "number", role: "interval" },
-      { id: "i1", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-      { id: "i2", type: "number", role: "interval" },
-    ],
-    [1, 100, 90, 110, 85, 96, 104, 120],
-    [2, 120, 95, 130, 90, 113, 124, 140],
-    [3, 130, 105, 140, 100, 117, 133, 139],
-    [4, 90, 85, 95, 85, 88, 92, 95],
-    [5, 70, 74, 63, 67, 69, 70, 72],
-    [6, 30, 39, 22, 21, 28, 34, 40],
-    [7, 80, 77, 83, 70, 77, 85, 90],
-    [8, 100, 90, 110, 85, 95, 102, 110],
-  ];
 
+  // line chart title
   const lineOptions = {
     title: "Price, per days",
     curveType: "function",
@@ -92,15 +71,15 @@ const HostOverview: React.FC = () => {
   };
 
   return (
-    <div className="text-2xl">
+    <div className="text-2xl ">
       <div className="mt-3">
         <h2 className="text-3xl font-bold mb-4 text-left mt-2 font-Merri">
           Overview
         </h2>
       </div>
       <>
-        <div className="stats mt-3">
-          <div className="stat space-y-3 bg-green-400">
+        <div className="stats mt-3 mb-8">
+          <div className="stat space-y-3 bg-green-400 ">
             <div className="stat-figure text-secondary">
               <img className="w-11 h-11" src={person} alt="" />
             </div>
@@ -130,25 +109,15 @@ const HostOverview: React.FC = () => {
       </>
 
       {/* chart */}
-      <div className="py-9 lg:py-11">
-        <h3>{piOptions.title} </h3>
-        {/* pi charts */}
-        <Chart
-          chartType="PieChart"
-          data={piChartData}
-          // options={options}
-          width={"100%"}
-          height={"400px"}
-        />
-        {/* line chart */}
-        <h3>{lineOptions.title} </h3>
-        <Chart
-          chartType="LineChart"
-          width="100%"
-          height="400px"
-          data={lineChartData}
-          // options={lineOptions}
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-[#1F2937] mb-4">{piOptions.title}</h2>
+          <DynamicPieChartHost />
+        </div>
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-[#1F2937] mb-4">{lineOptions.title}</h2>
+          <DynamicLineChartHost />
+        </div>
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-4 text-left">
@@ -169,11 +138,11 @@ const HostOverview: React.FC = () => {
               {bookings.map((item: bookings, idx: number) => (
                 <tr key={item._id}>
                   <th>{idx + 1}</th>
-                  <td>{item?.userName}</td>
+                  <td>{item?.cus_email}</td>
                   <td>{item?.location}</td>
                   <td>{formatDate(item?.startDate)}</td>
                   <td className="font-bold">
-                    {item?.totalCost}
+                    {item?.amount}
                     <span className="text-xl">৳</span>
                   </td>
                 </tr>

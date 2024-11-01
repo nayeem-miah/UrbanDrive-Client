@@ -8,13 +8,19 @@ import { FaCarRear } from "react-icons/fa6";
 import { TbBrandBooking } from "react-icons/tb";
 import { SyncLoader } from "react-spinners";
 import useRole from "../Hooks/useRole";
-import React, { useState } from "react";
+import React from "react";
 
 type Role = "Admin" | "Host" | "";
 
 const Dashboard: React.FC = () => {
   const [role, isPending]: [Role, boolean, boolean] = useRole();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+
+const handleLinkClick = () => {
+  if(window.innerWidth < 768){
+    setIsSidebarOpen(false);
+  }
+}
 
   if (isPending) {
     return (
@@ -54,9 +60,9 @@ const Dashboard: React.FC = () => {
       />
 
       <aside
-        className={`fixed md:static w-64 bg-primary shadow-lg z-40 h-full transform ${
+        className={`fixed md:static w-64 bg-primary shadow-lg z-40 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 ease-in-out`}
+        } md:translate-x-0 transition-transform duration-300 ease-in-out `}
       >
         <div className="px-6 py-8">
           <h2 className="text-2xl font-bold text-white text-center">
@@ -65,11 +71,12 @@ const Dashboard: React.FC = () => {
           </h2>
         </div>
 
-        <nav className="px-4 py-4">
+        <nav className="px-4 py-4 sticky top-0">
           {role === "Admin" && (
             <div className="space-y-2">
               <NavLink
                 to="/dashboard/adminHome"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -84,6 +91,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/manageUser"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -98,6 +106,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/cars"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -112,6 +121,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/paymentHistory"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -126,6 +136,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/bookings"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -140,6 +151,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/manageMemberShip"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -153,6 +165,7 @@ const Dashboard: React.FC = () => {
               </NavLink>
               <NavLink
                 to="/dashboard/support"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -168,6 +181,7 @@ const Dashboard: React.FC = () => {
               </NavLink>
               <NavLink
                 to="/dashboard/pendingCars"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -186,6 +200,7 @@ const Dashboard: React.FC = () => {
             <div className="space-y-2">
               <NavLink
                 to="/dashboard/hostOverview"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -200,6 +215,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/myCars"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -214,6 +230,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/hostManageBookings"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -228,6 +245,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/hostPayments"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -242,6 +260,7 @@ const Dashboard: React.FC = () => {
 
               <NavLink
                 to="/dashboard/requestAdvertise"
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                     isActive
@@ -259,6 +278,7 @@ const Dashboard: React.FC = () => {
           <div className="mt-8 pt-8 border-t border-white/10">
             <NavLink
               to="/"
+              onClick={handleLinkClick}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
                   isActive

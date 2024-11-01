@@ -93,7 +93,7 @@ const [phone, setPhone] = useState<string>(user?.phone || '');
     };
 
     try {
-        const response = await axiosPublic.put('/user/profile', { updateData: updatedUser });
+        await axiosPublic.put('/user/profile', { updateData: updatedUser });
         // setUser(response.data);
         toast.success('User profile updated successfully');
         setIsEditing(false);
