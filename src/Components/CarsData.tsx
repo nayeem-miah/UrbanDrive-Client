@@ -86,7 +86,7 @@ const CarsData: React.FC<CarsDataProps> = ({ cars }) => {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <h2 className="text-lg font-bold text-primary">{car.model} ({car.category})</h2>
-                      
+
                       {favoriteCars.includes(car._id) ? (
                         <IoMdHeart
                           onClick={() => removeFromFavoriteCars(car._id)}
