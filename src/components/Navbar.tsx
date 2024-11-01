@@ -235,21 +235,21 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden z-50 relative w-6 h-6"
+          className="lg:hidden z-50 relative w-6 h-6 col"
           onClick={() => setToggle(!toggle)}
         >
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "rotate-45 top-3" : "rotate-0 top-1"
             }`}
           />
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "opacity-0 translate-x-3" : "opacity-100"
             } top-3`}
           />
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "-rotate-45 top-3" : "rotate-0 top-5"
             }`}
           />

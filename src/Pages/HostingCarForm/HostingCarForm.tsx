@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import StepIndicator from '../../Components/steps/stepIndicator';
 import { steps } from '../../Components/steps/HostSteps';
@@ -14,16 +15,51 @@ import { imageUpload } from '../../Utils/ImageUpload';
 
 
 interface FormData {
-  basicCarInfo: { make: string; model: string; year: string };
-  rentalDetails: { price: string; availability: string };
-  locationAndPickupInfo: { city: string; pickupPoint: string; openingHours: { start: string; end: string } };
-  hostInfo: { name: string; phone: string };
-  membershipAndPlan: { plan: string };
-  additionalInfo: { description: string };
-  carImage: File[];
-  carImages: File[];
-  carImageUrl: string;
-  carImageUrls: string[];
+  _id?: string;
+  category: string;
+  make: string;
+  model: string;
+  year: number;
+  
+  availability: boolean;
+  features: string[];
+  rental_duration: string;
+  price: number;
+  discount: number;
+  city: string;
+  pickup_point: string;
+  opening_hours: string;
+  membership: string;
+  name: string;
+  email: string;
+  date?: string;
+  rating?: number;
+  review?: string;
+  price_per_day?: number;
+  total_price?: number;
+  plan_type: string;
+  description: string;
+  booking_id?: string;
+  customer_id?: string;
+  image: string;
+  seatCount: number;
+  trip_count?: number;
+  location?: {
+    type: string;
+    coordinates: number[];
+  };
+  driver: string;
+  home_pickup: string;
+  
+  averageRating?: number;
+  categoryRatings?: {
+    Cleanliness: number;
+    Communication: number;
+    Comfort: number;
+    Convenience: number;
+  };
+  reviewCount?: number;
+  carImage?: FileList; // For file upload handling
 }
 
 const HostingCarForm: React.FC = () => {
@@ -32,22 +68,62 @@ const HostingCarForm: React.FC = () => {
   const methods = useForm<FormData>();
   const { trigger, handleSubmit } = methods;
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (formData: any) => {
     try {
-      // Upload single car image
-      if (data.carImage && data.carImage[0]) {
-        const carImageUrl = await imageUpload(data.carImage[0]);
-        data.carImageUrl = carImageUrl;
+      const transformedData: FormData = {
+        category: formData.basicCarInfo.category,
+        make: formData.basicCarInfo.make,
+        model: formData.basicCarInfo.model,
+        year: Number(formData.basicCarInfo.year),
+        price_per_day: Number(formData.rentalDetails.price_per_day),
+        availability: true,
+        features: formData.basicCarInfo.features || [],
+        rental_duration: formData.rentalDetails.duration,
+        price: Number(formData.rentalDetails.price_per_day || 0),
+        discount: Number(formData.rentalDetails.discount) || 0,
+        city: formData.locationAndPickupInfo.city,
+        pickup_point: formData.locationAndPickupInfo.pickupPoint,
+        opening_hours: `${formData.locationAndPickupInfo.openingHours.start} - ${formData.locationAndPickupInfo.openingHours.end}`,
+        membership: formData.membership || 'Standard',
+        name: formData.host.name,
+        email: formData.host.email,
+        plan_type: formData.plan_type || 'Basic_Coverage',
+        description: formData.additionalInfo.description || '',
+        image: '', // Will be updated after image upload
+        seatCount: Number(formData.basicCarInfo.seatCount),
+        driver: formData.basicCarInfo.driver || 'No',
+        home_pickup: formData.basicCarInfo.homePickup || 'No',
+        
+        // Default values for optional fields
+        rating: 0,
+        averageRating: 0,
+        reviewCount: 0,
+        trip_count: 0,
+        location: {
+          type: "Point",
+          coordinates: [
+            formData.locationAndPickupInfo.coordinates?.lng ,
+            formData.locationAndPickupInfo.coordinates?.lat
+          ]
+        },
+        categoryRatings: {
+          Cleanliness: 0,
+          Communication: 0,
+          Comfort: 0,
+          Convenience: 0
+        }
+      };
+
+      console.log('Form data before transform:', formData); // Debug log
+      console.log('Transformed data:', transformedData); // Debug log
+
+      // Handle image upload
+      if (formData.carImage?.[0]) {
+        const imageUrl = await imageUpload(formData.carImage[0]);
+        transformedData.image = imageUrl;
       }
 
-      // Upload multiple car images
-      if (data.carImages && data.carImages.length > 0) {
-        const carImageUrls = await Promise.all(Array.from(data.carImages).map(imageUpload));
-        data.carImageUrls = carImageUrls;
-      }
-
-      // backend
-      const response = await axiosPublic.post('http://localhost:8000/hostCar', data);
+      const response = await axiosPublic.post('/hostCar', transformedData);
       console.log('Car hosted successfully:', response.data);
       Swal.fire({
         title: 'Car Hosted Successfully',
@@ -75,16 +151,16 @@ const HostingCarForm: React.FC = () => {
 
     switch (currentStep) {
       case 0:
-        isValid = await trigger(['basicCarInfo.make', 'basicCarInfo.model', 'basicCarInfo.year']);
+        isValid = await trigger(['make', 'model', 'year']);
         break;
       case 1:
-        isValid = await trigger(['rentalDetails.price', 'rentalDetails.availability']);
+        isValid = await trigger(['price', 'availability']);
         break;
       case 2:
-        isValid = await trigger(['locationAndPickupInfo.city', 'locationAndPickupInfo.pickupPoint', 'locationAndPickupInfo.openingHours.start', 'locationAndPickupInfo.openingHours.end']);
+        isValid = await trigger(['city', 'pickup_point', 'opening_hours']);
         break;
       case 5:
-        isValid = await trigger(['additionalInfo.description']);
+        isValid = await trigger(['description']);
         break;
       default:
         break;

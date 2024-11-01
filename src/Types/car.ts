@@ -1,5 +1,5 @@
 export interface ICar {
-    email: any;
+    email: string;
     _id: number;
     make: string;
     model: string;
@@ -9,7 +9,7 @@ export interface ICar {
     description: string;
     features: string[];
     category: string;
-    rental_price_per_day: number;
+    price_per_day: number;
     rental_duration: number;
     availability: boolean;
     total_price: number;

@@ -31,6 +31,8 @@ import HostManageBookings from "../Pages/Dashboard/Host/HostManageBookings";
 import HostPayments from "../Pages/Dashboard/Host/HostPayments";
 import RequestAdvertisement from "../Pages/Dashboard/Host/RequestAdvertisement";
 import HostManageCars from "../Pages/Dashboard/Host/HostManageCars";
+import SupportChat from "../Pages/Dashboard/Admin/SupportChat";
+import PendingCars from "../Pages/Dashboard/Admin/PendingCars";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -182,6 +184,14 @@ const router = createBrowserRouter([
       {
         path: "manageMemberShip",
         element: <ManageMemberShip />,
+      },
+      {
+        path: "support",
+        element: <SupportChat />,
+      },
+      {
+        path: "pendingCars",
+        element: <PendingCars />,
       },
       {
         path: "hostOverview",

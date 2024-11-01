@@ -71,7 +71,7 @@ const OnboardCheckout: React.FC = () => {
     const { name, value, files } = e.target;
     setUserInfo((prevInfo) => ({
       ...prevInfo,
-      [name]: files ? files[0] : value,
+      [name]: files ? files[0] : (value || ''),
     }));
   };
 
