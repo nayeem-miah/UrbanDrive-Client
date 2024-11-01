@@ -14,7 +14,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <SyncLoader color="#076cec" size={50} />
+        <SyncLoader color="#593cfb" size={18} />
       </div>
     );
   }
