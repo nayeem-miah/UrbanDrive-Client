@@ -31,6 +31,7 @@ import HostManageBookings from "../Pages/Dashboard/Host/HostManageBookings";
 import HostPayments from "../Pages/Dashboard/Host/HostPayments";
 import RequestAdvertisement from "../Pages/Dashboard/Host/RequestAdvertisement";
 import HostManageCars from "../Pages/Dashboard/Host/HostManageCars";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -53,25 +54,37 @@ const router = createBrowserRouter([
 
       {
         path: "/cars/:id",
-        element: <CarDetails></CarDetails>,
+        element: (
+          <PrivateRoute>
+            <CarDetails></CarDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
-      },
-      {
-        path: "/cars",
-        element: <Cars></Cars>,
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/services",
-        element: <Cars></Cars>,
+        element: (
+          <PrivateRoute>
+            <Cars></Cars>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/hostingForm",
-        element: <HostingCarForm></HostingCarForm>,
+        element: (
+          <PrivateRoute>
+            <HostingCarForm></HostingCarForm>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/checkout/:bookingId",
-        element: <OnboardCheckout></OnboardCheckout>,
+        element: (
+          <PrivateRoute>
+            <OnboardCheckout></OnboardCheckout>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/membership",
@@ -79,7 +92,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/membership-duration/:planName/:price",
-        element: <MembershipDuration></MembershipDuration>,
+        element: (
+          <PrivateRoute>
+            <MembershipDuration></MembershipDuration>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -108,19 +125,35 @@ const router = createBrowserRouter([
   },
   {
     path: "payment-history",
-    element: <PaymetHistory />,
+    element: (
+      <PrivateRoute>
+        <PaymetHistory />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/favorite",
-    element: <Favorite />,
+    element: (
+      <PrivateRoute>
+        <Favorite />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/booked",
-    element: <Booked />,
+    element: (
+      <PrivateRoute>
+        <Booked />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/dashboard",
@@ -128,7 +161,9 @@ const router = createBrowserRouter([
     children: [
       {
         path: "adminhome",
-        element: <AdminHome />,
+        element: (
+            <AdminHome />
+        ),
       },
       {
         path: "manageUser",
@@ -160,7 +195,7 @@ const router = createBrowserRouter([
       },
       {
         path: "myCars",
-        element: <HostManageCars/>
+        element: <HostManageCars />,
       },
       {
         path: "hostPayments",

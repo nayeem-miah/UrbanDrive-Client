@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
-import { ClipLoader } from "react-spinners";
+import { SyncLoader } from "react-spinners";
 import { ReactNode } from "react";
 
 interface PrivateRouteProps {
@@ -14,7 +14,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <ClipLoader color="#076cec" size={50} />
+        <SyncLoader color="#593cfb" size={18} />
       </div>
     );
   }
@@ -23,7 +23,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     return <>{children}</>;
   }
 
-  return <Navigate state={{ from: location }} to="/login" replace />;
+  return <Navigate state={location.pathname} to="/login" replace />;
 };
 
 export default PrivateRoute;
