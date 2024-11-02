@@ -6,13 +6,16 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
 import slide1 from "../../assets/slides/slide1.jpg";
+import ChatModal from './ChatModal';
+
 
 const Contact: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const { t } = useTranslation();
   const axiosPublic = useAxiosPublic();
-  
 
+ 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -55,6 +58,11 @@ const Contact: React.FC = () => {
       console.error('Error submitting form:', error);
       toast.error('Failed to send message. Please try again.');
     }
+  };
+
+  const handleChatClick = () => {
+    console.log('Chat button clicked'); // Add this debug log
+    setIsChatOpen(true);
   };
 
   return (
@@ -207,16 +215,24 @@ const Contact: React.FC = () => {
               {t('contact.dont_hesitate')}
             </p>
             <div className="flex justify-center">
-              <a
-                href="/contact"
+              <button 
+                onClick={handleChatClick}
                 className="px-10 py-4 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity duration-300"
               >
-                {t('contact.get_in_touch')}
-              </a>
+                {t('Chat with us')}
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Add debug info */}
+      <div className="hidden">Chat Modal State: {isChatOpen ? 'Open' : 'Closed'}</div>
+      
+      <ChatModal 
+        isOpen={isChatOpen} 
+        setIsOpen={setIsChatOpen} 
+      />
     </div>
   );
 };

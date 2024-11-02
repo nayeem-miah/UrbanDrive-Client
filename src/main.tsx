@@ -14,6 +14,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n from './Utils/i18n.ts'
 
 
+
 const queryClient = new QueryClient()
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

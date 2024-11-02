@@ -11,7 +11,7 @@ const BasicCarInfo: React.FC = () => {
     { value: 'Bluetooth', label: 'Bluetooth' },
     { value: 'Air Conditioning', label: 'Air Conditioning' },
     { value: 'USB Charging', label: 'USB Charging' },
-    { value: 'GPS Navigation', label: 'GPS Navigation' },
+    { value: 'GPS', label: 'GPS Navigation' },
     { value: 'Heated Seats', label: 'Heated Seats' },
   ];
 
@@ -34,6 +34,11 @@ const BasicCarInfo: React.FC = () => {
   };
 
   const animatedComponents = makeAnimated(); 
+
+  const driverOptions = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' },
+  ];
 
   return (
     <>
@@ -173,6 +178,58 @@ const BasicCarInfo: React.FC = () => {
         {errors.basicCarInfo && 'features' in errors.basicCarInfo && typeof errors.basicCarInfo.features?.message === 'string' && (
           <p className="text-red-500">{errors.basicCarInfo.features.message}</p>
         )}
+      </div>
+
+      {/* Add Driver Option */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-2">Driver Available</label>
+        <Select
+          options={driverOptions}
+          onChange={(option) => setValue('basicCarInfo.driver', option?.value)}
+          classNamePrefix="select"
+          isClearable
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,    
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
+        />
+      </div>
+
+      {/* Add Home Pickup Option */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-2">Home Pickup Available</label>
+        <Select
+          options={driverOptions}
+          onChange={(option) => setValue('basicCarInfo.homePickup', option?.value)}
+          classNamePrefix="select"
+          isClearable
+          styles={{
+            control: (provided, { isFocused }) => ({
+              ...provided,    
+              border: `1px solid ${isFocused ? '#4f46e5' : '#d1d5db'}`, 
+              borderRadius: '0.5rem', 
+              backgroundColor: '#f9fafb',
+              boxShadow: isFocused ? '0 0 0 1px rgba(79, 70, 229, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.1)', 
+              transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
+              transform: isFocused ? 'translateY(-0.25rem)' : 'translateY(0)', 
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999, 
+            }),
+          }}
+        />
       </div>
     </>
   );

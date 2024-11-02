@@ -39,12 +39,12 @@ const Success: React.FC = () => {
             >
               Go to Home
             </Link>
-            <Link
+            {/* <Link
               to={`/dashboard`}
               className="bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4"
             >
               Go to Dashboard
-            </Link>
+            </Link> */}
           </div>
         </motion.div>
       </motion.div>

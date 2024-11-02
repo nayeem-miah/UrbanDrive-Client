@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
                 Password
               </span>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="Type your password"
                 className="w-full p-2 border rounded-md placeholder:font-light placeholder:text-gray-500 text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 {...register("password", { required: true })}
@@ -108,7 +108,7 @@ const LoginPage: React.FC = () => {
                 {showPassword ? (
                   <FaEyeSlash className=""></FaEyeSlash>
                 ) : (
-                  <FaEye/>
+                  <FaEye />
                 )}
               </span>
               {errors.password && (
@@ -132,7 +132,7 @@ const LoginPage: React.FC = () => {
           </form>
           <button
             onClick={handleGoogleLogIn}
-            className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white"
+            className="w-full border border-primary text-primary font-medium text-md p-2 rounded-lg mb-6 hover:bg-second hover:text-white hover:bg-primary"
           >
             Sign in with Google
           </button>
