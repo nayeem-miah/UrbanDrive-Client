@@ -17,8 +17,6 @@ const Membership = () => {
     },
   });
 
-  
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-background pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -27,7 +25,9 @@ const Membership = () => {
             {t("choose_membership_plan")}
           </h1>
           <p className="text-text max-w-2xl mx-auto">
-            {t("Select the perfect membership plan that suits your needs and enjoy exclusive benefits")}
+            {t(
+              "Select the perfect membership plan that suits your needs and enjoy exclusive benefits"
+            )}
           </p>
         </div>
 
@@ -38,15 +38,16 @@ const Membership = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {membershipdata.map((membership: any) => {
-              const isPopular = membership.price === 700
-              
+              const isPopular = membership.price === 700;
+
               return (
-                <div 
-                  key={membership._id} 
+                <div
+                  key={membership._id}
                   className={`relative overflow-hidden rounded-2xl bg-white border transition-all duration-300
-                    ${isPopular 
-                      ? 'border-secondary shadow-lg scale-105 hover:shadow-xl' 
-                      : 'border-gray-200 hover:shadow-lg hover:border-secondary'
+                    ${
+                      isPopular
+                        ? "border-secondary shadow-lg scale-105 hover:shadow-xl"
+                        : "border-gray-200 hover:shadow-lg hover:border-secondary"
                     }`}
                 >
                   {isPopular && (
@@ -54,7 +55,7 @@ const Membership = () => {
                       Most Popular
                     </div>
                   )}
-                  
+
                   <div className="p-6 space-y-6">
                     {/* Header */}
                     <div className="text-center space-y-2">
@@ -63,10 +64,12 @@ const Membership = () => {
                       </h2>
                       <div className="flex items-baseline justify-center gap-1">
                         <span className="text-3xl font-bold text-secondary">
-                        <span className="text-3xl text-slate-700 font-semibold mr-2">BDT</span>
+                          <span className="text-3xl text-slate-700 font-semibold mr-2">
+                            BDT
+                          </span>
                           {membership.price}
                         </span>
-                        
+
                         <span className="text-text">/{t("month")}</span>
                       </div>
                     </div>
@@ -91,7 +94,8 @@ const Membership = () => {
                       <li className="flex items-start gap-3">
                         <FiCheck className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
                         <span className="text-text">
-                          {t("cardamage_responsibility")}: {membership.carDamageResponsibility}
+                          {t("cardamage_responsibility")}:{" "}
+                          {membership.carDamageResponsibility}
                         </span>
                       </li>
                     </ul>
@@ -112,12 +116,16 @@ const Membership = () => {
                           {t("additional_services")}:
                         </h3>
                         <ul className="space-y-3">
-                          {Object.entries(membership.additionalServices).map(([key, value]) => (
-                            <li key={key} className="flex items-start gap-3">
-                              <FiCheck className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
-                              <span className="text-text">{String(value)}</span>
-                            </li>
-                          ))}
+                          {Object.entries(membership.additionalServices).map(
+                            ([key, value]) => (
+                              <li key={key} className="flex items-start gap-3">
+                                <FiCheck className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+                                <span className="text-text">
+                                  {String(value)}
+                                </span>
+                              </li>
+                            )
+                          )}
                         </ul>
                       </div>
                     )}
@@ -129,11 +137,12 @@ const Membership = () => {
                       to={`/membership-duration/${membership.planName}/${membership.price}`}
                       className="block w-full"
                     >
-                      <button 
+                      <button
                         className={`w-full py-3 px-4 rounded-lg font-bold transition-colors duration-300 
-                          ${isPopular 
-                            ? 'bg-secondary text-white hover:bg-accent' 
-                            : 'bg-background text-primary hover:bg-accent hover:text-white'
+                          ${
+                            isPopular
+                              ? "bg-secondary text-white hover:bg-accent"
+                              : "bg-background text-primary hover:bg-accent hover:text-white"
                           }`}
                       >
                         {t("buy_now")}
