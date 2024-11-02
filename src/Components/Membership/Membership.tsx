@@ -62,10 +62,11 @@ const Membership = () => {
                         {t(`${membership.planName}`)}
                       </h2>
                       <div className="flex items-baseline justify-center gap-1">
-                        <span className="text-4xl font-bold text-secondary">
+                        <span className="text-3xl font-bold text-secondary">
+                        <span className="text-3xl text-slate-700 font-semibold mr-2">BDT</span>
                           {membership.price}
                         </span>
-                        <span className="text-xl font-bold">৳</span>
+                        
                         <span className="text-text">/{t("month")}</span>
                       </div>
                     </div>
