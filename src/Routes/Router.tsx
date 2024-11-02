@@ -34,6 +34,7 @@ import HostManageCars from "../Pages/Dashboard/Host/HostManageCars";
 import SupportChat from "../Pages/Dashboard/Admin/SupportChat";
 import PendingCars from "../Pages/Dashboard/Admin/PendingCars";
 import PrivateRoute from "./PrivateRoute";
+import SpecificCarDetails from "../Shared/SpecificCarDetails";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
+          fetch(`http://localhost:8000/cars/${params.id}`),
       },
       {
         path: "/services",
@@ -100,6 +101,12 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/model/:car",
+        element: <SpecificCarDetails/>,
+        loader : ({params}) => 
+          fetch(`http://localhost:8000/model/${params.car}`)
+      }
     ],
   },
   {
