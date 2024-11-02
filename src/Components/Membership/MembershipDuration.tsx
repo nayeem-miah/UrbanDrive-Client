@@ -75,12 +75,13 @@ const MembershipDuration: React.FC = () => {
       </select>
 
       <p className="text-xl font-bold text-gray-700">
-        TotalPrice: {calculatedPrice}
-        <span className="text-xl font-extrabold"> ৳</span>
+        TotalPrice:  <span className="text-xl mr-2">BDT</span>
+         {calculatedPrice}
+       
       </p>
       <button
         onClick={handleSubmitPayment}
-        className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${
+        className={`w-2/3 bg-gradient-to-r bg-secondary text-white hover:bg-[#0c8771]  font-bold py-2 px-4 rounded mt-4 ${
           isLoading ? " cursor-not-allowed" : ""
         }`}
         disabled={isLoading}
