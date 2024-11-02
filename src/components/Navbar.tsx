@@ -59,11 +59,11 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { id: "", title: t("home") },
-    { id: "services", title: t("services") },
-    { id: "about", title: t("about") },
-    { id: "membership", title: t("memberships") },
-    { id: "contact", title: t("Contact") },
+    { id: "", title: t("Home") },
+    { id: "Services", title: t("Services") },
+    { id: "About", title: t("About") },
+    { id: "Membership", title: t("Memberships") },
+    { id: "Contact", title: t("Contact") },
   ];
 
   // if (isLoading || isFetching) {
@@ -187,7 +187,7 @@ const Navbar: React.FC = () => {
                     to="/payment-history"
                     className="flex items-center p-2 text-gray-700"
                   >
-                    <FaCreditCard className="mr-2" /> {t("payment")}
+                    <FaCreditCard className="mr-2" /> {t("Payment")}
                   </Link>
                 </li>
                 {role === "Admin" && (
@@ -196,7 +196,7 @@ const Navbar: React.FC = () => {
                       to="/dashboard/adminhome"
                       className="flex items-center p-2 text-gray-700"
                     >
-                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                      <MdDashboard className="mr-2" /> {t("Dashboard")}
                     </Link>
                   </li>
                 )}
@@ -206,7 +206,7 @@ const Navbar: React.FC = () => {
                       to="/dashboard/hostOverview"
                       className="flex items-center p-2 text-gray-700"
                     >
-                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                      <MdDashboard className="mr-2" /> {t("Dashboard")}
                     </Link>
                   </li>
                 )}
