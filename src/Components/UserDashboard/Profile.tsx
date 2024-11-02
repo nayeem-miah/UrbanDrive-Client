@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
   const [phone, setPhone] = useState<string>(user?.phone || "");
   const [photoURL, setPhotoURL] = useState("");
   const [reviews, setReviews] = useState<Reviews[]>([]);
-  const [error, setError] = useState<string>("");
+  const [ setError] = useState<string>("");
 
   const {
     data: userdata, // Corrected line with comma
