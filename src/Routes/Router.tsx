@@ -62,7 +62,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/cars/${params.id}`),
+          fetch(`https://urban-driveserver.vercel.app/cars/${params.id}`),
       },
       {
         path: "/services",
