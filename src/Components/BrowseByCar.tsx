@@ -26,10 +26,10 @@ interface Car {
 const BrowseByCar: React.FC = () => {
   const { t } = useTranslation();
   const cars: Car[] = [
-    { name: t("toyota"), image: Toyota },
-    { name: t("honda"), image: Hyundai },
-    { name: t("nissan"), image: Nissan },
-    { name: t("suzuki"), image: Suzuki },
+    { name: t("Toyota"), image: Toyota },
+    { name: t("Honda"), image: Hyundai },
+    { name: t("Nissan"), image: Nissan },
+    { name: t("BMW"), image: Suzuki },
   ];
 
   return (
@@ -65,7 +65,7 @@ const BrowseByCar: React.FC = () => {
         {cars.map((car, index) => (
           <SwiperSlide key={index}>
             <Link 
-              to="/services" 
+              to={`/model/${car?.name}`} 
               className="block group"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">

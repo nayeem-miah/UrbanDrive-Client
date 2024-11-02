@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
@@ -88,7 +89,7 @@ const HostManageCars = () => {
       setIsModalOpen(false);
       refetch();
       Swal.fire("Updated!", "Car details have been updated.", "success");
-    } catch (error) {
+    } catch {
       Swal.fire("Error!", "Failed to update car details.", "error");
     } finally {
       setLoading(false);
