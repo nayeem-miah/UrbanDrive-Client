@@ -5,7 +5,7 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { SyncLoader } from 'react-spinners';
-// import Navbar from '../Navbar';
+import Navbar from '../Navbar';
 import Footer from '../Footer';
 
 
@@ -146,7 +146,7 @@ if (!userdata) {
 }
     return (
         <div>
-             {/* <Navbar></Navbar> */}
+             <Navbar></Navbar>
 
 <div className='container mx-auto p-2 lg:p-24'>
    

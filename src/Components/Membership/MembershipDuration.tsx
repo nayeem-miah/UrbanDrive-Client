@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
+import { useParams } from "react-router-dom";
 
 const MembershipDuration: React.FC = () => {
   const axiosPublic = useAxiosPublic();
@@ -78,7 +78,6 @@ const MembershipDuration: React.FC = () => {
         TotalPrice: {calculatedPrice}
         <span className="text-xl font-extrabold"> ৳</span>
       </p>
-
       <button
         onClick={handleSubmitPayment}
         className={`w-2/3 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold py-2 px-4 rounded mt-4 ${
