@@ -25,5 +25,4 @@ export interface ICar {
     reviewCount: number;
     categoryRatings: Array<{ label: string; value: number }>;
     discount: number;
-    rental_price_per_day: number
 }
