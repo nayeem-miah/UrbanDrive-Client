@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { FaCoins, FaHome, FaUserAlt } from "react-icons/fa";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { RiAdvertisementLine } from "react-icons/ri";
@@ -65,10 +65,12 @@ const handleLinkClick = () => {
         } md:translate-x-0 transition-transform duration-300 ease-in-out `}
       >
         <div className="px-6 py-8">
-          <h2 className="text-2xl font-bold text-white text-center">
-            <span className="text-accent">U</span>rban
-            <span className="text-accent">Drive</span>
-          </h2>
+          <Link to="/">
+            <h2 className="text-2xl font-bold text-white text-center">
+              <span className="text-accent">U</span>rban
+              <span className="text-accent">Drive</span>
+            </h2>
+          </Link>
         </div>
 
         <nav className="px-4 py-4 sticky top-0">
