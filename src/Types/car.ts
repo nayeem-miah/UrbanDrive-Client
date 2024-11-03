@@ -9,7 +9,7 @@ export interface ICar {
     description: string;
     features: string[];
     category: string;
-    price_per_day: number;
+    rental_price_per_day: number;
     rental_duration: number;
     availability: boolean;
     total_price: number;

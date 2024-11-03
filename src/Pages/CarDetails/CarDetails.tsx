@@ -93,7 +93,7 @@ const CarDetails: React.FC = () => {
 
   const calculateTotalCost = (start: Date, end: Date) => {
     const days = differenceInDays(end, start) + 1;
-    let cost = days * car.price_per_day;
+    let cost = days * car.rental_price_per_day;
 
     if (includedDriver) {
       cost += cost * 0.2;
@@ -106,7 +106,7 @@ const CarDetails: React.FC = () => {
 
     const newTotalCost = calculateTotalCost(dateRange[0].startDate, dateRange[0].endDate);
     setTotalCost(newTotalCost);
-    setPerDayCost(includedDriver ? car.price_per_day * 1.2 : car.price_per_day);
+    setPerDayCost(includedDriver ? car.rental_price_per_day * 1.2 : car.rental_price_per_day);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange, includedDriver]);
 
