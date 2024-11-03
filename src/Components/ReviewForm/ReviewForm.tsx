@@ -76,6 +76,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ carId, onReviewSubmitted }) => 
     }), {});
   
     const reviewData = {
+      userEmail: user?.email,
       carId,
       userId: user?.uid,
       userName: user?.displayName,

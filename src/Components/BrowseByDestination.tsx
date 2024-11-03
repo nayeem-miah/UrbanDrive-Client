@@ -63,12 +63,9 @@ const BrowseByDestination: React.FC = () => {
       >
         {destinations.map((destination, index) => (
           <SwiperSlide key={index}>
-            <Link 
-              to="/services" 
-              className="block group"
-            >
+            <Link to={`city/${destination?.name}`} className="block group">
               <div className="relative rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <div 
+                <div
                   className="h-64 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                   style={{ backgroundImage: `url(${destination.image})` }}
                 >
@@ -80,7 +77,7 @@ const BrowseByDestination: React.FC = () => {
                           {destination.name}
                         </h3>
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <span className="text-background/80 text-sm">
                           {t("Explore destination")}

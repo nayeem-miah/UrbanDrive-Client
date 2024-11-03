@@ -5,15 +5,15 @@ import { useFormContext } from 'react-hook-form';
 
 // Define membership and plan options
 const membershipOptions = [
-  { value: 'basic', label: 'Basic' },
-  { value: 'premium', label: 'Premium' },
-  { value: 'vip', label: 'VIP' },
+  { value: 'Standard', label: 'Standard' },
+  { value: 'Premium', label: 'Premium' },
+  { value: 'Elite', label: 'Elite' }
 ];
 
 const planOptions = [
-  { value: 'basic_coverage', label: 'Basic Coverage' },
-  { value: 'standard_coverage', label: 'Standard Coverage' },
-  { value: 'premium_coverage', label: 'Premium Coverage' },
+  { value: 'Basic_Coverage', label: 'Basic Coverage' },
+  { value: 'Standard_Coverage', label: 'Standard Coverage' },
+  { value: 'Comprehensive', label: 'Comprehensive Coverage' }
 ];
 
 const Membership: React.FC = () => {

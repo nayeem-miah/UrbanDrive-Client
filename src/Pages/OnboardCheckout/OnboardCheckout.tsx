@@ -8,7 +8,7 @@ import EmailVerification from './EmailVerification';
 import { steps } from '../../Components/steps/UserSteps';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from 'react-hot-toast';
-import { imageUpload } from '../../Utils/ImageUpload';
+import { imageUpload } from '../../utils/ImageUpload';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { ImSpinner9 } from 'react-icons/im';
 
@@ -71,7 +71,7 @@ const OnboardCheckout: React.FC = () => {
     const { name, value, files } = e.target;
     setUserInfo((prevInfo) => ({
       ...prevInfo,
-      [name]: files ? files[0] : value,
+      [name]: files ? files[0] : (value || ''),
     }));
   };
 

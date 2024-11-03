@@ -313,10 +313,10 @@ const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
              Browse {totalCars}+ cars
             </p>
             <div className="grid lg:grid-cols-2 gap-8">
-              <div className="overflow-y-auto h-full pr-4 space-y-6">
+              <div className="overflow-y-auto  h-[calc(100vh-100px)] pr-4 space-y-6">
                 <CarsData cars={cardata} />
               </div>
-              <div className="h-[calc(100vh-200px)] sticky top-0 rounded-lg overflow-hidden shadow-lg">
+              <div className="h-[calc(100vh-100px)] sticky top-0 rounded-lg overflow-hidden shadow-lg">
                 <MapComponent cars={cars} userLocation={userLocation} />
               </div>
             </div>

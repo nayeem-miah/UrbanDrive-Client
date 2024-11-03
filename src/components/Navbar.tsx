@@ -59,11 +59,11 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { id: "", title: t("home") },
-    { id: "services", title: t("services") },
-    { id: "about", title: t("about") },
-    { id: "membership", title: t("memberships") },
-    { id: "contact", title: t("Contact") },
+    { id: "", title: t("Home") },
+    { id: "Services", title: t("Services") },
+    { id: "About", title: t("About") },
+    { id: "Membership", title: t("Memberships") },
+    { id: "Contact", title: t("Contact") },
   ];
 
   // if (isLoading || isFetching) {
@@ -187,7 +187,7 @@ const Navbar: React.FC = () => {
                     to="/payment-history"
                     className="flex items-center p-2 text-gray-700"
                   >
-                    <FaCreditCard className="mr-2" /> {t("payment")}
+                    <FaCreditCard className="mr-2" /> {t("Payment")}
                   </Link>
                 </li>
                 {role === "Admin" && (
@@ -196,7 +196,7 @@ const Navbar: React.FC = () => {
                       to="/dashboard/adminhome"
                       className="flex items-center p-2 text-gray-700"
                     >
-                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                      <MdDashboard className="mr-2" /> {t("Dashboard")}
                     </Link>
                   </li>
                 )}
@@ -206,7 +206,7 @@ const Navbar: React.FC = () => {
                       to="/dashboard/hostOverview"
                       className="flex items-center p-2 text-gray-700"
                     >
-                      <MdDashboard className="mr-2" /> {t("dashboard")}
+                      <MdDashboard className="mr-2" /> {t("Dashboard")}
                     </Link>
                   </li>
                 )}
@@ -235,21 +235,21 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden z-50 relative w-6 h-6"
+          className="lg:hidden z-50 relative w-6 h-6 col"
           onClick={() => setToggle(!toggle)}
         >
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "rotate-45 top-3" : "rotate-0 top-1"
             }`}
           />
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "opacity-0 translate-x-3" : "opacity-100"
             } top-3`}
           />
           <span
-            className={`absolute h-0.5 w-full bg-current transform transition-all duration-300 ease-in-out ${
+            className={`absolute h-0.5 w-full bg-accent transform transition-all duration-300 ease-in-out ${
               toggle ? "-rotate-45 top-3" : "rotate-0 top-5"
             }`}
           />

@@ -10,7 +10,7 @@ import { addDays, differenceInDays, format } from 'date-fns';
 import { DateRange, RangeKeyDict } from 'react-date-range';
 import { MdElectricCar } from 'react-icons/md';
 import { GiCarDoor, GiCarSeat } from 'react-icons/gi';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ICar } from '../../Types/car';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
@@ -18,9 +18,29 @@ import { SyncLoader } from 'react-spinners';
 import { useQuery } from '@tanstack/react-query';
 import { Rating, Star } from '@smastrom/react-rating';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm';
+import { debounce } from 'lodash';
 
+// Framer Motion
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 }
+};
 
+const staggerChildren = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
+interface SearchResult {
+  place_id: number;
+  display_name: string;
+  lat: string;
+  lon: string;
+}
 const CarDetails: React.FC = () => {
   const navigate = useNavigate();
   const car = useLoaderData() as ICar;
@@ -40,7 +60,6 @@ const CarDetails: React.FC = () => {
       key: 'selection'
     }
   ]);
-
   const axiosPublic = useAxiosPublic();
   const [location, setLocation] = useState('Current Location');
   const [showCalendar, setShowCalendar] = useState(false);
@@ -48,6 +67,9 @@ const CarDetails: React.FC = () => {
   const [perDayCost, setPerDayCost] = useState(0);
   const [includedDriver, setIncludedDriver] = useState(false);
   const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   // const [totalPages, setTotalPages] = useState(1);
 
 
@@ -156,7 +178,41 @@ console.log(car.email);
     };
   }, []);
 
+  // Search Location
+  const searchLocations = async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    setIsSearching(true);
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=bd&limit=5`,
+        {
+          headers: {
+            'Accept-Language': 'en-US'
+          }
+        }
+      );
+      const data = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error('Error fetching locations:', error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
+  // Add debounced search function
+  const debouncedSearch = debounce(searchLocations, 300);
+
+
+  const handleLocationSelect = (displayName: string) => {
+    setLocation(displayName);
+    setSearchQuery(displayName);
+    setSearchResults([]);
+  };
 
   if (!car) return (
     <div className="min-h-screen flex items-center justify-center">
@@ -178,7 +234,7 @@ console.log(car.email);
         <div
           className="bg-cover bg-center h-[60vh] flex items-center justify-center relative overflow-hidden"
           style={{
-            backgroundImage: `url(${slide1})`,
+            backgroundImage: `url(${car.image || slide1})`,
             backgroundPositionY: `${scrollY * 0.5}px`,
             willChange: "transform"
           }}
@@ -197,12 +253,12 @@ console.log(car.email);
 
       {/* Car Details */}
       <section className="bg-background text-text">
-        <div className="max-w-6xl mx-auto p-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+        <div className="max-w-7xl mx-auto p-2 sm:p-8">
+          <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 py-6 sm:py-12">
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-12">
               {/* Left Section */}
               <div className="flex-1 w-full lg:w-2/3">
-                <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8">
                   <h1 className="text-4xl font-extrabold mb-2 text-primary">
                     {car.make} {car.model}
                   </h1>
@@ -215,24 +271,41 @@ console.log(car.email);
                   </div>
 
                   {/* Features Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6 text-text">
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                  <motion.div 
+                    variants={staggerChildren}
+                    initial="initial"
+                    animate="animate"
+                    className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6 text-text"
+                  >
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <FaGasPump className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">22 MPG</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <MdElectricCar className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">Gas (Premium)</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <GiCarDoor className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">4 Doors</span>
-                    </div>
-                    <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    </motion.div>
+                    <motion.div 
+                      variants={fadeIn}
+                      className="flex flex-col items-center p-4 bg-background rounded-lg"
+                    >
                       <GiCarSeat className="w-8 h-8 text-secondary mb-2" />
                       <span className="text-sm font-medium">{car.seatCount} Seats</span>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
                   {/* Description */}
                   <div className="mb-8">
@@ -257,7 +330,7 @@ console.log(car.email);
                 </div>
 
                 {/* Hosted By Section */}
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8">
                   <h2 className="text-2xl font-bold mb-6 text-primary">Hosted By</h2>
                   <div className="flex items-center mb-6">
                     <img src="https://via.placeholder.com/80" alt="Host" className="w-16 h-16 rounded-full mr-4" />
@@ -281,7 +354,7 @@ console.log(car.email);
 
               {/* Right Section (Pricing and Booking) */}
               <div className="flex-1 w-full lg:w-1/3 sticky top-10">
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                <div className="bg-white rounded-xl shadow-lg p-2 sm:p-6">
                   <span className="text-4xl font-bold text-primary mb-2 block">{perDayCost.toFixed(2)} BDT/day</span>
                   <p className="text-sm text-text mb-6">Price before taxes</p>
 
@@ -325,33 +398,81 @@ console.log(car.email);
 
                   {/* Calendar */}
                   {showCalendar && (
-                    <DateRange
-                      editableDateInputs={true}
-                      onChange={handleSelect}
-                      moveRangeOnFirstSelection={false}
-                      ranges={dateRange}
-                      className="mb-6"
-                      rangeColors={['#4F46E5']}
-                      color="#4F46E5"
-                    />
+                    <AnimatePresence>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="w-full overflow-x-auto -mx-2 px-2"
+                      >
+                        <DateRange
+                          editableDateInputs={true}
+                          onChange={handleSelect}
+                          moveRangeOnFirstSelection={false}
+                          ranges={dateRange}
+                          className="mb-6 w-full"
+                          rangeColors={['#4F46E5']}
+                          color="#4F46E5"
+                          months={window.innerWidth < 768 ? 1 : 2}
+                          direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
                   )}
 
                   {/* Location */}
-                  <div className="mb-6">
+                  <div className="mb-6 relative">
                     <p className="text-sm font-semibold mb-2 text-primary">Pickup & return location</p>
-                    <select 
-                      value={location} 
-                      onChange={(e) => setLocation(e.target.value)} 
-                      className="w-full border border-primary/20 p-3 rounded-lg bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="">Select location</option>
-                      <option value="uttara">Uttara</option>
-                      <option value="Gazipur">Dhaka</option>
-                      <option value="Gulshan">Gulshan</option>
-                      <option value="Badda">Badda</option>
-                      <option value="Khilkhet">Khilkhet</option>
-                      <option value="Airport">Airport</option>
-                    </select>
+
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => {
+                          setSearchQuery(e.target.value);
+                          debouncedSearch(e.target.value);
+                        }}
+                        placeholder="Search for a location..."
+                        className="w-full border border-primary/20 p-3 rounded-lg bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                      {isSearching && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Search Results Dropdown */}
+                    {searchResults.length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                        {searchResults.map((result) => (
+                          <button
+                            key={result.place_id}
+                            onClick={() => handleLocationSelect(result.display_name)}
+                            className="w-full text-left px-4 py-2 hover:bg-background/50 focus:bg-background/50 transition-colors text-sm"
+                          >
+                            {result.display_name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Quick Select Buttons */}
+                    <div className="mt-2">
+                      <p className="text-sm text-text mb-2">Or select a popular location:</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Uttara", "Mohammadpur", "Gulshan", "Badda", "Khilkhet", "Airport"].map((place) => (
+                          <button
+                            key={place}
+                            onClick={() => handleLocationSelect(place)}
+                            className="px-3 py-1.5 text-sm bg-background rounded-lg hover:bg-primary/10 transition-colors"
+                          >
+                            {place}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Continue Button */}
@@ -375,7 +496,7 @@ console.log(car.email);
           </div>
 
           {/* Ratings */}
-          <div className="p-6 bg-white rounded-lg shadow-lg mt-8">
+          <div className="p-2 sm:p-6 bg-white rounded-lg shadow-lg mt-8">
             <h2 className="text-3xl font-bold mb-4 text-primary text-center">Overall Ratings</h2>
             
             {/* Average Rating */}
@@ -410,7 +531,13 @@ console.log(car.email);
           </div>
 
           {/* Reviews */}
-          <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-12 bg-white p-2 sm:p-6 rounded-lg shadow-lg"
+          >
             <h2 className="text-3xl font-bold mb-6 text-primary text-center">Customer Reviews</h2>
 
             {isLoading ? (
@@ -420,8 +547,15 @@ console.log(car.email);
             ) : reviewsData.reviews.length > 0 ? (
               <div className="space-y-4">
                 {reviewsData.reviews.map((review: any) => (
-                  <div key={review._id} className="bg-background p-4 rounded-lg shadow-sm">
-                    
+                  <motion.div
+                    key={review._id}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-background p-4 rounded-lg shadow-sm"
+                  >
                     <div className="flex justify-between items-center mb-3">
                       <div className="flex items-center">
                         <Rating style={{ maxWidth: 100 }} value={review.rating} readOnly itemStyles={{ 
@@ -450,7 +584,7 @@ console.log(car.email);
 
                     {/* Review Comment */}
                     <p className="text-text text-sm leading-relaxed">{review.comment}</p>
-                  </div>
+                  </motion.div>
                 ))}
 
                 {/* Pagination Controls */}
@@ -484,7 +618,7 @@ console.log(car.email);
             ) : (
               <p className="mt-6 text-lg text-text text-center">Please log in to leave a review.</p>
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -1,5 +1,5 @@
 export interface ICar {
-    email: any;
+    email: string;
     _id: number;
     make: string;
     model: string;
@@ -24,4 +24,5 @@ export interface ICar {
     averageRating: number;
     reviewCount: number;
     categoryRatings: Array<{ label: string; value: number }>;
+    discount: number;
 }
