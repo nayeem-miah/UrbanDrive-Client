@@ -58,7 +58,7 @@ const SpecificCarDetails = () => {
                         <p className="flex items-center gap-1">
                           {car.averageRating > 0 ? (
                             <>
-                              {car.averageRating}
+                              {car.averageRating.toFixed(1)}
                               <MdOutlineStar className="text-accent" />(
                               {car.trip_count} trips)
                             </>

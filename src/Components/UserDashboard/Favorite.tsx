@@ -10,28 +10,28 @@ import { MdOutlineDiscount, MdOutlineStar } from "react-icons/md";
 import { SyncLoader } from "react-spinners";
 import Navbar from "../Navbar";
 // import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-
+interface Car {
+  _id: string;
+  name: string;
+  image: string;
+  review: string;
+  availability: boolean;
+  model: string;
+  category: string;
+  price: number;
+  date: number;
+  description: string;
+  discount: number;
+  averageRating: number;
+  trip_count: number;
+  make: string;
+  seatCount: number;
+  features: string[];
+}
 const Favorite: React.FC = () => {
   const axiosPublic = useAxiosPublic();
   const { user, loading } = useAuth();
-  interface Car {
-    _id: string;
-    name: string;
-    image: string;
-    review: string;
-    availability: boolean;
-    model: string;
-    category: string;
-    price: number;
-    date: number;
-    description: string;
-    discount: number;
-    averageRating: number;
-    trip_count: number;
-    make: string;
-    seatCount: number;
-    features: string[];
-  }
+  
 
   const {
     data: favoriteCars = [],
@@ -137,7 +137,7 @@ const Favorite: React.FC = () => {
           ) : (
             // If there are multiple favorite cars
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {favoriteCars.map((car) => (
+              {favoriteCars.map((car : Car) => (
             <div
               key={car._id}
               className="bg-background shadow-md rounded-2xl overflow-hidden group transition-shadow duration-300 hover:shadow-2xl"
@@ -183,7 +183,7 @@ const Favorite: React.FC = () => {
                     <div className="overflow-hidden transition-all duration-300 ease-in-out  group-hover:opacity-100">
                       <div className="mt-3 space-y-2 text-sm text-text">
                         <div className="flex flex-wrap gap-2">
-                          {car.features.slice(0, 3).map((feature, index) => (
+                          {car.features.slice(0, 3).map((feature : any, index : any) => (
                             <span
                               key={index}
                               className="px-3 py-1 bg-primary bg-opacity-10 text-primary rounded-full text-xs"

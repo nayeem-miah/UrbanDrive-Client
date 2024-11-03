@@ -48,8 +48,9 @@ const AdminHome: React.FC = () => {
   interface Booking {
     _id: string;
     amount: number;
+    totalCost: number;
   }
-   //  get price ----
+  //  get price ----
   const { data: bookingData = [] } = useQuery<Booking[]>({
     queryKey: ["bookingData"],
     queryFn: async () => {
@@ -57,9 +58,14 @@ const AdminHome: React.FC = () => {
       return res.data;
     },
   });
-console.log(bookingData );
-  // Calculating total amount;
-//  console.log(totalAmount);
+
+   // Calculating total amount
+  const totalPrice = bookingData.reduce((sum, item) => {
+    const cost = item.totalCost || item.amount || 0;
+    return sum + cost;
+  }, 0);
+
+
   interface bookings {
     _id: string;
     userName: string;
@@ -130,7 +136,7 @@ console.log(bookingData );
           <StatCard
             icon={FaDollarSign}
             title="Total Revenue"
-            value={`৳${data?.revenue || 0}`}
+            value={`৳${totalPrice || 0}`}
             bgColor="bg-[#14B8A6]"
           />
         </div>
