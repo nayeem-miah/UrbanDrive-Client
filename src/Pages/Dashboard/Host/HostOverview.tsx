@@ -45,7 +45,6 @@ const HostOverview: React.FC = () => {
       return res.data;
     },
   });
-
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {

@@ -7,11 +7,11 @@ import { SyncLoader } from "react-spinners";
 import DynamicPieChart from "./Charts/DynamicPieChart";
 import DynamicLineChart from "./Charts/DynamicLineChart";
 
-function StatCard({ icon: Icon, title, value, bgColor }: { 
-  icon: React.ElementType, 
-  title: string, 
+function StatCard({ icon: Icon, title, value, bgColor }: {
+  icon: React.ElementType,
+  title: string,
   value: string | number,
-  bgColor: string 
+  bgColor: string
 }) {
   return (
     <div className={`${bgColor} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
@@ -36,7 +36,6 @@ const AdminHome: React.FC = () => {
       return res.data;
     },
   });
-
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
@@ -45,6 +44,22 @@ const AdminHome: React.FC = () => {
     },
   });
 
+
+  interface Booking {
+    _id: string;
+    amount: number;
+  }
+   //  get price ----
+  const { data: bookingData = [] } = useQuery<Booking[]>({
+    queryKey: ["bookingData"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/bookings-data");
+      return res.data;
+    },
+  });
+console.log(bookingData );
+  // Calculating total amount;
+//  console.log(totalAmount);
   interface bookings {
     _id: string;
     userName: string;
@@ -94,25 +109,25 @@ const AdminHome: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatCard 
+          <StatCard
             icon={IoPersonSharp}
             title="Car Owners"
             value={data?.hostCount}
             bgColor="bg-[#003366]"
           />
-          <StatCard 
+          <StatCard
             icon={IoPersonSharp}
             title="Total Passengers"
             value={data?.passengerCount}
             bgColor="bg-[#14B8A6]"
           />
-          <StatCard 
+          <StatCard
             icon={FaCarRear}
             title="Available Cars"
             value={data?.carCount}
             bgColor="bg-[#003366]"
           />
-          <StatCard 
+          <StatCard
             icon={FaDollarSign}
             title="Total Revenue"
             value={`৳${data?.revenue || 0}`}
@@ -143,18 +158,18 @@ const AdminHome: React.FC = () => {
                   <th className="pb-3 text-[#003366]">Start Date</th>
                   <th className="pb-3 text-[#003366]">Amount</th>
 
-      
-     
-              </tr>
-            </thead>
-       
-             
+
+
+                </tr>
+              </thead>
+
+
               <tbody>
                 {bookings.map((item: bookings) => (
                   <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50">
                     <td className="py-4">
                       <div className="flex items-center">
-                        
+
                         <span className="ml-3">{item.userName}</span>
                       </div>
                     </td>
