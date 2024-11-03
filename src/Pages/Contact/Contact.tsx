@@ -171,7 +171,7 @@ const Contact: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 mt-6 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-bold rounded-2xl hover:opacity-90 transition-opacity duration-300"
+                  className="w-full px-6 py-3 mt-6 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-2xl hover:opacity-90 transition-opacity duration-300"
                 >
                   {t('contact.submit')}
                 </button>
@@ -217,7 +217,7 @@ const Contact: React.FC = () => {
             <div className="flex justify-center">
               <button 
                 onClick={handleChatClick}
-                className="px-10 py-4 bg-gradient-to-r from-[#3d83d3] to-[#a306fd] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity duration-300"
+                className="px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity duration-300"
               >
                 {t('Chat with us')}
               </button>

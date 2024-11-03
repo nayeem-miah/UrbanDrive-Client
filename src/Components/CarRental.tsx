@@ -29,16 +29,16 @@ const CarRental: React.FC = () => {
             {features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-3">
                 <div className="h-10 w-10 flex items-center justify-center bg-accent rounded-full">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-white transition-transform duration-300 hover:scale-110 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-text font-lato">{feature}</span>
+                <span className="text-text font-bold font-lato">{feature}</span>
               </div>
             ))}
           </div>
 
-          <button className="inline-flex items-center px-6 py-3 bg-accent text-white rounded-lg font-medium transition-transform hover:scale-105 hover:bg-opacity-90">
+          <button className="inline-flex items-center px-6 py-3 bg-accent text-white font-bold rounded-lg transition-transform hover:scale-105 hover:bg-opacity-90">
             {t("readMore")}
             <TbArrowUpRight className="text-xl ml-2" />
           </button>
