@@ -10,7 +10,7 @@ const SpecificCarDetails = () => {
   return (
     <div className="bg-white">
       <div className="max-w-6xl my-28 mx-auto px-4">
-        <h2 className="text-2xl font-bold font-Merri">Car : {car}</h2>
+        <h2 className="text-2xl font-bold font-Merri">{car}</h2>
         <div>
           <div className="grid mt-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-10">
             {details.map((car) => (

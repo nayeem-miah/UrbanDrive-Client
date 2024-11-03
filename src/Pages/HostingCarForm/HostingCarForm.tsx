@@ -35,7 +35,7 @@ interface FormData {
   date?: string;
   rating?: number;
   review?: string;
-  price_per_day?: number;
+  rental_price_per_day?: number;
   total_price?: number;
   plan_type: string;
   description: string;
@@ -75,7 +75,7 @@ const HostingCarForm: React.FC = () => {
         make: formData.basicCarInfo.make,
         model: formData.basicCarInfo.model,
         year: Number(formData.basicCarInfo.year),
-        price_per_day: Number(formData.rentalDetails.price_per_day),
+        rental_price_per_day: Number(formData.rentalDetails.price_per_day),
         availability: true,
         features: formData.basicCarInfo.features || [],
         rental_duration: formData.rentalDetails.duration,

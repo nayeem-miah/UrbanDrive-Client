@@ -107,6 +107,12 @@ const router = createBrowserRouter([
         loader : ({params}) => 
           fetch(`http://localhost:8000/model/${params.car}`)
       },
+      {
+        path: "/city/:car",
+        element: <SpecificCarDetails/>,
+        loader : ({params}) => 
+          fetch(`http://localhost:8000/location/${params.car}`)
+      },
     ],
   },
   {
