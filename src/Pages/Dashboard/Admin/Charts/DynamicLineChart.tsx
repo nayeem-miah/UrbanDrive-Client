@@ -19,14 +19,12 @@ const DynamicLineChart: React.FC = () => {
         try {
             const response = await axiosPublic.get('/bookings-data');
             const bookings: BookingData[] = response.data;
-
             // Ensure there are bookings to process
             if (bookings.length === 0) {
                 setError("No booking data available.!!!. so line chart is not available...");
                 setLoading(false);
                 return;
             }
-
             // Create a map to hold the booking amounts by date
             const bookingMap: { [key: string]: number } = {};
 

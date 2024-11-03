@@ -45,7 +45,6 @@ const HostOverview: React.FC = () => {
       return res.data;
     },
   });
-
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
@@ -96,6 +95,25 @@ const HostOverview: React.FC = () => {
     legend: "none",
   };
 
+
+  interface Booking {
+    _id: string;
+    amount: number;
+    totalCost: number;
+  }
+  //  get price 
+  const { data: bookingData = [] } = useQuery<Booking[]>({
+    queryKey: ["bookingData"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/hostHistory/${user?.email}`);
+      return res.data;
+    },
+  });
+   // Calculating total amount
+  const totalPrice = bookingData.reduce((sum, item) => {
+    const cost = item.totalCost || item.amount || 0;
+    return sum + cost;
+  }, 0);
   return (
     <div className="text-2xl ">
       <div className="mt-3">
@@ -125,7 +143,7 @@ const HostOverview: React.FC = () => {
         <StatCard
           icon={FaDollarSign}
           title="Total Revenue"
-          value={`৳${data?.revenue || 0}`}
+          value={`৳${totalPrice || 0}`}
           bgColor="bg-[#14B8A6]"
         />
       </div>
