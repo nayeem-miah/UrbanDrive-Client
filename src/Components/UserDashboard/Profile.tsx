@@ -82,8 +82,8 @@ const Profile: React.FC = () => {
         const res = await axiosPublic.post(image_hosting_api, formData);
         const uploadedImageUrl = res.data.data.display_url;
         setPhotoURL(uploadedImageUrl);
-      } catch (error) {
-        console.error("Image upload failed:", error);
+      } catch {
+        // console.error("Image upload failed:", error);
         toast.error("Image upload failed");
       }
     }
@@ -105,8 +105,8 @@ const Profile: React.FC = () => {
       // setUser(response.data);
       toast.success("User profile updated successfully");
       setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating user profile:", error);
+    } catch {
+      // console.error("Error updating user profile:", error);
       toast.error("Failed to update user profile");
     }
   };
